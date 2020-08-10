@@ -1,3 +1,9 @@
+body {
+  background-image: url(../imgs/IMG_0704.jpeg);
+  background-color: #cccccc;
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover; /* Resize the background image to cover the entire container */
+}
 #style-logo {
   height: 55px;
   width: 55px;
