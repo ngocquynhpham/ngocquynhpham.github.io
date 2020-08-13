@@ -13,20 +13,140 @@
       crossorigin="anonymous"
     />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <!--font awesome-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+      integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+      crossorigin="anonymous"
+    />
     <link rel="stylesheet" href="css/styles.css" />
+    <!-- js -->
+    <script src="./js/script.js"></script>
   </head>
   <body>
     <div class="wrapper">
       <div class="container-header">
-        <div class="header-right">
-          <a href="./index.html">
-            <img id="style-logo" src="./imgs/logo.png" />
-          </a>
-        </div>
-        <div class="header-left"></div>
+        <a href="./index.html">
+          <img class="style-logo" src="./imgs/logo.png" />
+        </a>
       </div>
-      <div class="container-main"></div>
-      <div class="container-footer"></div>
+      <div class="container-main">
+        <div class="typing-text">
+          <h1
+            class="typewrite"
+            data-period="2000"
+            data-type='[ "HI, I AM QUYNH.", "I AM ACTIVE.", "I AM CREATIVE." ,"I LOVE DESIGN.", "I LOVE TO DEVELOP." ]'
+          >
+            <span class="wrap"></span>
+          </h1>
+          <h6 class="fe-dev">FRONT-END DEVELOPER</h6>
+          <h6 class="fe-dev">MOBILE DEVELOPER</h6>
+          <div class="list-social">
+            <a href="https://www.facebook.com/ngocquynh.pham.58152559"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="https://github.com/ngocquynhpham"
+              ><i class="fab fa-github"></i
+            ></a>
+            <a href="https://gitlab.com/quynh24199"
+              ><i class="fab fa-gitlab"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/ngocquynhpham/"
+              ><i class="fab fa-linkedin-in"></i>
+            </a>
+          </div>
+        </div>
+        <div class="content">
+          <div class="about">
+            <h3>Hello, My name is Quynh</h3>
+            <p>
+              I am a front-end developer from Ho Chi Minh city, Vietnamese. I
+              love playing around with code and hopefully creating something
+              that help people and makes people smile.
+            </p>
+          </div>
+          <div class="skills">
+            <h2 class="txt">Skills and Experience</h2>
+            <p class="txt">
+              The main area of my expertise is front end development (client
+              side of the web).
+            </p>
+            <p class="txt">
+              HTML, CSS, JS (Typescript), building small and medium web, apps
+              with React Native, features, animations, and coding interactive
+              layouts.
+            </p>
+            <p class="txt">
+              Visit my
+              <span
+                ><a
+                  href="https://www.linkedin.com/in/ngocquynhpham/"
+                  style="color: #5f97a0;"
+                >
+                  LinkedIn </a
+                >profile for more details. 
+              </span>
+            </p>
+          </div>
+          <div class="container-exp">
+            <div class="item-exp ">
+              <h1>Front-end Web Developer</h1>
+              <h5><a class="text" href="https://finfin.world/">FinFin</a></h5>
+              <p>
+                An individual assistant aims to financial management and give
+                advice.
+              </p>
+              <ul style="text-align: left;">
+                <li>
+                  My responsibility: Develop UI by design, fix bugs, suggest
+                  features
+                </li>
+                <li>Team size: 3</li>
+                <li>
+                  Technologies: React Native, Typescript, Redux, Redux Saga,
+                  Socket IO, Firebase
+                </li>
+              </ul>
+            </div>
+            <hr/>
+            <div class="item-exp ">
+              <h1>Mobile Developer</h1>
+              <h5><a class="text"  href="https://finfin.world/">FinFin</a></h5>
+              <p>
+                An individual assistant aims to financial management and give
+                advice.
+              </p>
+              <ul style="text-align: left;">
+                <li>
+                  My responsibility: Building landing page
+                </li>
+                <li>Team size: 1</li>
+                <li>
+                  Technologies: ReactJS, NextJS, Typescript
+                </li>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container-footer">
+        <div id="text-copyright">
+          <i class="fa">&#xf1f9;</i><span> Copyrights </span
+          ><span
+            ><a
+              id="name"
+              href="https://www.facebook.com/ngocquynh.pham.58152559"
+            >
+              Ngoc Quynh Pham.</a
+            ></span
+          >
+          <span>All rights reserved.</span>
+        </div>
+      </div>
     </div>
   </body>
 </html>
