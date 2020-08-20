@@ -16,13 +16,13 @@ body {
   width: 100%;
   align-items: center;
   z-index: 10;
-  background-color: none;
+  background-color: #504e4e;
+  padding: 5px;
 }
 
 .style-logo {
-  height: 55px;
-  width: 55px;
-  margin: 1%;
+  height: 35px;
+  width: 35px;
 }
 /* footer */
 .container-footer {
