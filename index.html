@@ -211,11 +211,18 @@
 
             <div class="col-lg-4 col-md-6 portfolio-item filter-web">
               <div class="portfolio-img">
-                <img
-                  src="assets/img/portfolio/portfolio-2.png"
-                  class="img-fluid"
-                  alt=""
-                />
+                <button
+                  type="button"
+                  class="btn"
+                  data-toggle="modal"
+                  data-target="#Form"
+                >
+                  <img
+                    src="assets/img/portfolio/portfolio-2.png"
+                    class="img-fluid"
+                    alt=""
+                  />
+                </button>
               </div>
               <div class="portfolio-info">
                 <h4>Form validation</h4>
@@ -461,7 +468,7 @@
     </footer>
     <!-- End Footer -->
 
-    <!-- modal  -->
+    <!-- modal FinFIn  -->
     <div
       class="modal fade"
       id="FinFin"
@@ -522,7 +529,61 @@
       </div>
     </div>
 
-    <!-- end modal -->
+    <!-- end modal FInFIn -->
+    <!-- modal Form  -->
+    <div
+      class="modal fade"
+      id="Form"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLongTitle">
+              Form validation
+            </h4>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Form Signin, Signup</p>
+            <p>I built it 1st year University</p>
+            <img
+              width="110px"
+              src="./assets/img/login.png"
+              alt="Ngoc Quynh Pham"
+            />
+            <img width="100px" src="./assets/img/gsheet.png" alt="FinFin" />
+
+            <h5 style="font-weight: bold">Web Developer</h5>
+            <ul>
+              <li>My responsibility: Develop UI by design, fix bugs, code.</li>
+              <li>Team size: Only me ^^</li>
+              <li>
+                Technologies: Html, CSS, Redux, Redux Saga, Socket IO, Firebase.
+              </li>
+            </ul>
+            <span style="font-weight: bold"
+              >Website:
+              <a href="http://formvalidation.byethost7.com/?i=1">
+                Form validation</a
+              ></span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- end modal Form -->
 
     <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
