@@ -183,7 +183,6 @@ h6 {
   width: 95%;
 }
 .addr-time {
-  margin: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
