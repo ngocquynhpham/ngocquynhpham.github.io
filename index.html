@@ -183,18 +183,25 @@
             <li data-filter="*" class="filter-active">All</li>
             <li data-filter=".filter-app">App</li>
             <li data-filter=".filter-web">Web</li>
-            <li data-filter=".filter-git">Repos</li>
+            <li data-filter=".filter-git">Git</li>
             <li data-filter=".filter-card">Photos</li>
           </ul>
 
           <div class="row portfolio-container">
             <div class="col-lg-4 col-md-6 portfolio-item filter-app">
               <div class="portfolio-img">
-                <img
-                  src="assets/img/portfolio/portfolio-1.png"
-                  class="img-fluid"
-                  alt=""
-                />
+                <button
+                  type="button"
+                  class="btn"
+                  data-toggle="modal"
+                  data-target="#FinFin"
+                >
+                  <img
+                    src="assets/img/portfolio/portfolio-1.png"
+                    class="img-fluid"
+                    alt=""
+                  />
+                </button>
               </div>
               <div class="portfolio-info">
                 <h4>FinFin</h4>
@@ -451,6 +458,67 @@
       </div>
     </footer>
     <!-- End Footer -->
+
+    <!-- modal  -->
+    <div
+      class="modal fade"
+      id="FinFin"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" id="exampleModalLongTitle">
+              FinFin - personal assistant, knows you better than you do.
+            </h4>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>
+              An individual assistant aims to financial management and give
+              advice.
+            </p>
+            <p>I was intership at FIOP JSC between 03/2020 and 06/2020.</p>
+            <h5 style="font-weight: bold">Mobile Developer</h5>
+            <ul>
+              <li>
+                My responsibility: Develop UI by design, fix bugs, suggest
+                features.
+              </li>
+              <li>Team size: 3.</li>
+              <li>
+                Technologies: React Native, Typescript, Redux, Redux Saga,
+                Socket IO, Firebase.
+              </li>
+            </ul>
+            <h5 style="font-weight: bold">Front-end Web Developer</h5>
+            <ul>
+              <li>
+                My responsibility: Implement responsive landing page follow by
+                design
+              </li>
+              <li>Team size: 2.</li>
+              <li>Technologies: ReactJS, NextJS, Typescript.</li>
+            </ul>
+            <span style="font-weight: bold"
+              >Website: <a href="https://finfin.world.">FinFin</a></span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- end modal -->
 
     <a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
