@@ -42,7 +42,13 @@
     <!-- ======= Header ======= -->
     <header
       id="header"
-      class="fixed-top d-flex justify-content-center align-items-center header-transparent"
+      class="
+        fixed-top
+        d-flex
+        justify-content-center
+        align-items-center
+        header-transparent
+      "
     >
       <nav class="nav-menu d-none d-lg-block">
         <ul>
@@ -185,7 +191,9 @@
             <li data-filter=".filter-app">App</li>
             <li data-filter=".filter-web">Web</li>
             <li data-filter=".filter-git">Git</li>
+            {% comment %}
             <li data-filter=".filter-card">Photos</li>
+            {% endcomment %}
           </ul>
 
           <div class="row portfolio-container">
@@ -256,6 +264,7 @@
               </div>
             </div>
 
+            {% comment %}
             <div class="col-lg-4 col-md-6 portfolio-item filter-card">
               <div class="portfolio-img">
                 <a href="./blogs/Vietnam/vi/BinhDuong/HoDaBan/HoDaBan.html">
@@ -271,6 +280,7 @@
                 <p>Binh Duong, Vietnam</p>
               </div>
             </div>
+            {% endcomment %}
             <div class="col-lg-4 col-md-6 portfolio-item filter-git">
               <div class="portfolio-img">
                 <button
@@ -359,6 +369,7 @@
                 ></a>
               </div>
             </div>
+            {% comment %}
             <div class="col-lg-4 col-md-6 portfolio-item filter-card">
               <div class="portfolio-img">
                 <img
@@ -382,6 +393,7 @@
                 ></a>
               </div>
             </div>
+            {% endcomment %} {% comment %}
             <div class="col-lg-4 col-md-6 portfolio-item filter-card">
               <div class="portfolio-img">
                 <img
@@ -405,6 +417,7 @@
                 ></a>
               </div>
             </div>
+            {% endcomment %}
           </div>
         </div>
       </section>
