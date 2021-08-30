@@ -201,21 +201,18 @@
             </div>
           </div>
 
-          <!-- <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-              <div class="portfolio-img">
-                <a href="./blogs/Vietnam/vi/BinhDuong/HoDaBan/HoDaBan.html">
-                  <img
-                    src="assets/img/portfolio/portfolio-4.jpeg"
-                    class="img-fluid"
-                    alt=""
-                  />
-                </a>
-              </div>
-              <div class="portfolio-info">
-                <h4>Ho Da Ban</h4>
-                <p>Binh Duong, Vietnam</p>
-              </div>
-            </div> -->
+          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+            <div class="portfolio-img">
+              <button type="button" class="btn" data-toggle="modal" data-target="#TLnews">
+                <img src="./assets/img/news.png" class="img-fluid" alt="" />
+              </button>
+            </div>
+            <div class="portfolio-info">
+              <h4>TL News</h4>
+              <p>Website</p>
+            </div>
+          </div>
+
           <div class="col-lg-4 col-md-6 portfolio-item filter-git">
             <div class="portfolio-img">
               <button type="button" class="btn" data-toggle="modal" data-target="#Git">
@@ -227,7 +224,7 @@
               <p>My Repositories</p>
             </div>
           </div>
-
+          
           <div class="col-lg-4 col-md-6 portfolio-item filter-web">
             <div class="portfolio-img">
               <button type="button" class="btn" data-toggle="modal" data-target="#Watches">
@@ -260,6 +257,17 @@
               <p>Website Personal</p>
             </div>
           </div>
+          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
+            <div class="portfolio-img">
+              <button type="button" class="btn" data-toggle="modal" data-target="#Project20days">
+                <img src="./assets/img/20days.png" class="img-fluid" alt="" />
+              </button>
+            </div>
+            <div class="portfolio-info">
+              <h4>Project 20days</h4>
+              <p>Website Personal</p>
+            </div>
+          </div>
           <div class="col-lg-4 col-md-6 portfolio-item filter-app">
             <div class="portfolio-img">
               <img src="assets/img/portfolio/portfolio.jpg" class="img-fluid" alt="" />
@@ -278,53 +286,7 @@
               <p>Flutter</p>
             </div>
           </div>
-          <!-- <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-              <div class="portfolio-img">
-                <img
-                  src="assets/img/portfolio/portfolio-7.jpeg"
-                  class="img-fluid"
-                  alt=""
-                />
-              </div>
-              <div class="portfolio-info">
-                <h4>Hoi An</h4>
-                <p>Vietnam</p>
-                <a
-                  href="assets/img/portfolio/portfolio-7.jpeg"
-                  data-gall="portfolioGallery"
-                  class="venobox preview-link"
-                  title="Hoi An"
-                  ><i class="bx bx-plus"></i
-                ></a>
-                <a href="#" class="details-link" title="More Details"
-                  ><i class="bx bx-link"></i
-                ></a>
-              </div>
-            </div> -->
-
-          <!-- <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-              <div class="portfolio-img">
-                <img
-                  src="assets/img/portfolio/portfolio-8.jpeg"
-                  class="img-fluid"
-                  alt=""
-                />
-              </div>
-              <div class="portfolio-info">
-                <h4>Dragon Bridge</h4>
-                <p>Da Nang, Vietnam</p>
-                <a
-                  href="assets/img/portfolio/portfolio-8.jpeg"
-                  data-gall="portfolioGallery"
-                  class="venobox preview-link"
-                  title="Dragon Bridge"
-                  ><i class="bx bx-plus"></i
-                ></a>
-                <a href="#" class="details-link" title="More Details"
-                  ><i class="bx bx-link"></i
-                ></a>
-              </div>
-            </div> -->
+         
 
         </div>
       </div>
@@ -484,8 +446,42 @@
     </div>
   </div>
 
-  <!-- end modal Watches -->
+  <!-- end Clone movie -->
+<!-- modal FinFIn  -->
+<div class="modal fade" id="TLnews" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title" id="exampleModalLongTitle">
+        TL News
+      </h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <p>
+        This is the site of the company's internal magazine, where I used to work when I graduated from college. On page 26, you can also play minigames.
+      </p>
+      <img style="margin-bottom: 20px; width: 20%;" src="./assets/img/news.png" alt="TL News" />
+      <h5 style="font-weight: bold">Front-end Web Developer</h5>
+      <ul>
+        <li>
+          My responsibility: Implement responsive landing page follow by
+          design
+        </li>
+        <li>Team size: 2.</li>
+        <li>Technologies: HTML, CSS, JS.</li>
+      </ul>
+      <div style="font-weight: bold">Website News: <a href="https://thangloigroup.vn/magazine/">TL News</a></div>
+      <div style="font-weight: bold"><a href="https://thangloigroup.vn/magazine/minigame.html">Link Minigame</a> <a style="color:#333;font-weight: 200;" href="https://html.wincore.vn/magazine/minigame.html"> (link preventive)</a></div>
+    </div>
+  </div>
+</div>
+</div>
 
+<!-- end modal FInFIn -->
   <!-- modal Git respo-->
   <div class="modal fade" id="Git" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
@@ -510,6 +506,38 @@
   </div>
 
   <!-- end modal Git respo -->
+
+  <!-- modal Project 20days-->
+  <div class="modal fade" id="Project20days" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" id="exampleModalLongTitle">
+            Project 20days - Personal Project
+          </h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <img style="margin-bottom: 20px" width="100px" src="./assets/img/20days.png" alt="Project 20days" />
+
+          <h5 style="font-weight: bold">Web Developer</h5>
+          <ul>
+            <li>Description: This is the project I do based on the criterion of starting from the simplest projects</li>
+            <li>My responsibility: Design, fix bugs, code.</li>
+            <li>Team size: 2</li>
+            <li>Technologies: HTML , CSS, JavaScript, JQuery. </li>
+          </ul>
+          <span style="font-weight: bold">Website:
+            <a href="https://project20days.herokuapp.com/"> Project 20days</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- end Project 20days -->
   <!-- modal Watches-->
   <div class="modal fade" id="Watches" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
