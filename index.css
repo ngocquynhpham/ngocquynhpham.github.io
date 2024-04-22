@@ -234,10 +234,10 @@ button {
     letter-spacing: -0.3rem;
   }
   .decription {
-    
     padding: 12px;
+    text-align: center;
   }
-  .decription > p{
+  .decription > p {
     display:flex;
     flex-direction: column;
   justify-content: center;
