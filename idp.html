@@ -70,17 +70,37 @@
         }
         /* Tab styling */
         .tab-button {
-            @apply px-4 py-2 rounded-t-lg font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition duration-200 ease-in-out;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            color: #4A5568;
+            transition-property: background-color;
+            transition-duration: 200ms;
+            transition-timing-function: ease-in-out;
+            margin: 0 0.5rem ;
         }
+
+        .tab-button:hover {
+            background-color: #EDF2F7;
+        }
+
         .tab-button.active-tab {
-            @apply bg-blue-500 text-white;
+            background-color: #dcfce7;
+            color: #166534;
         }
+
         .tab-content {
-            @apply hidden p-6 border-t-2 border-gray-200;
+            display: none;
+            padding: 1.5rem;
         }
+
         .tab-content.active-content {
-            @apply block;
+            display: block;
         }
+        
     </style>
 </head>
 <body class="bg-gradient-to-br from-green-50 to-blue-100 min-h-screen">
@@ -91,7 +111,7 @@
     </button>
 
     <!-- Sidebar Navigation -->
-    <aside id="sidebar" class="fixed top-0 left-0 h-full bg-white shadow-xl w-64 z-40 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out md:block pt-6">
+    <aside id="sidebar" class="fixed top-0 left-0 h-full bg-white shadow-xl w-64 z-40 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out md:block pt-10 md:pt-2">
         <div class="p-6">
             <!-- No "PQ Ngọc Quỳnh" header as requested -->
             <nav class="space-y-2">
@@ -113,7 +133,7 @@
                 </a>
                 <a href="#certificates" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 font-medium flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14v5m0 0l-3-3m3 3l3-3M3 10h18M7 15h10M7 7h10V4a1 1 0 00-1-1H8a1 1 0 00-1 1v3z"></path></svg>
-                    Chứng chỉ/Khoóa học
+                    Chứng chỉ/Khóa học
                 </a>
                 <a href="#projects" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 font-medium flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m7 0V5a2 2 0 012-2h2a2 2 0 012 2v6m-6 0V5a2 2 0 00-2-2H9a2 2 0 00-2 2v6"></path></svg>
@@ -267,7 +287,7 @@
                         <button id="socialtech-tab" class="tab-button">SocialTech</button>
                     </div>
 
-                    <div id="edtech-content" class="tab-content active-content bg-yellow-50 rounded-lg shadow-sm">
+                    <div id="edtech-content" class="tab-content active-content bg-yellow-50 rounded-lg">
                         <div class="p-6">
                             <div class="text-4xl mb-2 text-center">📚</div>
                             <h5 class="font-bold text-lg text-yellow-800 mb-2">EdTech (Giáo dục)</h5>
@@ -292,13 +312,13 @@
                             <h6 class="font-bold text-md text-yellow-800 mb-2">Gợi ý MVP chi tiết hơn: Ứng dụng <span class="font-bold px-1 text-yellow-800">"Luyện Thi Thích Ứng AI"</span></h6>
                             <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
                                 <li><span class="font-bold px-1 text-yellow-800">Tính năng cốt lõi MVP:</span> Nền tảng web/mobile với ngân hàng câu hỏi trắc nghiệm đa dạng (chỉ 1 môn/chủ đề ban đầu), hệ thống chấm điểm tự động, giao diện theo dõi tiến độ học tập cơ bản.</li>
-                                <li><span class="font-bold px-1 text-yellow-800">Độc đáo MVP:</span> Thuật toán gợi ý câu hỏi tiếp theo dựa trên hiệu suất học tập của người dùng (nếu sai câu nào, hệ thống gợi ý các câu liên quan để củng cố).</li>
+                                <li><span class="font-bold px-1 text-yellow-800">Độc đáo MVP:</span> Thuật toán gợi ý câu hỏi dựa trên hiệu suất học tập của người dùng, phân tích điểm mạnh/yếu.</li>
                                 <li><span class="font-bold px-1 text-yellow-800">Phù hợp với bạn:</span> Kết hợp kỹ năng Frontend mạnh để xây dựng giao diện tương tác, và tư duy phân tích để phát triển thuật toán.</li>
                             </ul>
                         </div>
                     </div>
 
-                    <div id="healthtech-content" class="tab-content bg-red-50 rounded-lg shadow-sm">
+                    <div id="healthtech-content" class="tab-content bg-red-50 rounded-lg">
                         <div class="p-6">
                             <div class="text-4xl mb-2 text-center">❤️</div>
                             <h5 class="font-bold text-lg text-red-800 mb-2">HealthTech (Y tế/Sức khỏe)</h5>
@@ -335,7 +355,7 @@
                         </div>
                     </div>
 
-                    <div id="socialtech-content" class="tab-content bg-blue-50 rounded-lg shadow-sm">
+                    <div id="socialtech-content" class="tab-content bg-blue-50 rounded-lg">
                         <div class="p-6">
                             <div class="text-4xl mb-2 text-center">🌍</div>
                             <h5 class="font-bold text-lg text-blue-800 mb-2">SocialTech (Công nghệ vì xã hội)</h5>
@@ -514,9 +534,10 @@
                 <!-- Phân tích chi tiết từng nhóm kỹ năng và bento layout -->
                 <div class="col-span-full mt-8 space-y-8">
                     <h4 class="text-xl font-semibold text-gray-800 mb-3">Phân tích chi tiết từng nhóm kỹ năng:</h4>
+
                     <!-- 1. Giao tiếp & Truyền cảm hứng -->
                     <div class="flex flex-col gap-4 bg-gray-50 p-4 rounded-lg shadow-sm">
-                        <div class="flex flex-col justify-between">
+                        <div class="flex flex-col justify-between mb-4">
                             <h5 class="font-bold text-lg text-blue-700 mb-2 flex items-center">
                                 <span class="text-2xl mr-2">🎯</span> Giao tiếp & Truyền cảm hứng
                             </h5>
@@ -529,46 +550,52 @@
                                 <li>Truyền lửa, thuyết phục hoặc dẫn dắt nhóm đi đúng hướng.</li>
                             </ul>
                             <p class="text-gray-700 text-base mt-auto">
-                                <span class="font-bold text-green-700">👉 Ứng dụng tốt khi bạn làm mentoring, thuyết trình, pitching ý tưởng cho team hoặc stakeholder.</span>
+                                <b class="text-green-700">👉 Ứng dụng tốt khi bạn làm mentoring, thuyết trình, pitching ý tưởng cho team hoặc stakeholder.</b>
                             </p>
                         </div>
-                        <div class="grid lg:grid-cols-2 grid-cols-1  gap-4"> <!-- Changed grid-cols-1 md:grid-cols-2 to grid-cols-1 -->
-                            <div class="bg-white p-4 rounded-lg shadow-sm">
-                                <h6 class="font-bold text-md text-gray-800 mb-2">Cách áp dụng:</h6>
+                        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                            <div class="bg-blue-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-blue-800 mb-2">Cách áp dụng:</h6>
                                 <ul class="list-disc list-inside text-sm text-gray-700">
                                     <li>Chủ trì các buổi họp sản phẩm (daily, review, sprint planning).</li>
                                     <li>Thuyết trình vision, roadmap sản phẩm cho các bên liên quan.</li>
                                     <li>Viết tài liệu, user story rõ ràng, dễ hiểu.</li>
                                 </ul>
                             </div>
-                            <div class="bg-white p-4 rounded-lg shadow-sm">
-                                <h6 class="font-bold text-md text-gray-800 mb-2">Ví dụ cụ thể:</h6>
+                            <div class="bg-green-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-green-800 mb-2">Ví dụ cụ thể:</h6>
                                 <ul class="list-disc list-inside text-sm text-gray-700">
-                                    <li><span class="font-bold">EdTech:</span> Pitching ý tưởng ứng dụng học tiếng Anh mới cho nhà đầu tư.</li>
-                                    <li><span class="font-bold">HealthTech:</span> Truyền đạt tầm quan trọng của việc thu thập dữ liệu sức khỏe chính xác cho đội ngũ phát triển.</li>
-                                    <li><span class="font-bold">SocialTech:</span> Thuyết phục cộng đồng tham gia dự án tình nguyện mới.</li>
+                                    <li><b class="font-bold">EdTech:</b> Pitching ý tưởng ứng dụng học tiếng Anh mới cho nhà đầu tư.</li>
+                                    <li><b class="font-bold">HealthTech:</b> Truyền đạt tầm quan trọng của việc thu thập dữ liệu sức khỏe chính xác cho đội ngũ phát triển.</li>
+                                    <li><b class="font-bold">SocialTech:</b> Thuyết phục cộng đồng tham gia dự án tình nguyện mới.</li>
                                 </ul>
                             </div>
-                            <div class="bg-white p-4 rounded-lg shadow-sm">
-                                <h6 class="font-bold text-md text-gray-800 mb-2">Bất lợi/Hạn chế:</h6>
+                            <div class="bg-red-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-red-800 mb-2">Bất lợi/Hạn chế:</h6>
                                 <ul class="list-disc list-inside text-sm text-gray-700">
                                     <li>Dễ bị hiểu lầm là nói nhiều, thiếu hành động nếu không đi kèm kết quả.</li>
                                     <li>Dễ bỏ qua chi tiết quan trọng nếu quá tập trung vào bức tranh lớn.</li>
                                 </ul>
                             </div>
-                            <div class="bg-white p-4 rounded-lg shadow-sm">
-                                <h6 class="font-bold text-md text-gray-800 mb-2">Điểm lợi/Cạnh tranh:</h6>
+                            <div class="bg-yellow-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-yellow-800 mb-2">Điểm lợi/Cạnh tranh:</h6>
                                 <ul class="list-disc list-inside text-sm text-gray-700">
                                     <li>Xây dựng niềm tin, thúc đẩy team làm việc hiệu quả.</li>
                                     <li>Dẫn dắt các cuộc thảo luận phức tạp.</li>
                                     <li>Thúc đẩy sự hợp tác giữa các phòng ban.</li>
                                 </ul>
                             </div>
-                            <div class="bg-white p-4 rounded-lg shadow-sm"> <!-- Removed md:col-span-2 -->
-                                <h6 class="font-bold text-md text-gray-800 mb-2">Cách phát huy tốt nhất & Cần chú ý:</h6>
+                            <div class="bg-indigo-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-indigo-800 mb-2">Cách phát huy tốt nhất:</h6>
                                 <ul class="list-disc list-inside text-sm text-gray-700">
-                                    <li>**Cách phát huy:** Luyện thuyết trình, học lắng nghe chủ động, đặt câu hỏi hiệu quả.</li>
-                                    <li>**Cần chú ý:** Không biến thành độc thoại, đảm bảo thông điệp rõ ràng, phù hợp với từng đối tượng, tránh hứa hẹn quá mức.</li>
+                                    <li>Luyện thuyết trình, học lắng nghe chủ động, đặt câu hỏi hiệu quả.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-pink-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-pink-800 mb-2">Cần chú ý:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>Không biến thành độc thoại, đảm bảo thông điệp rõ ràng, phù hợp với từng đối tượng.</li>
+                                    <li>Tránh hứa hẹn quá mức, luôn đi kèm hành động và kết quả.</li>
                                 </ul>
                             </div>
                         </div>
@@ -576,7 +603,7 @@
 
                     <!-- 2. Đồng cảm & Kết nối -->
                     <div class="flex flex-col gap-4 bg-gray-50 p-4 rounded-lg shadow-sm">
-                        <div class="flex flex-col justify-between">
+                        <div class="flex flex-col justify-between mb-4">
                             <h5 class="font-bold text-lg text-green-700 mb-2 flex items-center">
                                 <span class="text-2xl mr-2">💞</span> Đồng cảm & Kết nối
                             </h5>
@@ -589,46 +616,52 @@
                                 <li>Hiểu cảm xúc và nhu cầu ẩn sâu của người khác.</li>
                             </ul>
                             <p class="text-gray-700 text-base mt-auto">
-                                <span class="font-bold text-green-700">👉 Phù hợp với vai trò team leader, coaching, quản lý nhân sự hoặc chăm sóc khách hàng.</span>
+                                <b class="text-green-700">👉 Phù hợp với vai trò team leader, coaching, quản lý nhân sự hoặc chăm sóc khách hàng.</b>
                             </p>
                         </div>
-                        <div class="grid lg:grid-cols-2 grid-cols-1  gap-4"> <!-- Changed grid-cols-1 md:grid-cols-2 to grid-cols-1 -->
-                            <div class="bg-white p-4 rounded-lg shadow-sm">
-                                <h6 class="font-bold text-md text-gray-800 mb-2">Cách áp dụng:</h6>
+                        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                            <div class="bg-blue-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-blue-800 mb-2">Cách áp dụng:</h6>
                                 <ul class="list-disc list-inside text-sm text-gray-700">
                                     <li>Tiến hành phỏng vấn người dùng, khảo sát để hiểu sâu insights.</li>
                                     <li>Xây dựng mối quan hệ tốt với team dev, thiết kế, marketing.</li>
                                     <li>Giải quyết xung đột, duy trì không khí làm việc tích cực.</li>
                                 </ul>
                             </div>
-                            <div class="bg-white p-4 rounded-lg shadow-sm">
-                                <h6 class="font-bold text-md text-gray-800 mb-2">Ví dụ cụ thể:</h6>
+                            <div class="bg-green-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-green-800 mb-2">Ví dụ cụ thể:</h6>
                                 <ul class="list-disc list-inside text-sm text-gray-700">
-                                    <li><span class="font-bold">EdTech:</span> Lắng nghe phản hồi từ học sinh và phụ huynh để cải thiện tính năng.</li>
-                                    <li><span class="font-bold">HealthTech:</span> Hiểu nỗi lo lắng của bệnh nhân để thiết kế giao diện thân thiện, dễ sử dụng.</li>
-                                    <li><span class="font-bold">SocialTech:</span> Xây dựng mối quan hệ tin cậy với các tổ chức phi lợi nhuận để hiểu đúng nhu cầu của họ.</li>
+                                    <li><b class="font-bold">EdTech:</b> Lắng nghe phản hồi từ học sinh và phụ huynh để cải thiện tính năng.</li>
+                                    <li><b class="font-bold">HealthTech:</b> Hiểu nỗi lo lắng của bệnh nhân để thiết kế giao diện thân thiện, dễ sử dụng.</li>
+                                    <li><b class="font-bold">SocialTech:</b> Xây dựng mối quan hệ tin cậy với các tổ chức phi lợi nhuận để hiểu đúng nhu cầu của họ.</li>
                                 </ul>
                             </div>
-                            <div class="bg-white p-4 rounded-lg shadow-sm">
-                                <h6 class="font-bold text-md text-gray-800 mb-2">Bất lợi/Hạn chế:</h6>
+                            <div class="bg-red-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-red-800 mb-2">Bất lợi/Hạn chế:</h6>
                                 <ul class="list-disc list-inside text-sm text-gray-700">
                                     <li>Dễ bị cảm xúc chi phối, khó đưa ra quyết định cứng rắn.</li>
                                     <li>Mất thời gian quá nhiều cho việc xây dựng mối quan hệ mà quên mục tiêu chính.</li>
                                 </ul>
                             </div>
-                            <div class="bg-white p-4 rounded-lg shadow-sm">
-                                <h6 class="font-bold text-md text-gray-800 mb-2">Điểm lợi/Cạnh tranh:</h6>
+                            <div class="bg-yellow-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-yellow-800 mb-2">Điểm lợi/Cạnh tranh:</h6>
                                 <ul class="list-disc list-inside text-sm text-gray-700">
                                     <li>Xây dựng sản phẩm thực sự đáp ứng nhu cầu người dùng.</li>
                                     <li>Tạo môi trường làm việc hài hòa, năng suất cao.</li>
                                     <li>Khả năng đàm phán, giải quyết vấn đề bằng sự thấu hiểu.</li>
                                 </ul>
                             </div>
-                             <div class="bg-white p-4 rounded-lg shadow-sm"> <!-- Removed md:col-span-2 -->
-                                <h6 class="font-bold text-md text-gray-800 mb-2">Cách phát huy tốt nhất & Cần chú ý:</h6>
+                             <div class="bg-indigo-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-indigo-800 mb-2">Cách phát huy tốt nhất:</h6>
                                 <ul class="list-disc list-inside text-sm text-gray-700">
-                                    <li>**Cách phát huy:** Thực hành lắng nghe chủ động, đặt mình vào vị trí người khác, phát triển EQ.</li>
-                                    <li>**Cần chú ý:** Cân bằng giữa cảm xúc và logic, không để sự đồng cảm làm lu mờ mục tiêu kinh doanh, học cách đưa ra phản hồi mang tính xây dựng nhưng kiên quyết.</li>
+                                    <li>Thực hành lắng nghe chủ động, đặt mình vào vị trí người khác, phát triển EQ.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-pink-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-pink-800 mb-2">Cần chú ý:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>Cân bằng giữa cảm xúc và logic, không để sự đồng cảm làm lu mờ mục tiêu kinh doanh.</li>
+                                    <li>Học cách đưa ra phản hồi mang tính xây dựng nhưng kiên quyết.</li>
                                 </ul>
                             </div>
                         </div>
@@ -636,7 +669,7 @@
 
                     <!-- 3. Cố vấn kỹ thuật -->
                     <div class="flex flex-col gap-4 bg-gray-50 p-4 rounded-lg shadow-sm">
-                        <div class="flex flex-col justify-between">
+                        <div class="flex flex-col justify-between mb-4">
                             <h5 class="font-bold text-lg text-yellow-700 mb-2 flex items-center">
                                 <span class="text-2xl mr-2">🛠️</span> Cố vấn kỹ thuật
                             </h5>
@@ -648,46 +681,52 @@
                                 <li>Làm mentor kỹ thuật, review code, chia sẻ kiến thức dễ hiểu.</li>
                             </ul>
                             <p class="text-gray-700 text-base mt-auto">
-                                <span class="font-bold text-green-700">👉 Thể hiện tố chất để dẫn dắt kỹ thuật trong team, đảm nhận vai trò Tech Lead trong tương lai hoặc làm cầu nối vững chắc giữa business và engineering.</span>
+                                <b class="text-green-700">👉 Thể hiện tố chất để dẫn dắt kỹ thuật trong team, đảm nhận vai trò Tech Lead trong tương lai hoặc làm cầu nối vững chắc giữa business và engineering.</b>
                             </p>
                         </div>
-                        <div class="grid lg:grid-cols-2 grid-cols-1  gap-4"> <!-- Changed grid-cols-1 md:grid-cols-2 to grid-cols-1 -->
-                            <div class="bg-white p-4 rounded-lg shadow-sm">
-                                <h6 class="font-bold text-md text-gray-800 mb-2">Cách áp dụng:</h6>
+                        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                            <div class="bg-blue-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-blue-800 mb-2">Cách áp dụng:</h6>
                                 <ul class="list-disc list-inside text-sm text-gray-700">
                                     <li>Tham gia vào các buổi thảo luận kỹ thuật, giúp đội ngũ hiểu yêu cầu sản phẩm.</li>
                                     <li>Đánh giá tính khả thi kỹ thuật của các tính năng mới.</li>
                                     <li>Giải đáp thắc mắc kỹ thuật cho team Product, Marketing.</li>
                                 </ul>
                             </div>
-                            <div class="bg-white p-4 rounded-lg shadow-sm">
-                                <h6 class="font-bold text-md text-gray-800 mb-2">Ví dụ cụ thể:</h6>
+                            <div class="bg-green-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-green-800 mb-2">Ví dụ cụ thể:</h6>
                                 <ul class="list-disc list-inside text-sm text-gray-700">
-                                    <li><span class="font-bold">EdTech:</span> Tư vấn về công nghệ AI phù hợp cho tính năng gợi ý lộ trình học.</li>
-                                    <li><span class="font-bold">HealthTech:</span> Giải thích về kiến trúc bảo mật dữ liệu cho các bên liên quan không chuyên về kỹ thuật.</li>
-                                    <li><span class="font-bold">SocialTech:</span> Đánh giá tính khả thi của việc tích hợp bản đồ tình nguyện viên với lượng lớn dữ liệu.</li>
+                                    <li><b class="font-bold">EdTech:</b> Tư vấn về công nghệ AI phù hợp cho tính năng gợi ý lộ trình học.</li>
+                                    <li><b class="font-bold">HealthTech:</b> Giải thích về kiến trúc bảo mật dữ liệu cho các bên liên quan không chuyên về kỹ thuật.</li>
+                                    <li><b class="font-bold">SocialTech:</b> Đánh giá tính khả thi của việc tích hợp bản đồ tình nguyện viên với lượng lớn dữ liệu.</li>
                                 </ul>
                             </div>
-                            <div class="bg-white p-4 rounded-lg shadow-sm">
-                                <h6 class="font-bold text-md text-gray-800 mb-2">Bất lợi/Hạn chế:</h6>
+                            <div class="bg-red-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-red-800 mb-2">Bất lợi/Hạn chế:</h6>
                                 <ul class="list-disc list-inside text-sm text-gray-700">
                                     <li>Dễ bị sa đà vào chi tiết kỹ thuật mà quên đi bức tranh lớn của sản phẩm.</li>
                                     <li>Có thể bị đánh giá là "micro-managing" nếu can thiệp quá sâu vào công việc của dev.</li>
                                 </ul>
                             </div>
-                            <div class="bg-white p-4 rounded-lg shadow-sm">
-                                <h6 class="font-bold text-md text-gray-800 mb-2">Điểm lợi/Cạnh tranh:</h6>
+                            <div class="bg-yellow-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-yellow-800 mb-2">Điểm lợi/Cạnh tranh:</h6>
                                 <ul class="list-disc list-inside text-sm text-gray-700">
                                     <li>Làm cầu nối vững chắc giữa team kinh doanh và kỹ thuật.</li>
                                     <li>Đưa ra các quyết định sản phẩm thực tế và khả thi hơn.</li>
                                     <li>Giúp đội ngũ phát triển hiểu rõ hơn về giá trị nghiệp vụ của tính năng.</li>
                                 </ul>
                             </div>
-                            <div class="bg-white p-4 rounded-lg shadow-sm"> <!-- Removed md:col-span-2 -->
-                                <h6 class="font-bold text-md text-gray-800 mb-2">Cách phát huy tốt nhất & Cần chú ý:</h6>
+                            <div class="bg-indigo-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-indigo-800 mb-2">Cách phát huy tốt nhất:</h6>
                                 <ul class="list-disc list-inside text-sm text-gray-700">
-                                    <li>**Cách phát huy:** Tham gia cộng đồng kỹ thuật, luôn cập nhật công nghệ mới, luyện khả năng giải thích kỹ thuật cho người không chuyên.</li>
-                                    <li>**Cần chú ý:** Tập trung vào "what" và "why" hơn là "how" khi làm PO, tin tưởng vào khả năng của đội ngũ dev.</li>
+                                    <li>Tham gia cộng đồng kỹ thuật, luôn cập nhật công nghệ mới, luyện khả năng giải thích kỹ thuật cho người không chuyên.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-pink-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-pink-800 mb-2">Cần chú ý:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>Tập trung vào "what" và "why" hơn là "how" khi làm PO, tin tưởng vào khả năng của đội ngũ dev.</li>
+                                    <li>Tránh can thiệp quá sâu vào các giải pháp kỹ thuật cụ thể.</li>
                                 </ul>
                             </div>
                         </div>
@@ -695,7 +734,7 @@
 
                     <!-- 4. Giải quyết vấn đề & Tư duy phân tích -->
                     <div class="flex flex-col gap-4 bg-gray-50 p-4 rounded-lg shadow-sm">
-                        <div class="flex flex-col justify-between">
+                        <div class="flex flex-col justify-between mb-4">
                             <h5 class="font-bold text-lg text-red-700 mb-2 flex items-center">
                                 <span class="text-2xl mr-2">🧠</span> Giải quyết vấn đề & Tư duy phân tích
                             </h5>
@@ -707,46 +746,52 @@
                                 <li>Tuy nhiên, có thể chưa phải là điểm mạnh nổi bật nhất so với các kỹ năng giao tiếp hay đồng cảm.</li>
                             </ul>
                             <p class="text-gray-700 text-base mt-auto">
-                                <span class="font-bold text-green-700">👉 Nên luyện thêm kỹ năng phân tích nghiệp vụ chuyên sâu, xác định root-cause, hoặc thử sức với vai trò Product Thinking, Business Analyst để củng cố thêm.</span>
+                                <b class="text-green-700">👉 Nên luyện thêm kỹ năng phân tích nghiệp vụ chuyên sâu, xác định root-cause, hoặc thử sức với vai trò Product Thinking, Business Analyst để củng cố thêm.</b>
                             </p>
                         </div>
-                        <div class="grid lg:grid-cols-2 grid-cols-1  gap-4"> <!-- Changed grid-cols-1 md:grid-cols-2 to grid-cols-1 -->
-                            <div class="bg-white p-4 rounded-lg shadow-sm">
-                                <h6 class="font-bold text-md text-gray-800 mb-2">Cách áp dụng:</h6>
+                        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                            <div class="bg-blue-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-blue-800 mb-2">Cách áp dụng:</h6>
                                 <ul class="list-disc list-inside text-sm text-gray-700">
                                     <li>Phân tích dữ liệu người dùng để tìm ra vấn đề và cơ hội.</li>
                                     <li>Xác định nguyên nhân gốc rễ của các vấn đề sản phẩm.</li>
                                     <li>Ưu tiên tính năng dựa trên giá trị và độ phức tạp.</li>
                                 </ul>
                             </div>
-                            <div class="bg-white p-4 rounded-lg shadow-sm">
-                                <h6 class="font-bold text-md text-gray-800 mb-2">Ví dụ cụ thể:</h6>
+                            <div class="bg-green-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-green-800 mb-2">Ví dụ cụ thể:</h6>
                                 <ul class="list-disc list-inside text-sm text-gray-700">
-                                    <li><span class="font-bold">EdTech:</span> Phân tích dữ liệu học viên để tìm điểm nghẽn trong quá trình học online.</li>
-                                    <li><span class="font-bold">HealthTech:</span> Sử dụng dữ liệu để xác định tính năng nào giúp người dùng tuân thủ liệu trình tốt nhất.</li>
-                                    <li><span class="font-bold">SocialTech:</span> Phân tích lý do tỷ lệ tương tác của tình nguyện viên giảm để tìm giải pháp cải thiện.</li>
+                                    <li><b class="font-bold">EdTech:</b> Phân tích dữ liệu học viên để tìm điểm nghẽn trong quá trình học online.</li>
+                                    <li><b class="font-bold">HealthTech:</b> Sử dụng dữ liệu để xác định tính năng nào giúp người dùng tuân thủ liệu trình tốt nhất.</li>
+                                    <li><b class="font-bold">SocialTech:</b> Phân tích lý do tỷ lệ tương tác của tình nguyện viên giảm để tìm giải pháp cải thiện.</li>
                                 </ul>
                             </div>
-                            <div class="bg-white p-4 rounded-lg shadow-sm">
-                                <h6 class="font-bold text-md text-gray-800 mb-2">Bất lợi/Hạn chế:</h6>
+                            <div class="bg-red-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-red-800 mb-2">Bất lợi/Hạn chế:</h6>
                                 <ul class="list-disc list-inside text-sm text-gray-700">
-                                    <li>Có thể bị sa lầy vào việc phân tích mà không đưa ra quyết định.</li>
+                                    <li>Dễ bị sa lầy vào việc phân tích mà không đưa ra quyết định.</li>
                                     <li>Đôi khi bỏ lỡ các yếu tố "human touch" nếu quá tập trung vào số liệu.</li>
                                 </ul>
                             </div>
-                            <div class="bg-white p-4 rounded-lg shadow-sm">
-                                <h6 class="font-bold text-md text-gray-800 mb-2">Điểm lợi/Cạnh tranh:</h6>
+                            <div class="bg-yellow-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-yellow-800 mb-2">Điểm lợi/Cạnh tranh:</h6>
                                 <ul class="list-disc list-inside text-sm text-gray-700">
                                     <li>Đưa ra quyết định dựa trên dữ liệu, giảm thiểu rủi ro.</li>
                                     <li>Khả năng giải quyết các vấn đề phức tạp một cách có hệ thống.</li>
                                     <li>Tối ưu hóa sản phẩm để đạt được hiệu quả kinh doanh.</li>
                                 </ul>
                             </div>
-                            <div class="bg-white p-4 rounded-lg shadow-sm"> <!-- Removed md:col-span-2 -->
-                                <h6 class="font-bold text-md text-gray-800 mb-2">Cách phát huy tốt nhất & Cần chú ý:</h6>
+                            <div class="bg-indigo-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-indigo-800 mb-2">Cách phát huy tốt nhất:</h6>
                                 <ul class="list-disc list-inside text-sm text-gray-700">
-                                    <li>**Cách phát huy:** Học thêm về A/B testing, SQL, Google Analytics, các phương pháp phân tích nghiệp vụ.</li>
-                                    <li>**Cần chú ý:** Không bỏ qua trực giác và phản hồi định tính, cân bằng giữa phân tích sâu và tốc độ ra quyết định.</li>
+                                    <li>Học thêm về A/B testing, SQL, Google Analytics, các phương pháp phân tích nghiệp vụ.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-pink-100 p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-pink-800 mb-2">Cần chú ý:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>Không bỏ qua trực giác và phản hồi định tính, cân bằng giữa phân tích sâu và tốc độ ra quyết định.</li>
+                                    <li>Phát triển khả năng ra quyết định nhanh chóng trong môi trường không chắc chắn.</li>
                                 </ul>
                             </div>
                         </div>
@@ -863,78 +908,89 @@
             const radarChartDom = document.getElementById('radar-chart-container');
             if (radarChartDom) {
                 const radarChart = echarts.init(radarChartDom);
-                const radarOption = {
-                    tooltip: {
-                        z: 9999, // Ensure tooltip is above other elements
-                        trigger: 'item', // 'item' is good for single data points on radar
-                        formatter: function (params) {
-                            // Custom formatter for tooltip
-                            const indicators = radarOption.radar[0].indicator; // Get indicators from the radar component
-                            const dataValue = params.value; // The array of values [85, 80, 75, 90]
-                            let tooltipContent = `<div style="font-weight: bold; margin-bottom: 5px;">Kỹ năng mềm của Ngọc Quỳnh</div>`;
-                            
-                            // Iterate through each indicator to display its name and score
-                            indicators.forEach((indicator, index) => {
-                                tooltipContent += `<div>${indicator.name}: <span style="font-weight: bold;">${dataValue[index]}%</span></div>`;
-                            });
-                            
-                            return tooltipContent;
+                var ngocQuynhSkillsData = [
+                    {
+                        value: [80, 85, 75, 90, 88, 70], // Giá trị mới cho 6 kỹ năng
+                        areaStyle: {
+                            color: 'rgba(220, 252, 231, 0.5)' // #dcfce7 với 50% opacity
+                        },
+                        lineStyle: {
+                            color: '#166534' // Màu xanh lá đậm
+                        },
+                        itemStyle: {
+                            color: '#166534' // Màu xanh lá đậm cho các điểm
+                        }
+                    }
+                ];
+
+                var radarOption = {
+                    title: {
+                        text: 'Kỹ năng mềm', // Tiêu đề theo yêu cầu
+                        left: 'center',
+                        textStyle: {
+                            fontSize: 18,
+                            fontWeight: 'bold',
+                            color: '#166534' // Màu xanh lá đậm cho tiêu đề
                         }
                     },
+                    tooltip: {
+                        trigger: 'item'
+                    },
                     legend: {
-                        data: ['Kỹ năng mềm'],
-                        bottom: '0',
+                        data: ngocQuynhSkillsData.map(function (s) { return s.name; }),
+                        bottom: 10,
+                        itemGap: 20,
                         textStyle: {
-                            color: '#333'
+                            color: '#166534' // Màu xanh lá đậm cho chữ trong legend
                         }
                     },
                     radar: {
+                        shape: 'polygon',
                         indicator: [
-                            { name: 'Giao tiếp & Truyền cảm hứng', max: 100, axisName: { color: '#10B981' } }, // Green
-                            { name: 'Giải quyết vấn đề & Tư duy phân tích', max: 100, axisName: { color: '#F59E0B' } }, // Amber
-                            { name: 'Cố vấn kỹ thuật', max: 100, axisName: { color: '#3B82F6' } }, // Blue
-                            { name: 'Đồng cảm & Kết nối', max: 100, axisName: { color: '#EF4444' } }  // Red
+                            { name: 'Giao tiếp', max: 100 },
+                            { name: 'Đồng cảm & Kết nối', max: 100 },
+                            { name: 'Cố vấn kỹ thuật', max: 100 },
+                            { name: 'Giải quyết vấn đề', max: 100 },
+                            { name: 'Tư duy phân tích', max: 100 },
+                            { name: 'Truyền cảm hứng', max: 100 }
                         ],
-                        radius: '65%',
-                        center: ['50%', '55%'], // Adjust center to make space for legend
-                        axisName: {
-                            fontSize: 12,
-                            fontWeight: 'bold' // Make axis labels bold
-                        },
-                        splitLine: {
-                            lineStyle: {
-                                color: 'rgba(128, 128, 128, 0.1)' // Lighter split lines
+                        radius: '60%',
+                        center: ['50%', '55%'],
+                        name: {
+                            textStyle: {
+                                color: '#166534', // Màu xanh lá đậm cho tên các kỹ năng
+                                fontSize: 12,
+                                overflow: 'break',
+                                width: 80,
+                                lineHeight: 14
                             }
                         },
-                        splitArea: {
+                        splitArea: { // Màu nền xen kẽ của các vùng chia radar
                             areaStyle: {
-                                color: ['rgba(200, 255, 200, 0.1)', 'rgba(200, 255, 200, 0.05)'] // Very light alternating fill
+                                color: [
+                                    'rgba(220, 252, 231, 0.1)', // #dcfce7 với 10% opacity
+                                    'rgba(220, 252, 231, 0.3)'  // #dcfce7 với 30% opacity
+                                ]
                             }
                         },
-                        axisLine: {
+                        axisLine: { // Style cho đường trục chính của radar
                             lineStyle: {
-                                color: 'rgba(128, 128, 128, 0.2)' // Lighter axis lines
+                                color: 'rgba(22, 101, 52, 0.4)' // #166534 với 40% opacity
+                            }
+                        },
+                        splitLine: { // Style cho các đường chia nhỏ bên trong radar
+                            lineStyle: {
+                                color: 'rgba(22, 101, 52, 0.2)' // #166534 với 20% opacity
                             }
                         }
                     },
                     series: [{
-                        name: 'Kỹ năng mềm của Ngọc Quỳnh',
+                        name: 'Kỹ năng mềm', // Tên này có thể hiển thị trong tooltip
                         type: 'radar',
-                        data: [{
-                            value: [85, 80, 75, 90],
-                            name: 'Kỹ năng mềm',
-                            areaStyle: {
-                                color: 'rgba(76, 175, 80, 0.6)' // Green color for the skill area
-                            },
-                            lineStyle: {
-                                color: '#4CAF50' // Green color for the line
-                            },
-                            itemStyle: {
-                                color: '#4CAF50' // Green color for the data points
-                            }
-                        }]
+                        data: ngocQuynhSkillsData
                     }]
                 };
+
                 radarChart.setOption(radarOption);
 
                 // Resize chart on window resize
