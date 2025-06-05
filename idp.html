@@ -7,11 +7,14 @@
     <!-- Tải Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Tải ECharts.js -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.3.3/dist/echarts.min.js"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f8f8f8;
             color: #333;
+            scroll-behavior: smooth; /* Cho phép cuộn mượt mà khi nhấn nút điều hướng */
         }
         .container {
             max-width: 960px;
@@ -56,467 +59,911 @@
             font-size: 1.2rem;
             margin-right: 0.5rem;
         }
-        .chart-bar {
-            height: 20px;
-            border-radius: 4px;
-            margin-bottom: 8px;
+        /* Active sidebar link styling */
+        .active-link {
+            background-color: #dcfce7; /* green-100 */
+            color: #166534; /* green-800 */
+            font-weight: 700; /* bold */
         }
-        .chart-label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #555;
-            margin-bottom: 4px;
+        .active-link svg {
+            color: #166534; /* green-800 for icon */
         }
-        /* Custom colors for skill chart bars */
-        .chart-skill-blue { background-color: #4299e1; } /* Blue-500 */
-        .chart-skill-green { background-color: #48bb78; } /* Green-500 */
-        .chart-skill-yellow { background-color: #ecc94b; } /* Yellow-500 */
-        .chart-skill-red { background-color: #f56565; } /* Red-500 */
+        /* Tab styling */
+        .tab-button {
+            @apply px-4 py-2 rounded-t-lg font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition duration-200 ease-in-out;
+        }
+        .tab-button.active-tab {
+            @apply bg-blue-500 text-white;
+        }
+        .tab-content {
+            @apply hidden p-6 border-t-2 border-gray-200;
+        }
+        .tab-content.active-content {
+            @apply block;
+        }
     </style>
 </head>
-<body class="bg-gradient-to-br from-green-50 to-blue-100 min-h-screen py-10">
-    <div class="container mx-auto px-4">
-        <!-- Header -->
-        <header class="text-center mb-12">
-            <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-green-200 flex items-center justify-center text-green-700 text-5xl font-bold">
-                PQ
-            </div>
-            <h1 class="text-5xl font-extrabold text-green-800 mb-2">Ngọc Quỳnh Phạm</h1>
-            <p class="text-2xl text-blue-700 font-semibold">Frontend Developer | Product Owner Aspirant</p>
-            <p class="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">
-                Chào bạn! Tôi là một nhà phát triển web đầy nhiệt huyết, tập trung vào việc xây dựng trải nghiệm kỹ thuật số hấp dẫn và dễ tiếp cận. Với hơn 3 năm kinh nghiệm trong lĩnh vực Frontend, tôi mong muốn kết hợp kỹ thuật với tư duy kinh doanh để tạo ra những sản phẩm có tác động tích cực đến xã hội.
-            </p>
-        </header>
+<body class="bg-gradient-to-br from-green-50 to-blue-100 min-h-screen">
+    <!-- Mobile Menu Toggle (Hamburger) -->
+    <button id="menu-toggle" class="fixed top-4 left-4 z-50 p-2 rounded-md bg-green-600 text-white md:hidden shadow-lg">
+        <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        <svg id="close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+    </button>
 
-        <!-- Giới thiệu chung -->
-        <section class="mb-12 p-8 card">
-            <h2 class="section-title text-3xl mb-6">Tổng quan về tôi</h2>
-            <div class="space-y-8">
-                <!-- Kinh nghiệm & Kỹ năng -->
-                <div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3">Kinh nghiệm & Kỹ năng</h3>
-                    <ul class="space-y-2 text-gray-700">
-                        <li class="flex items-start">
-                            <span class="list-item-icon">&#10003;</span>
-                            <span class="font-bold px-1 text-blue-700">3+ năm kinh nghiệm</span> là Frontend Developer.
-                        </li>
-                        <li class="flex items-start">
-                            <span class="list-item-icon">&#10003;</span>
-                            Chuyên sâu về <span class="font-bold px-1 text-blue-700">UI HTML/CSS và JavaScript</span>.
-                        </li>
-                        <li class="flex items-start">
-                            <span class="list-item-icon">&#10003;</span>
-                            Sử dụng thành thạo <span class="font-bold px-1 text-blue-700">ReactJS, TypeScript, Tailwind CSS</span>.
-                        </li>
-                        <li class="flex items-start">
-                            <span class="list-item-icon">&#10003;</span>
-                            Kinh nghiệm phát triển <span class="font-bold px-1 text-blue-700">hệ thống thiết kế</span> và <span class="font-bold px-1 text-blue-700">ứng dụng quản lý nghiệp vụ</span>.
-                        </li>
-                        <li class="flex items-start">
-                            <span class="list-item-icon">&#10003;</span>
-                            Đã <span class="font-bold px-1 text-blue-700">hướng dẫn thực tập sinh</span>, thể hiện khả năng cố vấn và lãnh đạo.
-                        </li>
-                    </ul>
-                </div>
-                <!-- Thế mạnh cá nhân -->
-                <div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3">Thế mạnh cá nhân</h3>
-                    <div class="flex flex-wrap gap-2 mb-4">
-                        <span class="skill-badge">Quyết đoán</span>
-                        <span class="skill-badge">Chủ động</span>
-                        <span class="skill-badge">Lãnh đạo</span>
-                        <span class="skill-badge">Giao tiếp tốt</span>
-                        <span class="skill-badge">Sáng tạo</span>
-                        <span class="skill-badge">Nhiệt huyết</span>
-                        <span class="skill-badge">Yêu tự do</span>
-                        <span class="skill-badge">Đồng cảm</span>
-                        <span class="skill-badge">Tư duy đổi mới</span>
-                        <span class="skill-badge">Định hướng thành công</span>
-                    </div>
-                    <p class="text-gray-700">
-                        Tôi là một cá nhân năng động, có tầm nhìn và khả năng lãnh đạo bẩm sinh. Tôi quyết đoán, hướng tới mục tiêu nhưng đồng thời cũng rất hòa đồng, có khả năng kết nối và truyền cảm hứng cho những người xung quanh. Tôi không chỉ muốn đạt được thành công mà còn mong muốn tạo ra giá trị tích cực và giúp đỡ người khác.
-                    </p>
-                </div>
-                <!-- Học vấn -->
-                <div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-3">Học vấn</h3>
-                    <ul class="space-y-2 text-gray-700">
-                        <li class="flex items-start">
-                            <span class="list-item-icon">&#10003;</span>
-                            Cử nhân <span class="font-bold px-1 text-blue-700">Công nghệ thông tin</span> - Đại học Khoa học Tự nhiên - ĐHQG TPHCM.
-                        </li>
-                        <li class="flex items-start">
-                            <span class="list-item-icon">&#10003;</span>
-                            Văn bằng 2 <span class="font-bold px-1 text-blue-700">Quản trị Kinh doanh</span> - Đại học Kinh tế Quốc dân.
-                        </li>
-                        <li class="flex items-start">
-                            <span class="list-item-icon">&#10003;</span>
-                            Chứng chỉ <span class="font-bold px-1 text-blue-700">UI/UX Designer</span> - DIA Academy.
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="fixed top-0 left-0 h-full bg-white shadow-xl w-64 z-40 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out md:block pt-6">
+        <div class="p-6">
+            <!-- No "PQ Ngọc Quỳnh" header as requested -->
+            <nav class="space-y-2">
+                <a href="#home" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 font-medium flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2 2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                    Trang chủ
+                </a>
+                <a href="#about" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 font-medium flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    Tổng quan về tôi
+                </a>
+                <a href="#personal-tests" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 font-medium flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 21h7a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                    Khám phá bản thân
+                </a>
+                <a href="#idp-main" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 font-medium flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h10M7 7h10V4a1 1 0 00-1-1H8a1 1 0 00-1 1v3z"></path></svg>
+                    Kế hoạch IDP
+                </a>
+                <a href="#certificates" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 font-medium flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14v5m0 0l-3-3m3 3l3-3M3 10h18M7 15h10M7 7h10V4a1 1 0 00-1-1H8a1 1 0 00-1 1v3z"></path></svg>
+                    Chứng chỉ/Khoóa học
+                </a>
+                <a href="#projects" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 font-medium flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m7 0V5a2 2 0 012-2h2a2 2 0 012 2v6m-6 0V5a2 2 0 00-2-2H9a2 2 0 00-2 2v6"></path></svg>
+                    Dự án thực tế
+                </a>
+                <a href="#soft-skills-main" class="block py-2 px-4 rounded-lg text-gray-700 hover:bg-gray-100 font-medium flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6a2 2 0 00-2-2H5a2 2 0 00-2 2v13a2 2 0 002 2h4zm2 0V6a2 2 0 012-2h2a2 2 0 012 2v13a2 2 0 01-2 2h-4zm2-19a2 2 0 012-2h2a2 2 0 012 2v13a2 2 0 01-2 2h-4zm-6 0a2 2 0 012-2h2a2 2 0 012 2v13a2 2 0 01-2 2h-4z"></path></svg>
+                    Kỹ năng mềm
+                </a>
+            </nav>
+        </div>
+    </aside>
 
-        <!-- Các bài test giá trị bản thân -->
-        <section class="mb-12 p-8 card">
-            <h2 class="section-title text-3xl mb-6">Khám phá bản thân qua các bài test</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-gray-700">
-                <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
-                    <h3 class="font-bold text-xl text-blue-700 mb-2">DISC: D (41%) + I (29%) - Thủ lĩnh, Người ảnh hưởng</h3>
-                    <p>Quyết đoán, chủ động, có năng lực lãnh đạo và giao tiếp tốt. Thích kiểm soát, hành động nhanh chóng và đạt kết quả cụ thể. Có khả năng thuyết phục và truyền cảm hứng.</p>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
-                    <h3 class="font-bold text-xl text-purple-700 mb-2">MBTI: ENFP - Người truyền cảm hứng</h3>
-                    <p>Sáng tạo, nhiệt huyết, yêu tự do, thích giúp người khác phát triển. Hướng ngoại, tập trung vào ý tưởng, đưa ra quyết định dựa trên giá trị và thích sự linh hoạt.</p>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
-                    <h3 class="font-bold text-xl text-green-700 mb-2">John Holland: Xã hội (40 điểm)</h3>
-                    <p>Hướng ngoại, thích giúp đỡ và tương tác xã hội, giỏi giao tiếp. Giàu lòng nhân ái, cảm thông, sẵn sàng chia sẻ, giúp đỡ người khác.</p>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
-                    <h3 class="font-bold text-xl text-red-700 mb-2">Sinh trắc vân tay: Yêu thương / Quan tâm</h3>
-                    <p>Nhạy cảm, giàu lòng trắc ẩn. Thể hiện sự đồng cảm và quan tâm sâu sắc đến người khác.</p>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
-                    <h3 class="font-bold text-xl text-yellow-700 mb-2">Chiêm tinh học: Bảo Bình</h3>
-                    <p>Tư duy đổi mới, yêu tự do, hướng tới tương lai. Thường có ý tưởng độc đáo và mong muốn thay đổi tích cực.</p>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
-                    <h3 class="font-bold text-xl text-orange-700 mb-2">Thần số học: Số 8</h3>
-                    <p>Khát vọng quyền lực, khả năng lãnh đạo, định hướng thành công. Thiên về vật chất, tài chính và quản lý.</p>
-                </div>
-            </div>
-        </section>
+    <!-- Backdrop for mobile menu -->
+    <div id="menu-backdrop" class="fixed inset-0 bg-black opacity-50 z-30 hidden md:hidden"></div>
 
-        <!-- Kế hoạch phát triển cá nhân (IDP) -->
-        <section class="mb-12 p-8 card">
-            <h2 class="section-title text-3xl mb-6">Kế hoạch phát triển cá nhân (IDP) của tôi</h2>
-
-            <div class="mb-8">
-                <h3 class="font-bold text-2xl text-green-800 mb-3 flex items-center">
-                    <span class="list-item-icon text-3xl mr-2">🎯</span> Mục tiêu dài hạn (2–5 năm):
-                </h3>
-                <h3 class="font-bold text-2xl text-green-800 mb-3 flex items-center">
-                    <span class="font-bold px-1 text-blue-700">Trở thành Product Owner hoặc Startup Founder</span>
-                </h3>
-                <p class="text-gray-700 text-lg mb-4">
-                    Mục tiêu này phản ánh sự kết hợp giữa nền tảng kỹ thuật vững chắc của bạn và văn bằng Quản trị Kinh doanh, cùng với các đặc điểm cá nhân như khả năng lãnh đạo (DISC D, Thần số học 8), tư duy đổi mới (MBTI ENFP, Chiêm tinh Bảo Bình), và mong muốn tạo tác động tích cực (John Holland Xã hội, Sinh trắc vân tay Yêu thương/Quan tâm).
+    <!-- Main Content Wrapper -->
+    <div class="md:ml-64 pt-10 pb-10 transition-all duration-300 ease-in-out">
+        <div class="container mx-auto px-4">
+            <!-- Header -->
+            <header class="text-center mb-12" id="home">
+                <div class="w-24 h-24 mx-auto mb-4 rounded-full bg-green-200 flex items-center justify-center text-green-700 text-5xl font-bold">
+                    PQ
+                </div>
+                <h1 class="text-5xl font-extrabold text-green-800 mb-2">Ngọc Quỳnh Phạm</h1>
+                <p class="text-2xl text-blue-700 font-semibold">Frontend Developer | Product Owner Aspirant</p>
+                <p class="text-lg text-gray-600 mt-4 max-w-2xl mx-auto">
+                    Chào bạn! Tôi là một nhà phát triển web đầy nhiệt huyết, tập trung vào việc xây dựng trải nghiệm kỹ thuật số hấp dụng và dễ tiếp cận. Với hơn 3 năm kinh nghiệm trong lĩnh vực Frontend, tôi mong muốn kết hợp kỹ thuật với tư duy kinh doanh để tạo ra những sản phẩm có tác động tích cực đến xã hội.
                 </p>
-                <h4 class="text-xl font-semibold text-gray-800 mb-3">Phân tích 3 lĩnh vực tiềm năng và hướng đi cho bạn:</h4>
-                <div class="grid grid-cols-1 gap-8 text-left">
-                    <!-- EdTech -->
-                    <div class="p-6 bg-yellow-50 rounded-lg shadow-sm col-span-full">
-                        <div class="text-4xl mb-2 text-center">📚</div>
-                        <h5 class="font-bold text-lg text-yellow-800 mb-2">EdTech (Giáo dục)</h5>
-                        <p class="text-sm text-gray-700 mb-4">
-                            <span class="font-bold px-1 text-yellow-800">Tiềm năng:</span> Lĩnh vực này có tiềm năng lớn để áp dụng tư duy đổi mới của bạn, tạo ra các giải pháp học tập hấp dẫn, dễ tiếp cận. Nó phù hợp với mong muốn giúp người khác phát triển và truyền cảm hứng (MBTI ENFP).
-                        </p>
-                        <h6 class="font-bold text-md text-yellow-800 mb-2">Rủi ro tiềm ẩn:</h6>
-                        <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
-                            <li><span class="font-bold px-1 text-yellow-800">Cạnh tranh cao:</span> Nhiều nền tảng lớn đã có mặt trên thị trường.</li>
-                            <li><span class="font-bold px-1 text-yellow-800">Yêu cầu chất lượng nội dung:</span> Cần chuyên gia, nội dung phải được kiểm duyệt chặt chẽ.</li>
-                            <li><span class="font-bold px-1 text-yellow-800">Khó khăn thay đổi thói quen:</span> Người học có thể quen với phương pháp truyền thống.</li>
-                            <li><span class="font-bold px-1 text-yellow-800">Quy định giáo dục:</span> Các chính sách và quy định có thể thay đổi, ảnh hưởng đến mô hình.</li>
-                        </ul>
-                        <h6 class="font-bold text-md text-yellow-800 mb-2">Các bước đi chi tiết & Chiến lược phát triển:</h6>
-                        <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
-                            <li><span class="font-bold px-1 text-yellow-800">Nghiên cứu thị trường sâu:</span> Xác định phân khúc học sinh/sinh viên/người đi làm, môn học/kỹ năng cụ thể cần giải pháp (ví dụ: luyện thi đại học, kỹ năng mềm, ngoại ngữ).</li>
-                            <li><span class="font-bold px-1 text-yellow-800">Tập trung vào cá nhân hóa:</span> Áp dụng AI/ML để phân tích hiệu suất học tập và gợi ý lộ trình, tài liệu phù hợp.</li>
-                            <li><span class="font-bold px-1 text-yellow-800">Xây dựng cộng đồng:</span> Tạo không gian cho người học tương tác, trao đổi, hỗ trợ lẫn nhau.</li>
-                            <li><span class="font-bold px-1 text-yellow-800">Chiến lược nội dung:</span> Hợp tác với các giáo viên/chuyên gia có uy tín để tạo ra nội dung chất lượng cao.</li>
-                            <li><span class="font-bold px-1 text-yellow-800">Mô hình kinh doanh:</span> Xác định rõ (freemium, subscription, pay-per-course).</li>
-                        </ul>
-                        <h6 class="font-bold text-md text-yellow-800 mb-2">Gợi ý MVP chi tiết hơn: Ứng dụng "Luyện Thi Thích Ứng AI"</h6>
-                        <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
-                            <li><span class="font-bold px-1 text-yellow-800">Tính năng cốt lõi MVP:</span> Nền tảng web/mobile với ngân hàng câu hỏi trắc nghiệm đa dạng (chỉ 1 môn/chủ đề ban đầu), hệ thống chấm điểm tự động, giao diện theo dõi tiến độ học tập cơ bản.</li>
-                            <li><span class="font-bold px-1 text-yellow-800">Độc đáo MVP:</span> Thuật toán gợi ý câu hỏi tiếp theo dựa trên kết quả trả lời của người dùng (nếu sai câu nào, hệ thống gợi ý các câu liên quan để củng cố).</li>
-                            <li><span class="font-bold px-1 text-yellow-800">Kế hoạch phát triển sau MVP:</span>
-                                <ul class="list-circle list-inside ml-4">
-                                    <li>Mở rộng thêm môn học/chủ đề.</li>
-                                    <li>Tích hợp module video bài giảng ngắn, tài liệu tham khảo.</li>
-                                    <li>Tính năng "gia sư ảo" (chatbot hỗ trợ giải đáp thắc mắc).</li>
-                                    <li>Phân tích chi tiết điểm mạnh/yếu theo từng chương/đề mục.</li>
-                                </ul>
+            </header>
+
+            <!-- Giới thiệu chung -->
+            <section class="mb-12 p-8 card" id="about">
+                <h2 class="section-title text-3xl mb-6">Tổng quan về tôi</h2>
+                <div class="space-y-8">
+                    <!-- Kinh nghiệm & Kỹ năng -->
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Kinh nghiệm & Kỹ năng</h3>
+                        <ul class="space-y-2 text-gray-700">
+                            <li class="flex items-start">
+                                <span class="list-item-icon">&#10003;</span>
+                                <span class="font-bold px-1 text-blue-700">3+ năm kinh nghiệm</span> là Frontend Developer.
+                            </li>
+                            <li class="flex items-start">
+                                <span class="list-item-icon">&#10003;</span>
+                                Chuyên sâu về <span class="font-bold px-1 text-blue-700">UI HTML/CSS và JavaScript</span>.
+                            </li>
+                            <li class="flex items-start">
+                                <span class="list-item-icon">&#10003;</span>
+                                Sử dụng thành thạo <span class="font-bold px-1 text-blue-700">ReactJS, TypeScript, Tailwind CSS</span>.
+                            </li>
+                            <li class="flex items-start">
+                                <span class="list-item-icon">&#10003;</span>
+                                Kinh nghiệm phát triển <span class="font-bold px-1 text-blue-700">hệ thống thiết kế</span> và <span class="font-bold px-1 text-blue-700">ứng dụng quản lý nghiệp vụ</span>.
+                            </li>
+                            <li class="flex items-start">
+                                <span class="list-item-icon">&#10003;</span>
+                                Đã <span class="font-bold px-1 text-blue-700">hướng dẫn thực tập sinh</span>, thể hiện khả năng cố vấn và lãnh đạo.
                             </li>
                         </ul>
                     </div>
-
-                    <!-- HealthTech -->
-                    <div class="p-6 bg-red-50 rounded-lg shadow-sm col-span-full">
-                        <div class="text-4xl mb-2 text-center">❤️</div>
-                        <h5 class="font-bold text-lg text-red-800 mb-2">HealthTech (Y tế/Sức khỏe)</h5>
-                        <p class="text-sm text-gray-700 mb-4">
-                            <span class="font-bold px-1 text-red-800">Tiềm năng:</span> Lĩnh vực này mang đến cơ hội tạo ra các sản phẩm cải thiện sức khỏe cộng đồng. Nó phát huy sự đồng cảm và quan tâm đến phúc lợi xã hội (John Holland Xã hội, Sinh trắc vân tay), kết hợp với khả năng phân tích dữ liệu.
+                    <!-- Thế mạnh cá nhân -->
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Thế mạnh cá nhân</h3>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="skill-badge">Quyết đoán</span>
+                            <span class="skill-badge">Chủ động</span>
+                            <span class="skill-badge">Lãnh đạo</span>
+                            <span class="skill-badge">Giao tiếp tốt</span>
+                            <span class="skill-badge">Sáng tạo</span>
+                            <span class="skill-badge">Nhiệt huyết</span>
+                            <span class="skill-badge">Yêu tự do</span>
+                            <span class="skill-badge">Đồng cảm</span>
+                            <span class="skill-badge">Tư duy đổi mới</span>
+                            <span class="skill-badge">Định hướng thành công</span>
+                        </div>
+                        <p class="text-gray-700">
+                            Tôi là một cá nhân năng động, có tầm nhìn và khả năng lãnh đạo bẩm sinh. Tôi quyết đoán, hướng tới mục tiêu nhưng đồng thời cũng rất hòa đồng, có khả năng kết nối và truyền cảm hứng cho những người xung quanh. Tôi không chỉ muốn đạt được thành công mà còn mong muốn tạo ra giá trị tích cực và giúp đỡ người khác.
                         </p>
-                        <h6 class="font-bold text-md text-red-800 mb-2">Rủi ro tiềm ẩn:</h6>
-                        <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
-                            <li><span class="font-bold px-1 text-red-800">Bảo mật dữ liệu nhạy cảm:</span> Yêu cầu tuân thủ các quy định nghiêm ngặt (ví dụ: HIPAA ở Mỹ, GDPR ở EU).</li>
-                            <li><span class="font-bold px-1 text-red-800">Độ tin cậy thông tin:</span> Nội dung y tế phải chính xác, cần sự xác nhận từ chuyên gia.</li>
-                            <li><span class="font-bold px-1 text-red-800">Khó khăn tiếp cận thị trường:</span> Cần xây dựng lòng tin rất lớn từ người dùng.</li>
-                            <li><span class="font-bold px-1 text-red-800">Chấp thuận y tế:</span> Một số ứng dụng có thể cần được cơ quan y tế cấp phép.</li>
-                        </ul>
-                        <h6 class="font-bold text-md text-red-800 mb-2">Các bước đi chi tiết & Chiến lược phát triển:</h6>
-                        <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
-                            <li><span class="font-bold px-1 text-red-800">Xác định ngách cụ thể:</span> Sức khỏe tinh thần, theo dõi bệnh mãn tính (tiểu đường, huyết áp), dinh dưỡng, rèn luyện thể chất.</li>
-                            <li><span class="font-bold px-1 text-red-800">Hợp tác chuyên gia:</span> Tìm kiếm sự tư vấn, xác nhận nội dung từ bác sĩ, chuyên gia tâm lý, dinh dưỡng.</li>
-                            <li><span class="font-bold px-1 text-red-800">Ưu tiên bảo mật:</span> Xây dựng kiến trúc dữ liệu an toàn ngay từ đầu, tuân thủ các tiêu chuẩn bảo mật.</li>
-                            <li><span class="font-bold px-1 text-red-800">Tập trung vào động lực:</span> Áp dụng gamification, hệ thống thưởng để khuyến khích người dùng duy trì thói quen.</li>
-                        </ul>
-                        <h6 class="font-bold text-md text-red-800 mb-2">Gợi ý MVP chi tiết hơn: Ứng dụng "Nhật Ký Sức Khỏe Tinh Thần"</h6>
-                        <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
-                            <li><span class="font-bold px-1 text-red-800">Tính năng cốt lõi MVP:</span> Ứng dụng mobile cho phép người dùng ghi lại tâm trạng hàng ngày bằng cách chọn biểu tượng cảm xúc và thêm ghi chú ngắn. Cung cấp thư viện nhỏ các bài tập hít thở/thiền định cơ bản (chỉ có văn bản hướng dẫn).</li>
-                            <li><span class="font-bold px-1 text-red-800">Độc đáo MVP:</span> Biểu đồ đơn giản hóa xu hướng tâm trạng theo tuần/tháng để người dùng tự nhận thức. Hệ thống nhắc nhở (push notifications) tùy chỉnh để thực hiện bài tập hoặc ghi nhật ký.</li>
-                            <li><span class="font-bold px-1 text-red-800">Kế hoạch phát triển sau MVP:</span>
-                                <ul class="list-circle list-inside ml-4">
-                                    <li>Mở rộng thư viện bài tập (audio, video), có các bài tập cho các tình huống cụ thể (stress, lo âu).</li>
-                                    <li>Tích hợp với thiết bị đeo tay (smartwatch) để theo dõi nhịp tim, giấc ngủ.</li>
-                                    <li>Module tư vấn ảo (chatbot) dựa trên AI để cung cấp hỗ trợ ban đầu.</li>
-                                    <li>Kết nối với chuyên gia tâm lý (có trả phí).</li>
-                                </ul>
-                            </li>
-                        </ul>
                     </div>
-
-                    <!-- SocialTech -->
-                    <div class="p-6 bg-blue-50 rounded-lg shadow-sm col-span-full">
-                        <div class="text-4xl mb-2 text-center">🌍</div>
-                        <h5 class="font-bold text-lg text-blue-800 mb-2">SocialTech (Công nghệ vì xã hội)</h5>
-                        <p class="text-sm text-gray-700 mb-4">
-                            <span class="font-bold px-1 text-blue-800">Tiềm năng:</span> Lĩnh vực này tập trung vào việc xây dựng các nền tảng kết nối, thúc đẩy tương tác xã hội tích cực hoặc giải quyết các vấn đề xã hội. Rất phù hợp với đặc điểm hướng ngoại, khả năng giao tiếp và mong muốn tạo tác động của bạn.
-                        </p>
-                        <h6 class="font-bold text-md text-blue-800 mb-2">Rủi ro tiềm ẩn:</h6>
-                        <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
-                            <li><span class="font-bold px-1 text-blue-800">Khó khăn thu hút người dùng ban đầu:</span> Cần hiệu ứng mạng lưới để phát triển.</li>
-                            <li><span class="font-bold px-1 text-blue-800">Kiểm duyệt nội dung:</span> Nguy cơ nội dung tiêu cực, sai lệch nếu không quản lý chặt.</li>
-                            <li><span class="font-bold px-1 text-blue-800">Duy trì tương tác:</span> Người dùng có thể mất hứng thú nếu không có hoạt động mới.</li>
-                            <li><span class="font-bold px-1 text-blue-800">Mô hình bền vững:</span> Nếu không dựa vào quảng cáo/phí, cần tìm kiếm nguồn tài trợ/gây quỹ.</li>
-                        </ul>
-                        <h6 class="font-bold text-md text-blue-800 mb-2">Các bước đi chi tiết & Chiến lược phát triển:</h6>
-                        <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
-                            <li><span class="font-bold px-1 text-blue-800">Xác định vấn đề xã hội cụ thể:</span> Ví dụ: thiếu tình nguyện viên, kết nối người cao tuổi, hỗ trợ người khuyết tật.</li>
-                            <li><span class="font-bold px-1 text-blue-800">Tập trung xây dựng cộng đồng:</span> Tạo môi trường an toàn, tích cực cho các thành viên tương tác.</li>
-                            <li><span class="font-bold px-1 text-blue-800">Tìm kiếm đối tác:</span> Hợp tác với các tổ chức phi lợi nhuận, chính quyền địa phương, các nhóm cộng đồng.</li>
-                            <li><span class="font-bold px-1 text-blue-800">Mô hình gây quỹ/tạo giá trị:</span> Phát triển các tính năng hỗ trợ gây quỹ, hoặc các hoạt động tạo ra giá trị xã hội rõ ràng.</li>
-                        </ul>
-                        <h6 class="font-bold text-md text-blue-800 mb-2">Gợi ý MVP chi tiết hơn: Nền tảng "Kết Nối Cộng Đồng Tình Nguyện Viên Địa Phương"</h6>
-                        <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
-                            <li><span class="font-bold px-1 text-blue-800">Tính năng cốt lõi MVP:</span> Website cho phép các tổ chức đăng dự án tình nguyện (tên, mô tả, thời gian, địa điểm) và người dùng tìm kiếm/đăng ký tham gia các dự án đó. Có profile đơn giản cho tình nguyện viên và tổ chức.</li>
-                            <li><span class="font-bold px-1 text-blue-800">Độc đáo MVP:</span> Bản đồ hiển thị các dự án tình nguyện gần vị trí người dùng (hoặc khu vực được chọn). Hệ thống nhắn tin nội bộ đơn giản để tình nguyện viên và tổ chức trao đổi.</li>
-                            <li><span class="font-bold px-1 text-blue-800">Kế hoạch phát triển sau MVP:</span>
-                                <ul class="list-circle list-inside ml-4">
-                                    <li>Chức năng "đánh dấu đã hoàn thành" cho dự án, ghi nhận đóng góp.</li>
-                                    <li>Bảng xếp hạng tình nguyện viên tích cực (gamification).</li>
-                                    <li>Tích hợp chức năng gây quỹ/đóng góp cho các dự án.</li>
-                                    <li>Hệ thống đánh giá/phản hồi chi tiết về dự án và tình nguyện viên.</li>
-                                </ul>
+                    <!-- Học vấn -->
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">Học vấn</h3>
+                        <ul class="space-y-2 text-gray-700">
+                            <li class="flex items-start">
+                                <span class="list-item-icon">&#10003;</span>
+                                Cử nhân <span class="font-bold px-1 text-blue-700">Công nghệ thông tin</span> - Đại học Khoa học Tự nhiên - ĐHQG TPHCM.
+                            </li>
+                            <li class="flex items-start">
+                                <span class="list-item-icon">&#10003;</span>
+                                Văn bằng 2 <span class="font-bold px-1 text-blue-700">Quản trị Kinh doanh</span> - Đại học Kinh tế Quốc dân.
+                            </li>
+                            <li class="flex items-start">
+                                <span class="list-item-icon">&#10003;</span>
+                                Chứng chỉ <span class="font-bold px-1 text-blue-700">UI/UX Designer</span> - DIA Academy.
                             </li>
                         </ul>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <div class="mb-8">
-                <h3 class="font-bold text-2xl text-blue-800 mb-3 flex items-center">
-                    <span class="list-item-icon text-3xl mr-2">🛠</span> Mục tiêu ngắn hạn (6–12 tháng)
-                </h3>
-                <p class="text-gray-700 mb-6">Các mục tiêu này được thiết kế để xây dựng nền tảng vững chắc cho vai trò Product Owner, với các chỉ số đo lường cụ thể và khung thời gian rõ ràng:</p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="card p-6 bg-blue-50">
-                        <h4 class="text-xl font-semibold text-blue-700 mb-3">UI/UX nâng cao (Figma, Design Systems)</h4>
-                        <ul class="space-y-2 text-gray-700 text-base">
-                            <li><span class="list-item-icon text-lg">&#x2713;</span> Hoàn thành chứng chỉ Google UX Design (Coursera) trong <span class="font-bold px-1 text-blue-700">3 tháng đầu</span>. Xây dựng <span class="font-bold px-1 text-blue-700">một Design System cơ bản</span> cho dự án cá nhân hoặc đóng góp vào dự án công ty.</li>
-                        </ul>
+            <!-- Các bài test giá trị bản thân -->
+            <section class="mb-12 p-8 card" id="personal-tests">
+                <h2 class="section-title text-3xl mb-6">Khám phá bản thân qua các bài test</h2>
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 text-gray-700">
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
+                        <h3 class="font-bold text-xl text-blue-700 mb-2">DISC: D (41%) + I (29%) - Thủ lĩnh, Người ảnh hưởng</h3>
+                        <p>Quyết đoán, chủ động, có năng lực lãnh đạo và giao tiếp tốt. Thích kiểm soát, hành động nhanh chóng và đạt kết quả cụ thể. Có khả năng thuyết phục và truyền cảm hứng.</p>
                     </div>
-                    <div class="card p-6 bg-green-50">
-                        <h4 class="text-xl font-semibold text-green-700 mb-3">Product Management (Agile, Scrum, backlog grooming)</h4>
-                        <ul class="space-y-2 text-gray-700 text-base">
-                            <li><span class="list-item-icon text-lg">&#x2713;</span> Hoàn thành chứng chỉ <span class="font-bold px-1 text-green-700">Scrum Product Owner (CSPO)</span> hoặc tương đương trong <span class="font-bold px-1 text-green-700">6 tháng đầu</span>. Tham gia <span class="font-bold px-1 text-green-700">ít nhất 2 dự án</span> với vai trò PO/APO, thực hiện <span class="font-bold px-1 text-green-700">backlog grooming định kỳ</span>.</li>
-                        </ul>
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
+                        <h3 class="font-bold text-xl text-purple-700 mb-2">MBTI: ENFP - Người truyền cảm hứng</h3>
+                        <p>Sáng tạo, nhiệt huyết, yêu tự do, thích giúp người khác phát triển. Hướng ngoại, tập trung vào ý tưởng, đưa ra quyết định dựa trên giá trị và thích sự linh hoạt.</p>
                     </div>
-                    <div class="card p-6 bg-yellow-50">
-                        <h4 class="text-xl font-semibold text-yellow-700 mb-3">Data Analysis cơ bản (Excel nâng cao, SQL, Tableau)</h4>
-                        <ul class="space-y-2 text-gray-700 text-base">
-                            <li><span class="list-item-icon text-lg">&#x2713;</span> Hoàn thành khóa học <span class="font-bold px-1 text-yellow-700">SQL for Data Analysis</span> (Mode / DataCamp) trong <span class="font-bold px-1 text-yellow-700">6-9 tháng</span>. Tạo <span class="font-bold px-1 text-yellow-700">ít nhất 3 báo cáo/dashboard cơ bản</span> bằng Excel/Tableau để hỗ trợ quyết định sản phẩm.</li>
-                        </ul>
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
+                        <h3 class="font-bold text-xl text-green-700 mb-2">John Holland: Xã hội (40 điểm)</h3>
+                        <p>Hướng ngoại, thích giúp đỡ và tương tác xã hội, giỏi giao tiếp. Giàu lòng nhân ái, cảm thông, sẵn sàng chia sẻ, giúp đỡ người khác.</p>
                     </div>
-                    <div class="card p-6 bg-red-50">
-                        <h4 class="text-xl font-semibold text-red-700 mb-3">Kỹ năng lãnh đạo nhóm (Leadership, Feedback 360°)</h4>
-                        <ul class="space-y-2 text-gray-700 text-base">
-                            <li><span class="list-item-icon text-lg">&#x2713;</span> Chủ trì <span class="font-bold px-1 text-red-700">ít nhất 5 buổi họp/buổi brainstorm</span> về sản phẩm.</li>
-                            <li><span class="list-item-icon text-lg">&#x2713;</span> Tìm kiếm phản hồi 360° từ đồng nghiệp và quản lý để cải thiện kỹ năng lãnh đạo liên tục trong <span class="font-bold px-1 text-red-700">6-12 tháng</span>.</li>
-                        </ul>
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
+                        <h3 class="font-bold text-xl text-red-700 mb-2">Sinh trắc vân tay: Yêu thương / Quan tâm</h3>
+                        <p>Nhạy cảm, giàu lòng trắc ẩn. Thể hiện sự đồng cảm và quan tâm sâu sắc đến người khác.</p>
                     </div>
-                    <div class="card p-6 bg-purple-50 col-span-1 md:col-span-2">
-                        <h4 class="text-xl font-semibold text-purple-700 mb-3">Business & Marketing nền tảng (Digital marketing, KPI tracking)</h4>
-                        <ul class="space-y-2 text-gray-700 text-base">
-                            <li><span class="list-item-icon text-lg">&#x2713;</span> Hoàn thành khóa học <span class="font-bold px-1 text-purple-700">Digital Marketing</span> (Hubspot/Google) trong <span class="font-bold px-1 text-purple-700">9-12 tháng</span>.</li>
-                            <li><span class="list-item-icon text-lg">&#x2713;</span> Định nghĩa và <span class="font-bold px-1 text-purple-700">theo dõi KPI</span> cho một tính năng/sản phẩm cụ thể.</li>
-                        </ul>
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
+                        <h3 class="font-bold text-xl text-yellow-700 mb-2">Chiêm tinh học: Bảo Bình</h3>
+                        <p>Tư duy đổi mới, yêu tự do, hướng tới tương lai. Thường có ý tưởng độc đáo và mong muốn thay đổi tích cực.</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
+                        <h3 class="font-bold text-xl text-orange-700 mb-2">Thần số học: Số 8</h3>
+                        <p>Khát vọng quyền lực, khả năng lãnh đạo, định hướng thành công. Thiên về vật chất, tài chính và quản lý.</p>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Chứng chỉ/Khóa học gợi ý -->
-        <section class="mb-12 p-8 card">
-            <h2 class="section-title text-3xl mb-6">🎓 Chứng chỉ/Khóa học gợi ý</h2>
-            <p class="text-gray-700 mb-6">Các chứng chỉ và khóa học này sẽ giúp bạn xây dựng nền tảng kiến thức vững chắc cho vai trò Product Owner và bổ sung các kỹ năng cần thiết:</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-indigo-50 p-6 rounded-lg shadow-sm">
-                    <h4 class="text-xl font-semibold text-indigo-700 mb-3">1. UI/UX & Thiết kế sản phẩm</h4>
-                    <ul class="space-y-2 text-gray-700 text-base">
-                        <li><span class="list-item-icon text-lg">&#x2713;</span> <span class="font-bold px-1 text-indigo-700">Google UX Design (Coursera):</span> Tập trung vào nguyên lý thiết kế lấy người dùng làm trung tâm, nghiên cứu người dùng, wireframing, prototyping.</li>
-                        <li><span class="list-item-icon text-lg">&#x2713;</span> <span class="font-bold px-1 text-indigo-700">Design Systems courses (Udemy/Pluralsight):</span> Hiểu cách xây dựng và quản lý các thư viện UI/UX để đảm bảo tính nhất quán và hiệu quả.</li>
-                    </ul>
-                    <p class="text-gray-600 mt-4 text-sm italic">
-                        <span class="font-bold px-1">Điểm mạnh cần phát huy:</span> Nền tảng Frontend vững chắc giúp bạn hiểu tính khả thi kỹ thuật của thiết kế. <span class="font-bold px-1">Điểm yếu cần cải thiện:</span> Từ "làm đẹp" sang "giải quyết vấn đề" thông qua thiết kế.
-                    </p>
-                </div>
-                <div class="bg-teal-50 p-6 rounded-lg shadow-sm">
-                    <h4 class="text-xl font-semibold text-teal-700 mb-3">2. Quản lý sản phẩm chuyên sâu</h4>
-                    <ul class="space-y-2 text-gray-700 text-base">
-                        <li><span class="list-item-icon text-lg">&#x2713;</span> <span class="font-bold px-1 text-teal-700">Product Management by Reforge hoặc Udacity:</span> Các khóa học chuyên sâu về chiến lược sản phẩm, định nghĩa sản phẩm, quản lý backlog, và làm việc với đội ngũ phát triển.</li>
-                        <li><span class="list-item-icon text-lg">&#x2713;</span> <span class="font-bold px-1 text-teal-700">Chứng chỉ Agile/Scrum (ví dụ CSPO):</span> Nắm vững vai trò Product Owner trong môi trường Agile, cách tối đa hóa giá trị sản phẩm.</li>
-                    </ul>
-                    <p class="text-gray-600 mt-4 text-sm italic">
-                        <span class="font-bold px-1">Điểm mạnh cần phát huy:</span> Khả năng lãnh đạo, giao tiếp và giải quyết vấn đề. <span class="font-bold px-1">Điểm yếu cần cải thiện:</span> Từ "thực thi" sang "chiến lược", học cách đưa ra quyết định dựa trên dữ liệu.
-                    </p>
-                </div>
-                <div class="bg-orange-50 p-6 rounded-lg shadow-sm">
-                    <h4 class="text-xl font-semibold text-orange-700 mb-3">3. Phân tích dữ liệu & Kinh doanh</h4>
-                    <ul class="space-y-2 text-gray-700 text-base">
-                        <li><span class="list-item-icon text-lg">&#x2713;</span> <span class="font-bold px-1 text-orange-700">SQL for Data Analysis (Mode / DataCamp):</span> Kỹ năng truy vấn và phân tích dữ liệu cơ bản để hiểu hành vi người dùng và hiệu suất sản phẩm.</li>
-                        <li><span class="list-item-icon text-lg">&#x2713;</span> <span class="font-bold px-1 text-orange-700">Digital Marketing by Hubspot/Google:</span> Nắm vững các kênh tiếp thị số để hiểu cách đưa sản phẩm ra thị trường và đo lường hiệu quả.</li>
-                    </ul>
-                    <p class="text-gray-600 mt-4 text-sm italic">
-                        <span class="font-bold px-1">Điểm mạnh cần phát huy:</span> Tư duy phân tích và định hướng thành công (Thần số học 8). <span class="font-bold px-1">Điểm yếu cần cải thiện:</span> Từ "trực giác" sang "dữ liệu", học cách sử dụng số liệu để chứng minh giá trị.
-                    </p>
-                </div>
-            </div>
-        </section>
+            <!-- Kế hoạch phát triển cá nhân (IDP) -->
+            <section class="mb-12 p-8 card" id="idp-main">
+                <h2 class="section-title text-3xl mb-6">Kế hoạch phát triển cá nhân (IDP) của tôi</h2>
 
-        <!-- Dự án thực tế nên làm -->
-        <section class="mb-12 p-8 card">
-            <h2 class="section-title text-3xl mb-6">📦 Dự án thực tế nên làm</h2>
-            <p class="text-gray-700 mb-6">Thực hành thông qua các dự án là cách tốt nhất để củng cố kiến thức và phát triển kỹ năng PO của bạn. Bạn nên tập trung vào:</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-gray-50 p-6 rounded-lg shadow-sm col-span-full">
-                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Xây dựng MVP cho một ý tưởng startup cá nhân (theo lĩnh vực)</h4>
-                    <p class="text-gray-700 text-base mb-4">
-                        Chọn một trong các ý tưởng MVP dưới đây và thực hiện từ A-Z: nghiên cứu người dùng, định nghĩa tính năng cốt lõi (MVP), thiết kế wireframe/prototype, viết user stories, và theo dõi quá trình phát triển (có thể tự code hoặc tìm partner).
+                <div class="mb-8">
+                    <h3 class="font-bold text-2xl text-green-800 mb-3 flex items-center">
+                        <span class="list-item-icon text-3xl mr-2">🎯</span> Mục tiêu dài hạn (2–5 năm):
+                    </h3>
+                    <h3 class="font-bold text-2xl text-green-800 mb-3 flex items-center">
+                        <span class="font-bold px-1 text-blue-700">Trở thành Product Owner hoặc Startup Founder</span>
+                    </h3>
+                    <p class="text-gray-700 text-lg mb-4">
+                        Mục tiêu này phản ánh sự kết hợp giữa nền tảng kỹ thuật vững chắc của bạn và văn bằng Quản trị Kinh doanh, cùng với các đặc điểm cá nhân như khả năng lãnh đạo (DISC D, Thần số học 8), tư duy đổi mới (MBTI ENFP, Chiêm tinh Bảo Bình), và mong muốn tạo tác động tích cực (John Holland Xã hội, Sinh trắc vân tay Yêu thương/Quan tâm).
                     </p>
-                    <h5 class="font-bold text-md text-blue-700 mb-2">Gợi ý MVP theo lĩnh vực:</h5>
-                    <ul class="list-disc list-inside text-gray-700 text-base space-y-2">
-                        <li>
-                            <span class="font-bold px-1 text-green-700">EdTech: Ứng dụng "Luyện Thi Thích Ứng AI"</span>
-                            <ul class="list-circle list-inside ml-4">
-                                <li>Tính năng cốt lõi: Nền tảng web/mobile với các bài kiểm tra trắc nghiệm theo môn học/chủ đề.</li>
-                                <li>Điểm đặc biệt MVP: Thuật toán gợi ý câu hỏi dựa trên hiệu suất học tập của người dùng, phân tích điểm mạnh/yếu.</li>
-                                <li>Phù hợp với bạn: Kết hợp kỹ năng Frontend mạnh để xây dựng giao diện tương tác, và tư duy phân tích để phát triển thuật toán.</li>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-3">Phân tích 3 lĩnh vực tiềm năng và hướng đi cho bạn:</h4>
+                    <div class="flex flex-wrap justify-center mb-6" role="tablist">
+                        <button id="edtech-tab" class="tab-button active-tab">EdTech</button>
+                        <button id="healthtech-tab" class="tab-button">HealthTech</button>
+                        <button id="socialtech-tab" class="tab-button">SocialTech</button>
+                    </div>
+
+                    <div id="edtech-content" class="tab-content active-content bg-yellow-50 rounded-lg shadow-sm">
+                        <div class="p-6">
+                            <div class="text-4xl mb-2 text-center">📚</div>
+                            <h5 class="font-bold text-lg text-yellow-800 mb-2">EdTech (Giáo dục)</h5>
+                            <p class="text-sm text-gray-700 mb-4">
+                                <span class="font-bold px-1 text-yellow-800">Tiềm năng:</span> Lĩnh vực này có tiềm năng lớn để áp dụng tư duy đổi mới của bạn, tạo ra các giải pháp học tập hấp dẫn, dễ tiếp cận. Nó phù hợp với mong muốn giúp người khác phát triển và truyền cảm hứng (MBTI ENFP).
+                            </p>
+                            <h6 class="font-bold text-md text-yellow-800 mb-2">Rủi ro tiềm ẩn:</h6>
+                            <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
+                                <li><span class="font-bold px-1 text-yellow-800">Cạnh tranh cao:</span> Nhiều nền tảng lớn đã có mặt trên thị trường.</li>
+                                <li><span class="font-bold px-1 text-yellow-800">Yêu cầu chất lượng nội dung:</span> Cần chuyên gia, nội dung phải được kiểm duyệt chặt chẽ.</li>
+                                <li><span class="font-bold px-1 text-yellow-800">Khó khăn thay đổi thói quen:</span> Người học có thể quen với phương pháp truyền thống.</li>
+                                <li><span class="font-bold px-1 text-yellow-800">Quy định giáo dục:</span> Các chính sách và quy định có thể thay đổi, ảnh hưởng đến mô hình.</li>
                             </ul>
-                        </li>
-                        <li>
-                            <span class="font-bold px-1 text-green-700">HealthTech: Ứng dụng "Nhật Ký Sức Khỏe Tinh Thần"</span>
-                            <ul class="list-circle list-inside ml-4">
-                                <li>Tính năng cốt lõi: Ứng dụng mobile cho phép người dùng ghi lại tâm trạng hàng ngày, các yếu tố ảnh hưởng (giấc ngủ, hoạt động).</li>
-                                <li>Điểm đặc biệt MVP: Đồ thị đơn giản hóa xu hướng tâm trạng theo thời gian, gửi thông báo nhắc nhở tích cực tùy chỉnh.</li>
-                                <li>Phù hợp với bạn: Phát huy sự đồng cảm, khả năng UI/UX để tạo ứng dụng thân thiện, và kỹ năng phân tích dữ liệu để hiểu xu hướng người dùng.</li>
+                            <h6 class="font-bold text-md text-yellow-800 mb-2">Các bước đi chi tiết & Chiến lược phát triển:</h6>
+                            <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
+                                <li><span class="font-bold px-1 text-yellow-800">Nghiên cứu thị trường sâu:</span> Xác định phân khúc học sinh/sinh viên/người đi làm, môn học/kỹ năng cụ thể cần giải pháp (ví dụ: luyện thi đại học, kỹ năng mềm, ngoại ngữ).</li>
+                                <li><span class="font-bold px-1 text-yellow-800">Tập trung vào cá nhân hóa:</span> Áp dụng AI/ML để phân tích hiệu suất học tập và gợi ý lộ trình, tài liệu phù hợp.</li>
+                                <li><span class="font-bold px-1 text-yellow-800">Xây dựng cộng đồng:</span> Tạo không gian cho người học tương tác, trao đổi, hỗ trợ lẫn nhau.</li>
+                                <li><span class="font-bold px-1 text-yellow-800">Chiến lược nội dung:</span> Hợp tác với các giáo viên/chuyên gia có uy tín để tạo ra nội dung chất lượng cao.</li>
+                                <li><span class="font-bold px-1 text-yellow-800">Mô hình kinh doanh:</span> Xác định rõ (freemium, subscription, pay-per-course).</li>
                             </ul>
-                        </li>
-                        <li>
-                            <span class="font-bold px-1 text-green-700">SocialTech: Nền tảng "Kết Nối Cộng Đồng Tình Nguyện Viên Địa Phương"</span>
-                            <ul class="list-circle list-inside ml-4">
-                                <li>Tính năng cốt lõi: Website cho phép các tổ chức đăng dự án tình nguyện và người dùng tìm kiếm/đăng ký tham gia.</li>
-                                <li>Điểm đặc biệt MVP: Bản đồ hiển thị các dự án gần vị trí người dùng, hệ thống nhắn tin nội bộ đơn giản giữa tổ chức và tình nguyện viên.</li>
-                                <li>Phù hợp với bạn: Tận dụng kỹ năng giao tiếp, kết nối (John Holland Xã hội) để xây dựng cộng đồng, và kinh nghiệm Frontend để tạo nền tảng dễ sử dụng.</li>
+                            <h6 class="font-bold text-md text-yellow-800 mb-2">Gợi ý MVP chi tiết hơn: Ứng dụng <span class="font-bold px-1 text-yellow-800">"Luyện Thi Thích Ứng AI"</span></h6>
+                            <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
+                                <li><span class="font-bold px-1 text-yellow-800">Tính năng cốt lõi MVP:</span> Nền tảng web/mobile với ngân hàng câu hỏi trắc nghiệm đa dạng (chỉ 1 môn/chủ đề ban đầu), hệ thống chấm điểm tự động, giao diện theo dõi tiến độ học tập cơ bản.</li>
+                                <li><span class="font-bold px-1 text-yellow-800">Độc đáo MVP:</span> Thuật toán gợi ý câu hỏi tiếp theo dựa trên hiệu suất học tập của người dùng (nếu sai câu nào, hệ thống gợi ý các câu liên quan để củng cố).</li>
+                                <li><span class="font-bold px-1 text-yellow-800">Phù hợp với bạn:</span> Kết hợp kỹ năng Frontend mạnh để xây dựng giao diện tương tác, và tư duy phân tích để phát triển thuật toán.</li>
                             </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div class="bg-gray-50 p-6 rounded-lg shadow-sm col-span-full">
-                    <h4 class="text-xl font-semibold text-gray-700 mb-3">2. Tham gia hackathon hoặc dự án nội bộ với vai trò Product Owner</h4>
-                    <p class="text-gray-700 text-base">
-                        Tìm kiếm các cuộc thi hackathon hoặc các dự án nội bộ tại công ty nơi bạn có thể chủ động đảm nhận vai trò Product Owner (hoặc hỗ trợ PO hiện có). Tập trung vào việc chuyển đổi yêu cầu kinh doanh thành các user stories rõ ràng và làm việc chặt chẽ với đội ngũ kỹ thuật.
-                    </p>
-                    <p class="text-gray-600 mt-4 text-sm italic">
-                        <span class="font-bold px-1">Phân tích:</span> Giúp bạn làm quen với áp lực thời gian, làm việc nhóm dưới điều kiện khắc nghiệt và củng cố kỹ năng giao tiếp, giải quyết vấn đề nhanh chóng.
-                    </p>
-                </div>
-            </div>
-        </section>
+                        </div>
+                    </div>
 
-        <!-- Tích hợp và phát huy Kỹ năng mềm -->
-        <section class="mb-12 p-8 card">
-            <h2 class="section-title text-3xl mb-6">🤝 Tích hợp và phát huy Kỹ năng mềm</h2>
-            <p class="text-gray-700 mb-6">Các kỹ năng mềm là yếu tố then chốt giúp bạn thành công trong vai trò Product Owner, đặc biệt khi kết hợp với định hướng cá nhân của bạn:</p>
-            <div class="grid grid-cols-1 gap-8 mb-8">
-                <div>
-                    <h4 class="text-xl font-semibold text-pink-700 mb-3">Phân tích Kỹ năng</h4>
-                    <div class="space-y-4">
-                        <div>
-                            <div class="flex justify-between items-center mb-1">
-                                <span class="chart-label">Giao tiếp & Truyền cảm hứng (MBTI ENFP, DISC I)</span>
-                                <span class="text-sm font-bold text-gray-600">85%</span>
+                    <div id="healthtech-content" class="tab-content bg-red-50 rounded-lg shadow-sm">
+                        <div class="p-6">
+                            <div class="text-4xl mb-2 text-center">❤️</div>
+                            <h5 class="font-bold text-lg text-red-800 mb-2">HealthTech (Y tế/Sức khỏe)</h5>
+                            <p class="text-sm text-gray-700 mb-4">
+                                <span class="font-bold px-1 text-red-800">Tiềm năng:</span> Lĩnh vực này mang đến cơ hội tạo ra các sản phẩm cải thiện sức khỏe cộng đồng. Nó phát huy sự đồng cảm và quan tâm đến phúc lợi xã hội (John Holland Xã hội, Sinh trắc vân tay), kết hợp với khả năng phân tích dữ liệu.
+                            </p>
+                            <h6 class="font-bold text-md text-red-800 mb-2">Rủi ro tiềm ẩn:</h6>
+                            <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
+                                <li><span class="font-bold px-1 text-red-800">Bảo mật dữ liệu nhạy cảm:</span> Yêu cầu tuân thủ các quy định nghiêm ngặt (ví dụ: HIPAA ở Mỹ, GDPR ở EU).</li>
+                                <li><span class="font-bold px-1 text-red-800">Độ tin cậy thông tin:</span> Nội dung y tế phải chính xác, cần sự xác nhận từ chuyên gia.</li>
+                                <li><span class="font-bold px-1 text-red-800">Khó khăn tiếp cận thị trường:</span> Cần xây dựng lòng tin rất lớn từ người dùng.</li>
+                                <li><span class="font-bold px-1 text-red-800">Chấp thuận y tế:</span> Một số ứng dụng có thể cần được cơ quan y tế cấp phép.</li>
+                            </ul>
+                            <h6 class="font-bold text-md text-red-800 mb-2">Các bước đi chi tiết & Chiến lược phát triển:</h6>
+                            <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
+                                <li><span class="font-bold px-1 text-red-800">Xác định ngách cụ thể:</span> Sức khỏe tinh thần, theo dõi bệnh mãn tính (tiểu đường, huyết áp), dinh dưỡng, rèn luyện thể chất.</li>
+                                <li><span class="font-bold px-1 text-red-800">Hợp tác chuyên gia:</span> Tìm kiếm sự tư vấn, xác nhận nội dung từ bác sĩ, chuyên gia tâm lý, dinh dưỡng.</li>
+                                <li><span class="font-bold px-1 text-red-800">Ưu tiên bảo mật:</span> Xây dựng kiến trúc dữ liệu an toàn ngay từ đầu, tuân thủ các tiêu chuẩn bảo mật.</li>
+                                <li><span class="font-bold px-1 text-red-800">Tập trung vào động lực:</span> Áp dụng gamification, hệ thống thưởng để khuyến khích người dùng duy trì thói quen.</li>
+                            </ul>
+                            <h6 class="font-bold text-md text-red-800 mb-2">Gợi ý MVP chi tiết hơn: Ứng dụng <span class="font-bold px-1 text-red-800">"Nhật Ký Sức Khỏe Tinh Thần"</span></h6>
+                            <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
+                                <li><span class="font-bold px-1 text-red-800">Tính năng cốt lõi MVP:</span> Ứng dụng mobile cho phép người dùng ghi lại tâm trạng hàng ngày bằng cách chọn biểu tượng cảm xúc và thêm ghi chú ngắn. Cung cấp thư viện nhỏ các bài tập hít thở/thiền định cơ bản (chỉ có văn bản hướng dẫn).</li>
+                                <li><span class="font-bold px-1 text-red-800">Độc đáo MVP:</span> Biểu đồ đơn giản hóa xu hướng tâm trạng theo tuần/tháng để người dùng tự nhận thức. Hệ thống nhắc nhở (push notifications) tùy chỉnh để thực hiện bài tập hoặc ghi nhật ký.</li>
+                                <li><span class="font-bold px-1 text-red-800">Kế hoạch phát triển sau MVP:</span>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li>Mở rộng thư viện bài tập (audio, video), có các bài tập cho các tình huống cụ thể (stress, lo âu).</li>
+                                        <li>Tích hợp với thiết bị đeo tay (smartwatch) để theo dõi nhịp tim, giấc ngủ.</li>
+                                        <li>Module tư vấn ảo (chatbot) dựa trên AI để cung cấp hỗ trợ ban đầu.</li>
+                                        <li>Kết nối với chuyên gia tâm lý (có trả phí).</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="socialtech-content" class="tab-content bg-blue-50 rounded-lg shadow-sm">
+                        <div class="p-6">
+                            <div class="text-4xl mb-2 text-center">🌍</div>
+                            <h5 class="font-bold text-lg text-blue-800 mb-2">SocialTech (Công nghệ vì xã hội)</h5>
+                            <p class="text-sm text-gray-700 mb-4">
+                                <span class="font-bold px-1 text-blue-800">Tiềm năng:</span> Lĩnh vực này tập trung vào việc xây dựng các nền tảng kết nối, thúc đẩy tương tác xã hội tích cực hoặc giải quyết các vấn đề xã hội. Rất phù hợp với đặc điểm hướng ngoại, khả năng giao tiếp và mong muốn tạo tác động của bạn.
+                            </p>
+                            <h6 class="font-bold text-md text-blue-800 mb-2">Rủi ro tiềm ẩn:</h6>
+                            <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
+                                <li><span class="font-bold px-1 text-blue-800">Khó khăn thu hút người dùng ban đầu:</span> Cần hiệu ứng mạng lưới để phát triển.</li>
+                                <li><span class="font-bold px-1 text-blue-800">Kiểm duyệt nội dung:</span> Nguy cơ nội dung tiêu cực, sai lệch nếu không quản lý chặt.</li>
+                                <li><span class="font-bold px-1 text-blue-800">Duy trì tương tác:</span> Người dùng có thể mất hứng thú nếu không có hoạt động mới.</li>
+                                <li><span class="font-bold px-1 text-blue-800">Mô hình bền vững:</span> Nếu không dựa vào quảng cáo/phí, cần tìm kiếm nguồn tài trợ/gây quỹ.</li>
+                            </ul>
+                            <h6 class="font-bold text-md text-blue-800 mb-2">Các bước đi chi tiết & Chiến lược phát triển:</h6>
+                            <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
+                                <li><span class="font-bold px-1 text-blue-800">Nghiên cứu thị trường sâu:</span> Xác định phân khúc học sinh/sinh viên/người đi làm, môn học/kỹ năng cụ thể cần giải pháp (ví dụ: luyện thi đại học, kỹ năng mềm, ngoại ngữ).</li>
+                                <li><span class="font-bold px-1 text-blue-800">Tập trung xây dựng cộng đồng:</span> Tạo môi trường an toàn, tích cực cho các thành viên tương tác.</li>
+                                <li><span class="font-bold px-1 text-blue-800">Tìm kiếm đối tác:</span> Hợp tác với các tổ chức phi lợi nhuận, chính quyền địa phương, các nhóm cộng đồng.</li>
+                                <li><span class="font-bold px-1 text-blue-800">Mô hình gây quỹ/tạo giá trị:</span> Phát triển các tính năng hỗ trợ gây quỹ, hoặc các hoạt động tạo ra giá trị xã hội rõ ràng.</li>
+                            </ul>
+                            <h6 class="font-bold text-md text-blue-800 mb-2">Gợi ý MVP chi tiết hơn: Nền tảng <span class="font-bold px-1 text-blue-800">"Kết Nối Cộng Đồng Tình Nguyện Viên Địa Phương"</span></h6>
+                            <ul class="list-disc list-inside text-sm text-gray-700 mb-4">
+                                <li><span class="font-bold px-1 text-blue-800">Tính năng cốt lõi MVP:</span> Website cho phép các tổ chức đăng dự án tình nguyện (tên, mô tả, thời gian, địa điểm) và người dùng tìm kiếm/đăng ký tham gia các dự án đó. Có profile đơn giản cho tình nguyện viên và tổ chức.</li>
+                                <li><span class="font-bold px-1 text-blue-800">Độc đáo MVP:</span> Bản đồ hiển thị các dự án tình nguyện gần vị trí người dùng (hoặc khu vực được chọn). Hệ thống nhắn tin nội bộ đơn giản để tình nguyện viên và tổ chức trao đổi.</li>
+                                <li><span class="font-bold px-1 text-blue-800">Kế hoạch phát triển sau MVP:</span>
+                                    <ul class="list-circle list-inside ml-4">
+                                        <li>Chức năng "đánh dấu đã hoàn thành" cho dự án, ghi nhận đóng góp.</li>
+                                        <li>Bảng xếp hạng tình nguyện viên tích cực (gamification).</li>
+                                        <li>Tích hợp chức năng gây quỹ/đóng góp cho các dự án.</li>
+                                        <li>Hệ thống đánh giá/phản hồi chi tiết về dự án và tình nguyện viên.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="font-bold text-2xl text-blue-800 mb-3 flex items-center">
+                        <span class="list-item-icon text-3xl mr-2">🛠</span> Mục tiêu ngắn hạn (6–12 tháng)
+                    </h3>
+                    <p class="text-gray-700 mb-6">Các mục tiêu này được thiết kế để xây dựng nền tảng vững chắc cho vai trò Product Owner, với các chỉ số đo lường cụ thể và khung thời gian rõ ràng:</p>
+                    <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                        <div class="card p-6 bg-blue-50">
+                            <h4 class="text-xl font-semibold text-blue-700 mb-3">UI/UX nâng cao (Figma, Design Systems)</h4>
+                            <ul class="space-y-2 text-gray-700 text-base">
+                                <li><span class="list-item-icon text-lg">&#x2713;</span> Hoàn thành chứng chỉ Google UX Design (Coursera) trong <span class="font-bold px-1 text-blue-700">3 tháng đầu</span>. Xây dựng <span class="font-bold px-1 text-blue-700">một Design System cơ bản</span> cho dự án cá nhân hoặc đóng góp vào dự án công ty.</li>
+                            </ul>
+                        </div>
+                        <div class="card p-6 bg-green-50">
+                            <h4 class="text-xl font-semibold text-green-700 mb-3">Product Management (Agile, Scrum, backlog grooming)</h4>
+                            <ul class="space-y-2 text-gray-700 text-base">
+                                <li><span class="list-item-icon text-lg">&#x2713;</span> Hoàn thành chứng chỉ <span class="font-bold px-1 text-green-700">Scrum Product Owner (CSPO)</span> hoặc tương đương trong <span class="font-bold px-1 text-green-700">6 tháng đầu</span>. Tham gia <span class="font-bold px-1 text-green-700">ít nhất 2 dự án</span> với vai trò PO/APO, thực hiện <span class="font-bold px-1 text-green-700">backlog grooming định kỳ</span>.</li>
+                            </ul>
+                        </div>
+                        <div class="card p-6 bg-yellow-50">
+                            <h4 class="text-xl font-semibold text-yellow-700 mb-3">Data Analysis cơ bản (Excel nâng cao, SQL, Tableau)</h4>
+                            <ul class="space-y-2 text-gray-700 text-base">
+                                <li><span class="list-item-icon text-lg">&#x2713;</span> Hoàn thành khóa học <span class="font-bold px-1 text-yellow-700">SQL for Data Analysis</span> (Mode / DataCamp) trong <span class="font-bold px-1 text-yellow-700">6-9 tháng</span>. Tạo <span class="font-bold px-1 text-yellow-700">ít nhất 3 báo cáo/dashboard cơ bản</span> bằng Excel/Tableau để hỗ trợ quyết định sản phẩm.</li>
+                            </ul>
+                        </div>
+                        <div class="card p-6 bg-red-50">
+                            <h4 class="text-xl font-semibold text-red-700 mb-3">Kỹ năng lãnh đạo nhóm (Leadership, Feedback 360°)</h4>
+                            <ul class="space-y-2 text-gray-700 text-base">
+                                <li><span class="list-item-icon text-lg">&#x2713;</span> Chủ trì <span class="font-bold px-1 text-red-700">ít nhất 5 buổi họp/buổi brainstorm</span> về sản phẩm.</li>
+                                <li><span class="list-item-icon text-lg">&#x2713;</span> Tìm kiếm phản hồi 360° từ đồng nghiệp và quản lý để cải thiện kỹ năng lãnh đạo liên tục trong <span class="font-bold px-1 text-red-700">6-12 tháng</span>.</li>
+                            </ul>
+                        </div>
+                        <div class="card p-6 bg-purple-50 col-span-1 xl:col-span-2">
+                            <h4 class="text-xl font-semibold text-purple-700 mb-3">Business & Marketing nền tảng (Digital marketing, KPI tracking)</h4>
+                            <ul class="space-y-2 text-gray-700 text-base">
+                                <li><span class="list-item-icon text-lg">&#x2713;</span> Hoàn thành khóa học <span class="font-bold px-1 text-purple-700">Digital Marketing</span> (Hubspot/Google) trong <span class="font-bold px-1 text-purple-700">9-12 tháng</span>.</li>
+                                <li><span class="list-item-icon text-lg">&#x2713;</span> Định nghĩa và <span class="font-bold px-1 text-purple-700">theo dõi KPI</span> cho một tính năng/sản phẩm cụ thể.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chứng chỉ/Khoá học gợi ý -->
+            <section class="mb-12 p-8 card" id="certificates">
+                <h2 class="section-title text-3xl mb-6">🎓 Chứng chỉ/Khóa học gợi ý</h2>
+                <p class="text-gray-700 mb-6">Các chứng chỉ và khóa học này sẽ giúp bạn xây dựng nền tảng kiến thức vững chắc cho vai trò Product Owner và bổ sung các kỹ năng cần thiết:</p>
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                    <div class="bg-indigo-50 p-6 rounded-lg shadow-sm">
+                        <h4 class="text-xl font-semibold text-indigo-700 mb-3">1. UI/UX & Thiết kế sản phẩm</h4>
+                        <ul class="space-y-2 text-gray-700 text-base">
+                            <li><span class="list-item-icon text-lg">&#x2713;</span> <span class="font-bold px-1 text-indigo-700">Google UX Design (Coursera):</span> Tập trung vào nguyên lý thiết kế lấy người dùng làm trung tâm, nghiên cứu người dùng, wireframing, prototyping.</li>
+                            <li><span class="list-item-icon text-lg">&#x2713;</span> <span class="font-bold px-1 text-indigo-700">Design Systems courses (Udemy/Pluralsight):</span> Hiểu cách xây dựng và quản lý các thư viện UI/UX để đảm bảo tính nhất quán và hiệu quả.</li>
+                        </ul>
+                        <p class="text-gray-600 mt-4 text-sm italic">
+                            <span class="font-bold px-1">Điểm mạnh cần phát huy:</span> Nền tảng Frontend vững chắc giúp bạn hiểu tính khả thi kỹ thuật của thiết kế. <span class="font-bold px-1">Điểm yếu cần cải thiện:</span> Từ "làm đẹp" sang "giải quyết vấn đề" thông qua thiết kế.
+                        </p>
+                    </div>
+                    <div class="bg-teal-50 p-6 rounded-lg shadow-sm">
+                        <h4 class="text-xl font-semibold text-teal-700 mb-3">2. Quản lý sản phẩm chuyên sâu</h4>
+                        <ul class="space-y-2 text-gray-700 text-base">
+                            <li><span class="list-item-icon text-lg">&#x2713;</span> <span class="font-bold px-1 text-teal-700">Product Management by Reforge hoặc Udacity:</span> Các khóa học chuyên sâu về chiến lược sản phẩm, định nghĩa sản phẩm, quản lý backlog, và làm việc với đội ngũ phát triển.</li>
+                            <li><span class="list-item-icon text-lg">&#x2713;</span> <span class="font-bold px-1 text-teal-700">Chứng chỉ Agile/Scrum (ví dụ CSPO):</span> Nắm vững vai trò Product Owner trong môi trường Agile, cách tối đa hóa giá trị sản phẩm.</li>
+                        </ul>
+                        <p class="text-gray-600 mt-4 text-sm italic">
+                            <span class="font-bold px-1">Điểm mạnh cần phát huy:</span> Khả năng lãnh đạo, giao tiếp và giải quyết vấn đề. <span class="font-bold px-1">Điểm yếu cần cải thiện:</span> Từ "thực thi" sang "chiến lược", học cách đưa ra quyết định dựa trên dữ liệu.
+                        </p>
+                    </div>
+                    <div class="bg-orange-50 p-6 rounded-lg shadow-sm">
+                        <h4 class="text-xl font-semibold text-orange-700 mb-3">3. Phân tích dữ liệu & Kinh doanh</h4>
+                        <ul class="space-y-2 text-gray-700 text-base">
+                            <li><span class="list-item-icon text-lg">&#x2713;</span> <span class="font-bold px-1 text-orange-700">SQL for Data Analysis (Mode / DataCamp):</span> Kỹ năng truy vấn và phân tích dữ liệu cơ bản để hiểu hành vi người dùng và hiệu suất sản phẩm.</li>
+                            <li><span class="list-item-icon text-lg">&#x2713;</span> <span class="font-bold px-1 text-orange-700">Digital Marketing by Hubspot/Google:</span> Nắm vững các kênh tiếp thị số để hiểu cách đưa sản phẩm ra thị trường và đo lường hiệu quả.</li>
+                        </ul>
+                        <p class="text-gray-600 mt-4 text-sm italic">
+                            <span class="font-bold px-1">Điểm mạnh cần phát huy:</span> Tư duy phân tích và định hướng thành công (Thần số học 8). <span class="font-bold px-1">Điểm yếu cần cải thiện:</span> Từ "trực giác" sang "dữ liệu", học cách sử dụng số liệu để chứng minh giá trị.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Dự án thực tế nên làm -->
+            <section class="mb-12 p-8 card" id="projects">
+                <h2 class="section-title text-3xl mb-6">📦 Dự án thực tế nên làm</h2>
+                <p class="text-gray-700 mb-6">Thực hành thông qua các dự án là cách tốt nhất để củng cố kiến thức và phát triển kỹ năng PO của bạn. Bạn nên tập trung vào:</p>
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm col-span-full">
+                        <h4 class="text-xl font-semibold text-gray-700 mb-3">Xây dựng MVP cho một ý tưởng startup cá nhân (theo lĩnh vực)</h4>
+                        <p class="text-gray-700 text-base mb-4">
+                            Chọn một trong các ý tưởng MVP dưới đây và thực hiện từ A-Z: nghiên cứu người dùng, định nghĩa tính năng cốt lõi (MVP), thiết kế wireframe/prototype, viết user stories, và theo dõi quá trình phát triển (có thể tự code hoặc tìm partner).
+                        </p>
+                        <h5 class="font-bold text-md text-blue-700 mb-2">Gợi ý MVP theo lĩnh vực:</h5>
+                        <ul class="list-disc list-inside text-gray-700 text-base space-y-2">
+                            <li>
+                                <span class="font-bold px-1 text-green-700">EdTech: Ứng dụng "Luyện Thi Thích Ứng AI"</span>
+                                <ul class="list-circle list-inside ml-4">
+                                    <li>Tính năng cốt lõi: Nền tảng web/mobile với các bài kiểm tra trắc nghiệm theo môn học/chủ đề.</li>
+                                    <li>Điểm đặc biệt MVP: Thuật toán gợi ý câu hỏi dựa trên hiệu suất học tập của người dùng, phân tích điểm mạnh/yếu.</li>
+                                    <li>Phù hợp với bạn: Kết hợp kỹ năng Frontend mạnh để xây dựng giao diện tương tác, và tư duy phân tích để phát triển thuật toán.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="font-bold px-1 text-green-700">HealthTech: Ứng dụng "Nhật Ký Sức Khỏe Tinh Thần"</span>
+                                <ul class="list-circle list-inside ml-4">
+                                    <li>Tính năng cốt lõi: Ứng dụng mobile cho phép người dùng ghi lại tâm trạng hàng ngày, các yếu tố ảnh hưởng (giấc ngủ, hoạt động).</li>
+                                    <li>Điểm đặc biệt MVP: Đồ thị đơn giản hóa xu hướng tâm trạng theo thời gian, gửi thông báo nhắc nhở tích cực tùy chỉnh.</li>
+                                    <li>Phù hợp với bạn: Phát huy sự đồng cảm, khả năng UI/UX để tạo ứng dụng thân thiện, và kỹ năng phân tích dữ liệu để hiểu xu hướng người dùng.</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <span class="font-bold px-1 text-green-700">SocialTech: Nền tảng "Kết Nối Cộng Đồng Tình Nguyện Viên Địa Phương"</span>
+                                <ul class="list-circle list-inside ml-4">
+                                    <li>Tính năng cốt lõi: Website cho phép các tổ chức đăng dự án tình nguyện và người dùng tìm kiếm/đăng ký tham gia.</li>
+                                    <li>Điểm đặc biệt MVP: Bản đồ hiển thị các dự án gần vị trí người dùng, hệ thống nhắn tin nội bộ đơn giản giữa tổ chức và tình nguyện viên.</li>
+                                    <li>Phù hợp với bạn: Tận dụng kỹ năng giao tiếp, kết nối (John Holland Xã hội) để xây dựng cộng đồng, và kinh nghiệm Frontend để tạo nền tảng dễ sử dụng.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm col-span-full">
+                        <h4 class="text-xl font-semibold text-gray-700 mb-3">2. Tham gia hackathon hoặc dự án nội bộ với vai trò Product Owner</h4>
+                        <p class="text-gray-700 text-base">
+                            Tìm kiếm các cuộc thi hackathon hoặc các dự án nội bộ tại công ty nơi bạn có thể chủ động đảm nhận vai trò Product Owner (hoặc hỗ trợ PO hiện có). Tập trung vào việc chuyển đổi yêu cầu kinh doanh thành các user stories rõ ràng và làm việc chặt chẽ với đội ngũ kỹ thuật.
+                        </p>
+                        <p class="text-gray-600 mt-4 text-sm italic">
+                            <span class="font-bold px-1">Phân tích:</span> Giúp bạn làm quen với áp lực thời gian, làm việc nhóm dưới điều kiện khắc nghiệt và củng cố kỹ năng giao tiếp, giải quyết vấn đề nhanh chóng.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tích hợp và phát huy Kỹ năng mềm -->
+            <section class="mb-12 p-8 card" id="soft-skills-main">
+                <h2 class="section-title text-3xl mb-6">🤝 Tích hợp và phát huy Kỹ năng mềm</h2>
+                <p class="text-gray-700 mb-6">Các kỹ năng mềm là yếu tố then chốt giúp bạn thành công trong vai trò Product Owner, đặc biệt khi kết hợp với định hướng cá nhân của bạn:</p>
+                
+                <h4 class="text-xl font-semibold text-pink-700 mb-3">Phân tích Kỹ năng</h4>
+                <div id="radar-chart-container" style="width: 100%; height: 350px;"></div> <!-- Tăng chiều cao để biểu đồ rõ hơn -->
+                
+                <!-- Phân tích chi tiết từng nhóm kỹ năng và bento layout -->
+                <div class="col-span-full mt-8 space-y-8">
+                    <h4 class="text-xl font-semibold text-gray-800 mb-3">Phân tích chi tiết từng nhóm kỹ năng:</h4>
+                    <!-- 1. Giao tiếp & Truyền cảm hứng -->
+                    <div class="flex flex-col gap-4 bg-gray-50 p-4 rounded-lg shadow-sm">
+                        <div class="flex flex-col justify-between">
+                            <h5 class="font-bold text-lg text-blue-700 mb-2 flex items-center">
+                                <span class="text-2xl mr-2">🎯</span> Giao tiếp & Truyền cảm hứng
+                            </h5>
+                            <p class="text-gray-700 text-base mb-2">
+                                Điểm số gần như cao nhất (85%), chứng tỏ bạn có khả năng:
+                            </p>
+                            <ul class="list-disc list-inside text-gray-700 text-base mb-2 ml-4">
+                                <li>Diễn đạt ý tưởng rõ ràng, mạch lạc.</li>
+                                <li>Tạo ảnh hưởng tích cực tới người khác.</li>
+                                <li>Truyền lửa, thuyết phục hoặc dẫn dắt nhóm đi đúng hướng.</li>
+                            </ul>
+                            <p class="text-gray-700 text-base mt-auto">
+                                <span class="font-bold text-green-700">👉 Ứng dụng tốt khi bạn làm mentoring, thuyết trình, pitching ý tưởng cho team hoặc stakeholder.</span>
+                            </p>
+                        </div>
+                        <div class="grid lg:grid-cols-2 grid-cols-1  gap-4"> <!-- Changed grid-cols-1 md:grid-cols-2 to grid-cols-1 -->
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-gray-800 mb-2">Cách áp dụng:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>Chủ trì các buổi họp sản phẩm (daily, review, sprint planning).</li>
+                                    <li>Thuyết trình vision, roadmap sản phẩm cho các bên liên quan.</li>
+                                    <li>Viết tài liệu, user story rõ ràng, dễ hiểu.</li>
+                                </ul>
                             </div>
-                            <div class="w-full bg-gray-200 rounded-full">
-                                <div class="chart-bar chart-skill-blue w-[85%]"></div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-gray-800 mb-2">Ví dụ cụ thể:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li><span class="font-bold">EdTech:</span> Pitching ý tưởng ứng dụng học tiếng Anh mới cho nhà đầu tư.</li>
+                                    <li><span class="font-bold">HealthTech:</span> Truyền đạt tầm quan trọng của việc thu thập dữ liệu sức khỏe chính xác cho đội ngũ phát triển.</li>
+                                    <li><span class="font-bold">SocialTech:</span> Thuyết phục cộng đồng tham gia dự án tình nguyện mới.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-gray-800 mb-2">Bất lợi/Hạn chế:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>Dễ bị hiểu lầm là nói nhiều, thiếu hành động nếu không đi kèm kết quả.</li>
+                                    <li>Dễ bỏ qua chi tiết quan trọng nếu quá tập trung vào bức tranh lớn.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-gray-800 mb-2">Điểm lợi/Cạnh tranh:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>Xây dựng niềm tin, thúc đẩy team làm việc hiệu quả.</li>
+                                    <li>Dẫn dắt các cuộc thảo luận phức tạp.</li>
+                                    <li>Thúc đẩy sự hợp tác giữa các phòng ban.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm"> <!-- Removed md:col-span-2 -->
+                                <h6 class="font-bold text-md text-gray-800 mb-2">Cách phát huy tốt nhất & Cần chú ý:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>**Cách phát huy:** Luyện thuyết trình, học lắng nghe chủ động, đặt câu hỏi hiệu quả.</li>
+                                    <li>**Cần chú ý:** Không biến thành độc thoại, đảm bảo thông điệp rõ ràng, phù hợp với từng đối tượng, tránh hứa hẹn quá mức.</li>
+                                </ul>
                             </div>
                         </div>
-                        <div>
-                            <div class="flex justify-between items-center mb-1">
-                                <span class="chart-label">Giải quyết vấn đề & Tư duy phân tích (DISC D, Thần số học 8)</span>
-                                <span class="text-sm font-bold text-gray-600">80%</span>
+                    </div>
+
+                    <!-- 2. Đồng cảm & Kết nối -->
+                    <div class="flex flex-col gap-4 bg-gray-50 p-4 rounded-lg shadow-sm">
+                        <div class="flex flex-col justify-between">
+                            <h5 class="font-bold text-lg text-green-700 mb-2 flex items-center">
+                                <span class="text-2xl mr-2">💞</span> Đồng cảm & Kết nối
+                            </h5>
+                            <p class="text-gray-700 text-base mb-2">
+                                Mức điểm cao tương đương với nhóm trên (90%), thể hiện:
+                            </p>
+                            <ul class="list-disc list-inside text-gray-700 text-base mb-2 ml-4">
+                                <li>Khả năng lắng nghe chân thành, chia sẻ và thấu hiểu.</li>
+                                <li>Tạo dựng quan hệ tốt, xây dựng niềm tin trong môi trường làm việc.</li>
+                                <li>Hiểu cảm xúc và nhu cầu ẩn sâu của người khác.</li>
+                            </ul>
+                            <p class="text-gray-700 text-base mt-auto">
+                                <span class="font-bold text-green-700">👉 Phù hợp với vai trò team leader, coaching, quản lý nhân sự hoặc chăm sóc khách hàng.</span>
+                            </p>
+                        </div>
+                        <div class="grid lg:grid-cols-2 grid-cols-1  gap-4"> <!-- Changed grid-cols-1 md:grid-cols-2 to grid-cols-1 -->
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-gray-800 mb-2">Cách áp dụng:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>Tiến hành phỏng vấn người dùng, khảo sát để hiểu sâu insights.</li>
+                                    <li>Xây dựng mối quan hệ tốt với team dev, thiết kế, marketing.</li>
+                                    <li>Giải quyết xung đột, duy trì không khí làm việc tích cực.</li>
+                                </ul>
                             </div>
-                            <div class="w-full bg-gray-200 rounded-full">
-                                <div class="chart-bar chart-skill-green w-[80%]"></div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-gray-800 mb-2">Ví dụ cụ thể:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li><span class="font-bold">EdTech:</span> Lắng nghe phản hồi từ học sinh và phụ huynh để cải thiện tính năng.</li>
+                                    <li><span class="font-bold">HealthTech:</span> Hiểu nỗi lo lắng của bệnh nhân để thiết kế giao diện thân thiện, dễ sử dụng.</li>
+                                    <li><span class="font-bold">SocialTech:</span> Xây dựng mối quan hệ tin cậy với các tổ chức phi lợi nhuận để hiểu đúng nhu cầu của họ.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-gray-800 mb-2">Bất lợi/Hạn chế:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>Dễ bị cảm xúc chi phối, khó đưa ra quyết định cứng rắn.</li>
+                                    <li>Mất thời gian quá nhiều cho việc xây dựng mối quan hệ mà quên mục tiêu chính.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-gray-800 mb-2">Điểm lợi/Cạnh tranh:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>Xây dựng sản phẩm thực sự đáp ứng nhu cầu người dùng.</li>
+                                    <li>Tạo môi trường làm việc hài hòa, năng suất cao.</li>
+                                    <li>Khả năng đàm phán, giải quyết vấn đề bằng sự thấu hiểu.</li>
+                                </ul>
+                            </div>
+                             <div class="bg-white p-4 rounded-lg shadow-sm"> <!-- Removed md:col-span-2 -->
+                                <h6 class="font-bold text-md text-gray-800 mb-2">Cách phát huy tốt nhất & Cần chú ý:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>**Cách phát huy:** Thực hành lắng nghe chủ động, đặt mình vào vị trí người khác, phát triển EQ.</li>
+                                    <li>**Cần chú ý:** Cân bằng giữa cảm xúc và logic, không để sự đồng cảm làm lu mờ mục tiêu kinh doanh, học cách đưa ra phản hồi mang tính xây dựng nhưng kiên quyết.</li>
+                                </ul>
                             </div>
                         </div>
-                        <div>
-                            <div class="flex justify-between items-center mb-1">
-                                <span class="chart-label">Cố vấn kỹ thuật (Kinh nghiệm Frontend)</span>
-                                <span class="text-sm font-bold text-gray-600">75%</span>
+                    </div>
+
+                    <!-- 3. Cố vấn kỹ thuật -->
+                    <div class="flex flex-col gap-4 bg-gray-50 p-4 rounded-lg shadow-sm">
+                        <div class="flex flex-col justify-between">
+                            <h5 class="font-bold text-lg text-yellow-700 mb-2 flex items-center">
+                                <span class="text-2xl mr-2">🛠️</span> Cố vấn kỹ thuật
+                            </h5>
+                            <p class="text-gray-700 text-base mb-2">
+                                Điểm cao (75%), cho thấy:
+                            </p>
+                            <ul class="list-disc list-inside text-gray-700 text-base mb-2 ml-4">
+                                <li>Bạn có khả năng hỗ trợ người khác về chuyên môn một cách hiệu quả.</li>
+                                <li>Làm mentor kỹ thuật, review code, chia sẻ kiến thức dễ hiểu.</li>
+                            </ul>
+                            <p class="text-gray-700 text-base mt-auto">
+                                <span class="font-bold text-green-700">👉 Thể hiện tố chất để dẫn dắt kỹ thuật trong team, đảm nhận vai trò Tech Lead trong tương lai hoặc làm cầu nối vững chắc giữa business và engineering.</span>
+                            </p>
+                        </div>
+                        <div class="grid lg:grid-cols-2 grid-cols-1  gap-4"> <!-- Changed grid-cols-1 md:grid-cols-2 to grid-cols-1 -->
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-gray-800 mb-2">Cách áp dụng:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>Tham gia vào các buổi thảo luận kỹ thuật, giúp đội ngũ hiểu yêu cầu sản phẩm.</li>
+                                    <li>Đánh giá tính khả thi kỹ thuật của các tính năng mới.</li>
+                                    <li>Giải đáp thắc mắc kỹ thuật cho team Product, Marketing.</li>
+                                </ul>
                             </div>
-                            <div class="w-full bg-gray-200 rounded-full">
-                                <div class="chart-bar chart-skill-yellow w-[75%]"></div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-gray-800 mb-2">Ví dụ cụ thể:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li><span class="font-bold">EdTech:</span> Tư vấn về công nghệ AI phù hợp cho tính năng gợi ý lộ trình học.</li>
+                                    <li><span class="font-bold">HealthTech:</span> Giải thích về kiến trúc bảo mật dữ liệu cho các bên liên quan không chuyên về kỹ thuật.</li>
+                                    <li><span class="font-bold">SocialTech:</span> Đánh giá tính khả thi của việc tích hợp bản đồ tình nguyện viên với lượng lớn dữ liệu.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-gray-800 mb-2">Bất lợi/Hạn chế:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>Dễ bị sa đà vào chi tiết kỹ thuật mà quên đi bức tranh lớn của sản phẩm.</li>
+                                    <li>Có thể bị đánh giá là "micro-managing" nếu can thiệp quá sâu vào công việc của dev.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-gray-800 mb-2">Điểm lợi/Cạnh tranh:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>Làm cầu nối vững chắc giữa team kinh doanh và kỹ thuật.</li>
+                                    <li>Đưa ra các quyết định sản phẩm thực tế và khả thi hơn.</li>
+                                    <li>Giúp đội ngũ phát triển hiểu rõ hơn về giá trị nghiệp vụ của tính năng.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm"> <!-- Removed md:col-span-2 -->
+                                <h6 class="font-bold text-md text-gray-800 mb-2">Cách phát huy tốt nhất & Cần chú ý:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>**Cách phát huy:** Tham gia cộng đồng kỹ thuật, luôn cập nhật công nghệ mới, luyện khả năng giải thích kỹ thuật cho người không chuyên.</li>
+                                    <li>**Cần chú ý:** Tập trung vào "what" và "why" hơn là "how" khi làm PO, tin tưởng vào khả năng của đội ngũ dev.</li>
+                                </ul>
                             </div>
                         </div>
-                        <div>
-                            <div class="flex justify-between items-center mb-1">
-                                <span class="chart-label">Đồng cảm & Kết nối (John Holland Xã hội, Sinh trắc vân tay)</span>
-                                <span class="text-sm font-bold text-gray-600">90%</span>
+                    </div>
+
+                    <!-- 4. Giải quyết vấn đề & Tư duy phân tích -->
+                    <div class="flex flex-col gap-4 bg-gray-50 p-4 rounded-lg shadow-sm">
+                        <div class="flex flex-col justify-between">
+                            <h5 class="font-bold text-lg text-red-700 mb-2 flex items-center">
+                                <span class="text-2xl mr-2">🧠</span> Giải quyết vấn đề & Tư duy phân tích
+                            </h5>
+                            <p class="text-gray-700 text-base mb-2">
+                                Tuy vẫn cao (80%) nhưng thấp hơn các nhóm khác một chút, điều này có nghĩa:
+                            </p>
+                            <ul class="list-disc list-inside text-gray-700 text-base mb-2 ml-4">
+                                <li>Bạn có tư duy logic và khả năng giải quyết vấn đề tốt.</li>
+                                <li>Tuy nhiên, có thể chưa phải là điểm mạnh nổi bật nhất so với các kỹ năng giao tiếp hay đồng cảm.</li>
+                            </ul>
+                            <p class="text-gray-700 text-base mt-auto">
+                                <span class="font-bold text-green-700">👉 Nên luyện thêm kỹ năng phân tích nghiệp vụ chuyên sâu, xác định root-cause, hoặc thử sức với vai trò Product Thinking, Business Analyst để củng cố thêm.</span>
+                            </p>
+                        </div>
+                        <div class="grid lg:grid-cols-2 grid-cols-1  gap-4"> <!-- Changed grid-cols-1 md:grid-cols-2 to grid-cols-1 -->
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-gray-800 mb-2">Cách áp dụng:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>Phân tích dữ liệu người dùng để tìm ra vấn đề và cơ hội.</li>
+                                    <li>Xác định nguyên nhân gốc rễ của các vấn đề sản phẩm.</li>
+                                    <li>Ưu tiên tính năng dựa trên giá trị và độ phức tạp.</li>
+                                </ul>
                             </div>
-                            <div class="w-full bg-gray-200 rounded-full">
-                                <div class="chart-bar chart-skill-red w-[90%]"></div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-gray-800 mb-2">Ví dụ cụ thể:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li><span class="font-bold">EdTech:</span> Phân tích dữ liệu học viên để tìm điểm nghẽn trong quá trình học online.</li>
+                                    <li><span class="font-bold">HealthTech:</span> Sử dụng dữ liệu để xác định tính năng nào giúp người dùng tuân thủ liệu trình tốt nhất.</li>
+                                    <li><span class="font-bold">SocialTech:</span> Phân tích lý do tỷ lệ tương tác của tình nguyện viên giảm để tìm giải pháp cải thiện.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-gray-800 mb-2">Bất lợi/Hạn chế:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>Có thể bị sa lầy vào việc phân tích mà không đưa ra quyết định.</li>
+                                    <li>Đôi khi bỏ lỡ các yếu tố "human touch" nếu quá tập trung vào số liệu.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm">
+                                <h6 class="font-bold text-md text-gray-800 mb-2">Điểm lợi/Cạnh tranh:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>Đưa ra quyết định dựa trên dữ liệu, giảm thiểu rủi ro.</li>
+                                    <li>Khả năng giải quyết các vấn đề phức tạp một cách có hệ thống.</li>
+                                    <li>Tối ưu hóa sản phẩm để đạt được hiệu quả kinh doanh.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-white p-4 rounded-lg shadow-sm"> <!-- Removed md:col-span-2 -->
+                                <h6 class="font-bold text-md text-gray-800 mb-2">Cách phát huy tốt nhất & Cần chú ý:</h6>
+                                <ul class="list-disc list-inside text-sm text-gray-700">
+                                    <li>**Cách phát huy:** Học thêm về A/B testing, SQL, Google Analytics, các phương pháp phân tích nghiệp vụ.</li>
+                                    <li>**Cần chú ý:** Không bỏ qua trực giác và phản hồi định tính, cân bằng giữa phân tích sâu và tốc độ ra quyết định.</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <!-- Cách phát huy trong vai trò PO -->
-            <div class="col-span-full mt-8">
-                <h4 class="text-xl font-semibold text-pink-700 mb-3">Cách phát huy trong vai trò Product Owner</h4>
-                <ul class="space-y-3 text-gray-700 text-lg">
-                    <li class="flex flex-col items-start">
-                        <span class="font-bold px-1 text-blue-700"><span class="list-item-icon text-2xl">&#9679;</span> Giao tiếp & Truyền cảm hứng: </span> Sử dụng để trình bày rõ ràng tầm nhìn sản phẩm, thuyết phục các bên liên quan (stakeholders) và truyền động lực cho đội ngũ phát triển.
-                    </li>
-                    <li class="flex flex-col items-start">
-                        <span class="font-bold px-1 text-green-700"><span class="list-item-icon text-2xl">&#9679;</span> Giải quyết vấn đề & Tư duy phân tích: </span> Áp dụng để nhanh chóng nhận diện vấn đề, đánh giá các giải pháp và đưa ra quyết định tối ưu cho sản phẩm.
-                    </li>
-                    <li class="flex flex-col items-start">
-                        <span class="font-bold px-1 text-yellow-700"><span class="list-item-icon text-2xl">&#9679;</span> Cố vấn kỹ thuật: </span> Tận dụng kinh nghiệm Frontend để cố vấn cho đội ngũ phát triển, đưa ra các yêu cầu kỹ thuật khả thi, và hỗ trợ giải quyết các thách thức kỹ thuật liên quan đến sản phẩm.
-                    </li>
-                    <li class="flex flex-col items-start">
-                        <span class="font-bold px-1 text-red-700"><span class="list-item-icon text-2xl">&#9679;</span> Đồng cảm & Kết nối: </span> Duy trì sự đồng cảm với người dùng để hiểu sâu sắc nhu cầu của họ và xây dựng các tính năng mang lại giá trị thực sự. Kết nối tốt với các thành viên trong nhóm để tạo môi trường làm việc tích cực và hiệu quả.
-                    </li>
-                </ul>
-            </div>
-        </section>
+            </section>
 
-        <!-- Footer -->
-        <footer class="text-center text-gray-600 mt-12 p-4">
-            <p>&copy; 2024 Ngọc Quỳnh Phạm. All rights reserved.</p>
-        </footer>
+            <!-- Footer -->
+            <footer class="text-center text-gray-600 mt-12 p-4">
+                <p id="footer-year">&copy; <span id="current-year"></span> Ngọc Quỳnh Phạm. All rights reserved.</p>
+            </footer>
+        </div>
     </div>
+
+    <!-- JavaScript for Mobile Menu Toggle and Active Link Highlighting -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get current year and update footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('menu-backdrop');
+            const hamburgerIcon = document.getElementById('hamburger-icon');
+            const closeIcon = document.getElementById('close-icon');
+            const sidebarLinks = sidebar.querySelectorAll('a');
+            const sections = document.querySelectorAll('section[id], header[id="home"]'); // Get all sections and the home header
+
+            // Function to open sidebar
+            function openSidebar() {
+                sidebar.classList.remove('-translate-x-full');
+                backdrop.classList.remove('hidden');
+                hamburgerIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+            }
+
+            // Function to close sidebar
+            function closeSidebar() {
+                sidebar.classList.add('-translate-x-full');
+                backdrop.classList.add('hidden');
+                hamburgerIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            }
+
+            // Toggle sidebar on button click
+            menuToggle.addEventListener('click', function() {
+                if (sidebar.classList.contains('-translate-x-full')) {
+                    openSidebar();
+                } else {
+                    closeSidebar();
+                }
+            });
+
+            // Close sidebar when clicking on backdrop
+            backdrop.addEventListener('click', function() {
+                closeSidebar();
+            });
+
+            // Handle sidebar link clicks
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // Smooth scroll is handled by CSS scroll-behavior: smooth
+                    // Close sidebar only on small screens after clicking a link
+                    if (window.innerWidth < 768) {
+                        closeSidebar();
+                    }
+                    // The scroll event listener will handle active state after scroll completes
+                });
+            });
+
+            // Function to highlight active link on scroll
+            function highlightActiveLink() {
+                let currentActive = '';
+
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    // Adjusted scroll offset to consider fixed elements and give some lead time
+                    const scrollOffset = 100; // Pixels from top of viewport
+
+                    if (window.scrollY >= sectionTop - scrollOffset && window.scrollY < sectionTop + sectionHeight - scrollOffset) {
+                        currentActive = section.getAttribute('id');
+                    }
+                });
+
+                sidebarLinks.forEach(link => {
+                    link.classList.remove('active-link');
+                    if (link.getAttribute('href').includes(currentActive)) {
+                        link.classList.add('active-link');
+                    }
+                });
+            }
+
+            // Call on load and scroll
+            highlightActiveLink(); // Set initial active link
+            window.addEventListener('scroll', highlightActiveLink);
+
+            // Adjust main content padding based on sidebar visibility on larger screens
+            // This ensures content doesn't get hidden under fixed sidebar
+            function adjustMainContentPadding() {
+                const mainContentWrapper = document.querySelector('.md\\:ml-64');
+                if (window.innerWidth >= 768) { // md breakpoint in Tailwind CSS is 768px
+                    mainContentWrapper.style.marginLeft = '16rem'; /* w-64 is 16rem */
+                } else {
+                    mainContentWrapper.style.marginLeft = '0';
+                }
+            }
+
+            // Call on load and resize
+            adjustMainContentPadding();
+            window.addEventListener('resize', adjustMainContentPadding);
+
+            // ECharts Radar Chart Initialization
+            const radarChartDom = document.getElementById('radar-chart-container');
+            if (radarChartDom) {
+                const radarChart = echarts.init(radarChartDom);
+                const radarOption = {
+                    tooltip: {
+                        z: 9999, // Ensure tooltip is above other elements
+                        trigger: 'item', // 'item' is good for single data points on radar
+                        formatter: function (params) {
+                            // Custom formatter for tooltip
+                            const indicators = radarOption.radar[0].indicator; // Get indicators from the radar component
+                            const dataValue = params.value; // The array of values [85, 80, 75, 90]
+                            let tooltipContent = `<div style="font-weight: bold; margin-bottom: 5px;">Kỹ năng mềm của Ngọc Quỳnh</div>`;
+                            
+                            // Iterate through each indicator to display its name and score
+                            indicators.forEach((indicator, index) => {
+                                tooltipContent += `<div>${indicator.name}: <span style="font-weight: bold;">${dataValue[index]}%</span></div>`;
+                            });
+                            
+                            return tooltipContent;
+                        }
+                    },
+                    legend: {
+                        data: ['Kỹ năng mềm'],
+                        bottom: '0',
+                        textStyle: {
+                            color: '#333'
+                        }
+                    },
+                    radar: {
+                        indicator: [
+                            { name: 'Giao tiếp & Truyền cảm hứng', max: 100, axisName: { color: '#10B981' } }, // Green
+                            { name: 'Giải quyết vấn đề & Tư duy phân tích', max: 100, axisName: { color: '#F59E0B' } }, // Amber
+                            { name: 'Cố vấn kỹ thuật', max: 100, axisName: { color: '#3B82F6' } }, // Blue
+                            { name: 'Đồng cảm & Kết nối', max: 100, axisName: { color: '#EF4444' } }  // Red
+                        ],
+                        radius: '65%',
+                        center: ['50%', '55%'], // Adjust center to make space for legend
+                        axisName: {
+                            fontSize: 12,
+                            fontWeight: 'bold' // Make axis labels bold
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                color: 'rgba(128, 128, 128, 0.1)' // Lighter split lines
+                            }
+                        },
+                        splitArea: {
+                            areaStyle: {
+                                color: ['rgba(200, 255, 200, 0.1)', 'rgba(200, 255, 200, 0.05)'] // Very light alternating fill
+                            }
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: 'rgba(128, 128, 128, 0.2)' // Lighter axis lines
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'Kỹ năng mềm của Ngọc Quỳnh',
+                        type: 'radar',
+                        data: [{
+                            value: [85, 80, 75, 90],
+                            name: 'Kỹ năng mềm',
+                            areaStyle: {
+                                color: 'rgba(76, 175, 80, 0.6)' // Green color for the skill area
+                            },
+                            lineStyle: {
+                                color: '#4CAF50' // Green color for the line
+                            },
+                            itemStyle: {
+                                color: '#4CAF50' // Green color for the data points
+                            }
+                        }]
+                    }]
+                };
+                radarChart.setOption(radarOption);
+
+                // Resize chart on window resize
+                window.addEventListener('resize', function() {
+                    radarChart.resize();
+                });
+            }
+
+            // Tab functionality for IDP section
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetId = this.id.replace('-tab', '-content');
+
+                    tabButtons.forEach(btn => btn.classList.remove('active-tab'));
+                    this.classList.add('active-tab');
+
+                    tabContents.forEach(content => {
+                        if (content.id === targetId) {
+                            content.classList.add('active-content');
+                        } else {
+                            content.classList.remove('active-content');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
