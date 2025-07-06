@@ -59,6 +59,7 @@ body {
   background-color: var(--dark-blue);
   width: fit-content;
   z-index: 2;
+  max-width: calc(100% - 40px);
 }
 .hero-description {
   font-weight: 500;
@@ -73,6 +74,7 @@ body {
   margin-top: 16px;
   z-index: 2;
   border: 2px solid var(--white);
+    max-width: calc(100% - 20px);
 }
 .button-wrap{
   z-index: 3;
