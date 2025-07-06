@@ -1,0 +1,229 @@
+:root {
+  /* colors */
+  --red: #e63946;
+  --white: #ffffff;
+  --light: #f1faee;
+  --aqua: #a8dadc;
+  --light-blue: #457b9d;
+  --dark-blue: #1d3557;
+  --orange: #FE7743;
+  /* fonts */
+  --primary-font: "Poppins";
+
+  /* background img */
+  --background: url("https://ik.imagekit.io/tvlk/blog/2024/03/nha-tho-chanh-toa-phu-cuong-1-1024x681.jpg?tr=q-70,c-at_max,w-500,h-300,dpr-2");
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  text-align: center;
+  color: var(--white);
+  font-family: var(--primary-font);
+}
+
+.hero {
+  background-image: var(--background);
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(29, 53, 87, 0.6); /* Dark blue with transparency */
+}
+.hero-title {
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 100%;
+  text-align: center;
+  border-radius: 10px;
+  padding: 12px 24px;
+  background-color: var(--dark-blue);
+  width: fit-content;
+  z-index: 2;
+}
+.hero-description {
+  font-weight: 500;
+  font-size: 18.72px;
+  line-height: 150%;
+  text-align: center;
+  border-radius: 10px;
+  padding: 6px 28px;
+  background-color: var(--light-blue);
+  width: fit-content;
+  max-width: 500px;
+  margin-top: 16px;
+  z-index: 2;
+  border: 2px solid var(--white);
+}
+.button-wrap{
+  z-index: 3;
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 5%;
+
+}
+.button {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border: none;
+}
+
+.button::after {
+  mask-image: url('data:image/svg+xml;base64,PHN2ZyAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiAgd2lkdGg9IjI0IiAgaGVpZ2h0PSIyNCIgIHZpZXdCb3g9IjAgMCAyNCAyNCIgIGZpbGw9ImN1cnJlbnRDb2xvciIgIGNsYXNzPSJpY29uIGljb24tdGFibGVyIGljb25zLXRhYmxlci1maWxsZWQgaWNvbi10YWJsZXItY2lyY2xlLWFycm93LWRvd24iPjxwYXRoIHN0cm9rZT0ibm9uZSIgZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik0xNyAzLjM0YTEwIDEwIDAgMSAxIC0xNC45OTUgOC45ODRsLS4wMDUgLS4zMjRsLjAwNSAtLjMyNGExMCAxMCAwIDAgMSAxNC45OTUgLTguMzM2em0tNSAzLjY2YTEgMSAwIDAgMCAtMSAxdjUuNTg1bC0yLjI5MyAtMi4yOTJsLS4wOTQgLS4wODNhMSAxIDAgMCAwIC0xLjMyIDEuNDk3bDQgNGMuMDI4IC4wMjggLjA1NyAuMDU0IC4wOTQgLjA4M2wuMDkyIC4wNjRsLjA5OCAuMDUybC4wODEgLjAzNGwuMTEzIC4wMzRsLjExMiAuMDJsLjExNyAuMDA2bC4xMTUgLS4wMDdsLjExNCAtLjAybC4xNDIgLS4wNDRsLjExMyAtLjA1NGwuMTExIC0uMDcxYS45MzkgLjkzOSAwIDAgMCAuMTEyIC0uMDk3bDQgLTRsLjA4MyAtLjA5NGExIDEgMCAwIDAgLTEuNDk3IC0xLjMybC0yLjI5MyAyLjI5MXYtNS41ODRsLS4wMDcgLS4xMTdhMSAxIDAgMCAwIC0uOTkzIC0uODgzeiIgLz48L3N2Zz4=');
+  mask-size: cover;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  position: absolute;
+  z-index: 3;
+  background-color: var(--white);
+  opacity: 0.8;
+  content: "";
+  transform: translateX(-50%);
+  height: 40px;
+  width: 40px;
+  animation: shake-vertical 2s ease-in-out infinite;
+}
+.button:hover::after {
+  opacity: 1;
+  cursor: pointer;
+}
+.activities{
+  background-color: var(--light);
+  padding: 39px 34px;
+}
+.activities-title {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 150%;
+  text-align: center;
+  color: var(--dark-blue);
+}
+.activity-list{
+  margin-top: 54px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+.activity-item {
+  overflow: hidden;
+  flex: 1 1 290px;
+  min-width: 192px;
+  max-width: 400px; 
+  border-radius: 10px;
+}
+.activity-item img {
+  height: 100px;
+  object-fit: cover;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+.sub-title-activity {
+  margin-top: 22px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 150%;  
+  color: var(--dark-blue);        
+}
+.description-activity {
+  margin-top: 17px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--dark-blue);
+}
+.guide-wrap{
+  background-color: var(--white);
+  padding: 39px 34px;
+}
+.guide {
+  max-width: 660px;
+  background-color: var(--aqua);
+  padding: 23px 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  border-radius: 24px;
+  box-shadow: 0px 8px 0px var(--dark-blue);
+}
+.guide-content{
+  padding: 30px;
+}
+.guide-title {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 150%;
+  text-align: center;
+  color: var(--dark-blue);
+}
+.guide-quote {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+  color: var(--dark-blue);
+  margin-top: 14px;
+  font-style: italic;
+}
+.guide-name{
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 150%;
+  text-align: center;
+  color: var(--dark-blue);
+  margin-top: 26px; 
+}  
+.guide-image-wrap {
+  margin-bottom: -30px;
+  margin-left: -30px;
+  flex: 1 1 100px;
+  min-width: 150px;
+  max-width: 300px;
+  border-radius: 10px;
+}
+.guide-image{
+  width: 200px;
+}
+@keyframes shake-vertical {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  20% {
+    transform: translateY(-10px);
+  }
+  40% {
+    transform: translateY(10px);
+  }
+  60% {
+    transform: translateY(-6px);
+  }
+  80% {
+    transform: translateY(6px);
+  }
+}
