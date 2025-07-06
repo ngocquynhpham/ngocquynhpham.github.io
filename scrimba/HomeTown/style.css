@@ -32,7 +32,7 @@ body {
   background-size: cover;
   background-position: top center;
   background-repeat: no-repeat;
-  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -105,7 +105,6 @@ body {
   background-color: var(--white);
   opacity: 0.8;
   content: "";
-  transform: translateX(-50%);
   height: 40px;
   width: 40px;
   animation: shake-vertical 2s ease-in-out infinite;
@@ -214,18 +213,18 @@ body {
 }
 @keyframes shake-vertical {
   0%, 100% {
-    transform: translateY(0);
+    transform: translate(-50%, 0px);
   }
   20% {
-    transform: translateY(-10px);
+   transform: translate(-50%, -10px);
   }
   40% {
-    transform: translateY(10px);
+    transform: translate(-50%, 10px);
   }
   60% {
-    transform: translateY(-6px);
+    transform: translate(-50%, -6px);
   }
   80% {
-    transform: translateY(6px);
+    transform: translate(-50%, 6px);
   }
 }
