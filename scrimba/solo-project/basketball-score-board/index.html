@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basketball Score Board | Live Game Tracker</title>
+  <meta name="description"
+    content="Track basketball scores live with our interactive basketball score board. Perfect for games, tournaments, and practice sessions.">
+  <meta name="keywords"
+    content="basketball, score board, live scores, game tracker, sports, scoreboard, basketball app">
+  <meta name="author" content="Ngoc Quynh Pham">
+  <link rel="canonical" href="https://ngocquynhpham.github.io/scrimba/solo-project/basketball-score-board/">
+  <meta property="og:title" content="Basketball Score Board | Live Game Tracker">
+  <meta property="og:description" content="Track basketball scores live with our interactive basketball score board.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ngocquynhpham.github.io/scrimba/solo-project/basketball-score-board/">
+  <meta property="og:image"
+    content="https://ngocquynhpham.github.io/scrimba/solo-project/basketball-score-board/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Basketball Score Board | Live Game Tracker">
+  <meta name="twitter:description" content="Track basketball scores live with our interactive basketball score board.">
+  <meta name="twitter:image"
+    content="https://ngocquynhpham.github.io/scrimba/solo-project/basketball-score-board/og-image.jpg">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+  <div class="m-container">
+    <div class="m-inner">
+      <h1 class="m-title">Basketball Score Board</h1>
+      <main>
+        <section id="scoreboard" aria-label="Live Basketball Scoreboard">
+          <h2 class="m-sub-title">Live Game Tracker</h2>
+          <!-- Scoreboard UI goes here -->
+          <div class="scoreboard">
+            <div class="team" id="team1">
+              <h3 class="team-name">HOME</h3>
+              <div class="score-container">
+                <p class="score" id="score1">0</p>
+              </div>
+              <div class="button-container">
+                <button class="btn" id="home-btn1" aria-label="Add 1 Point">+1</button>
+                <button class="btn" id="home-btn2" aria-label="Add 2 Points">+2</button>
+                <button class="btn" id="home-btn3" aria-label="Add 3 Points">+3</button>
+              </div>
+            </div>
+            <div class="team" id="team2">
+              <h3 class="team-name">GUEST</h3>
+              <div class="score-container">
+                <p class="score" id="score2">0</p>
+              </div>
+              <div class="button-container">
+                <button class="btn" id="away-btn1" aria-label="Add 1 Point">+1</button>
+                <button class="btn" id="away-btn2" aria-label="Add 2 Points">+2</button>
+                <button class="btn" id="away-btn3" aria-label="Add 3 Points">+3</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+</body>
+<script src="./index.js"></script>
+
+</html>
