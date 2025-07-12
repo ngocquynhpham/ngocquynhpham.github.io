@@ -41,7 +41,7 @@
             <div class="team" id="team1">
               <h3 class="team-name">HOME</h3>
               <div class="score-container">
-                <p class="score" id="score1">0</p>
+                <p class="score" id="score1">198</p>
               </div>
               <div class="button-container">
                 <button class="btn" id="home-btn1" aria-label="Add 1 Point">+1</button>
@@ -62,10 +62,23 @@
             </div>
           </div>
           <div class="new-game-container">
-            <button class="btn new-game-btn" id="new-game-btn" aria-label="Start New Game">New Game</button>
+            <div class="new-game-wrapper">
+              <div class="note-container">
+                <p class="note" style="margin-top:10px;">
+                  <span>
+                    Click here to restart.
+                  </span>
+                  <span style="display:inline-block; margin-left:5px; vertical-align:middle;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="transform:rotate(-30deg);">
+                      <path d="M2 12h20M18 8l4 4-4 4" stroke="#FFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                </p>
+              </div>
+              <button class="btn new-game-btn" id="new-game-btn" aria-label="Start New Game">New Game</button>
+            </div>
           </div>
         </section>
-
       </main>
     </div>
   </div>

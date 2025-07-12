@@ -121,17 +121,41 @@ button:active {
   cursor: pointer;
   font-size: 1rem;
   font-family: var(--font-main);
-  transition: background-color 0.3s ease;   
+  transition: background-color 0.3s ease, transform 0.1s ease;   
 }
 .btn:hover {
   background-color: var(--secondary-color);
   color: var(--text-color);
 }
-.new-game-container{
+.btn:active {
+  transform: scale(0.95);
+  transition: transform 0.1s;
+}
+
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: transparent;
+  color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  pointer-events: none;
+}
+.new-game-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 10px;
+  width: fit-content;
+  margin: 0 auto;
   margin-top: 20px;
+  padding-bottom: 70px;
+
+}
+.new-game-wrapper{
+  position: relative;
+  width: 100%;
+  padding: 0 50px;
 }
 .new-game-btn{
   background-color: var(--primary-color);
@@ -142,6 +166,25 @@ button:active {
   font-family: var(--font-main);
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+.new-game-btn:hover {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
+.note-container{
+  width: 100%;
+  position: absolute;
+  bottom: -100%;
+  left: -50px;
+  z-index: 3;
+  display: none;
+}
+.note-container.show {
+  display: block;
+}
+.note {
+  color: var(--text-color);
+  text-align: center;
 }
 .leader {
   border: 3px solid var(--primary-color);
