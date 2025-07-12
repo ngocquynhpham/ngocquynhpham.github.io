@@ -100,7 +100,8 @@ button:active {
   font-size: 5rem;
   font-weight: bold;
   color: var(--primary-color);  
-  font-family: var(--font-main);        
+  font-family: var(--font-main);    
+  text-align: center; 
 }
 .button-container{
   display: flex;
@@ -125,4 +126,40 @@ button:active {
 .btn:hover {
   background-color: var(--secondary-color);
   color: var(--text-color);
+}
+.new-game-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+.new-game-btn{
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  font-family: var(--font-main);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.leader {
+  border: 3px solid var(--primary-color);
+  box-shadow: 0 0 10px 2px var(--primary-color);
+  animation: leader-glow 1s ease-in-out infinite alternate;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes leader-glow {
+  0% {
+    box-shadow: 0 0 10px 2px var(--primary-color);
+    border-color: var(--primary-color);
+    transform: scale(1);
+  }
+  100% {
+    box-shadow: 0 0 15px 5px var(--primary-color);
+    border-color: #fff;
+    transform: scale(1.03);
+  }
 }
