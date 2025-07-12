@@ -19,13 +19,16 @@ const team2Btn3 = document.getElementById('away-btn3');
 function updateScore(team, points) {
   const currentScore = parseInt(team.textContent);
   team.textContent = currentScore + points;
-  updateLeader() 
+  updateLeader();
+  checkScoreLimit();
 }
 // Function to reset the scores
 function resetScores() {
     team1Score.textContent = '0';   
     team2Score.textContent = '0';
-    updateLeader()
+    updateLeader();
+    checkScoreLimit();
+    document.querySelector('.note-container').classList.remove('show');
 }
 
 // Event listeners for Team 1 buttons
@@ -43,6 +46,7 @@ btnNewGame.addEventListener(("click"), () => {
     resetScores();
 });
 
+// Function to update the leader class based on scores
 function updateLeader() {
     const score1 = parseInt(team1Score.textContent);
     const score2 = parseInt(team2Score.textContent);
@@ -56,6 +60,32 @@ function updateLeader() {
         team2.classList.add('leader');
     }
 }
+function checkScoreLimit() {
+    const limit = 200;
+    const score1 = parseInt(team1Score.textContent);
+    const score2 = parseInt(team2Score.textContent);
+    team1Btn1.disabled = false;
+    team1Btn2.disabled = false;
+    team1Btn3.disabled = false;
+    team2Btn1.disabled = false;
+    team2Btn2.disabled = false;
+    team2Btn3.disabled = false;
+    if (score1 > limit || score2 > limit) {
+        document.querySelector('.note-container').classList.add('show');
+        team1Btn1.disabled = true;
+        team1Btn2.disabled = true;
+        team1Btn3.disabled = true;
+        team2Btn1.disabled = true;
+        team2Btn2.disabled = true;
+        team2Btn3.disabled = true;
+        if (score1 > limit) {
+            alert('Team 1 has exceeded 200 points!');
+        }
+        if (score2 > limit) {
+            alert('Team 2 has exceeded 200 points!');
+        }
+    }
+    
+}
 
-
-document.addEventListener('DOMContentLoaded', updateLeader);
+document.addEventListener('DOMContentLoaded', updateScore);
