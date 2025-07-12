@@ -1,0 +1,208 @@
+@font-face {
+  font-family: "CursedTimer";
+  src: url("./fonts/CursedTimer.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+:root {
+  --primary-color: #f94f6d;
+  --secondary-color: #9aabd8;
+  --text-color: #eeeeee;
+
+  --bg-primary-color: #1b244a;
+  --bg-secondary-color: #080001;
+ 
+
+  --font-main: "CursedTimer", sans-serif;
+  --font-secondary: "Poppins", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+button {
+  border: none;
+  outline: none;
+  background: none; 
+}
+
+button:focus,
+button:active {
+  outline: none;
+}
+
+.m-container {
+  background-color: var(--bg-secondary-color);
+  color: var(--text-color);
+  font-family: var(--font-secondary);
+  min-height: 100vh;
+}
+.m-inner {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.m-title{
+  padding-top: 20px;
+  text-align: center;
+  font-family: var(--font-main);
+  font-size: 3rem;
+  line-height: 1.8;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+.m-sub-title {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--secondary-color);
+  margin-bottom: 20px;
+}
+.scoreboard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+}
+.team {
+  color: var(--text-color);
+  background-color: var(--bg-primary-color);
+  width: calc(50% - 40px);
+  min-width: 300px;
+  max-width: 400px;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+}
+.team-name {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.score-container{
+  background-color: var(--bg-secondary-color);
+  padding: 20px;
+  border-radius: 10px;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;      
+}
+.score{
+  font-size: 5rem;
+  font-weight: bold;
+  color: var(--primary-color);  
+  font-family: var(--font-main);    
+  text-align: center; 
+}
+.button-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 60%;
+}
+
+.btn{
+  background-color: transparent;
+  color: var(--secondary-color);
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  border: 2px solid var(--secondary-color);
+  cursor: pointer;
+  font-size: 1rem;
+  font-family: var(--font-main);
+  transition: background-color 0.3s ease, transform 0.1s ease;   
+}
+.btn:hover {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
+.btn:active {
+  transform: scale(0.95);
+  transition: transform 0.1s;
+}
+
+.btn:disabled,
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: transparent;
+  color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  pointer-events: none;
+}
+.new-game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding-bottom: 70px;
+
+}
+.new-game-wrapper{
+  position: relative;
+  width: 100%;
+  padding: 0 50px;
+}
+.new-game-btn{
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  font-family: var(--font-main);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.new-game-btn:hover {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
+.note-container{
+  width: 100%;
+  position: absolute;
+  bottom: -100%;
+  left: -50px;
+  z-index: 3;
+  display: none;
+}
+.note-container.show {
+  display: block;
+}
+.note {
+  color: var(--text-color);
+  text-align: center;
+}
+.leader {
+  border: 3px solid var(--primary-color);
+  box-shadow: 0 0 10px 2px var(--primary-color);
+  animation: leader-glow 1s ease-in-out infinite alternate;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes leader-glow {
+  0% {
+    box-shadow: 0 0 10px 2px var(--primary-color);
+    border-color: var(--primary-color);
+    transform: scale(1);
+  }
+  100% {
+    box-shadow: 0 0 15px 5px var(--primary-color);
+    border-color: #fff;
+    transform: scale(1.03);
+  }
+}

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lottie Animation Controls - Simplified</title>
+    <style>
+        :root {
+            --page-bg: #f0f2f5;
+            --container-bg: #ffffff;
+            --lottie-container-bg: #ffffff; /* Màu nền cố định cho Lottie container */
+            --text-color-primary: #333333;
+            --text-color-secondary: #555555;
+            --button-bg: #f8f9fa;
+            --button-hover-bg: #e9ecef;
+            --border-color: #ced4da;
+            --accent-color: #007bff;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --slider-track-bg: #dee2e6;
+            --slider-thumb-bg: #ffffff;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            background-color: var(--page-bg);
+            color: var(--text-color-primary);
+            line-height: 1.5;
+        }
+
+        #lottie-container {
+            width: 300px;
+            height: 300px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            background-color: var(--lottie-container-bg); /* Sử dụng biến CSS cố định */
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: auto auto; /* Giữ lại 2 cột nếu các controls còn lại vẫn hợp lý */
+            gap: 15px 20px;
+            background-color: var(--container-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px var(--shadow-color);
+            align-items: center;
+        }
+
+        .control-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-item label {
+            white-space: nowrap;
+            color: var(--text-color-secondary);
+            font-size: 0.9em;
+        }
+
+        .controls-grid button {
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            background-color: var(--button-bg);
+            color: var(--text-color-primary);
+            font-size: 0.9em;
+        }
+
+        .controls-grid button:hover {
+            background-color: var(--button-hover-bg);
+        }
+
+        .controls-grid input[type="range"] {
+            flex-grow: 1;
+            min-width: 120px;
+            cursor: pointer;
+        }
+
+        #speedValue,
+        #currentFrameDisplay {
+            min-width: 40px;
+            font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 0.9em;
+            text-align: right;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--slider-track-bg);
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: var(--slider-thumb-bg);
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 1px 3px var(--shadow-color);
+        }
+
+        input:checked + .slider {
+            background-color: var(--accent-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Lottie Animation Controls</h2>
+
+    <div id="lottie-container"></div>
+
+    <div class="controls-grid">
+        <div class="control-item">
+            <button id="playBtn">Play</button>
+            <button id="pauseBtn">Pause</button>
+        </div>
+
+        <div class="control-item">
+            <label for="loopToggle">Loop:</label>
+            <label class="switch">
+                <input type="checkbox" id="loopToggle">
+                <span class="slider"></span>
+            </label>
+        </div>
+        
+        <div class="control-item">
+            <label for="speedControl">Tốc độ:</label>
+            <input type="range" id="speedControl" min="0.1" max="3" step="0.1">
+            <span id="speedValue">1.0x</span>
+        </div>
+
+        <div class="control-item" style="grid-column: 1 / -1;"> <label for="seeker">Seek:</label>
+            <input type="range" id="seeker" value="0" min="0" step="1" style="flex-grow:1;">
+            <span id="currentFrameDisplay">0</span>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+
+    <script>
+        const lottieContainer = document.getElementById('lottie-container');
+        const playBtn = document.getElementById('playBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        // Đã loại bỏ: colorPickerLottieBg và rectFillPicker
+        const seeker = document.getElementById('seeker');
+        const currentFrameDisplay = document.getElementById('currentFrameDisplay');
+        const loopToggle = document.getElementById('loopToggle');
+        const speedControl = document.getElementById('speedControl');
+        const speedValue = document.getElementById('speedValue');
+
+        let animationInstance = null;
+        // Đã loại bỏ: targetRectElement
+        const animationPath = '/json/animation.json'; 
+
+        animationInstance = lottie.loadAnimation({
+            container: lottieContainer,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: animationPath
+        });
+
+        animationInstance.addEventListener('DOMLoaded', () => {
+            console.log('Animation Loaded');
+            seeker.max = animationInstance.totalFrames;
+            currentFrameDisplay.textContent = Math.floor(animationInstance.currentFrame);
+            
+            loopToggle.checked = animationInstance.loop;
+            speedControl.value = animationInstance.playSpeed;
+            speedValue.textContent = `${animationInstance.playSpeed.toFixed(1)}x`;
+
+            // Đã loại bỏ logic liên quan đến colorPickerLottieBg và rectFillPicker
+        });
+
+        playBtn.addEventListener('click', () => {
+            if (animationInstance) animationInstance.play();
+        });
+
+        pauseBtn.addEventListener('click', () => {
+            if (animationInstance) animationInstance.pause();
+        });
+
+        seeker.addEventListener('input', () => {
+            if (animationInstance) {
+                const frame = parseInt(seeker.value);
+                animationInstance.goToAndStop(frame, true);
+                currentFrameDisplay.textContent = frame;
+            }
+        });
+
+        animationInstance.addEventListener('enterFrame', () => {
+            const currentFrame = Math.floor(animationInstance.currentFrame);
+            seeker.value = currentFrame;
+            currentFrameDisplay.textContent = currentFrame;
+        });
+
+        // Đã loại bỏ event listener cho colorPickerLottieBg
+        // Đã loại bỏ event listener cho rectFillPicker
+
+        loopToggle.addEventListener('change', () => {
+            if (animationInstance) {
+                animationInstance.loop = loopToggle.checked;
+            }
+        });
+
+        speedControl.addEventListener('input', () => {
+            if (animationInstance) {
+                const newSpeed = parseFloat(speedControl.value);
+                animationInstance.setSpeed(newSpeed);
+                speedValue.textContent = `${newSpeed.toFixed(1)}x`;
+            }
+        });
+
+    </script>
+
+</body>
+</html>
