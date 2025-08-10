@@ -42,10 +42,12 @@
         <p class="m-message" id="messageEl">Want to play a round?</p>
         <p class="m-card">Cards: <span id="cardEl"></span></p>
         <p class="m-sum">Sum: <span id="sumEl"></span></p>
-        <button onclick="startGame()" class="m-btn">START GAME</button>
-        <button onclick="newCard()" class="m-btn m-btn-secondary">NEW CARD</button>
+        <button id="startGameBtn" onclick="startGame()" class="m-btn">START GAME</button>
+        <button id="newCardBtn" onclick="newCard()" class="m-btn m-btn-secondary">NEW CARD</button>
+        <p  id="player-el"></p>
       </div>
     </div>
+    <p id="greeting-el"></pid>
   </div>
 </body>
 <script src="./index.js"></script>
