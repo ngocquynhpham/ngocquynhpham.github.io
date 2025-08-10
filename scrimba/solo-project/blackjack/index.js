@@ -82,7 +82,6 @@ const newCard = () => {
     let newCard = getRandomCard();
     sum += newCard;
     cards.push(newCard);
-    console.log(cards);
     renderGame();
   }
 };
