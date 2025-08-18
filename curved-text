@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Curved Text Editor</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+    }
+    #controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 200px;
+    }
+    svg {
+      border: 1px solid #ccc;
+      flex: 1;
+    }
+    .path-guide {
+      fill: none;
+      stroke: #ddd;
+      stroke-width: 1;
+    }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <label>
+      Text:
+      <textarea id="txtInput" rows="6">Hello <u>world</u>!
+This is <b>curved</b> text</textarea>
+    </label>
+
+    <label>
+      Curvature:
+      <input type="range" id="curvInput" min="-200" max="200" value="50" />
+      <span id="curvValue">50</span>
+    </label>
+
+    <label>
+      Font Size:
+      <input type="number" id="fontSizeInput" value="20" />
+    </label>
+
+    <label>
+      Line Height:
+      <input type="number" id="lineHeightInput" value="40" />
+    </label>
+
+    <label>
+      Color:
+      <input type="color" id="colorPicker" value="#000000" />
+    </label>
+  </div>
+
+  <svg id="svg" width="800" height="400"></svg>
+
+  <script>
+    const txtInput = document.getElementById("txtInput");
+    const curvInput = document.getElementById("curvInput");
+    const fontSizeInput = document.getElementById("fontSizeInput");
+    const lineHeightInput = document.getElementById("lineHeightInput");
+    const colorPicker = document.getElementById("colorPicker");
+    const curvValue = document.getElementById("curvValue");
+    const svg = document.getElementById("svg");
+
+    function render() {
+      svg.innerHTML = ""; // clear old content
+
+      const lines = txtInput.value
+        .split(/\n|<br\s*\/?>/i)
+        .filter((l) => l.trim() !== "");
+      const curvature = Number(curvInput.value);
+      const fontSize = Number(fontSizeInput.value);
+      const lineHeight = Number(lineHeightInput.value);
+      const color = colorPicker.value;
+
+      curvValue.textContent = curvature;
+
+      const startX = 40,
+        startY = 150;
+      const endX = 680,
+        endY = 150;
+
+      lines.forEach((line, i) => {
+        const offsetY = i * lineHeight;
+        const cx = (startX + endX) / 2;
+        const cy = startY - curvature + offsetY;
+
+        const pathId = `curve${i}`;
+        const d = `M ${startX} ${startY + offsetY} Q ${cx} ${cy} ${endX} ${
+          endY + offsetY
+        }`;
+
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("id", pathId);
+        path.setAttribute("d", d);
+        path.setAttribute("class", "path-guide");
+        svg.appendChild(path);
+
+        const textEl = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        textEl.setAttribute("font-size", fontSize);
+        textEl.setAttribute("fill", color);
+        textEl.setAttribute("text-anchor", "middle"); // 👈 thêm ở đây
+
+        const textPath = document.createElementNS("http://www.w3.org/2000/svg", "textPath");
+        textPath.setAttribute("href", `#${pathId}`);
+        textPath.setAttribute("startOffset", "50%"); // 👈 thêm ở đây
+
+        // Parse HTML -> tspan
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = line;
+
+        tempDiv.childNodes.forEach((node) => {
+          const tspan = document.createElementNS("http://www.w3.org/2000/svg", "tspan");
+          if (node.nodeType === Node.TEXT_NODE) {
+            tspan.textContent = node.textContent;
+          } else if (node.nodeType === Node.ELEMENT_NODE) {
+            tspan.textContent = node.textContent;
+            if (node.tagName.toLowerCase() === "u") {
+              tspan.setAttribute("style", "text-decoration: underline");
+            }
+            if (node.tagName.toLowerCase() === "s") {
+              tspan.setAttribute("style", "text-decoration: line-through");
+            }
+            if (node.tagName.toLowerCase() === "b" || node.tagName.toLowerCase() === "strong") {
+              tspan.setAttribute("font-weight", "bold");
+            }
+            if (node.tagName.toLowerCase() === "i" || node.tagName.toLowerCase() === "em") {
+              tspan.setAttribute("font-style", "italic");
+            }
+          }
+          textPath.appendChild(tspan);
+        });
+
+        textEl.appendChild(textPath);
+        svg.appendChild(textEl);
+      });
+    }
+
+    txtInput.addEventListener("input", render);
+    curvInput.addEventListener("input", render);
+    fontSizeInput.addEventListener("input", render);
+    lineHeightInput.addEventListener("input", render);
+    colorPicker.addEventListener("input", render);
+
+    render();
+  </script>
+</body>
+</html>
