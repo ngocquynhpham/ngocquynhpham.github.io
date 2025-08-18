@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Inert</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      :root {
+        --bg: #f7f7fb;
+        --card: #ffffff;
+        --text: #1f2328;
+        --muted: #6b7280;
+        --brand: #2563eb;
+        --brand-600: #1d4ed8;
+        --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        --radius: 14px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+          Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.65;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 48px 20px;
+        height: fit-content;
+      }
+
+      /* ---------- Article card ---------- */
+      #main-content {
+        width: min(860px, 100%);
+        background: var(--card);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 32px 28px;
+      }
+      .post-head {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 14px;
+      }
+      .avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #f59e0b, #ef4444, #8b5cf6);
+      }
+      h1 {
+        margin: 6px 0 12px;
+        font-size: 28px;
+        line-height: 1.25;
+        letter-spacing: -0.02em;
+      }
+      h2 {
+        font-size: 18px;
+        margin: 20px 0 8px;
+      }
+      p {
+        margin: 10px 0;
+      }
+      ul {
+        margin: 10px 0 16px 20px;
+      }
+      li {
+        margin: 6px 0;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .callout {
+        background: #f1f5ff;
+        border: 1px solid #dfe7ff;
+        padding: 14px 16px;
+        border-radius: 12px;
+      }
+
+      /* ---------- CTA button ---------- */
+      .cta-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 22px;
+      }
+      #openModal {
+        appearance: none;
+        border: 0;
+        cursor: pointer;
+        background: var(--brand);
+        color: #fff;
+        font-weight: 700;
+        padding: 14px 22px;
+        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+        transform: translateY(0);
+        transition: transform 0.15s ease, box-shadow 0.2s ease,
+          background 0.2s ease;
+      }
+      #openModal:hover {
+        background: var(--brand-600);
+        transform: translateY(-1px);
+      }
+      #openModal:active {
+        transform: translateY(0);
+        box-shadow: 0 6px 14px rgba(37, 99, 235, 0.35);
+      }
+      #openModal .icon {
+        width: 18px;
+        height: 18px;
+        display: inline-block;
+      }
+
+      /* ---------- Overlay + Modal ---------- */
+      #overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        display: none;
+        z-index: 90;
+        transition: opacity 0.2s ease;
+      }
+      #modal {
+        position: fixed;
+        inset: 0;
+        display: none;
+        z-index: 100;
+        place-items: center;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+      .modal-card {
+        width: min(420px, 100%);
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: var(--shadow);
+        padding: 28px;
+        text-align: center;
+        position: relative;
+        transform: translateY(10px) scale(0.98);
+        opacity: 0;
+        transition: transform 0.25s ease, opacity 0.25s ease;
+      }
+      .modal-card.open {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      .x {
+        position: absolute;
+        right: 12px;
+        top: 12px;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+        border: 0;
+        background: #f3f4f6;
+      }
+      .x:hover {
+        background: #e5e7eb;
+      }
+      .confetti {
+        width: 68px;
+        height: 68px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        margin: 0 auto 10px;
+        background: #fff7cc;
+        box-shadow: inset 0 0 0 1px #ffe58f;
+      }
+      .track {
+        margin-top: 18px;
+        width: 100%;
+        border: 0;
+        cursor: pointer;
+        background: #000;
+        color: #fff;
+        font-weight: 700;
+        padding: 12px 18px;
+        border-radius: 10px;
+        transition: opacity 0.2s ease;
+      }
+      .track:hover {
+        opacity: 0.9;
+      }
+
+      /* accessibility: reduce motion */
+      @media (prefers-reduced-motion: reduce) {
+        #openModal,
+        .modal-card {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ======= MAIN CONTENT (will be inert when modal opens) ======= -->
+    <article id="main-content">
+      <div class="post-head">
+        <div class="avatar" aria-hidden="true"></div>
+        <div>
+          <strong>Q Creative • Web Developer</strong>
+          <div class="muted">“inert” is simple yet powerful.</div>
+        </div>
+      </div>
+
+      <h1>Heard about the new HTML <code>inert</code> attribute?</h1>
+      <p>
+        It’s a small attribute that makes a big difference. When you mark a
+        container as <code>inert</code>, the element and everything inside it
+        becomes <b>inactive</b>: users can’t click, focus, or tab into it — and
+        screen readers entirely skip it. This lets you control attention and
+        interaction with one declarative switch.
+      </p>
+
+      <h2>Why it matters</h2>
+      <ul>
+        <li>
+          <b>Focus the experience:</b> perfect for modals and pop-ups. Keep
+          users inside the dialog without accidental clicks on the page behind.
+        </li>
+        <li>
+          <b>Accessible by default:</b> assistive tech ignores inert regions, so
+          people using screen readers don’t hear irrelevant content.
+        </li>
+        <li>
+          <b>Simple & reliable:</b> add/remove one attribute; no brittle
+          tab-trap hacks.
+        </li>
+      </ul>
+
+      <div class="callout">
+        <b>How it works?</b><br />
+        Add <code>inert</code> to any element you want to deactivate. While it’s
+        there, users can’t click, tab, or interact with it. Remove it, and
+        everything goes back to normal. It’s effective and effortless to set up.
+      </div>
+
+      <div class="cta-row">
+        <button id="openModal" aria-haspopup="dialog">
+          <svg
+            class="icon"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              d="M7 4h10a2 2 0 0 1 2 2v3H5V6a2 2 0 0 1 2-2zm-2 7h14l-1.2 7.2A2 2 0 0 1 15.83 20H8.17a2 2 0 0 1-1.97-1.8L5 11zM9 22a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm6 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
+            />
+          </svg>
+          Place Order
+        </button>
+        <span class="muted"
+          >Demo modal will use <code>inert</code> to lock this page.</span
+        >
+      </div>
+    </article>
+
+    <!-- ======= OVERLAY + MODAL ======= -->
+    <div id="overlay" hidden></div>
+
+    <div
+      id="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+      hidden
+    >
+      <div class="modal-card" id="modalCard">
+        <button class="x" id="closeModal" aria-label="Close">✕</button>
+        <div class="confetti" aria-hidden="true">🎉</div>
+        <h2 id="modal-title" style="margin: 8px 0 6px">
+          Your order has been placed!
+        </h2>
+        <p class="muted" style="margin: 0 0 8px">
+          Thanks for shopping with us.
+        </p>
+        <button class="track" id="trackBtn">Track order</button>
+      </div>
+    </div>
+
+    <script>
+      const openBtn = document.getElementById("openModal");
+      const closeBtn = document.getElementById("closeModal");
+      const trackBtn = document.getElementById("trackBtn");
+      const main = document.getElementById("main-content");
+      const overlay = document.getElementById("overlay");
+      const modal = document.getElementById("modal");
+      const modalCard = document.getElementById("modalCard");
+    
+      let lastFocus = null;
+    
+      function openModal() {
+        console.log("open modal...");
+        lastFocus = document.activeElement;
+    
+        // show modal + overlay
+        modal.style.display = "flex";
+        overlay.style.display = "block";
+    
+        // animate card
+        requestAnimationFrame(() => modalCard.classList.add("open"));
+    
+        // lock page scroll
+        main.setAttribute("inert", "");
+        document.body.style.overflow = "hidden";
+    
+        // focus vào nút close
+        closeBtn.focus();
+      }
+    
+      function closeModal() {
+        modalCard.classList.remove("open");
+    
+        // chờ animation xong rồi ẩn modal
+        setTimeout(() => {
+          modal.style.display = "none";
+          overlay.style.display = "none";
+          main.removeAttribute("inert");
+          document.body.style.overflow = "";
+    
+          if (lastFocus) lastFocus.focus();
+        }, 150);
+      }
+    
+      openBtn.addEventListener("click", openModal);
+      closeBtn.addEventListener("click", closeModal);
+      overlay.addEventListener("click", closeModal);
+    
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.style.display === "block") {
+          closeModal();
+        }
+      });
+    
+      // demo action
+      trackBtn.addEventListener("click", () =>
+        alert("Opening tracking page…")
+      );
+    </script>
+  </body>
+</html>
