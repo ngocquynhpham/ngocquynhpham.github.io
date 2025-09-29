@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Validation: :valid vs :user-valid</title>
+
+    <!-- Tailwind CSS for basic layout -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f1f5f9;
+        color: #1e293b;
+      }
+
+      /* --- General Input Styling --- */
+      .form-input {
+        border: 2px solid #cbd5e1;
+        transition: all 0.2s ease-in-out;
+      }
+      .form-input:focus {
+        outline: none;
+        border-color: #4f46e5;
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+      }
+
+      /* --- Styling cho Form 1: Dùng :valid và :invalid (Kiểu cũ) --- */
+      .legacy-form .form-input:valid {
+        border-color: #16a34a; /* Green */
+      }
+      .legacy-form .form-input:invalid {
+        border-color: #dc2626; /* Red */
+      }
+
+      /* --- Styling cho Form 2: Dùng :user-valid và :user-invalid (Kiểu mới) --- */
+      .modern-form .form-input:user-valid {
+        border-color: #16a34a; /* Green */
+      }
+      .modern-form .form-input:user-invalid {
+        border-color: #dc2626; /* Red */
+      }
+    </style>
+  </head>
+  <body class="p-4 sm:p-8">
+    <div class="max-w-4xl mx-auto">
+      <header class="text-center mb-6 md:mb-10">
+        <h1 class="text-3xl md:text-4xl font-bold text-slate-800">
+          CSS Form Validation
+        </h1>
+        <p class="text-base md:text-lg text-slate-600 mt-2">
+          So sánh trực quan giữa <code>:valid</code> và <code>:user-valid</code>
+        </p>
+      </header>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <!-- ===== FORM 1: DÙNG :VALID (KIỂU CŨ) ===== -->
+        <div class="legacy-form bg-white p-6 rounded-lg shadow-md">
+          <h2 class="text-xl md:text-2xl font-semibold mb-1 text-slate-700">
+            Kiểu cũ: <code>:valid</code>
+          </h2>
+          <p class="text-sm text-slate-500 mb-4">
+            <strong>Vấn đề:</strong> Ô "Họ và tên" (không bắt buộc) hiển thị màu
+            xanh ngay lập tức, trong khi người dùng chưa làm gì cả.
+          </p>
+          <form action="#" class="space-y-4">
+            <div>
+              <label
+                for="legacy-name"
+                class="block text-sm font-medium text-slate-600"
+                >Họ và tên (Không bắt buộc)</label
+              >
+              <input
+                type="text"
+                id="legacy-name"
+                class="form-input mt-1 block w-full rounded-md p-2"
+              />
+            </div>
+            <div>
+              <label
+                for="legacy-email"
+                class="block text-sm font-medium text-slate-600"
+                >Email (Bắt buộc)</label
+              >
+              <input
+                type="email"
+                id="legacy-email"
+                required
+                class="form-input mt-1 block w-full rounded-md p-2"
+              />
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-slate-700 text-white py-2 rounded-md font-semibold hover:bg-slate-600"
+            >
+              Đăng ký
+            </button>
+          </form>
+        </div>
+
+        <!-- ===== FORM 2: DÙNG :USER-VALID (KIỂU MỚI) ===== -->
+        <div class="modern-form bg-white p-6 rounded-lg shadow-md">
+          <h2 class="text-xl md:text-2xl font-semibold mb-1 text-slate-700">
+            Kiểu mới: <code>:user-valid</code> 👍
+          </h2>
+          <p class="text-sm text-slate-500 mb-4">
+            <strong>Ưu điểm:</strong> Chỉ hiển thị màu xanh/đỏ sau khi bạn đã
+            tương tác (gõ chữ rồi di chuyển ra ngoài). Trải nghiệm tự nhiên hơn.
+          </p>
+          <form action="#" class="space-y-4">
+            <div>
+              <label
+                for="modern-name"
+                class="block text-sm font-medium text-slate-600"
+                >Họ và tên (Không bắt buộc)</label
+              >
+              <input
+                type="text"
+                id="modern-name"
+                class="form-input mt-1 block w-full rounded-md p-2"
+              />
+            </div>
+            <div>
+              <label
+                for="modern-email"
+                class="block text-sm font-medium text-slate-600"
+                >Email (Bắt buộc)</label
+              >
+              <input
+                type="email"
+                id="modern-email"
+                required
+                class="form-input mt-1 block w-full rounded-md p-2"
+              />
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-indigo-600 text-white py-2 rounded-md font-semibold hover:bg-indigo-500"
+            >
+              Đăng ký
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="mt-8 md:mt-10 p-4 bg-slate-200 text-slate-700 rounded-lg">
+        <h3 class="font-semibold">💡 Hướng dẫn thử nghiệm:</h3>
+        <div class="flex flex-col gap-4 pt-4">
+          <p class="text-sm md:text-base">
+            1. Quan sát Form 1: Ô "Họ và tên" có viền xanh ngay từ đầu.
+          </p>
+          <p class="text-sm md:text-base">
+            2. Tương tác với Form 2: Gõ một email hợp lệ vào ô Email, sau đó bấm
+            ra ngoài. Bạn sẽ thấy viền xanh xuất hiện.
+          </p>
+          <p class="text-sm md:text-base">
+            3. Thử nhập sai: Gõ một email không hợp lệ vào Form 2 và bấm ra
+            ngoài để thấy viền đỏ.
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
