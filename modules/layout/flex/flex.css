@@ -222,7 +222,6 @@ img {
 }
 
 body {
-  min-width: 768px;
   font-family: var(--font-primary);
 }
 .container { 
