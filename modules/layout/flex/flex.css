@@ -1,0 +1,327 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&display=swap');
+
+:root {
+  --color01: #000000; /* color text_1 */
+  --color02: #1E9F60; /* color accent_1 */
+  --color03: #E0B825; /* color accent_2 */
+  --color04: #FFEABA; /* color accent_3 */
+  --color05: #124A38; /* color accent_4 */
+  --color06: #124A38CC; /* color accent_4-80 */
+  --color07: #2B5C60; /* color accent_5 */
+  --color08: #FFFFFF; /* color bg_1 */
+  --color09: #F4F4F4; /* color bg_2 */
+  --color10: #625A3B; /* color bg_3 */
+  --color11: #F6F1E5; /* color bg_4 */
+  --color12: #FFFFFF66; /* color white-40 */
+  --color13: #FFFFFF99; /* color white-60 */
+  --color14: #FFFFFFCC; /* color white-80 */
+  --color15: #FFFFFF; /* color white */
+  --color16: #000000; /* color black */
+  --color17: #00000033; /* color black-20 */
+  --color18: #00000099; /* color black-60 */
+  --color19: #1E9F60CC; /* color accent_1-80 */
+  --color20: #1E9F6099; /* color accent_1-60 */
+  --color21: #1E9F6066; /* color accent_1-40 */
+  --color22: #1E9F601A; /* color accent_1-10 */
+  --color23: #1E9F6033; /* color accent_1-20 */
+  --color24: #19654C; /* color sub_1 */
+  --color25: #208565; /* color sub_2 */
+  --color26: #26A37C; /* color sub_3 */
+  --color27: #D9D9D9CC; /* color grey */
+
+  --font-primary: "Zen Kaku Gothic New", sans-serif;
+  --font-secondary: "Roboto", sans-serif;
+}
+
+.sg-img-auto {
+  width: auto;
+  height: auto;
+}
+
+.body-main {
+  position: relative;
+  background-color: #ffffff;
+  z-index: 1;
+}
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+main {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-size: 16px;
+  word-wrap: break-word;
+  word-break: normal;
+  -webkit-font-smoothing: antialiased;
+  overflow-wrap: break-word;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+select,
+input,
+textarea,
+button {
+  font-family: inherit;
+}
+
+select,
+button {
+  cursor: pointer;
+}
+
+button {
+  border: unset;
+  background: unset;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+body {
+  min-width: 768px;
+  font-family: var(--font-primary);
+}
+.container { 
+  padding: 40px 0;
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  word-break: break-word;
+  margin: 0 auto;
+}
+.inner { 
+  padding: 0 24px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+/* Custom styles to complement Tailwind */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #1a202c; /* Dark background */
+  color: #e2e8f0;
+}
+
+/* Styling for Prism.js code blocks */
+pre[class*="language-"] {
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  height: 100%;
+}
+
+/* Custom scrollbar for a better look */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #2d3748;
+}
+::-webkit-scrollbar-thumb {
+  background: #4a5568;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #718096;
+}
+
+/* Tab styles */
+.tab-btn.active {
+  background-color: #4a5568;
+  color: #ffffff;
+}
+
+/* Hide content that is not active */
+.content-tab > div:not(.active) {
+  display: none;
+}
+
+/* Preview item styling */
+.preview-item {
+  min-height: 80px;
+}
+/* ==============================
+* Headline
+============================== */
+.headline{
+  position: relative;
+  z-index: 1;
+}
+.headline__title{
+  color: var(--color02);
+  font-variant-numeric: ordinal;
+  font-family: var(--font-secondary);
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 100%;
+  letter-spacing: 6px;
+  text-transform: capitalize;
+  display: block;
+}
+.headline__desc{
+  padding-top: 16px;
+  color: var(--color01);
+  font-family: var(--font-primary);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 150%;
+  letter-spacing: 1.92px;
+  display: block;
+}
+
+.content-main {
+  display: flex;
+  gap: 24px;
+  padding-top: 40px;
+  position: relative;
+  z-index: 1;
+  min-height: calc(100vh - 196px);
+}
