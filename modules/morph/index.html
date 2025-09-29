@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Morph Animation</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f5f5f5;
+    }
+
+    .morph {
+      width: 150px;
+      height: 150px;
+      background: #4cafef;
+      border-radius: 50%; /* bắt đầu là hình tròn */
+      animation: morphing 3s infinite alternate ease-in-out;
+    }
+
+    @keyframes morphing {
+      0% {
+        border-radius: 50%; /* tròn */
+        background: #4cafef;
+        transform: rotate(0deg) scale(1);
+      }
+      50% {
+        border-radius: 20%; /* bo góc ít hơn */
+        background: #ff6b6b;
+        transform: rotate(45deg) scale(1.2);
+      }
+      100% {
+        border-radius: 0%; /* vuông */
+        background: #6bcf4c;
+        transform: rotate(90deg) scale(1);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="morph"></div>
+</body>
+</html>
