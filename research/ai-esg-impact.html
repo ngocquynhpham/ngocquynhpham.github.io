@@ -3,457 +3,578 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI ESG Impact Analyzer & Curriculum</title>
+    <title>AI & ESG: Greenwashing Trap</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="./style/ai-esg-impact.css" />
-
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              "tech-dark": "#0f172a",
-              "tech-card": "#1e293b",
-              "neon-green": "#10b981",
-              "alert-red": "#ef4444",
-              "warning-yellow": "#f59e0b",
-              "info-blue": "#3b82f6",
-            },
-          },
-        },
-      };
-    </script>
   </head>
-  <body class="bg-tech-dark text-white min-h-screen flex flex-col">
-    <!-- Modal Popup for Analysis Results (UPDATED) -->
-    <div
-      id="result-modal"
-      class="fixed inset-0 z-50 hidden modal-backdrop items-center justify-center opacity-0 flex"
-    >
+  <body
+    class="bg-slate-100 font-sans text-slate-800 min-h-screen flex flex-col"
+  >
+    <!-- Header / Navigation -->
+    <header class="bg-slate-900 text-white shadow-lg sticky top-0 z-50">
       <div
-        class="max-h-[80%] mt-[64px] overflow-y-auto modal-content bg-tech-card p-8 rounded-2xl shadow-2xl max-w-[80%] w-full border border-gray-700"
+        class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0"
       >
-        <h3 class="text-3xl font-bold mb-4 text-center">
-          BÁO CÁO KIỂM TOÁN ESG
-        </h3>
-        <p class="text-gray-400 text-center mb-6">
-          Tóm tắt phân tích cho dự án:
-        </p>
-
-        <p
-          id="modal-project-name"
-          class="text-center text-xl font-bold text-neon-green mb-6 border-b border-gray-700 pb-3"
-        ></p>
-
-        <div id="modal-result-content" class="space-y-4">
-          <!-- Analysis results summary inserted here -->
+        <div>
+          <h1
+            class="text-xl md:text-2xl font-bold tracking-tight text-emerald-400 flex items-center gap-2"
+          >
+            <i data-lucide="leaf" class="w-6 h-6"></i> AI & ESG: Greenwashing
+            Trap
+          </h1>
+          <p class="text-xs text-slate-400 uppercase tracking-widest pl-8">
+            Research Project: Recycling Colony v1.0
+          </p>
         </div>
+        <nav class="flex flex-wrap justify-center gap-4 text-sm font-medium">
+          <button
+            onclick="switchTab('overview')"
+            id="btn-overview"
+            class="nav-btn text-emerald-400 border-b-2 border-emerald-400 hover:text-emerald-300 transition-colors"
+          >
+            Lý thuyết
+          </button>
+          <button
+            onclick="switchTab('model')"
+            id="btn-model"
+            class="nav-btn text-slate-300 hover:text-emerald-300 transition-colors"
+          >
+            Mô hình
+          </button>
+          <button
+            onclick="switchTab('case-study')"
+            id="btn-case-study"
+            class="nav-btn text-slate-300 hover:text-emerald-300 transition-colors"
+          >
+            Case Study
+          </button>
+        </nav>
+      </div>
+    </header>
 
-        <!-- Chart Container (MOVED HERE) -->
-        <div class="mt-8 pt-6 border-t border-gray-700">
-          <h4 class="text-lg font-bold mb-3 text-center text-blue-400">
-            Trực quan hóa Phân bổ Nguồn lực
-          </h4>
-          <div class="h-64 w-full flex items-center justify-center">
-            <canvas id="impactChart"></canvas>
-          </div>
-        </div>
-
-        <button
-          onclick="closeModal()"
-          class="w-full mt-8 py-3 bg-info-blue hover:bg-blue-600 rounded-lg font-semibold transition"
+    <main class="max-w-6xl mx-auto px-4 py-8 flex-grow w-full">
+      <!-- TAB 1: OVERVIEW & THEORY -->
+      <div id="tab-overview" class="tab-content animate-fadeIn space-y-8 block">
+        <!-- Introduction -->
+        <section
+          class="bg-white p-8 rounded-xl shadow-sm border border-slate-200"
         >
-          Đóng
-        </button>
-      </div>
-    </div>
-
-    <!-- Navbar -->
-    <nav
-      class="sticky top-0 z-50 bg-tech-dark/95 backdrop-blur border-b border-gray-700"
-    >
-      <div class="max-w-6xl mx-auto px-4">
-        <div class="flex items-center justify-between h-16">
-          <span
-            class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-neon-green to-blue-500"
-          >
-            ESG.AI
-          </span>
-          <div class="flex space-x-4">
-            <button
-              onclick="switchTab('curriculum')"
-              id="tab-btn-curriculum"
-              class="px-4 py-2 rounded-lg text-sm font-medium transition-colors bg-gray-800 text-gray-300 hover:text-white"
-            >
-              📚 Lý thuyết
-            </button>
-            <button
-              onclick="switchTab('tool')"
-              id="tab-btn-tool"
-              class="px-4 py-2 rounded-lg text-sm font-medium transition-colors text-gray-300 hover:text-white hover:bg-gray-800"
-            >
-              🛠️ Công Cụ Phân Tích
-            </button>
-          </div>
-        </div>
-      </div>
-    </nav>
-
-    <div class="flex-grow p-4 md:p-8">
-      <div class="max-w-6xl mx-auto">
-        <!-- TAB 1: CURRICULUM & CONCEPTS -->
-        <div id="tab-curriculum" class="block animate-fade-in">
-          <!-- Hero Section -->
-          <div class="text-center mb-12 py-10">
-            <h1 class="text-4xl md:text-5xl font-bold mb-4">
-              AI & Bẫy Greenwashing <br />trong Kỷ nguyên Số
-            </h1>
-            <p class="text-xl text-gray-400 max-w-2xl mx-auto">
-              Bài viết mang tính chất nghiên cứu của một cá nhân
-            </p>
-            <div
-              class="mt-6 inline-flex items-center px-4 py-2 bg-gray-800 rounded-full border border-gray-600"
-            >
-              <span
-                class="w-3 h-3 bg-neon-green rounded-full mr-2 animate-pulse"
-              ></span>
-              <span class="text-sm font-mono text-neon-green"
-                >Context: Recycling Colony v1.0</span
-              >
+          <div class="flex items-start gap-4">
+            <div class="p-3 bg-emerald-100 rounded-full text-emerald-700">
+              <i data-lucide="book-open" class="w-8 h-8"></i>
             </div>
-          </div>
-
-          <!-- Lesson Plan Overview -->
-          <div class="flex gap-6 mb-12 justify-center align-items">
-            <div
-              class="bg-tech-card p-6 rounded-xl border-l-4 border-info-blue"
-            >
-              <h3 class="text-info-blue font-bold text-lg mb-2">🎯 Mục tiêu</h3>
-              <p class="text-gray-300 text-sm">
-                Phân biệt được ứng dụng AI thực chất (tối ưu quy trình) và AI
-                dùng để "Tẩy xanh" (Marketing/Reporting).
-              </p>
-            </div>
-            
-            <div
-              class="bg-tech-card p-6 rounded-xl border-l-4 border-neon-green"
-            >
-              <h3 class="text-neon-green font-bold text-lg mb-2">
-                🚀 Hoạt động chính
-              </h3>
-              <p class="text-gray-300 text-sm">
-                Pitch War: Cuộc chiến ý tưởng giữa các nhóm Startup (Marketing
-                vs Operations).
-              </p>
-            </div>
-          </div>
-
-          <!-- Key Concepts Breakdown -->
-          <h2
-            class="text-2xl font-bold mb-6 flex items-center gap-2 border-b border-gray-700 pb-2"
-          >
-            <span class="text-3xl">💡</span> Giải mã Khái niệm
-          </h2>
-
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-            <!-- Concept 1 -->
-            <div
-              class="bg-tech-card p-6 rounded-2xl border border-gray-700 hover:border-gray-500 transition"
-            >
-              <h3 class="text-xl font-bold text-white mb-3">
-                1. Greenwashing 4.0 là gì?
-              </h3>
-              <p class="text-gray-400 mb-4 text-justify">
-                Không chỉ là dán nhãn "Eco-friendly". Trong kỷ nguyên AI, tẩy
-                xanh là việc sử dụng thuật toán để:
-              </p>
-              <ul class="list-disc list-inside space-y-2 text-gray-300 text-sm">
-                <li>
-                  Tạo ra hàng ngàn hình ảnh bao bì xanh (Generative AI) nhưng
-                  không sản xuất thật.
-                </li>
-                <li>
-                  Tối ưu hóa từ khóa SEO để thao túng nhận thức người dùng về
-                  tính bền vững của cty.
-                </li>
-                <li>"Xào nấu" dữ liệu báo cáo ESG để đạt điểm cao ảo.</li>
-              </ul>
-            </div>
-
-            <!-- Concept 2 -->
-            <div
-              class="bg-tech-card p-6 rounded-2xl border border-gray-700 hover:border-gray-500 transition"
-            >
-              <h3 class="text-xl font-bold text-white mb-3">
-                2. Recycling Colony Model
-              </h3>
-              <p class="text-gray-400 mb-4 text-justify">
-                Mô hình "Thuộc địa Tái chế" giả định một hệ sinh thái khép kín
-                nơi rác thải là tài nguyên. AI đóng vai trò não bộ điều khiển:
-              </p>
-              <ul class="list-disc list-inside space-y-2 text-gray-300 text-sm">
-                <li>
-                  <span class="text-neon-green font-bold">Phần Gốc:</span> Robot
-                  phân loại rác, AI phát hiện vật liệu mới, Tối ưu lộ trình xe
-                  rác.
-                </li>
-                <li>
-                  <span class="text-warning-yellow font-bold">Phần Ngọn:</span>
-                  App tích điểm cho người dân, Dashboard hiển thị thành tích.
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- The 5 Factors Explained -->
-          <h2
-            class="text-2xl font-bold mb-6 flex items-center gap-2 border-b border-gray-700 pb-2"
-          >
-            <span class="text-3xl">🎛️</span> 5 Chỉ số trong Công cụ Phân tích
-          </h2>
-
-          <div class="space-y-4 mb-12">
-            <div
-              class="flex flex-col md:flex-row gap-4 bg-gray-900 p-4 rounded-xl border border-gray-800"
-            >
-              <div
-                class="md:w-1/4 text-warning-yellow font-bold uppercase text-sm tracking-wide pt-1"
-              >
-                Nhóm "Phần Ngọn" (Surface)
-              </div>
-              <div class="md:w-3/4">
-                <h4 class="font-bold text-white">Marketing & Content AI</h4>
-                <p class="text-gray-400 text-sm mt-1">
-                  Sử dụng AI để viết bài PR, tạo ảnh, video quảng bá lối sống
-                  xanh. Dễ làm, chi phí thấp, nhưng rủi ro "nói quá sự thật".
-                </p>
-              </div>
-            </div>
-
-            <div
-              class="flex flex-col md:flex-row gap-4 bg-gray-900 p-4 rounded-xl border border-gray-800"
-            >
-              <div
-                class="md:w-1/4 text-warning-yellow font-bold uppercase text-sm tracking-wide pt-1"
-              >
-                Nhóm "Phần Ngọn" (Surface)
-              </div>
-              <div class="md:w-3/4">
-                <h4 class="font-bold text-white">
-                  Gamification (Trò chơi hóa)
-                </h4>
-                <p class="text-gray-400 text-sm mt-1">
-                  AI tạo ra các thử thách, bảng xếp hạng để khuyến khích người
-                  dùng. Tốt để giáo dục, nhưng vô nghĩa nếu hệ thống xử lý rác
-                  phía sau bị quá tải.
-                </p>
-              </div>
-            </div>
-
-            <div
-              class="flex flex-col md:flex-row gap-4 bg-gray-900 p-4 rounded-xl border border-gray-800"
-            >
-              <div
-                class="md:w-1/4 text-neon-green font-bold uppercase text-sm tracking-wide pt-1"
-              >
-                Nhóm "Phần Gốc" (Root)
-              </div>
-              <div class="md:w-3/4">
-                <h4 class="font-bold text-white">Logistics & Chuỗi cung ứng</h4>
-                <p class="text-gray-400 text-sm mt-1">
-                  AI tối ưu hóa đường đi để giảm xăng dầu, dự báo điểm nóng rác
-                  thải. Tác động trực tiếp đến khí thải CO2.
-                </p>
-              </div>
-            </div>
-
-            <div
-              class="flex flex-col md:flex-row gap-4 bg-gray-900 p-4 rounded-xl border border-gray-800"
-            >
-              <div
-                class="md:w-1/4 text-neon-green font-bold uppercase text-sm tracking-wide pt-1"
-              >
-                Nhóm "Phần Gốc" (Root)
-              </div>
-              <div class="md:w-3/4">
-                <h4 class="font-bold text-white">
-                  Công nghệ Vật liệu & Phân loại
-                </h4>
-                <p class="text-gray-400 text-sm mt-1">
-                  Computer Vision (Thị giác máy tính) giúp robot nhặt rác chính
-                  xác, AI R&D tìm ra vật liệu dễ phân hủy. Đây là công nghệ lõi
-                  khó nhất.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div class="text-center">
-            <button
-              onclick="switchTab('tool')"
-              class="px-8 py-4 bg-gradient-to-r from-blue-600 to-neon-green rounded-full font-bold text-lg shadow-lg hover:shadow-neon-green/50 transition transform hover:scale-105"
-            >
-              Chuyển sang Công cụ Thực hành ➡️
-            </button>
-          </div>
-        </div>
-
-        <!-- TAB 2: ANALYZER TOOL (MODIFIED FOR SINGLE COLUMN) -->
-        <div id="tab-tool" class="hidden animate-fade-in">
-          <header
-            class="flex flex-col md:flex-row justify-between items-center mb-8 pb-6 border-b border-gray-700"
-          >
             <div>
-              <h1 class="text-3xl font-bold text-white">
-                AI ESG Impact Analyzer
-              </h1>
-              <p class="text-gray-400 mt-1">
-                Nhập thông số dự án của nhóm bạn để kiểm toán.
-              </p>
-            </div>
-            <div class="mt-4 md:mt-0">
-              <span
-                class="px-3 py-1 bg-gray-800 rounded border border-gray-600 text-sm text-gray-300"
-              >
-                Mode: <strong class="text-neon-green">Simulation</strong>
-              </span>
-            </div>
-          </header>
-
-          <!-- SINGLE COLUMN LAYOUT FOR INPUTS (Full width of the 3xl container) -->
-          <div class="max-w-3xl mx-auto">
-            <!-- Input Section (Full width in this container) -->
-            <div
-              class="bg-tech-card p-6 rounded-2xl shadow-xl border border-gray-700"
-            >
-              <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
-                <svg
-                  class="w-6 h-6 text-blue-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-                  ></path>
-                </svg>
-                Cấu hình Giải pháp AI
+              <h2 class="text-2xl font-bold mb-2 text-slate-900">
+                Tuyên bố Vấn đề (Problem Statement)
               </h2>
-
-              <div class="space-y-4">
-                <div class="space-y-2">
-                  <label class="block text-sm font-medium text-gray-300"
-                    >Tên Dự Án AI (Nhóm)</label
-                  >
-                  <input
-                    type="text"
-                    id="projectNameInput"
-                    placeholder="VD: EcoScan Pro..."
-                    class="w-full bg-gray-900 border border-gray-600 rounded-lg p-3 text-white focus:ring-2 focus:ring-neon-green outline-none transition"
-                  />
-                </div>
-
-                <div class="space-y-2">
-                  <h3
-                    class="text-sm font-semibold text-gray-300 border-b border-gray-700 pb-2 mt-4"
-                  >
-                    Yếu tố cấu hình & Nguồn lực (0-100)
-                  </h3>
-                </div>
-
-                <!-- Factor Lists -->
-                <div
-                  class="bg-gray-800/50 p-4 rounded-xl border border-gray-700"
-                >
-                  <h4
-                    class="text-warning-yellow font-semibold mb-3 text-sm uppercase tracking-wider"
-                  >
-                    Phần Ngọn (Marketing/UX)
-                  </h4>
-                  <div id="surface-factors" class="space-y-3">
-                    <!-- Dynamic factors rendered here -->
-                  </div>
-                  <button
-                    onclick="addFactor('surface', 'Tính năng mới')"
-                    class="mt-3 text-xs text-info-blue hover:text-blue-400 font-medium flex items-center"
-                  >
-                    <svg
-                      class="w-4 h-4 mr-1"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M12 4v16m8-8H4"
-                      ></path>
-                    </svg>
-                    Thêm yếu tố Ngọn
-                  </button>
-                </div>
-
-                <div
-                  class="bg-gray-800/50 p-4 rounded-xl border border-gray-700"
-                >
-                  <h4
-                    class="text-neon-green font-semibold mb-3 text-sm uppercase tracking-wider"
-                  >
-                    Phần Gốc (Quy trình/Sản xuất)
-                  </h4>
-                  <div id="root-factors" class="space-y-3">
-                    <!-- Dynamic factors rendered here -->
-                  </div>
-                  <button
-                    onclick="addFactor('root', 'Tính năng mới')"
-                    class="mt-3 text-xs text-info-blue hover:text-blue-400 font-medium flex items-center"
-                  >
-                    <svg
-                      class="w-4 h-4 mr-1"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M12 4v16m8-8H4"
-                      ></path>
-                    </svg>
-                    Thêm yếu tố Gốc
-                  </button>
-                </div>
-
-                <!-- Actions -->
-                <div class="pt-4 flex gap-4">
-                  <button
-                    onclick="triggerAnalysis()"
-                    type="button"
-                    class="flex-grow py-3 bg-neon-green hover:bg-green-600 text-black font-bold rounded-lg transition shadow-lg shadow-neon-green/30"
-                  >
-                    <i class="fa-solid fa-chart-line mr-2"></i> Phân Tích & Báo
-                    Cáo
-                  </button>
-                  <button
-                    onclick="resetFactors()"
-                    type="button"
-                    class="py-3 px-6 bg-gray-600 hover:bg-gray-500 text-white font-bold rounded-lg transition"
-                  >
-                    <i class="fa-solid fa-rotate-left"></i> Reset
-                  </button>
-                </div>
+              <p class="text-slate-600 mb-4">
+                Trong kỷ nguyên số, sự hội tụ giữa AI và ESG đang tạo ra một
+                nghịch lý: Công nghệ vừa là công cụ tối ưu hóa tài nguyên
+                (Sustainability Enabler), vừa là vũ khí tinh vi để ngụy tạo
+                thành tích xanh (Greenwashing Amplifier).
+              </p>
+              <div
+                class="bg-slate-50 p-4 rounded-lg border-l-4 border-emerald-500 italic text-slate-700"
+              >
+                "Làm thế nào để phân biệt giữa hiệu quả vận hành thực chất
+                (Operational Efficiency) và sự thao túng nhận thức (Perception
+                Manipulation) trong các ứng dụng AI vì môi trường?"
               </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Definitions Grid -->
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Card 1 -->
+          <div
+            class="p-6 rounded-lg border-l-4 shadow-sm mb-4 bg-amber-50 border-amber-500 text-amber-900"
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <i data-lucide="shield-alert" class="w-6 h-6 text-amber-600"></i>
+              <h3 class="font-bold text-lg">Greenwashing 4.0</h3>
+            </div>
+            <div class="text-sm leading-relaxed opacity-90">
+              Không chỉ là dán nhãn sinh thái. Đây là việc sử dụng thuật toán AI
+              để:
+              <ul class="list-disc list-inside mt-2 space-y-1">
+                <li>
+                  <strong>Generative AI:</strong> Tạo hàng ngàn hình ảnh bao
+                  bì/sản phẩm xanh không có thật.
+                </li>
+                <li>
+                  <strong>Data Cooking:</strong> Lựa chọn dữ liệu ESG có lợi
+                  (Selective Disclosure) để báo cáo.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div
+            class="p-6 rounded-lg border-l-4 shadow-sm mb-4 bg-red-50 border-red-500 text-red-900"
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <i data-lucide="globe" class="w-6 h-6 text-red-600"></i>
+              <h3 class="font-bold text-lg">
+                Carbon Colonialism (Thực dân hóa Carbon)
+              </h3>
+            </div>
+            <div class="text-sm leading-relaxed opacity-90">
+              Một hình thức áp bức mới được số hóa (Digital Oppression):
+              <ul class="list-disc list-inside mt-2 space-y-1">
+                <li>
+                  <strong>Bất công Dữ liệu:</strong> Sử dụng AI tính toán tín
+                  chỉ carbon từ xa (Satellite) mà bỏ qua tác động xã hội thực tế
+                  tại địa phương.
+                </li>
+                <li>
+                  <strong>Di dời cưỡng bức:</strong> Đẩy người bản địa khỏi đất
+                  đai để trồng rừng "bù đắp carbon" cho các nước giàu (Theo phim
+                  <em>Recycling Colony</em>).
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div
+            class="p-6 rounded-lg border-l-4 shadow-sm mb-4 bg-emerald-50 border-emerald-500 text-emerald-900 md:col-span-2"
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <i data-lucide="target" class="w-6 h-6 text-emerald-600"></i>
+              <h3 class="font-bold text-lg">Intentionalism (Chủ đích)</h3>
+            </div>
+            <div class="text-sm leading-relaxed opacity-90">
+              Tư duy cốt lõi để giải quyết vấn đề. Công nghệ phải được thiết kế
+              với chủ đích:
+              <ul class="list-disc list-inside mt-2 space-y-1">
+                <li>
+                  Tách rời trách nhiệm môi trường khỏi động cơ đánh bóng tên
+                  tuổi.
+                </li>
+                <li>
+                  Đảm bảo công bằng xã hội (Social Justice) trong chuyển đổi
+                  xanh.
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
-    </div>
+
+      <!-- TAB 2: ANALYTICAL MODEL -->
+      <div id="tab-model" class="tab-content animate-fadeIn space-y-8 hidden">
+        <section
+          class="bg-white p-8 rounded-xl shadow-sm border border-slate-200"
+        >
+          <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+            <i data-lucide="layers" class="text-emerald-600"></i>
+            Mô hình "Recycling Colony" (Thuộc địa Tái chế)
+          </h2>
+
+          <div class="grid lg:grid-cols-3 gap-8">
+            <!-- Visual Representation -->
+            <div
+              class="lg:col-span-1 flex flex-col items-center justify-center bg-slate-50 p-6 rounded-xl border border-slate-200 h-full relative overflow-hidden"
+            >
+              <div
+                class="w-full text-center font-bold text-slate-400 mb-4 text-xs tracking-widest"
+              >
+                MÔ HÌNH CẤU TRÚC
+              </div>
+              <div
+                class="w-full bg-emerald-100 p-4 rounded-t-lg border-b-2 border-emerald-300 text-center relative z-10"
+              >
+                <div class="font-bold text-emerald-800">
+                  PHẦN NGỌN (SURFACE)
+                </div>
+                <div class="text-xs text-emerald-600">
+                  Marketing, Image, Perception
+                </div>
+              </div>
+              <div class="h-4 w-1 bg-slate-300"></div>
+              <div
+                class="w-full bg-slate-800 p-6 rounded-b-lg text-center relative z-10"
+              >
+                <div class="font-bold text-white">PHẦN GỐC (ROOT)</div>
+                <div class="text-xs text-slate-400">
+                  Operations, Materials, Logistics
+                </div>
+              </div>
+
+              <!-- Icon Background -->
+              <div class="absolute bottom-2 right-2 opacity-10">
+                <i data-lucide="globe" style="width: 100px; height: 100px"></i>
+              </div>
+
+              <div class="mt-6 text-xs text-center text-slate-500 italic">
+                "Nếu Ngọn phát triển mà Gốc mục rỗng → Sụp đổ hệ thống
+                (Greenwashing Collapse)"
+              </div>
+            </div>
+
+            <!-- Detailed Analysis with Accordion -->
+            <div class="lg:col-span-2 space-y-4">
+              <!-- Surface Layer -->
+              <div class="border border-emerald-200 rounded-lg overflow-hidden">
+                <button
+                  onclick="toggleAccordion('surface')"
+                  class="w-full flex justify-between items-center p-4 bg-emerald-50 hover:bg-emerald-100 transition-colors"
+                >
+                  <div class="flex items-center gap-3">
+                    <i data-lucide="activity" class="text-emerald-600"></i>
+                    <span class="font-bold text-emerald-900"
+                      >Nhóm "Phần Ngọn": Behavioral Impact & Marketing</span
+                    >
+                  </div>
+                  <i
+                    data-lucide="chevron-down"
+                    id="icon-surface"
+                    class="transition-transform"
+                  ></i>
+                </button>
+                <div
+                  id="content-surface"
+                  class="hidden p-4 bg-white text-sm text-slate-700 border-t border-emerald-100"
+                >
+                  <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <strong class="text-emerald-700 block mb-1"
+                        >1. Marketing & Content AI</strong
+                      >
+                      <p>
+                        Sử dụng Generative AI để tạo nội dung PR xanh. Rủi ro
+                        cao về việc "thổi phồng" sự thật (Hyperbole) và định
+                        hướng sai lệch.
+                      </p>
+                    </div>
+                    <div>
+                      <strong class="text-emerald-700 block mb-1"
+                        >2. Gamification (Trò chơi hóa)</strong
+                      >
+                      <p>
+                        Tạo bảng xếp hạng, điểm thưởng. Tốt cho giáo dục nhưng
+                        vô nghĩa nếu hệ thống xử lý phía sau quá tải. Có thể tạo
+                        ra "ảo giác hành động" (Illusion of Action).
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Root Layer -->
+              <div class="border border-slate-300 rounded-lg overflow-hidden">
+                <button
+                  onclick="toggleAccordion('root')"
+                  class="w-full flex justify-between items-center p-4 bg-slate-100 hover:bg-slate-200 transition-colors"
+                >
+                  <div class="flex items-center gap-3">
+                    <i data-lucide="anchor" class="text-slate-700"></i>
+                    <span class="font-bold text-slate-900"
+                      >Nhóm "Phần Gốc": Operational Efficiency & Tech</span
+                    >
+                  </div>
+                  <i
+                    data-lucide="chevron-down"
+                    id="icon-root"
+                    class="transition-transform"
+                  ></i>
+                </button>
+                <div
+                  id="content-root"
+                  class="hidden p-4 bg-white text-sm text-slate-700 border-t border-slate-200"
+                >
+                  <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                      <strong class="text-slate-700 block mb-1"
+                        >3. Logistics & Chuỗi cung ứng</strong
+                      >
+                      <p>
+                        AI tối ưu lộ trình, giảm nhiên liệu thực tế. Tác động
+                        trực tiếp đến Scope 1 & 2 Emissions. Đây là chỉ số khó
+                        làm giả nhất.
+                      </p>
+                    </div>
+                    <div>
+                      <strong class="text-slate-700 block mb-1"
+                        >4. Tech Vật liệu & Phân loại</strong
+                      >
+                      <p>
+                        Computer Vision cho robot phân loại, AI R&D vật liệu
+                        mới. Đây là "Công nghệ lõi" (Deep Tech) đòi hỏi đầu tư
+                        lớn, không sinh lời ngay.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Financial & Carbon Markets Layer -->
+              <div class="border border-red-200 rounded-lg overflow-hidden">
+                <div
+                  class="w-full flex justify-between items-center p-4 bg-red-50"
+                >
+                  <div class="flex items-center gap-3">
+                    <i data-lucide="scale" class="text-red-600"></i>
+                    <span class="font-bold text-red-900"
+                      >Chiều Kích Công Bằng (Justice & Carbon Markets)</span
+                    >
+                  </div>
+                </div>
+                <div
+                  class="p-4 bg-white text-sm text-slate-700 border-t border-red-100"
+                >
+                  <p class="mb-2">
+                    <strong
+                      >Nghịch lý Chỉ số Carbon (The Carbon Paradox):</strong
+                    >
+                  </p>
+                  <ul class="list-disc list-inside space-y-1">
+                    <li>
+                      AI giúp tính toán "Net-Zero" chính xác, nhưng lại được
+                      dùng để biện minh cho việc "mua quyền ô nhiễm"
+                      (offsetting) thay vì giảm thải trực tiếp.
+                    </li>
+                    <li>
+                      <strong
+                        >Insight từ phim <em>Recycling Colony</em>:</strong
+                      >
+                      Các dự án "xanh" ở nước giàu thường được xây dựng trên sự
+                      hy sinh đất đai của người bản địa ở nước nghèo. Chỉ số ESG
+                      đẹp đẽ thường che giấu sự
+                      <strong
+                        >bất công môi trường (Environmental Injustice)</strong
+                      >
+                      này.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="bg-slate-900 text-white p-8 rounded-xl shadow-lg">
+          <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+            <i data-lucide="users" class="text-emerald-400"></i>
+            Pitch War Hypothesis: Marketing vs. Operations
+          </h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-slate-800 p-4 rounded border border-slate-700">
+              <h4 class="font-bold text-emerald-400 mb-2">
+                Team Surface (Marketing)
+              </h4>
+              <ul class="text-sm space-y-2 text-slate-300">
+                <li>• KPI: Brand Awareness, App Downloads.</li>
+                <li>• Vũ khí: GenAI Image, Chatbot, Social Listening.</li>
+                <li>• Chiến thuật: "Green Labelling" - Nhanh, rẻ, dễ thấy.</li>
+                <li>
+                  • Rủi ro: Bị cáo buộc Greenwashing khi khủng hoảng xảy ra.
+                </li>
+              </ul>
+            </div>
+            <div class="bg-slate-800 p-4 rounded border border-slate-700">
+              <h4 class="font-bold text-blue-400 mb-2">
+                Team Root (Operations)
+              </h4>
+              <ul class="text-sm space-y-2 text-slate-300">
+                <li>
+                  • KPI: Tons of Waste Recycled, Carbon Footprint Reduced.
+                </li>
+                <li>• Vũ khí: Optimization Algorithms, IoT Sensors.</li>
+                <li>• Chiến thuật: "Deep Tech" - Chậm, đắt, khó thấy.</li>
+                <li>
+                  • Rủi ro: Không đủ ngân sách marketing để duy trì dự án.
+                </li>
+              </ul>
+            </div>
+          </div>
+          <a
+            href="./case-study.html"
+            target="_blank"
+            class="m-auto text-white mt-6 flex-grow p-3 hover:bg-neon-green bg-green-600 text-black font-bold rounded-lg transition shadow-lg shadow-neon-green/30 flex w-[fit-content] items-center justify-center gap-2"
+          >
+            Bắt đầu Phân tích
+          </a>
+        </section>
+      </div>
+
+      <!-- TAB 3: CASE STUDIES -->
+      <div
+        id="tab-case-study"
+        class="tab-content animate-fadeIn space-y-8 hidden"
+      >
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Case 1 -->
+          <div
+            class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200"
+          >
+            <div class="bg-emerald-600 p-4 text-white">
+              <div class="flex justify-between items-start">
+                <h3 class="font-bold text-lg">When AI Meets Conservation</h3>
+                <span class="text-xs bg-emerald-700 px-2 py-1 rounded"
+                  >Gabon Model</span
+                >
+              </div>
+              <p class="text-emerald-100 text-xs mt-1">Pragmatism & Root AI</p>
+            </div>
+            <div class="p-6">
+              <div class="mb-4">
+                <h4
+                  class="font-bold text-slate-800 text-sm uppercase tracking-wide mb-2"
+                >
+                  Ứng dụng
+                </h4>
+                <p class="text-sm text-slate-600">
+                  Sử dụng Computer Vision & Camera Trap để theo dõi voi và khỉ
+                  đột thời gian thực. Hỗ trợ chống săn trộm.
+                </p>
+              </div>
+              <div class="mb-4">
+                <h4
+                  class="font-bold text-slate-800 text-sm uppercase tracking-wide mb-2"
+                >
+                  Phân tích Chủ đích
+                </h4>
+                <p class="text-sm text-slate-600">
+                  Đây là ví dụ của <strong>Pragmatism (Thực dụng)</strong>. Công
+                  nghệ giải quyết vấn đề vật lý tại hiện trường, không phục vụ
+                  mục đích đánh bóng tên tuổi.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Case 2 -->
+          <div
+            class="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-200"
+          >
+            <div class="bg-amber-600 p-4 text-white">
+              <div class="flex justify-between items-start">
+                <h3 class="font-bold text-lg">Recycling Colony</h3>
+                <span class="text-xs bg-amber-700 px-2 py-1 rounded"
+                  >Korea Context</span
+                >
+              </div>
+              <p class="text-amber-100 text-xs mt-1">
+                Environmental Injustice & Surface Failure
+              </p>
+            </div>
+            <div class="p-6">
+              <div class="mb-4">
+                <h4
+                  class="font-bold text-slate-800 text-sm uppercase tracking-wide mb-2"
+                >
+                  Vấn đề
+                </h4>
+                <p class="text-sm text-slate-600">
+                  Rác thải từ nước giàu đổ về nước nghèo. Carbon Offset đẩy
+                  người bản địa khỏi đất. Các chỉ số "xanh" ở bề mặt che giấu sự
+                  bất công ở tầng gốc.
+                </p>
+              </div>
+              <div class="mb-4">
+                <h4
+                  class="font-bold text-slate-800 text-sm uppercase tracking-wide mb-2"
+                >
+                  Phân tích Chủ đích
+                </h4>
+                <p class="text-sm text-slate-600">
+                  Minh chứng cho sự nguy hiểm của
+                  <strong>Greenwashing hệ thống</strong>. AI/Tech nếu chỉ dùng
+                  để tối ưu lợi nhuận sẽ tạo ra "Thuộc địa rác".
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- UPGRADED SECTION: RESEARCH DEEP DIVE -->
+        <section
+          class="bg-white p-6 rounded-xl border-l-4 border-blue-500 shadow-sm"
+        >
+          <h3
+            class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2"
+          >
+            <i data-lucide="microscope" class="text-blue-600"></i>
+            Trọng tâm Nghiên cứu (Thesis Core): Chuyển dịch Metrics
+          </h3>
+          <p class="text-sm text-slate-600 mb-4">
+            <strong>Vấn đề:</strong> Theo định luật <em>Goodhart's Law</em>, khi
+            một chỉ số trở thành mục tiêu (KPI), nó không còn là chỉ số đo lường
+            tốt nữa. Các chỉ số bề mặt đang bị lạm dụng để "tẩy xanh". Bạn cần
+            nghiên cứu sâu sự chuyển dịch sau:
+          </p>
+
+          <!-- Metrics Comparison Table -->
+          <div class="overflow-x-auto mb-4">
+            <table class="min-w-full text-sm text-left text-slate-600">
+              <thead class="text-xs text-slate-700 uppercase bg-slate-100">
+                <tr>
+                  <th class="px-4 py-2">Loại Metrics</th>
+                  <th class="px-4 py-2">Chỉ số Bề mặt (Surface / Vanity)</th>
+                  <th class="px-4 py-2 text-emerald-700">
+                    Chỉ số Tác động Thực (Root / Impact)
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="bg-white">
+                  <td class="px-4 py-2 font-medium">Tương tác Xã hội</td>
+                  <td class="px-4 py-2">
+                    Lượt Like, Share, App Downloads, Cam kết Online.
+                  </td>
+                  <td class="px-4 py-2 font-bold text-emerald-700">
+                    Tỷ lệ thay đổi hành vi thực tế (Behavior Change Rate) sau 6
+                    tháng.
+                  </td>
+                </tr>
+                <tr class="bg-slate-50">
+                  <td class="px-4 py-2 font-medium">Hiệu quả Rác thải</td>
+                  <td class="px-4 py-2">
+                    Khối lượng rác "thu gom" (Collected).
+                  </td>
+                  <td class="px-4 py-2 font-bold text-emerald-700">
+                    Khối lượng rác được "tái chế vòng tròn" (Circular Recycled)
+                    mà không xuất khẩu.
+                  </td>
+                </tr>
+                <tr class="bg-white">
+                  <td class="px-4 py-2 font-medium">Khí thải Carbon</td>
+                  <td class="px-4 py-2">
+                    Số lượng tín chỉ Carbon (Offsets) đã mua.
+                  </td>
+                  <td class="px-4 py-2 font-bold text-emerald-700">
+                    Mức giảm phát thải trực tiếp tại nguồn (Direct Emission
+                    Reduction).
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="flex gap-2 mt-2">
+            <span
+              class="bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded border border-blue-200 font-medium"
+              >Nhiệm vụ: Tìm dữ liệu chứng minh các chỉ số bên phải khó làm giả
+              hơn.</span
+            >
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer
+      class="bg-slate-900 text-slate-400 py-8 mt-12 text-center text-sm border-t border-slate-800"
+    >
+      <p class="mt-2 text-xs opacity-50">
+        Bài viết chỉ mang mục đích nghiên cứu
+      </p>
+    </footer>
     <script src="./js/ai-esg-impact.js"></script>
   </body>
 </html>

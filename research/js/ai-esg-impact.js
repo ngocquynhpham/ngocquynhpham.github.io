@@ -1,298 +1,124 @@
-// GLOBAL STATE
-let factors = [
-  { id: 1, name: "Content & Branding AI", type: "surface", value: 0 },
-  { id: 2, name: "Gamification (User App)", type: "surface", value: 0 },
-  { id: 3, name: "Tối ưu hóa Logistics", type: "root", value: 0 },
-  { id: 4, name: "Công nghệ Vật liệu/Phân loại", type: "root", value: 0 },
-  { id: 5, name: "Tiết kiệm Năng lượng", type: "root", value: 0 },
-];
-let nextFactorId = 6;
-let impactChart;
+// --- 1. Tab Switching Logic ---
+function switchTab(tabId) {
+    // Hide all contents
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('block'));
+    
+    // Show selected content
+    const selectedContent = document.getElementById(`tab-${tabId}`);
+    selectedContent.classList.remove('hidden');
+    selectedContent.classList.add('block');
 
-// --- MODAL LOGIC ---
-function openModal() {
-  const modal = document.getElementById("result-modal");
-  modal.classList.remove("hidden");
-  setTimeout(() => {
-    modal.classList.add("opacity-100", "modal-open");
-  }, 10);
+    // Reset all button styles
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('text-emerald-400', 'border-b-2', 'border-emerald-400');
+        btn.classList.add('text-slate-300');
+    });
+
+    // Active button style
+    const activeBtn = document.getElementById(`btn-${tabId}`);
+    activeBtn.classList.remove('text-slate-300');
+    activeBtn.classList.add('text-emerald-400', 'border-b-2', 'border-emerald-400');
 }
 
-function closeModal() {
-  const modal = document.getElementById("result-modal");
-  modal.classList.remove("opacity-100", "modal-open");
-  setTimeout(() => {
-    modal.classList.add("hidden");
-  }, 300);
+// --- 2. Accordion Logic (Model Tab) ---
+function toggleAccordion(id) {
+    const content = document.getElementById(`content-${id}`);
+    const icon = document.getElementById(`icon-${id}`);
+    
+    if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        icon.style.transform = 'rotate(180deg)';
+    } else {
+        content.classList.add('hidden');
+        icon.style.transform = 'rotate(0deg)';
+    }
 }
 
-// --- FACTOR MANAGEMENT ---
-function getFactorElement(factor) {
-  const factorTypeColor =
-    factor.type === "surface" ? "text-warning-yellow" : "text-neon-green";
-  return `
-                <div id="factor-${factor.id}" class="flex flex-col gap-1 p-2 rounded-lg bg-gray-900/50">
-                    <div class="flex items-center justify-between text-sm">
-                        <input type="text" value="${factor.name}" oninput="updateFactorName(${factor.id}, this.value)"
-                               class="bg-transparent font-medium focus:ring-0 focus:border-0 outline-none w-3/4 ${factorTypeColor}">
-                        <div class="flex items-center gap-2">
-                            <span id="val-${factor.id}" class="w-10 text-right">${factor.value}%</span>
-                            <button onclick="removeFactor(${factor.id})" class="text-gray-500 hover:text-alert-red transition">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                            </button>
-                        </div>
-                    </div>
-                    <input type="range" min="0" max="100" value="${factor.value}" 
-                           oninput="updateFactorValue(${factor.id}, this.value)"
-                           class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer slider-thumb">
-                </div>
-            `;
+// --- 3. Analyzer Tool Logic ---
+const inputSurface = document.getElementById('input-surface');
+const inputRoot = document.getElementById('input-root');
+const valSurface = document.getElementById('val-surface');
+const valRoot = document.getElementById('val-root');
+
+const resultCard = document.getElementById('result-card');
+const resultIconBg = document.getElementById('result-icon-bg');
+const resultStatus = document.getElementById('result-status');
+const resultMessage = document.getElementById('result-message');
+const resultVerdict = document.getElementById('result-verdict');
+
+function calculateImpact() {
+    const surfaceScore = parseInt(inputSurface.value);
+    const rootScore = parseInt(inputRoot.value);
+
+    // Update display numbers
+    valSurface.textContent = `${surfaceScore}%`;
+    valRoot.textContent = `${rootScore}%`;
+
+    let result = {};
+
+    if (rootScore < 30) {
+        result = {
+            status: "CẢNH BÁO ĐỎ: NỀN TẢNG YẾU",
+            class: "bg-red-50 border-red-500 text-red-900",
+            bgClass: "bg-red-200",
+            icon: "alert-triangle",
+            message: "Dự án thiếu nền tảng vận hành thực tế (Root). Mọi hoạt động bề mặt chỉ là vỏ bọc rỗng.",
+            verdict: "Failed Model"
+        };
+    } else if (surfaceScore > rootScore * 1.5) {
+        result = {
+            status: "NGUY CƠ CAO: GREENWASHING",
+            class: "bg-amber-50 border-amber-500 text-amber-900",
+            bgClass: "bg-amber-200",
+            icon: "shield-alert",
+            message: "Nguồn lực Marketing (Ngọn) đang lấn át năng lực Vận hành (Gốc). Dấu hiệu điển hình của việc 'thổi phồng' thành tích.",
+            verdict: "High Risk"
+        };
+    } else if (rootScore >= surfaceScore) {
+        result = {
+            status: "BỀN VỮNG: MÔ HÌNH CHUẨN",
+            class: "bg-emerald-50 border-emerald-500 text-emerald-900",
+            bgClass: "bg-emerald-200",
+            icon: "check-circle",
+            message: "Sự đầu tư vào công nghệ lõi và vận hành tương xứng hoặc cao hơn quảng bá. Đây là dấu hiệu của Intentionalism đúng đắn.",
+            verdict: "Sustainable"
+        };
+    } else {
+        result = {
+            status: "CÂN BẰNG: CẦN THEO DÕI",
+            class: "bg-blue-50 border-blue-500 text-blue-900",
+            bgClass: "bg-blue-200",
+            icon: "activity",
+            message: "Tỷ lệ đầu tư khá cân bằng. Cần giám sát chặt chẽ để đảm bảo cam kết được thực hiện.",
+            verdict: "Balanced"
+        };
+    }
+
+    // Apply styles and text
+    resultCard.className = `h-full p-6 rounded-xl border-2 flex flex-col items-center text-center justify-center transition-all duration-300 ${result.class}`;
+    resultIconBg.className = `p-4 rounded-full mb-4 ${result.bgClass}`;
+    resultStatus.textContent = result.status;
+    resultMessage.textContent = `"${result.message}"`;
+    resultVerdict.textContent = `Verdict: ${result.verdict}`;
+    
+    // Update Icon (Simple re-render check)
+    // Note: Lucide needs to re-scan or we manually SVG. 
+    // For simplicity in vanilla JS without re-rendering loop, we can just replace the innerHTML of the icon container if we want to change icons dynamically.
+    // But since lucide.createIcons runs once, let's just update the data-lucide attribute and run it again specific to this element or just swap SVGs.
+    // EASIER WAY: Just clear the icon container and add the new icon element, then scan.
+    
+    const iconContainer = document.getElementById('result-icon').parentElement;
+    iconContainer.innerHTML = `<i data-lucide="${result.icon}" class="w-12 h-12"></i>`;
+    lucide.createIcons();
 }
 
-function renderFactors() {
-  document.getElementById("surface-factors").innerHTML = factors
-    .filter((f) => f.type === "surface")
-    .map(getFactorElement)
-    .join("");
+// Listeners
+inputSurface.addEventListener('input', calculateImpact);
+inputRoot.addEventListener('input', calculateImpact);
 
-  document.getElementById("root-factors").innerHTML = factors
-    .filter((f) => f.type === "root")
-    .map(getFactorElement)
-    .join("");
-
-  updateChart(); // Update chart whenever factors are rendered/changed
-}
-
-function updateFactorValue(id, value) {
-  const factor = factors.find((f) => f.id === id);
-  if (factor) {
-    factor.value = parseInt(value);
-    document.getElementById(`val-${id}`).innerText = `${value}%`;
-    updateChart();
-  }
-}
-
-function updateFactorName(id, name) {
-  const factor = factors.find((f) => f.id === id);
-  if (factor) {
-    factor.name = name;
-    updateChart();
-  }
-}
-
-function addFactor(type, name) {
-  const newFactor = {
-    id: nextFactorId++,
-    name: name,
-    type: type,
-    value: 0,
-  };
-  factors.push(newFactor);
-  renderFactors();
-}
-
-function removeFactor(id) {
-  // Đảm bảo không xóa hết các yếu tố cốt lõi (ví dụ: giữ lại ít nhất 1)
-  if (
-    factors.filter(
-      (f) => f.type === factors.find((item) => item.id === id).type
-    ).length <= 1 &&
-    factors.length > 1
-  ) {
-    alert("Không thể xóa yếu tố cuối cùng trong nhóm.");
-    return;
-  }
-  factors = factors.filter((f) => f.id !== id);
-  renderFactors();
-}
-
-function resetFactors() {
-  // Reset về trạng thái ban đầu của 5 yếu tố
-  factors = [
-    { id: 1, name: "Content & Branding AI", type: "surface", value: 0 },
-    { id: 2, name: "Gamification (User App)", type: "surface", value: 0 },
-    { id: 3, name: "Tối ưu hóa Logistics", type: "root", value: 0 },
-    { id: 4, name: "Công nghệ Vật liệu/Phân loại", type: "root", value: 0 },
-    { id: 5, name: "Tiết kiệm Năng lượng", type: "root", value: 0 },
-  ];
-  nextFactorId = 6;
-  document.getElementById("projectNameInput").value = "";
-  renderFactors();
-  updateChart();
-}
-
-// --- CHART LOGIC ---
-function initChart() {
-  const ctx = document.getElementById("impactChart").getContext("2d");
-  impactChart = new Chart(ctx, {
-    type: "radar",
-    data: {
-      labels: factors.map((f) => f.name),
-      datasets: [
-        {
-          label: "Phân bổ nguồn lực",
-          data: factors.map((f) => f.value),
-          backgroundColor: "rgba(16, 185, 129, 0.2)",
-          borderColor: "#10b981",
-          pointBackgroundColor: "#fff",
-          pointBorderColor: "#10b981",
-          pointHoverBackgroundColor: "#fff",
-          pointHoverBorderColor: "#10b981",
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        r: {
-          angleLines: { color: "rgba(255, 255, 255, 0.1)" },
-          grid: { color: "rgba(255, 255, 255, 0.1)" },
-          pointLabels: { color: "#94a3b8", font: { size: 12 } },
-          ticks: { display: false, backdropColor: "transparent" },
-          suggestedMin: 0,
-          suggestedMax: 100,
-        },
-      },
-      plugins: {
-        legend: { display: false },
-      },
-    },
-  });
-}
-
-function updateChart() {
-  if (impactChart) {
-    impactChart.data.labels = factors.map((f) => f.name);
-    impactChart.data.datasets[0].data = factors.map((f) => f.value);
-    impactChart.update();
-  }
-}
-
-// --- ANALYSIS LOGIC ---
-function triggerAnalysis() {
-  const projectName =
-    document.getElementById("projectNameInput").value || "Dự án không tên";
-
-  // Check for empty factors
-  if (factors.length === 0) {
-    alert("Vui lòng thêm ít nhất một yếu tố cấu hình.");
-    return;
-  }
-
-  const surfaceFactors = factors.filter((f) => f.type === "surface");
-  const rootFactors = factors.filter((f) => f.type === "root");
-
-  // Must have at least one factor in each main group for meaningful analysis
-  if (surfaceFactors.length === 0 || rootFactors.length === 0) {
-    alert(
-      "Vui lòng thêm ít nhất một yếu tố vào nhóm 'Phần Ngọn' và một yếu tố vào nhóm 'Phần Gốc' để thực hiện kiểm toán."
-    );
-    return;
-  }
-
-  const totalSurfaceValue = surfaceFactors.reduce((sum, f) => sum + f.value, 0);
-  const totalRootValue = rootFactors.reduce((sum, f) => sum + f.value, 0);
-
-  const surfaceCount = surfaceFactors.length;
-  const rootCount = rootFactors.length;
-
-  const surfaceScore = totalSurfaceValue / surfaceCount;
-  const rootScore = totalRootValue / rootCount;
-
-  // Determine Status
-  let status;
-  let statusColor;
-  let statusIcon;
-  let description;
-
-  if (rootScore < 30 && surfaceScore > 60) {
-    status = "CẢNH BÁO: GREENWASHING";
-    statusColor = "text-alert-red";
-    statusIcon = "⚠️";
-    description =
-      "Phân tích cho thấy nguồn lực AI tập trung quá mức vào bề nổi (Marketing, UX). Tác động thực tế (Root Impact) rất thấp. Rủi ro Tẩy Xanh cao.";
-  } else if (rootScore > 65) {
-    status = "TÁC ĐỘNG THỰC (REAL IMPACT)";
-    statusColor = "text-neon-green";
-    statusIcon = "🌱";
-    description =
-      "Tuyệt vời! Dự án tập trung nguồn lực mạnh mẽ vào giải quyết vấn đề cốt lõi (Quy trình, Vật liệu, Năng lượng). Hướng đi bền vững và có chiều sâu.";
-  } else if (rootScore > 40 && surfaceScore < 50) {
-    status = "CÂN BẰNG & TIỀM NĂNG";
-    statusColor = "text-info-blue";
-    statusIcon = "⚖️";
-    description =
-      "Dự án có sự cân bằng hợp lý giữa truyền thông và kỹ thuật. Cần đẩy mạnh hơn nữa các yếu tố gốc để đảm bảo hiệu quả dài hạn.";
-  } else {
-    status = "CẦN ĐIỀU CHỈNH";
-    statusColor = "text-warning-yellow";
-    statusIcon = "🟡";
-    description =
-      "Phân bổ nguồn lực chưa rõ ràng. Đội ngũ cần quyết định tập trung vào việc tạo tác động thực chất (Root) hay chỉ giới thiệu sản phẩm (Surface).";
-  }
-
-  // --- RENDER MODAL CONTENT ---
-  document.getElementById("modal-project-name").innerText = projectName;
-  const content = `
-                <div class="space-y-4">
-                    <div class="text-center p-4 rounded-xl bg-gray-800/50">
-                        <p class="text-sm text-gray-400">Trạng thái Kiểm Toán:</p>
-                        <p class="4xl mt-1 mb-2">${statusIcon}</p>
-                        <p class="text-xl font-bold ${statusColor}">${status}</p>
-                    </div>
-                    
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-gray-800 p-3 rounded-lg text-center">
-                            <p class="text-xs text-gray-400">Điểm Surface (Ngọn)</p>
-                            <p class="text-2xl font-bold mt-1 text-warning-yellow">${surfaceScore.toFixed(
-                              1
-                            )}/100</p>
-                        </div>
-                        <div class="bg-gray-800 p-3 rounded-lg text-center">
-                            <p class="text-xs text-gray-400">Điểm Root (Gốc)</p>
-                            <p class="text-2xl font-bold mt-1 text-neon-green">${rootScore.toFixed(
-                              1
-                            )}/100</p>
-                        </div>
-                    </div>
-
-                    <h4 class="font-bold text-lg text-white pt-2 border-t border-gray-700">Đánh giá chung:</h4>
-                    <p class="text-gray-300 text-sm">${description}</p>
-                </div>
-            `;
-  document.getElementById("modal-result-content").innerHTML = content;
-  openModal();
-}
-
-// --- INITIALIZATION ---
-window.onload = () => {
-  initChart();
-  renderFactors();
-  // Bắt đầu với tab Curriculum
-  switchTab("curriculum");
-};
-
-// --- TAB SWITCHING (Duplicate for full code inclusion) ---
-function switchTab(tabName) {
-  document.getElementById("tab-curriculum").classList.add("hidden");
-  document.getElementById("tab-tool").classList.add("hidden");
-
-  document
-    .getElementById("tab-btn-curriculum")
-    .classList.remove("bg-neon-green", "text-black");
-  document
-    .getElementById("tab-btn-curriculum")
-    .classList.add("bg-gray-800", "text-gray-300");
-
-  document
-    .getElementById("tab-btn-tool")
-    .classList.remove("bg-neon-green", "text-black");
-  document.getElementById("tab-btn-tool").classList.add("text-gray-300");
-
-  document.getElementById("tab-" + tabName).classList.remove("hidden");
-
-  const activeBtn = document.getElementById("tab-btn-" + tabName);
-  activeBtn.classList.remove("bg-gray-800", "text-gray-300");
-  activeBtn.classList.add("bg-neon-green", "text-black");
-}
+// Initialize Icons & Logic
+document.addEventListener("DOMContentLoaded", () => {
+    lucide.createIcons();
+    calculateImpact(); // Run once to set initial state
+});
