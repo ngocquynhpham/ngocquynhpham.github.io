@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Bar Playground</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0f172a; 
+            color: #cbd5e1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #1e293b;
+            padding: 0;
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            max-width: 600px;
+            width: 100%;
+            border: 1px solid #334155;
+            overflow: hidden;
+        }
+
+        .header {
+            padding: 30px 30px 20px 30px;
+            border-bottom: 1px solid #334155;
+            text-align: center;
+        }
+
+        h1 {
+            color: #fcd34d;
+            margin: 0 0 10px 0;
+            font-size: 24px;
+        }
+
+        p {
+            margin: 0;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        .playground-area {
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            background-color: #0f172a;
+        }
+
+        /* --- CSS CHO PROGRESS BAR --- */
+        progress {
+            border-radius: 8px; 
+            overflow: hidden;
+            width: 100%;
+            max-width: 400px;
+            height: 16px;
+            appearance: none; 
+            -webkit-appearance: none;
+            border: none; 
+            background-color: #e2e8f0; 
+        }
+
+        progress::-moz-progress-bar {
+            background-color: #db2777;
+        }
+
+        progress::-webkit-progress-bar {
+            background-color: #e2e8f0;
+        }
+
+        progress::-webkit-progress-value {
+            background-color: #db2777;
+            border-radius: 8px;
+            transition: width 0.3s ease;
+        }
+        /* --------------------------- */
+
+        .controls {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        input[type="range"] {
+            flex-grow: 1;
+            cursor: pointer;
+            accent-color: #db2777;
+        }
+
+        .value-display {
+            font-weight: bold;
+            color: #db2777;
+            font-family: monospace;
+            font-size: 1.1rem;
+            min-width: 50px;
+            text-align: right;
+        }
+
+        .code-section {
+            padding: 0;
+            background-color: #1e293b;
+        }
+
+        .tab-bar {
+            display: flex;
+            border-bottom: 1px solid #334155;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .tab-btn:hover {
+            color: #e2e8f0;
+        }
+
+        .tab-btn.active {
+            color: #db2777;
+            border-bottom-color: #db2777;
+        }
+
+        .code-display {
+            position: relative;
+            padding: 20px;
+            background-color: #0f172a; 
+            overflow-x: auto;
+            display: none;
+        }
+
+        .code-display.active {
+            display: block;
+        }
+
+        pre {
+            margin: 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #a5b4fc;
+        }
+
+        .keyword { color: #c084fc; } 
+        .selector { color: #f472b6; }
+        .property { color: #93c5fd; }
+        .value { color: #86efac; }
+        .punctuation { color: #94a3b8; }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #334155;
+            color: white;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background-color: #475569;
+        }
+
+        .copy-btn.copied {
+            background-color: #10b981;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>CSS Progress Bar</h1>
+            <p>Vendor-specific styling playground</p>
+        </div>
+
+        <div class="playground-area">
+            <progress id="myProgress" max="100" value="60"></progress>
+
+            <div class="controls">
+                <input type="range" id="slider" min="0" max="100" value="60">
+                <div class="value-display"><span id="valText">60</span>%</div>
+            </div>
+        </div>
+
+        <div class="code-section">
+            <div class="tab-bar">
+                <button class="tab-btn active" onclick="switchTab('css')">CSS</button>
+                <button class="tab-btn" onclick="switchTab('html')">HTML</button>
+            </div>
+
+            <!-- CSS Code View -->
+            <div id="css-code" class="code-display active">
+                <button class="copy-btn" onclick="copyCode('css-content')">Copy</button>
+                <pre id="css-content">
+<span class="selector">progress</span> <span class="punctuation">{</span>
+  <span class="property">border-radius</span>: <span class="value">8px</span>;
+  <span class="property">overflow</span>: <span class="value">hidden</span>;
+  <span class="property">width</span>: <span class="value">100%</span>;
+  <span class="property">height</span>: <span class="value">16px</span>;
+  <span class="property">appearance</span>: <span class="value">none</span>;
+  <span class="property">border</span>: <span class="value">none</span>;
+  <span class="property">background-color</span>: <span class="value">#e2e8f0</span>;
+<span class="punctuation">}</span>
+
+<span class="selector">progress::-moz-progress-bar</span> <span class="punctuation">{</span>
+  <span class="property">background-color</span>: <span class="value">#db2777</span>;
+<span class="punctuation">}</span>
+
+<span class="selector">progress::-webkit-progress-bar</span> <span class="punctuation">{</span>
+  <span class="property">background-color</span>: <span class="value">#e2e8f0</span>;
+<span class="punctuation">}</span>
+
+<span class="selector">progress::-webkit-progress-value</span> <span class="punctuation">{</span>
+  <span class="property">background-color</span>: <span class="value">#db2777</span>;
+  <span class="property">border-radius</span>: <span class="value">8px</span>;
+  <span class="property">transition</span>: <span class="value">width 0.3s ease</span>;
+<span class="punctuation">}</span></pre>
+            </div>
+
+            <!-- HTML Code View -->
+            <div id="html-code" class="code-display">
+                <button class="copy-btn" onclick="copyCode('html-content')">Copy</button>
+                <pre id="html-content">
+<span class="punctuation">&lt;</span><span class="selector">progress</span> <span class="property">max</span>=<span class="value">"100"</span> <span class="property">value</span>=<span class="value">"60"</span><span class="punctuation">&gt;&lt;/</span><span class="selector">progress</span><span class="punctuation">&gt;</span></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const progressBar = document.getElementById('myProgress');
+        const slider = document.getElementById('slider');
+        const valText = document.getElementById('valText');
+
+        slider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            progressBar.value = val;
+            valText.textContent = val;
+            updateCodeViews(val);
+        });
+
+        function switchTab(type) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.code-display').forEach(c => c.classList.remove('active'));
+            
+            if (type === 'css') {
+                document.querySelector('.tab-btn:first-child').classList.add('active');
+                document.getElementById('css-code').classList.add('active');
+            } else {
+                document.querySelector('.tab-btn:last-child').classList.add('active');
+                document.getElementById('html-code').classList.add('active');
+            }
+        }
+
+        function copyCode(elementId) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector(`#${elementId}`).parentElement.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        function updateCodeViews(val) {
+            const htmlBlock = document.getElementById('html-content');
+            htmlBlock.innerHTML = `
+<span class="punctuation">&lt;</span><span class="selector">progress</span> <span class="property">max</span>=<span class="value">"100"</span> <span class="property">value</span>=<span class="value">"${val}"</span><span class="punctuation">&gt;&lt;/</span><span class="selector">progress</span><span class="punctuation">&gt;</span>`;
+        }
+    </script>
+</body>
+</html>
