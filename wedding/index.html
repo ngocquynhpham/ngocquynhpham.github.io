@@ -87,33 +87,13 @@
 
     <!-- Navigation -->
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent py-6">
-      <div class="container mx-auto px-6 flex justify-between items-center">
+      <div class="container mx-auto px-6 flex justify-center items-center">
         <div class="flex flex-col">
           <h1 class="font-serif text-2xl font-bold tracking-wide text-wedding-dark">
             Lệ Trâm <span class="text-wedding-gold italic">&</span> Văn Vọng
           </h1>
-          <p class="text-xs tracking-[0.2em] text-gray-500 mt-1 uppercase">Chủ Nhật: 21/12/2025</p>
+          <p class="text-xs tracking-[0.2em] text-gray-500 mt-1 uppercase text-center">Chủ Nhật: 21/12/2025</p>
         </div>
-
-        <!-- Desktop Menu -->
-        <div class="hidden md:flex space-x-8 text-sm tracking-widest uppercase font-medium text-gray-600">
-          <a href="#info" class="hover:text-wedding-gold transition-colors">Thông Tin</a>
-          <a href="#gallery" class="hover:text-wedding-gold transition-colors">Album Ảnh</a>
-          <a href="#wishes" class="hover:text-wedding-gold transition-colors">Lời Chúc</a>
-        </div>
-
-        <!-- Mobile Menu Button -->
-        <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none">
-          <i id="icon-menu" data-lucide="menu" class="w-7 h-7"></i>
-          <i id="icon-x" data-lucide="x" class="w-7 h-7 hidden"></i>
-        </button>
-      </div>
-
-      <!-- Mobile Menu Overlay -->
-      <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white shadow-lg py-6 flex flex-col items-center space-y-6 text-sm tracking-widest uppercase border-t fade-in-up">
-        <a href="#info" class="mobile-link hover:text-wedding-gold">Thông Tin</a>
-        <a href="#gallery" class="mobile-link hover:text-wedding-gold">Album Ảnh</a>
-        <a href="#wishes" class="mobile-link hover:text-wedding-gold">Lời Chúc</a>
       </div>
     </nav>
 
@@ -121,12 +101,12 @@
     <main>
       
       <!-- Hero Section -->
-      <section class="relative w-full h-screen min-h-[700px] flex items-center justify-center pt-20 pb-10 px-4 md:px-8">
+      <section class="relative w-full h-screen min-h-[700px] flex items-center justify-center pt-32 pb-10 px-4 md:px-8">
         <div class="container mx-auto h-full relative rounded-[40px] overflow-hidden shadow-2xl">
           <!-- Background Image -->
           <div 
             class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 hover:scale-105"
-            style="background-image: url('https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')"
+            style="background-image: url('./imgs/imgs_5.png')"
           >
             <div class="absolute inset-0 bg-black/20 md:bg-black/10"></div>
           </div>
@@ -207,51 +187,51 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                <!-- Left Column (Large Image) -->
-                <div class="w-full animate-on-scroll">
-                    <div class="overflow-hidden rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 h-full">
-                        <img 
-                            src="https://images.unsplash.com/photo-1519225448520-eda5186b6473?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                            alt="Wedding Moment 1" 
-                            class="w-full h-full min-h-[300px] md:h-[600px] object-cover rounded-3xl hover:scale-105 transition-transform duration-700"
-                        />
-                    </div>
+              <!-- Left Column (Large Image) -->
+              <div class="w-full animate-on-scroll">
+                <div class="overflow-hidden rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 h-full">
+                  <img 
+                    src="./imgs/imgs_1.png" 
+                    alt="Wedding Moment 1" 
+                    class="w-full h-full min-h-[300px] md:h-[600px] object-cover rounded-3xl hover:scale-105 transition-transform duration-700"
+                  />
                 </div>
+              </div>
 
-                <!-- Right Column (Grid of 3) -->
-                <div class="flex flex-col gap-4 md:gap-6">
-                     <div class="overflow-hidden rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 animate-on-scroll delay-200">
-                        <img 
-                            src="https://images.unsplash.com/photo-1511285560982-1351cdeb9821?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                            alt="Wedding Moment 2" 
-                            class="w-full h-[300px] md:h-[400px] object-cover rounded-3xl hover:scale-105 transition-transform duration-700"
-                        />
-                    </div>
-                    
-                    <div class="grid grid-cols-2 gap-4 md:gap-6">
-                         <div class="overflow-hidden rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 animate-on-scroll delay-200">
-                            <img 
-                                src="https://images.unsplash.com/photo-1595867332308-5693c4e3009d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                                alt="Wedding Moment 3" 
-                                class="w-full h-[300px] md:h-[280px] object-cover rounded-3xl hover:scale-105 transition-transform duration-700"
-                            />
-                        </div>
-                        <div class="overflow-hidden rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 animate-on-scroll delay-500">
-                            <img 
-                                src="https://images.unsplash.com/photo-1623136209503-4c55e90df38c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                                alt="Ring details" 
-                                class="w-full h-[300px] md:h-[280px] object-cover rounded-3xl hover:scale-105 transition-transform duration-700"
-                            />
-                        </div>
-                    </div>
+              <!-- Right Column (Grid of 3) -->
+              <div class="flex flex-col gap-4 md:gap-6">
+                 <div class="overflow-hidden rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 animate-on-scroll delay-200">
+                  <img 
+                    src="./imgs/imgs_2.png" 
+                    alt="Wedding Moment 2" 
+                    class="w-full h-[300px] md:h-[400px] object-cover rounded-3xl hover:scale-105 transition-transform duration-700"
+                  />
                 </div>
+                
+                <div class="grid grid-cols-2 gap-4 md:gap-6">
+                   <div class="overflow-hidden rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 animate-on-scroll delay-200">
+                    <img 
+                      src="./imgs/imgs_3.png" 
+                      alt="Wedding Moment 3" 
+                      class="w-full h-[300px] md:h-[280px] object-cover rounded-3xl hover:scale-105 transition-transform duration-700"
+                    />
+                  </div>
+                  <div class="overflow-hidden rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 animate-on-scroll delay-500">
+                    <img 
+                      src="./imgs/imgs_4.png" 
+                      alt="Ring details" 
+                      class="w-full h-[300px] md:h-[280px] object-cover rounded-3xl hover:scale-105 transition-transform duration-700"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
             
              <!-- Bottom Full Width Image -->
              <div class="mt-6 animate-on-scroll delay-200">
                 <div class="overflow-hidden rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 h-64 md:h-96 w-full">
                     <img 
-                        src="https://images.unsplash.com/photo-1510076857177-7470076d4098?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
+                        src="./imgs/imgs_5.png"
                         alt="Silhouette Sunset"
                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                     />
@@ -318,14 +298,6 @@
       // Initialize Lucide Icons
       lucide.createIcons();
 
-      // Navigation Logic
-      const navbar = document.getElementById('navbar');
-      const menuBtn = document.getElementById('menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const iconMenu = document.getElementById('icon-menu');
-      const iconX = document.getElementById('icon-x');
-      const mobileLinks = document.querySelectorAll('.mobile-link');
-      let isMenuOpen = false;
 
       // Scroll Effect for Navbar
       window.addEventListener('scroll', () => {
@@ -338,28 +310,8 @@
         }
       });
 
-      // Mobile Menu Toggle
-      function toggleMenu() {
-        isMenuOpen = !isMenuOpen;
-        if (isMenuOpen) {
-          mobileMenu.classList.remove('hidden');
-          iconMenu.classList.add('hidden');
-          iconX.classList.remove('hidden');
-        } else {
-          mobileMenu.classList.add('hidden');
-          iconMenu.classList.remove('hidden');
-          iconX.classList.add('hidden');
-        }
-      }
 
-      menuBtn.addEventListener('click', toggleMenu);
 
-      // Close mobile menu when clicking a link
-      mobileLinks.forEach(link => {
-        link.addEventListener('click', () => {
-          if (isMenuOpen) toggleMenu();
-        });
-      });
 
       // Intersection Observer for Animations
       const observer = new IntersectionObserver(
