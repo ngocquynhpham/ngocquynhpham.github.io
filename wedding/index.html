@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lệ Trâm & Văn Vọng - Wedding Invitation</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ['"Playfair Display"', 'serif'],
+              sans: ['"Montserrat"', 'sans-serif'],
+              script: ['"Great Vibes"', 'cursive'],
+            },
+            colors: {
+              wedding: {
+                beige: '#FDFBF7',
+                gold: '#C5A059',
+                dark: '#2C2C2C',
+                rose: '#F4EBE8',
+              }
+            }
+          }
+        }
+      }
+    </script>
+
+    <!-- Custom CSS -->
+    <style>
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 100px;
+      }
+      body {
+        background-color: #FDFBF7;
+        color: #2C2C2C;
+      }
+      
+      /* Animations */
+      .fade-in-up {
+        animation: fadeInUp 1s ease-out forwards;
+      }
+      
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .delay-200 { animation-delay: 200ms; }
+      .delay-500 { animation-delay: 500ms; }
+      
+      .animate-on-scroll {
+        opacity: 0; /* Initially hidden */
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
+    "react/": "https://esm.sh/react@^19.2.3/"
+  }
+}
+</script>
+</head>
+  <body class="min-h-screen font-sans selection:bg-wedding-gold selection:text-white overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-transparent py-6">
+      <div class="container mx-auto px-6 flex justify-between items-center">
+        <div class="flex flex-col">
+          <h1 class="font-serif text-2xl font-bold tracking-wide text-wedding-dark">
+            Lệ Trâm <span class="text-wedding-gold italic">&</span> Văn Vọng
+          </h1>
+          <p class="text-xs tracking-[0.2em] text-gray-500 mt-1 uppercase">Chủ Nhật: 21/12/2025</p>
+        </div>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex space-x-8 text-sm tracking-widest uppercase font-medium text-gray-600">
+          <a href="#info" class="hover:text-wedding-gold transition-colors">Thông Tin</a>
+          <a href="#gallery" class="hover:text-wedding-gold transition-colors">Album Ảnh</a>
+          <a href="#wishes" class="hover:text-wedding-gold transition-colors">Lời Chúc</a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none">
+          <i id="icon-menu" data-lucide="menu" class="w-7 h-7"></i>
+          <i id="icon-x" data-lucide="x" class="w-7 h-7 hidden"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Overlay -->
+      <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white shadow-lg py-6 flex flex-col items-center space-y-6 text-sm tracking-widest uppercase border-t fade-in-up">
+        <a href="#info" class="mobile-link hover:text-wedding-gold">Thông Tin</a>
+        <a href="#gallery" class="mobile-link hover:text-wedding-gold">Album Ảnh</a>
+        <a href="#wishes" class="mobile-link hover:text-wedding-gold">Lời Chúc</a>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+      
+      <!-- Hero Section -->
+      <section class="relative w-full h-screen min-h-[700px] flex items-center justify-center pt-20 pb-10 px-4 md:px-8">
+        <div class="container mx-auto h-full relative rounded-[40px] overflow-hidden shadow-2xl">
+          <!-- Background Image -->
+          <div 
+            class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 hover:scale-105"
+            style="background-image: url('https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80')"
+          >
+            <div class="absolute inset-0 bg-black/20 md:bg-black/10"></div>
+          </div>
+  
+          <!-- Text Overlay -->
+          <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-6">
+              <p class="text-xs md:text-sm tracking-[0.3em] uppercase mb-4 opacity-0 fade-in-up">Trân Trọng Kính Mời</p>
+              
+              <div class="relative mb-6 opacity-0 fade-in-up delay-200">
+                  <h1 class="font-serif text-6xl md:text-8xl lg:text-9xl font-bold italic leading-tight">
+                     <span class="block text-5xl md:text-7xl mb-2 font-normal not-italic">Lễ</span>
+                     Thành Hôn
+                  </h1>
+                  <div class="w-24 h-0.5 bg-white/70 mx-auto mt-6"></div>
+              </div>
+  
+              <p class="text-sm md:text-lg font-light tracking-wide max-w-lg italic opacity-0 fade-in-up delay-500">
+                  Cùng chung vui trong ngày trọng đại của chúng tôi
+              </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Event Info Section -->
+      <section id="info" class="py-20 md:py-28 bg-wedding-beige">
+        <div class="container mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="font-serif text-4xl md:text-5xl text-wedding-dark mb-4">Thông Tin Lễ Cưới</h2>
+            <p class="text-gray-500 italic max-w-2xl mx-auto font-light">
+              "Sự hiện diện của bạn là niềm vinh hạnh lớn nhất đối với chúng tôi."
+            </p>
+          </div>
+  
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto">
+            <!-- Time Card -->
+            <div class="bg-white p-10 rounded-3xl shadow-sm hover:shadow-xl transition-shadow duration-300 text-center border border-gray-100 group">
+              <div class="w-16 h-16 bg-wedding-rose rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-wedding-gold group-hover:text-white transition-colors duration-300">
+                <i data-lucide="calendar" class="w-7 h-7 text-wedding-gold group-hover:text-white"></i>
+              </div>
+              <h3 class="font-serif text-2xl mb-2 text-gray-800">Thời Gian</h3>
+              <div class="w-12 h-px bg-wedding-gold mx-auto my-4"></div>
+              <p class="text-gray-600 font-medium mb-2">Chủ Nhật, 21 Tháng 12, 2025</p>
+              <p class="text-4xl font-serif font-bold text-wedding-dark mt-4">17h30</p>
+            </div>
+  
+            <!-- Location Card -->
+            <div class="bg-white p-10 rounded-3xl shadow-sm hover:shadow-xl transition-shadow duration-300 text-center border border-gray-100 group">
+              <div class="w-16 h-16 bg-wedding-rose rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-wedding-gold group-hover:text-white transition-colors duration-300">
+                <i data-lucide="map-pin" class="w-7 h-7 text-wedding-gold group-hover:text-white"></i>
+              </div>
+              <h3 class="font-serif text-2xl mb-2 text-gray-800">Tiệc Cưới</h3>
+              <div class="w-12 h-px bg-wedding-gold mx-auto my-4"></div>
+              <h4 class="font-bold text-gray-800 mb-2">Trung tâm tiệc cưới Xuân Lập</h4>
+              <p class="text-gray-500 text-sm mb-6 leading-relaxed">
+                KCN NAM TÂN UYÊN MỞ RỘNG,<br/>
+                PHƯỜNG TÂN UYÊN, TPHCM
+              </p>
+              <a 
+                href="https://maps.google.com"
+                target="_blank" 
+                rel="noreferrer"
+                class="inline-flex items-center gap-2 bg-wedding-rose text-wedding-dark px-6 py-2 rounded-full text-xs font-bold tracking-widest hover:bg-wedding-gold hover:text-white transition-colors"
+              >
+                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                XEM BẢN ĐỒ
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gallery Section -->
+      <section id="gallery" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 animate-on-scroll">
+                <p class="text-wedding-gold text-xs font-bold tracking-[0.3em] uppercase mb-3">Khoảnh Khắc</p>
+                <h2 class="font-serif text-4xl md:text-5xl text-wedding-dark">Album Ảnh Cưới</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                <!-- Left Column (Large Image) -->
+                <div class="w-full animate-on-scroll">
+                    <div class="overflow-hidden rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 h-full">
+                        <img 
+                            src="https://images.unsplash.com/photo-1519225448520-eda5186b6473?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                            alt="Wedding Moment 1" 
+                            class="w-full h-full min-h-[300px] md:h-[600px] object-cover rounded-3xl hover:scale-105 transition-transform duration-700"
+                        />
+                    </div>
+                </div>
+
+                <!-- Right Column (Grid of 3) -->
+                <div class="flex flex-col gap-4 md:gap-6">
+                     <div class="overflow-hidden rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 animate-on-scroll delay-200">
+                        <img 
+                            src="https://images.unsplash.com/photo-1511285560982-1351cdeb9821?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                            alt="Wedding Moment 2" 
+                            class="w-full h-[300px] md:h-[400px] object-cover rounded-3xl hover:scale-105 transition-transform duration-700"
+                        />
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4 md:gap-6">
+                         <div class="overflow-hidden rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 animate-on-scroll delay-200">
+                            <img 
+                                src="https://images.unsplash.com/photo-1595867332308-5693c4e3009d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                alt="Wedding Moment 3" 
+                                class="w-full h-[300px] md:h-[280px] object-cover rounded-3xl hover:scale-105 transition-transform duration-700"
+                            />
+                        </div>
+                        <div class="overflow-hidden rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 animate-on-scroll delay-500">
+                            <img 
+                                src="https://images.unsplash.com/photo-1623136209503-4c55e90df38c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                alt="Ring details" 
+                                class="w-full h-[300px] md:h-[280px] object-cover rounded-3xl hover:scale-105 transition-transform duration-700"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+             <!-- Bottom Full Width Image -->
+             <div class="mt-6 animate-on-scroll delay-200">
+                <div class="overflow-hidden rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 h-64 md:h-96 w-full">
+                    <img 
+                        src="https://images.unsplash.com/photo-1510076857177-7470076d4098?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
+                        alt="Silhouette Sunset"
+                        class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                    />
+                </div>
+             </div>
+        </div>
+      </section>
+
+      <!-- Quote Section -->
+      <section class="py-16 px-6 bg-wedding-beige">
+        <div class="container mx-auto">
+          <div class="bg-wedding-rose rounded-3xl p-10 md:p-20 text-center relative overflow-hidden">
+              <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+              
+              <div class="relative z-10 max-w-3xl mx-auto">
+                  <h3 class="font-serif text-4xl md:text-5xl text-[#D4A373] mb-8">Tình Yêu</h3>
+                  <p class="text-gray-600 font-light italic text-lg md:text-xl leading-loose">
+                      "Tình yêu không phải là tìm thấy một người hoàn hảo, mà là nhìn thấy một người không hoàn hảo một cách hoàn hảo."
+                  </p>
+                  <div class="mt-8 text-wedding-gold text-2xl">
+                      ❦
+                  </div>
+              </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white py-12 border-t border-gray-100">
+        <div class="container mx-auto text-center px-4">
+            <h2 class="font-serif text-3xl font-bold text-wedding-dark mb-3">
+                Lệ Trâm <span class="text-wedding-gold italic">&</span> Văn Vọng
+            </h2>
+            <p class="text-xs tracking-[0.2em] text-gray-400 uppercase mb-8">#TramVong2025</p>
+
+            <div class="flex justify-center space-x-6 mb-8">
+               <a href="#" class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:border-wedding-gold hover:text-wedding-gold transition-all">
+                  <i data-lucide="facebook" class="w-4 h-4"></i>
+               </a>
+               <a href="#" class="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:border-wedding-gold hover:text-wedding-gold transition-all">
+                  <i data-lucide="instagram" class="w-4 h-4"></i>
+               </a>
+            </div>
+
+            <div class="text-gray-400 text-xs font-light flex items-center justify-center gap-1">
+                <span>Designed with</span>
+                <i data-lucide="heart" class="w-3 h-3 text-red-400 fill-current"></i>
+                <span>for Mobile</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Music Button -->
+    <div class="fixed bottom-6 right-6 z-40">
+      <button class="bg-white p-3 rounded-full shadow-lg text-wedding-gold hover:bg-wedding-gold hover:text-white transition-all duration-300 animate-bounce">
+          <i data-lucide="music" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <!-- Application Logic -->
+    <script>
+      // Initialize Lucide Icons
+      lucide.createIcons();
+
+      // Navigation Logic
+      const navbar = document.getElementById('navbar');
+      const menuBtn = document.getElementById('menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const iconMenu = document.getElementById('icon-menu');
+      const iconX = document.getElementById('icon-x');
+      const mobileLinks = document.querySelectorAll('.mobile-link');
+      let isMenuOpen = false;
+
+      // Scroll Effect for Navbar
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('bg-white/90', 'backdrop-blur-md', 'shadow-sm', 'py-3');
+          navbar.classList.remove('bg-transparent', 'py-6');
+        } else {
+          navbar.classList.remove('bg-white/90', 'backdrop-blur-md', 'shadow-sm', 'py-3');
+          navbar.classList.add('bg-transparent', 'py-6');
+        }
+      });
+
+      // Mobile Menu Toggle
+      function toggleMenu() {
+        isMenuOpen = !isMenuOpen;
+        if (isMenuOpen) {
+          mobileMenu.classList.remove('hidden');
+          iconMenu.classList.add('hidden');
+          iconX.classList.remove('hidden');
+        } else {
+          mobileMenu.classList.add('hidden');
+          iconMenu.classList.remove('hidden');
+          iconX.classList.add('hidden');
+        }
+      }
+
+      menuBtn.addEventListener('click', toggleMenu);
+
+      // Close mobile menu when clicking a link
+      mobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          if (isMenuOpen) toggleMenu();
+        });
+      });
+
+      // Intersection Observer for Animations
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.remove('opacity-0');
+              entry.target.classList.add('fade-in-up');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.1,
+          rootMargin: '50px'
+        }
+      );
+
+      // Observe all elements with 'animate-on-scroll'
+      document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+        observer.observe(el);
+      });
+    </script>
+  </body>
+</html>
