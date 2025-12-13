@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo QR Code Pro - Web & Wifi</title>
+    <meta name="description" content="Tạo mã QR miễn phí cho website, link và wifi. Công cụ tạo QR code online nhanh chóng, dễ sử dụng, hỗ trợ tải về ảnh chất lượng cao.">
+    <meta name="keywords" content="tạo qr code, qr code generator, mã qr wifi, qr code miễn phí, tạo mã qr online, qr code việt nam">
+    <meta name="author" content="Ngoc Quynh Pham">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ngocquynhpham.github.io/qr/">
+    <meta property="og:title" content="Tạo QR Code Pro - Web & Wifi">
+    <meta property="og:description" content="Tạo mã QR miễn phí cho website, link và wifi. Công cụ tạo QR code online nhanh chóng, dễ sử dụng.">
+    <meta property="og:image" content="https://ngocquynhpham.github.io/qr/favicon.webp">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ngocquynhpham.github.io/qr/">
+    <meta property="twitter:title" content="Tạo QR Code Pro - Web & Wifi">
+    <meta property="twitter:description" content="Tạo mã QR miễn phí cho website, link và wifi. Công cụ tạo QR code online nhanh chóng, dễ sử dụng.">
+    <meta property="twitter:image" content="https://ngocquynhpham.github.io/qr/favicon.webp">
+    
+    <link rel="canonical" href="https://ngocquynhpham.github.io/qr/">
+    <link rel="icon" type="image/webp" href="./favicon.webp">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #f0f2f5;
+        }
+        .tab-btn.active {
+            background-color: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+        .tab-btn {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <div class="bg-white p-6 md:p-8 rounded-3xl shadow-2xl w-full max-w-lg">
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">QR Code Generator</h1>
+            <p class="text-gray-500 text-sm mt-1">Tạo mã QR miễn phí trọn đời</p>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex gap-2 mb-6 bg-gray-100 p-1 rounded-xl">
+            <button onclick="switchTab('website')" id="tab-web" class="tab-btn active flex-1 py-2 px-4 rounded-lg font-semibold text-sm border border-transparent hover:bg-white hover:shadow-sm">
+                🌐 Website / Link
+            </button>
+            <button onclick="switchTab('wifi')" id="tab-wifi" class="tab-btn flex-1 py-2 px-4 rounded-lg font-semibold text-sm border border-transparent hover:bg-white hover:shadow-sm text-gray-600">
+                📶 Wifi
+            </button>
+        </div>
+
+        <!-- QR Display Area -->
+        <div class="flex flex-col items-center justify-center mb-6 bg-white p-6 rounded-2xl border-2 border-gray-100 shadow-inner relative">
+            <!-- Canvas cho QR -->
+            <canvas id="qr-code"></canvas>
+            
+            <!-- Tên hiển thị bên dưới -->
+            <div id="display-label" class="mt-4 text-center font-bold text-lg text-gray-800 break-all px-4">
+                PHAM THI NGOC QUYNH
+            </div>
+        </div>
+
+        <!-- Controls Area -->
+        <div class="space-y-4">
+            
+            <!-- Website Inputs -->
+            <div id="input-website" class="space-y-3">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Đường link (URL)</label>
+                    <input type="text" id="url-input" value="https://github.com/ngocquynhpham" 
+                        placeholder="Ví dụ: https://google.com"
+                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-gray-50"
+                        oninput="updateQR()">
+                </div>
+            </div>
+
+            <!-- Wifi Inputs (Mặc định ẩn) -->
+            <div id="input-wifi" class="space-y-3 hidden">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Tên Wifi (SSID)</label>
+                    <input type="text" id="ssid" value="PHAM THI NGOC QUYNH" 
+                        class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-gray-50"
+                        oninput="updateQR()">
+                </div>
+                <div class="flex gap-3">
+                    <div class="flex-1">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Mật khẩu</label>
+                        <input type="text" id="password" value="123456789" 
+                            class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition bg-gray-50"
+                            oninput="updateQR()">
+                    </div>
+                    <div class="w-1/3">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Bảo mật</label>
+                        <select id="encryption" class="w-full px-2 py-3 border border-gray-200 rounded-xl outline-none bg-gray-50" onchange="updateQR()">
+                            <option value="WPA">WPA</option>
+                            <option value="nopass">None</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Download Button -->
+            <button onclick="downloadQR()" 
+                class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-4 rounded-xl transition duration-300 flex items-center justify-center gap-2 mt-6 shadow-lg transform active:scale-95">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Tải ảnh về máy
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let currentTab = 'website';
+        let qr;
+        
+        // Icons dạng Base64 để không phụ thuộc vào mạng
+        const iconWifi = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjU2M2ViIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTUgMTIuNTVhMTEgMTEgMCAwIDEgMTQuMDggMCI+PC9wYXRoPjxwYXRoIGQ9Ik0xLjQyIDlhMTYgMTYgMCAwIDEgMjEuMTYgMCI+PC9wYXRoPjxwYXRoIGQ9Ik04LjUzIDE2LjExYTYgNiAwIDAgMSA2Ljk1IDAiPjwvcGF0aD48bGluZSB4MT0iMTIiIHkxPSIyMCIgeDI9IjEyLjAxIiB5Mj0iMjAiPjwvbGluZT48L3N2Zz4=";
+        
+        const iconWeb = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMjU2M2ViIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiPjwvY2lyY2xlPjxsaW5lIHgxPSIyIiB5MT0iMTIiIHgyPSIyMiIgeTI9IjEyIj48L2xpbmU+PHBhdGggZD0iTTEyIDJhMTUuMyAxNS4zIDAgMCAxIDQgMTAgMTUuMyAxNS4zIDAgMCAxLTQgMTAgMTUuMyAxNS4zIDAgMCAxLTQtMTAgMTUuMyAxNS4zIDAgMCAxIDQtMTB6Ij48L3BhdGg+PC9zdmc+";
+
+        function switchTab(tab) {
+            currentTab = tab;
+            
+            // UI Toggle
+            document.getElementById('tab-web').className = `tab-btn flex-1 py-2 px-4 rounded-lg font-semibold text-sm border border-transparent hover:bg-white hover:shadow-sm ${tab === 'website' ? 'active bg-blue-600 text-white' : 'text-gray-600'}`;
+            document.getElementById('tab-wifi').className = `tab-btn flex-1 py-2 px-4 rounded-lg font-semibold text-sm border border-transparent hover:bg-white hover:shadow-sm ${tab === 'wifi' ? 'active bg-blue-600 text-white' : 'text-gray-600'}`;
+            
+            // Input Toggle
+            document.getElementById('input-website').classList.toggle('hidden', tab !== 'website');
+            document.getElementById('input-wifi').classList.toggle('hidden', tab !== 'wifi');
+
+            updateQR();
+        }
+
+        function updateQR() {
+            let value = "";
+            let label = "";
+            let iconSrc = "";
+
+            if (currentTab === 'website') {
+                value = document.getElementById('url-input').value;
+                label = value.replace('https://', '').replace('http://', '');
+                if(label.length > 25) label = label.substring(0, 22) + "...";
+                if(label === "") label = "WEB QR";
+                iconSrc = iconWeb;
+            } else {
+                const ssid = document.getElementById('ssid').value;
+                const pass = document.getElementById('password').value;
+                const enc = document.getElementById('encryption').value;
+                value = `WIFI:T:${enc};S:${ssid};P:${pass};;`;
+                label = ssid;
+                iconSrc = iconWifi;
+            }
+
+            // Update Label text below QR
+            document.getElementById('display-label').innerText = label;
+
+            // Generate Basic QR
+            const canvas = document.getElementById('qr-code');
+            qr = new QRious({
+                element: canvas,
+                value: value,
+                size: 300,
+                level: 'H', // High error correction to allow icon in middle
+                background: 'white',
+                foreground: '#000000'
+            });
+
+            // Draw Icon in Center
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            img.src = iconSrc;
+            img.onload = function() {
+                const size = 300;
+                const iconSize = 60; // Kích thước icon
+                const center = size / 2;
+                
+                // Vẽ ô trắng làm nền cho icon để không bị lẫn vào mã QR
+                ctx.fillStyle = "white";
+                ctx.fillRect(center - (iconSize/2) - 5, center - (iconSize/2) - 5, iconSize + 10, iconSize + 10);
+                
+                // Vẽ icon
+                ctx.drawImage(img, center - (iconSize/2), center - (iconSize/2), iconSize, iconSize);
+            }
+        }
+
+        function downloadQR() {
+            const canvas = document.getElementById('qr-code');
+            // Tạo một canvas tạm thời để vẽ cả QR và Text vào một ảnh duy nhất
+            const tempCanvas = document.createElement('canvas');
+            const ctx = tempCanvas.getContext('2d');
+            
+            // Kích thước ảnh tải về
+            const padding = 20;
+            const textHeight = 40;
+            const qrSize = canvas.width;
+            
+            tempCanvas.width = qrSize + (padding * 2);
+            tempCanvas.height = qrSize + textHeight + (padding * 2);
+            
+            // Tô nền trắng
+            ctx.fillStyle = "white";
+            ctx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+            
+            // Vẽ QR code từ canvas gốc sang
+            ctx.drawImage(canvas, padding, padding);
+            
+            // Vẽ chữ (Tên Wifi hoặc Web)
+            ctx.font = "bold 20px 'Segoe UI', sans-serif";
+            ctx.fillStyle = "#333";
+            ctx.textAlign = "center";
+            const labelText = document.getElementById('display-label').innerText;
+            ctx.fillText(labelText, tempCanvas.width / 2, qrSize + padding + 30);
+
+            // Tải về
+            const image = tempCanvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            const link = document.createElement('a');
+            link.download = `QR-${currentTab}-${labelText}.png`;
+            link.href = image;
+            link.click();
+        }
+
+        // Init
+        window.onload = updateQR;
+    </script>
+</body>
+</html>
