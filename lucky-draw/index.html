@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quay Số May Mắn</title>
+  
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <!-- XLSX Library for Excel -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  
+  <style>
+    /* Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #10b981;
+      --primary-dark: #059669;
+      --primary-light: #34d399;
+      --bg-color: #f0fdf4;
+      --card-bg: #ffffff;
+      --text-dark: #1f2937;
+      --text-light: #6b7280;
+      --border-color: #d1fae5;
+      --shadow: 0 4px 20px rgba(16, 185, 129, 0.15);
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg-color);
+      min-height: 100vh;
+      color: var(--text-dark);
+      transition: background 0.4s ease;
+    }
+
+    /* Theme Classes */
+    body.theme-green {
+      --primary-color: #10b981;
+      --primary-dark: #059669;
+      --primary-light: #34d399;
+      --bg-color: #f0fdf4;
+      --border-color: #d1fae5;
+    }
+
+    body.theme-red {
+      --primary-color: #ef4444;
+      --primary-dark: #dc2626;
+      --primary-light: #f87171;
+      --bg-color: #fef2f2;
+      --border-color: #fecaca;
+    }
+
+    body.theme-purple {
+      --primary-color: #a855f7;
+      --primary-dark: #9333ea;
+      --primary-light: #c084fc;
+      --bg-color: #faf5ff;
+      --border-color: #e9d5ff;
+    }
+
+    body.theme-blue {
+      --primary-color: #3b82f6;
+      --primary-dark: #2563eb;
+      --primary-light: #60a5fa;
+      --bg-color: #eff6ff;
+      --border-color: #dbeafe;
+    }
+
+    body.theme-orange {
+      --primary-color: #f59e0b;
+      --primary-dark: #d97706;
+      --primary-light: #fbbf24;
+      --bg-color: #fffbeb;
+      --border-color: #fde68a;
+    }
+
+    /* Header */
+    .header {
+      background: var(--primary-color);
+      padding: 18px 0;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: background 0.4s ease;
+    }
+
+    .header-content {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: white;
+    }
+
+    .header-icon {
+      font-size: 2rem;
+    }
+
+    .header-title h1 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin: 0;
+      letter-spacing: 0.5px;
+    }
+
+    /* Theme Selector */
+    .theme-selector {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .theme-label {
+      color: white;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-right: 5px;
+    }
+
+    .theme-btn {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255, 255, 255, 0.5);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .theme-btn:hover {
+      transform: scale(1.1);
+      border-color: white;
+    }
+
+    .theme-btn.active {
+      border-color: white;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    }
+
+    .theme-btn.active::after {
+      content: '✓';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+
+    .theme-green-btn { background: #10b981; }
+    .theme-red-btn { background: #ef4444; }
+    .theme-purple-btn { background: #a855f7; }
+    .theme-blue-btn { background: #3b82f6; }
+    .theme-orange-btn { background: #f59e0b; }
+
+    /* Main Layout */
+    .main-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 25px;
+      align-items: start;
+    }
+
+    /* Card Styles */
+    .card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: var(--shadow);
+      border: 2px solid var(--border-color);
+      transition: all 0.4s ease;
+    }
+
+    /* Draw Panel */
+    .draw-panel {
+      position: relative;
+    }
+
+    /* Slot Machine */
+    .slot-machine {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      border-radius: 20px;
+      padding: 50px 30px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+      margin-bottom: 25px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s ease;
+      height: 515px;
+    }
+
+    .slot-machine::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.08) 50%, transparent 70%);
+      animation: shine 3s infinite;
+      pointer-events: none;
+    }
+
+    @keyframes shine {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+
+    .slot-display {
+      background: white;
+      border-radius: 16px;
+      padding: 70px 20px;
+      position: relative;
+      z-index: 1;
+      box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .slot-content {
+      text-align: center;
+    }
+
+    /* Number Display - Fixed Boxes, Only Numbers Change */
+    .slot-number-container {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 25px;
+      height: 120px;
+      align-items: center;
+    }
+
+    .number-digit {
+      width: 120px;
+      height: 150px;
+      background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 6rem;
+      font-weight: 900;
+      color: white;
+      font-family: 'Arial Black', sans-serif;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s ease;
+    }
+
+    /* Inner number that spins, not the box */
+    .number-digit-inner {
+      display: block;
+      transition: none;
+    }
+
+    .number-digit.spinning .number-digit-inner {
+      animation: numberBlur 0.15s linear infinite;
+    }
+
+    @keyframes numberBlur {
+      0% { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+      50% { 
+        opacity: 0.3;
+        transform: translateY(-5px);
+      }
+      100% { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .slot-name {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 15px;
+      min-height: 2.5rem;
+    }
+
+    .slot-details {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .slot-detail-item {
+      background: var(--bg-color);
+      padding: 8px 20px;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    /* Control Buttons */
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      padding: 16px 35px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      letter-spacing: 0.3px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      color: white;
+      font-size: 1.15rem;
+      padding: 18px 45px;
+    }
+
+    .btn-icon {
+      font-size: 1.3rem;
+    }
+
+    /* Utility Buttons - Corner Position */
+    .utility-buttons {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      display: flex;
+      gap: 10px;
+      z-index: 10;
+    }
+
+    .btn-utility {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      background: white;
+      color: var(--text-dark);
+      border: 2px solid var(--border-color);
+    }
+
+    .btn-utility:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    /* Upload Button Special Style */
+    .btn-upload {
+      background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
+      color: white;
+      border-color: transparent;
+    }
+
+    .btn-upload:hover {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      color: white;
+    }
+
+    /* Hidden file input */
+    #fileInput {
+      display: none;
+    }
+
+    /* Info Panel */
+    .info-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Statistics - 3 columns 1 row */
+    .stats-card {
+      padding: 25px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .section-icon {
+      font-size: 1.4rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .stat-item {
+      background: var(--bg-color);
+      padding: 18px 15px;
+      border-radius: 12px;
+      text-align: center;
+      border: 2px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    .stat-item:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary-color);
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .stat-value {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--primary-color);
+      font-family: 'Arial Black', sans-serif;
+      transition: color 0.3s ease;
+    }
+
+    /* Winners List */
+    .winners-card {
+      padding: 25px;
+    }
+
+    .winners-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .btn-danger {
+      padding: 8px 16px;
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.2);
+    }
+
+    .btn-danger:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+
+    .winners-container {
+      height: 350px;
+      overflow-y: auto;
+      padding-right: 8px;
+    }
+
+    .winners-container::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .winners-container::-webkit-scrollbar-track {
+      background: var(--bg-color);
+      border-radius: 10px;
+    }
+
+    .winners-container::-webkit-scrollbar-thumb {
+      background: var(--primary-color);
+      border-radius: 10px;
+    }
+
+    .winner-item {
+      background: var(--bg-color);
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 2px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    .winner-item:hover {
+      transform: translateX(3px);
+      border-color: var(--primary-color);
+    }
+
+    .winner-rank {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .winner-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .winner-name {
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .winner-meta {
+      display: flex;
+      gap: 8px;
+      font-size: 0.75rem;
+      color: var(--text-light);
+      flex-wrap: wrap;
+    }
+
+    .winner-meta span {
+      background: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+
+    .empty-message {
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.95rem;
+      padding: 50px 20px;
+      font-style: italic;
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      z-index: 10001;
+      animation: confetti-fall linear forwards;
+    }
+
+    @keyframes confetti-fall {
+      to {
+        transform: translateY(100vh) rotate(720deg);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+      .main-container {
+        grid-template-columns: 1fr;
+      }
+
+      .utility-buttons {
+        position: static;
+        justify-content: center;
+        margin-bottom: 15px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .main-container {
+        padding: 15px;
+        gap: 15px;
+      }
+
+      .card {
+        padding: 20px;
+      }
+
+      .slot-machine {
+        padding: 30px 20px;
+      }
+
+      .slot-display {
+        padding: 70px 15px;
+      }
+
+      .number-digit {
+        width: 70px;
+        height: 100px;
+        font-size: 4rem;
+      }
+
+      .slot-number-container {
+        height: 100px;
+        gap: 6px;
+      }
+
+      .slot-name {
+        font-size: 1.5rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .controls {
+        flex-direction: column;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .utility-buttons {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+
+      .btn-utility {
+        flex: 1;
+        min-width: 120px;
+      }
+    }
+
+    /* SweetAlert2 Custom Styling */
+    .swal2-popup {
+      border-radius: 20px;
+      padding: 30px;
+    }
+
+    .swal2-title {
+      font-size: 2rem;
+      font-weight: 800;
+    }
+
+    .swal2-html-container {
+      font-size: 1.05rem;
+    }
+
+    .swal2-confirm {
+      border-radius: 10px;
+      padding: 12px 30px;
+      font-weight: 700;
+    }
+
+    /* Loading Popup Custom */
+    .swal2-loading .swal2-popup {
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .swal2-loading .swal2-title {
+      color: white;
+    }
+  </style>
+</head>
+<body class="theme-green">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="header-title">
+        <div class="header-icon">🎰</div>
+        <h1>QUAY SỐ MAY MẮN</h1>
+      </div>
+      
+      <div class="theme-selector">
+        <span class="theme-label">Chủ đề:</span>
+        <div class="theme-btn theme-green-btn active" onclick="changeTheme('green')" title="Xanh lá"></div>
+        <div class="theme-btn theme-red-btn" onclick="changeTheme('red')" title="Đỏ"></div>
+        <div class="theme-btn theme-purple-btn" onclick="changeTheme('purple')" title="Tím"></div>
+        <div class="theme-btn theme-blue-btn" onclick="changeTheme('blue')" title="Xanh dương"></div>
+        <div class="theme-btn theme-orange-btn" onclick="changeTheme('orange')" title="Cam"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="main-container">
+    
+    <!-- Left Panel - Draw Area -->
+    <div class="draw-panel">
+      <div class="card">
+        <!-- Slot Machine -->
+        <div class="slot-machine" id="slotMachine">
+          <div class="slot-display">
+            <div class="slot-content">
+              <!-- Fixed Boxes, Only Numbers Inside Change -->
+              <div class="slot-number-container" id="numberContainer">
+                <div class="number-digit" id="digit1">
+                  <span class="number-digit-inner" id="digit1-inner">0</span>
+                </div>
+                <div class="number-digit" id="digit2">
+                  <span class="number-digit-inner" id="digit2-inner">0</span>
+                </div>
+                <div class="number-digit" id="digit3">
+                  <span class="number-digit-inner" id="digit3-inner">0</span>
+                </div>
+              </div>
+              
+              <!-- Static Information -->
+              <div class="slot-name" id="slotName">Nhấn nút để bắt đầu</div>
+              <div class="slot-details">
+                <div class="slot-detail-item" id="slotMsnv">MSNV: ---</div>
+                <div class="slot-detail-item" id="slotDept">Phòng ban: ---</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Control Button -->
+        <div class="controls">
+          <button class="btn btn-primary" id="drawBtn" onclick="startDraw()">
+            <span class="btn-icon">🎲</span>
+            <span>BẮT ĐẦU QUAY SỐ</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Panel - Stats & Winners -->
+    <div class="info-panel">
+      
+      <!-- Statistics Card - 3 columns 1 row -->
+      <div class="card stats-card">
+        <div class="section-header">
+          <span class="section-icon">📊</span>
+          <h3 class="section-title">Thống kê</h3>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-label">Tổng số</span>
+            <div class="stat-value" id="totalCount">0</div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Còn lại</span>
+            <div class="stat-value" id="remainingCount">0</div>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Đã trúng</span>
+            <div class="stat-value" id="winnerCount">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Winners List Card -->
+      <div class="card winners-card">
+        <div class="winners-header">
+        <div class="section-header" style="margin-bottom: 0;">
+          <span class="section-icon">🏆</span>
+          <h3 class="section-title">Danh sách trúng thưởng</h3>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button class="btn-utility" onclick="printWinners()" style="margin: 0; background: #fff; border: 1px solid #ccc;">🖨️ In</button>
+          <button class="btn-danger" onclick="clearWinners()">Xóa</button>
+        </div>
+      </div>
+        <div class="winners-container" id="winnersContainer">
+          <p class="empty-message">Chưa có người trúng thưởng</p>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <script>
+    // Global variables
+    let allEmployees = [];
+    let availableEmployees = [];
+    let winners = [];
+    let isDrawing = false;
+    let currentTheme = 'green';
+    let loadingPopup = null;
+
+    // Initialize on page load
+    window.onload = function() {
+      loadData();
+      loadWinners();
+    };
+
+    /**
+     * Show loading popup with SweetAlert2
+     */
+    function showLoading(message = 'Đang tải...') {
+      loadingPopup = Swal.fire({
+        title: message,
+        html: '<div style="margin: 20px 0;"><div style="width: 60px; height: 60px; border: 5px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; margin: 0 auto; animation: spin 0.8s linear infinite;"></div></div>',
+        background: getComputedStyle(document.documentElement).getPropertyValue('--primary-color'),
+        color: '#fff',
+        showConfirmButton: false,
+        allowOutsideClick: false,
+        didOpen: () => {
+          // Add spin animation
+          const style = document.createElement('style');
+          style.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+          document.head.appendChild(style);
+        }
+      });
+    }
+
+    /**
+     * Close loading popup
+     */
+    function closeLoading() {
+      if (loadingPopup) {
+        loadingPopup.close();
+      }
+    }
+
+    /**
+     * Change theme
+     */
+    function changeTheme(theme) {
+      currentTheme = theme;
+      
+      // Update body class
+      document.body.className = 'theme-' + theme;
+      
+      // Update active button
+      document.querySelectorAll('.theme-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      document.querySelector('.theme-' + theme + '-btn').classList.add('active');
+    }
+
+    /**
+     * Handle Excel file upload
+     */
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      showLoading('Đang đọc file Excel...');
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          const data = new Uint8Array(e.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+          
+          // Get first sheet
+          const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+          const jsonData = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+          
+          if (jsonData.length < 2) {
+            closeLoading();
+            Swal.fire({
+              icon: 'error',
+              title: 'Lỗi!',
+              text: 'File Excel không có dữ liệu!'
+            });
+            return;
+          }
+
+          // Parse data
+          const headers = jsonData[0];
+          const employees = [];
+          
+          // Find column indexes
+          const sttIndex = headers.findIndex(h => h && h.toString().toLowerCase().includes('stt'));
+          const msnvIndex = headers.findIndex(h => h && h.toString().toLowerCase().includes('msnv'));
+          const nameIndex = headers.findIndex(h => h && (h.toString().toLowerCase().includes('tên') || h.toString().toLowerCase().includes('họ')));
+          const deptIndex = headers.findIndex(h => h && (h.toString().toLowerCase().includes('phòng') || h.toString().toLowerCase().includes('ban')));
+
+          // Parse rows
+          for (let i = 1; i < jsonData.length; i++) {
+            const row = jsonData[i];
+            if (!row || row.length === 0) continue;
+            
+            const msnv = row[msnvIndex] || '';
+            const name = row[nameIndex] || '';
+            
+            if (!msnv && !name) continue;
+            
+            employees.push({
+              stt: row[sttIndex] || i,
+              msnv: msnv.toString(),
+              name: name.toString(),
+              department: row[deptIndex] ? row[deptIndex].toString() : ''
+            });
+          }
+
+          if (employees.length === 0) {
+            closeLoading();
+            Swal.fire({
+              icon: 'error',
+              title: 'Lỗi!',
+              text: 'Không tìm thấy dữ liệu hợp lệ trong file!'
+            });
+            return;
+          }
+
+          // Upload to Google Sheet
+          closeLoading();
+          showLoading('Đang upload lên Google Sheet...');
+          
+          // Kiểm tra xem có Google Apps Script không
+          if (typeof google === 'undefined' || !google.script) {
+            closeLoading();
+            // Demo mode - chỉ cập nhật local
+            allEmployees = employees;
+            updateAvailableEmployees();
+            updateStatusBar();
+            
+            Swal.fire({
+              icon: 'success', 
+              title: 'Demo Mode - Thành công!',
+              html: `
+                <div style="text-align: left; padding: 10px;">
+                  <p><strong>✅ Đã tải:</strong> ${employees.length} nhân viên</p>
+                  <p><strong>ℹ️ Lưu ý:</strong> Chạy ở chế độ demo, dữ liệu không lưu vào Google Sheet</p>
+                </div>
+              `,
+              confirmButtonText: 'OK'
+            });
+            return;
+          }
+          
+          google.script.run
+            .withSuccessHandler(function(result) {
+              closeLoading();
+              
+              if (result.success) {
+                // Reload data from sheet
+                loadData();
+                
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Thành công!',
+                  html: `
+                    <div style="text-align: left; padding: 10px;">
+                      <p><strong>✅ Đã thêm:</strong> ${result.added} dòng mới</p>
+                      <p><strong>🗑️ Đã xóa:</strong> ${result.deleted} dòng trùng</p>
+                      <p><strong>📊 Tổng cộng:</strong> ${result.total} nhân viên</p>
+                    </div>
+                  `,
+                  confirmButtonText: 'OK'
+                });
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Lỗi!',
+                  text: result.error
+                });
+              }
+            })
+            .withFailureHandler(function(error) {
+              closeLoading();
+              Swal.fire({
+                icon: 'error',
+                title: 'Lỗi!',
+                text: 'Không thể upload lên Google Sheet: ' + error.message
+              });
+            })
+            .uploadEmployees(employees)
+
+        } catch (error) {
+          closeLoading();
+          Swal.fire({
+            icon: 'error',
+            title: 'Lỗi!',
+            text: 'Không thể đọc file Excel: ' + error.message
+          });
+        }
+      };
+
+      reader.readAsArrayBuffer(file);
+      
+      // Reset input
+      event.target.value = '';
+    }
+
+    /**
+     * Load employee data from Google Sheet
+     */
+    function loadData() {
+      showLoading('Đang tải...');
+      
+      google.script.run
+        .withSuccessHandler(function(result) {
+          closeLoading();
+          
+          if (result.success) {
+            allEmployees = result.data;
+            updateAvailableEmployees();
+            updateStatusBar();
+            
+            Swal.fire({
+              icon: 'success',
+              title: 'Thành công!',
+              text: `Đã tải ${result.count} nhân viên`,
+              timer: 2000,
+              showConfirmButton: false
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Lỗi!',
+              text: result.error
+            });
+          }
+        })
+        .withFailureHandler(function(error) {
+          closeLoading();
+          Swal.fire({
+            icon: 'error',
+            title: 'Lỗi!',
+            text: 'Không thể tải dữ liệu: ' + error.message
+          });
+        })
+        .getEmployeeList();
+    }
+
+    /**
+     * Load winners from server
+     */
+    function loadWinners() {
+      google.script.run
+        .withSuccessHandler(function(result) {
+          if (result.success) {
+            winners = result.data || [];
+            updateAvailableEmployees();
+            updateWinnersList();
+            updateStatusBar();
+          }
+        })
+        .withFailureHandler(function(error) {
+          console.error('Error loading winners:', error);
+        })
+        .getWinners();
+    }
+
+    /**
+     * In danh sách trúng thưởng
+     */
+    function printWinners() {
+      if (winners.length === 0) {
+        Swal.fire('Thông báo', 'Chưa có người trúng thưởng để in!', 'info');
+        return;
+      }
+
+      let printWindow = window.open('', '', 'height=600,width=800');
+      let html = `
+        <html>
+          <head>
+            <title>Danh Sách Trúng Thưởng</title>
+            <style>
+              body { font-family: Arial, sans-serif; padding: 20px; }
+              h2 { text-align: center; color: #333; }
+              table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+              th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+              th { background-color: #f2f2f2; font-weight: bold; text-align: center;}
+              td { text-align: center; }
+            </style>
+          </head>
+          <body>
+            <h2>🎉 DANH SÁCH TRÚNG THƯỞNG 🎉</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 50px">STT</th>
+                  <th>Họ và Tên</th>
+                  <th>MSNV</th>
+                  <th>Phòng ban</th>
+                </tr>
+              </thead>
+              <tbody>`;
+
+      winners.forEach((w, index) => {
+        html += `
+                <tr>
+                  <td>${index + 1}</td>
+                  <td style="text-align: left; font-weight: bold;">${w.name}</td>
+                  <td>${w.msnv}</td>
+                  <td>${w.department}</td>
+                </tr>`;
+      });
+
+      html += `
+              </tbody>
+            </table>
+            <div style="margin-top: 20px; text-align: right; font-style: italic; font-size: 12px;">
+              Ngày in: ${new Date().toLocaleString('vi-VN')}
+            </div>
+            <script>
+              window.onload = function() { window.print(); window.close(); }
+            <\/script>
+          </body>
+        </html>`;
+
+      printWindow.document.write(html);
+      printWindow.document.close();
+    }
+
+    /**
+     * Update available employees (exclude winners)
+     */
+    function updateAvailableEmployees() {
+      const winnerMsnvSet = new Set(winners.map(w => w.msnv));
+      availableEmployees = allEmployees.filter(emp => !winnerMsnvSet.has(emp.msnv));
+    }
+
+    /**
+     * Update status bar
+     */
+    function updateStatusBar() {
+      document.getElementById('totalCount').textContent = allEmployees.length;
+      document.getElementById('remainingCount').textContent = availableEmployees.length;
+      document.getElementById('winnerCount').textContent = winners.length;
+    }
+
+    /**
+     * Start drawing animation
+     */
+    function startDraw() {
+      if (isDrawing) return;
+      
+      if (availableEmployees.length === 0) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Không thể quay!',
+          text: 'Không còn người nào để quay số!'
+        });
+        return;
+      }
+
+      isDrawing = true;
+      const drawBtn = document.getElementById('drawBtn');
+      
+      drawBtn.disabled = true;
+      drawBtn.innerHTML = '<span class="btn-icon">⏳</span><span>ĐANG QUAY...</span>';
+
+      // Animation phase - Only numbers change, boxes stay fixed
+      animateNumbers();
+
+      // Draw winner after 3 seconds
+      setTimeout(() => {
+        const randomIndex = Math.floor(Math.random() * availableEmployees.length);
+        const winner = availableEmployees[randomIndex];
+        
+        // Stop spinning and show winner
+        stopSpinning();
+        updateDisplay(winner);
+        
+        // Show winner popup with SweetAlert2
+        showWinnerPopup(winner);
+        
+        // Add to winners list
+        winners.push(winner);
+        updateAvailableEmployees();
+        updateStatusBar();
+        updateWinnersList();
+        
+        // Save to server
+        saveWinnersToServer();
+        
+        // Show confetti effect
+        createConfetti();
+        
+        // Reset button
+        drawBtn.disabled = false;
+        drawBtn.innerHTML = '<span class="btn-icon">🎲</span><span>BẮT ĐẦU QUAY SỐ</span>';
+        isDrawing = false;
+      }, 3000);
+    }
+
+    /**
+     * Animate only the numbers inside - boxes stay fixed
+     */
+    function animateNumbers() {
+      const digit1 = document.getElementById('digit1');
+      const digit2 = document.getElementById('digit2');
+      const digit3 = document.getElementById('digit3');
+      
+      const digit1Inner = document.getElementById('digit1-inner');
+      const digit2Inner = document.getElementById('digit2-inner');
+      const digit3Inner = document.getElementById('digit3-inner');
+      
+      // Add spinning class only to boxes (for blur effect)
+      digit1.classList.add('spinning');
+      digit2.classList.add('spinning');
+      digit3.classList.add('spinning');
+      
+      // Change only the inner numbers rapidly
+      const interval = setInterval(() => {
+        const randomNum = Math.floor(Math.random() * 1000);
+        const numStr = String(randomNum).padStart(3, '0');
+        
+        digit1Inner.textContent = numStr[0];
+        digit2Inner.textContent = numStr[1];
+        digit3Inner.textContent = numStr[2];
+      }, 100);
+      
+      // Store interval to clear later
+      window.spinInterval = interval;
+    }
+
+    /**
+     * Stop spinning animation
+     */
+    function stopSpinning() {
+      clearInterval(window.spinInterval);
+      
+      document.getElementById('digit1').classList.remove('spinning');
+      document.getElementById('digit2').classList.remove('spinning');
+      document.getElementById('digit3').classList.remove('spinning');
+    }
+
+    /**
+     * Update display with winner info
+     */
+    function updateDisplay(employee) {
+      const number = String(employee.stt).padStart(3, '0');
+      
+      // Update numbers
+      document.getElementById('digit1-inner').textContent = number[0];
+      document.getElementById('digit2-inner').textContent = number[1];
+      document.getElementById('digit3-inner').textContent = number[2];
+      
+      // Update static info
+      document.getElementById('slotName').textContent = employee.name;
+      document.getElementById('slotMsnv').textContent = 'MSNV: ' + employee.msnv;
+      document.getElementById('slotDept').textContent = 'Phòng ban: ' + employee.department;
+    }
+
+    /**
+     * Show winner popup with SweetAlert2
+     */
+    function showWinnerPopup(winner) {
+      const number = String(winner.stt).padStart(3, '0');
+      
+      Swal.fire({
+        title: '🎉 CHÚC MỪNG 🎉',
+        html: `
+          <div style="text-align: center; padding: 20px;">
+            <div style="font-size: 5rem; font-weight: 900; color: ${getComputedStyle(document.documentElement).getPropertyValue('--primary-color')}; margin-bottom: 20px; font-family: Arial Black, sans-serif;">
+              ${number}
+            </div>
+            <div style="font-size: 2rem; font-weight: 800; color: #1f2937; margin-bottom: 25px;">
+              ${winner.name}
+            </div>
+            <div style="background: #f0fdf4; padding: 20px; border-radius: 12px; text-align: left;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 12px; padding: 10px; background: white; border-radius: 8px;">
+                <span style="font-weight: 700; color: #064e3b;">MSNV:</span>
+                <span style="font-weight: 900; color: ${getComputedStyle(document.documentElement).getPropertyValue('--primary-color')};">${winner.msnv}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; padding: 10px; background: white; border-radius: 8px;">
+                <span style="font-weight: 700; color: #064e3b;">Phòng ban:</span>
+                <span style="font-weight: 900; color: ${getComputedStyle(document.documentElement).getPropertyValue('--primary-color')};">${winner.department}</span>
+              </div>
+            </div>
+          </div>
+        `,
+        width: 600,
+        confirmButtonText: 'Đóng',
+        confirmButtonColor: getComputedStyle(document.documentElement).getPropertyValue('--primary-color'),
+        timer: 6000,
+        timerProgressBar: true
+      });
+    }
+
+    /**
+     * Update winners list
+     */
+    function updateWinnersList() {
+      const container = document.getElementById('winnersContainer');
+      
+      if (winners.length === 0) {
+        container.innerHTML = '<p class="empty-message">Chưa có người trúng thưởng</p>';
+        return;
+      }
+      
+      let html = '';
+      winners.forEach((winner, index) => {
+        html += `
+          <div class="winner-item">
+            <div class="winner-rank">#${index + 1}</div>
+            <div class="winner-info">
+              <div class="winner-name">${winner.name}</div>
+              <div class="winner-meta">
+                <span>MSNV: ${winner.msnv}</span>
+                <span>${winner.department}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      
+      container.innerHTML = html;
+    }
+
+    /**
+     * Save winners to server
+     */
+    function saveWinnersToServer() {
+      google.script.run
+        .withSuccessHandler(function(result) {
+          if (!result.success) {
+            console.error('Error saving winners:', result.error);
+          }
+        })
+        .withFailureHandler(function(error) {
+          console.error('Error saving winners:', error);
+        })
+        .saveWinners(winners);
+    }
+
+    /**
+     * Clear all winners
+     */
+    function clearWinners() {
+      if (winners.length === 0) {
+        Swal.fire({
+          icon: 'info',
+          title: 'Danh sách trống',
+          text: 'Chưa có người trúng thưởng nào!',
+          timer: 2000
+        });
+        return;
+      }
+      
+      Swal.fire({
+        title: 'Xác nhận xóa?',
+        text: 'Bạn có chắc muốn xóa toàn bộ danh sách người đã trúng?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Xóa',
+        cancelButtonText: 'Hủy'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          showLoading('Đang xóa danh sách...');
+          
+          google.script.run
+            .withSuccessHandler(function(result) {
+              closeLoading();
+              
+              if (result.success) {
+                winners = [];
+                updateAvailableEmployees();
+                updateStatusBar();
+                updateWinnersList();
+                
+                // Reset display
+                document.getElementById('digit1-inner').textContent = '0';
+                document.getElementById('digit2-inner').textContent = '0';
+                document.getElementById('digit3-inner').textContent = '0';
+                document.getElementById('slotName').textContent = 'Nhấn nút để bắt đầu';
+                document.getElementById('slotMsnv').textContent = 'MSNV: ---';
+                document.getElementById('slotDept').textContent = 'Phòng ban: ---';
+                
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Đã xóa!',
+                  text: 'Danh sách đã được xóa thành công',
+                  timer: 2000,
+                  showConfirmButton: false
+                });
+              } else {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Lỗi!',
+                  text: result.error
+                });
+              }
+            })
+            .withFailureHandler(function(error) {
+              closeLoading();
+              Swal.fire({
+                icon: 'error',
+                title: 'Lỗi!',
+                text: 'Không thể xóa: ' + error.message
+              });
+            })
+            .resetWinners();
+        }
+      });
+    }
+
+    /**
+     * Reset all
+     */
+    function resetAll() {
+      Swal.fire({
+        title: 'Xác nhận Reset?',
+        text: 'Bạn có chắc muốn reset toàn bộ và xóa danh sách người đã trúng?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#ef4444',
+        cancelButtonColor: '#6b7280',
+        confirmButtonText: 'Reset',
+        cancelButtonText: 'Hủy'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          clearWinners();
+        }
+      });
+    }
+
+    /**
+     * Create confetti effect
+     */
+    function createConfetti() {
+      const colors = ['#10b981', '#34d399', '#6ee7b7', '#a7f3d0', '#d1fae5'];
+      const confettiCount = 60;
+      
+      for (let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDelay = Math.random() * 0.3 + 's';
+        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        document.body.appendChild(confetti);
+        
+        setTimeout(() => confetti.remove(), 4000);
+      }
+    }
+  </script>
+</body>
+</html>
