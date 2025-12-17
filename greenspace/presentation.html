@@ -1,0 +1,660 @@
+<!-- Chosen Palette: Greenspace Nature (Forest Green #2E7D32, Cream #FAFAF5, Earth Brown #795548) -->
+<!-- Application Structure Plan: The application is designed as an interactive Project Pitch Deck. It transforms the linear presentation into a navigable dashboard. 
+    1. 'Tổng quan': High-level introduction and Tech Stack visualization.
+    2. 'Cấu trúc Code': (NEW) Detailed Directory Structure visualization for Devs/CTO.
+    3. 'Phân quyền & Luồng': Interactive toggle to switch between User and Admin perspectives/journeys.
+    4. 'Thiết kế UI/UX': Visual style guide (colors, typography) directly rendered in the browser.
+    5. 'Mô phỏng Dashboard': A live simulation of the proposed Admin Dashboard using Chart.js to visualize the 'Real-time stats' requirement.
+    6. 'Kiến trúc & Lộ trình': A structural diagram using HTML/CSS grid (replacing Mermaid) and a Gantt-chart style timeline.
+    This structure allows the CTO and Developers to jump to technical specs while Business stakeholders can view the goals and design. -->
+<!-- Visualization & Content Choices: 
+    - Tech Stack: Card Grid with icons (Unicode) -> Goal: Inform -> Quick scan of technologies.
+    - Directory Tree: Nested List with CSS styling -> Goal: Organize -> Visualizes the PHP MVC structure clearly.
+    - Admin Stats: Chart.js Bar Chart -> Goal: Simulation -> Demonstrates the 'Real-time stats' requirement from the backend specs.
+    - User Flow: CSS Flexbox Diagram with arrows -> Goal: Organize -> Visualizes the Sitemap without Mermaid.
+    - Roadmap: Horizontal Timeline -> Goal: Change/Plan -> visualizes the 4-week execution plan.
+    - Library: Chart.js for the dashboard simulation. Tailwind CSS for layout. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greenspace Project Proposal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Custom Font Import - simulating Montserrat/Nunito */
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #FAFAF5; /* Cream background */
+            color: #333;
+        }
+
+        .text-primary { color: #2E7D32; }
+        .bg-primary { background-color: #2E7D32; }
+        .border-primary { border-color: #2E7D32; }
+        
+        .text-accent { color: #795548; }
+        .bg-accent { background-color: #795548; }
+
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(46, 125, 50, 0.1), 0 2px 4px -1px rgba(46, 125, 50, 0.06);
+        }
+
+        /* Chart Container Styling - Mandatory */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        .flow-arrow::after {
+            content: '→';
+            font-size: 1.5rem;
+            color: #2E7D32;
+            margin: 0 10px;
+        }
+        @media (max-width: 640px) {
+            .flow-arrow::after {
+                content: '↓';
+                display: block;
+                text-align: center;
+                margin: 5px 0;
+            }
+        }
+
+        .tab-active {
+            border-bottom: 3px solid #2E7D32;
+            color: #2E7D32;
+            font-weight: 700;
+        }
+
+        /* Tree View Styling */
+        .tree-line {
+            border-left: 2px dashed #cbd5e1;
+            margin-left: 0.75rem;
+            padding-left: 1.5rem;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <nav class="bg-white sticky top-0 z-50 shadow-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-extrabold text-[#2E7D32]">🌿 Greenspace</span>
+                </div>
+                <div class="hidden md:flex space-x-6 items-center">
+                    <button onclick="scrollToSection('overview')" class="text-gray-600 hover:text-[#2E7D32] transition text-sm font-medium">Tổng quan</button>
+                    <button onclick="scrollToSection('structure')" class="text-gray-600 hover:text-[#2E7D32] transition text-sm font-medium">Cấu trúc Code</button>
+                    <button onclick="scrollToSection('users')" class="text-gray-600 hover:text-[#2E7D32] transition text-sm font-medium">Người dùng</button>
+                    <button onclick="scrollToSection('design')" class="text-gray-600 hover:text-[#2E7D32] transition text-sm font-medium">Thiết kế</button>
+                    <button onclick="scrollToSection('dashboard-sim')" class="text-gray-600 hover:text-[#2E7D32] transition text-sm font-bold border-b-2 border-transparent hover:border-[#2E7D32]">Mô phỏng Dashboard</button>
+                    <button onclick="scrollToSection('roadmap')" class="text-gray-600 hover:text-[#2E7D32] transition text-sm font-medium">Lộ trình</button>
+                </div>
+                <!-- Mobile menu button placeholder -->
+                <div class="md:hidden flex items-center">
+                    <button class="text-gray-600 text-2xl">☰</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-[#FAFAF5] pt-12 pb-8 text-center px-4">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-[#2E7D32] mb-4">Dự án Greenspace</h1>
+        <p class="text-xl text-[#795548] max-w-2xl mx-auto">Nền tảng E-commerce chuyên biệt cho Cây Xanh nội thất & Văn phòng</p>
+        <div class="mt-6 flex justify-center gap-4 text-sm text-gray-500">
+            <span>📅 17/12/2025</span>
+            <span>•</span>
+            <span>👤 Presenter: [Tên Của Bạn]</span>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16 w-full">
+
+        <!-- Section 1: Overview & Tech Stack -->
+        <section id="overview" class="scroll-mt-24">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800">1. Tổng Quan & Công Nghệ</h2>
+                <p class="mt-2 text-gray-600 max-w-3xl mx-auto">
+                    Mục tiêu xây dựng một hệ thống bán hàng nhẹ, nhanh, chuẩn SEO và hoàn toàn độc lập (Custom PHP), không phụ thuộc vào các nền tảng có sẵn như WordPress.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Tech Stack Cards -->
+                <div class="bg-white p-6 rounded-xl card-shadow border-t-4 border-[#2E7D32]">
+                    <div class="text-3xl mb-3">🐘</div>
+                    <h3 class="text-xl font-bold mb-2">Backend: PHP Thuần</h3>
+                    <ul class="text-gray-600 space-y-2 text-sm">
+                        <li>• Custom Code 100%</li>
+                        <li>• Tối ưu hiệu suất & Tốc độ</li>
+                        <li>• Bảo mật cao, kiểm soát dữ liệu</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl card-shadow border-t-4 border-[#2E7D32]">
+                    <div class="text-3xl mb-3">💻</div>
+                    <h3 class="text-xl font-bold mb-2">Frontend & UI</h3>
+                    <ul class="text-gray-600 space-y-2 text-sm">
+                        <li>• HTML5, CSS3, JS Vanilla</li>
+                        <li>• Responsive (Mobile-first)</li>
+                        <li>• Không dùng Framework nặng</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-6 rounded-xl card-shadow border-t-4 border-[#2E7D32]">
+                    <div class="text-3xl mb-3">🗄️</div>
+                    <h3 class="text-xl font-bold mb-2">Database</h3>
+                    <ul class="text-gray-600 space-y-2 text-sm">
+                        <li>• MySQL Relational DB</li>
+                        <li>• Quản lý Attributes (Sáng, Nước)</li>
+                        <li>• Tối ưu truy vấn sản phẩm</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1.5: Directory Structure (NEW SECTION) -->
+        <section id="structure" class="scroll-mt-24">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-800">2. Cấu Trúc Mã Nguồn (MVC Tinh Gọn)</h2>
+                <p class="mt-2 text-gray-600">Kiến trúc thư mục được tổ chức khoa học, tách biệt Frontend và Backend để dễ dàng bảo trì và mở rộng.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Tree Visual -->
+                <div class="bg-[#1e293b] text-green-400 p-6 rounded-xl shadow-xl font-mono text-sm overflow-hidden">
+                    <div class="flex items-center gap-2 mb-4 text-white font-bold border-b border-gray-600 pb-2">
+                        <span>📂</span> /project-greenspace-root/
+                    </div>
+                    
+                    <ul class="space-y-1">
+                        <!-- Admin -->
+                        <li class="flex items-start">
+                            <span class="mr-2">├──</span> <span class="text-yellow-400">📁 admin/</span> <span class="text-gray-500 ml-2">// CMS Quản trị</span>
+                        </li>
+                        <li class="tree-line">
+                            <div class="flex items-center">├── 📄 category_manager.php <span class="text-yellow-400 text-xs ml-2">(QL Danh mục)</span></div>
+                            <div class="flex items-center">├── 📄 product_list.php</div>
+                            <div class="flex items-center">├── 📄 product_add.php</div>
+                            <div class="flex items-center">├── 📄 blog_manager.php</div>
+                            <div class="flex items-center">├── 📄 blog_add.php <span class="text-green-400 text-xs ml-2">(+ Viết bài mới)</span></div>
+                            <div class="flex items-center">└── 📄 order_manager.php</div>
+                        </li>
+
+                        <!-- Config -->
+                        <li class="flex items-start mt-2">
+                            <span class="mr-2">├──</span> <span class="text-blue-400">📁 config/</span> <span class="text-gray-500 ml-2">// Cấu hình hệ thống</span>
+                        </li>
+                        <li class="tree-line">
+                            <div class="flex items-center">├── 📄 db_connect.php <span class="text-gray-500 text-xs ml-2">(Kết nối DB)</span></div>
+                            <div class="flex items-center">└── 📄 session.php</div>
+                        </li>
+
+                        <!-- Includes -->
+                        <li class="flex items-start mt-2">
+                            <span class="mr-2">├──</span> <span class="text-purple-400">📁 includes/</span> <span class="text-gray-500 ml-2">// Thành phần dùng chung</span>
+                        </li>
+                        <li class="tree-line">
+                            <div class="flex items-center">├── 📄 header.php</div>
+                            <div class="flex items-center">├── 📄 footer.php</div>
+                            <div class="flex items-center">└── 📄 functions.php</div>
+                        </li>
+
+                        <!-- Pages -->
+                        <li class="flex items-start mt-2">
+                            <span class="mr-2">├──</span> <span class="text-green-400">📁 pages/</span> <span class="text-gray-500 ml-2">// Logic hiển thị (View)</span>
+                        </li>
+                        <li class="tree-line">
+                            <div class="flex items-center">├── 📄 home.php</div>
+                            <div class="flex items-center">├── 📄 category.php <span class="text-green-400 text-xs ml-2">(Danh sách SP)</span></div>
+                            <div class="flex items-center">├── 📄 product_detail.php</div>
+                            <div class="flex items-center">├── 📄 blog_list.php <span class="text-gray-500 text-xs ml-2">(Trang tin tức)</span></div>
+                            <div class="flex items-center">├── 📄 blog_detail.php</div>
+                            <div class="flex items-center">└── 📄 cart.php</div>
+                        </li>
+
+                        <!-- Uploads -->
+                        <li class="flex items-start mt-2">
+                            <span class="mr-2">├──</span> <span class="text-orange-400">📁 uploads/</span> <span class="text-gray-500 ml-2">// Media</span>
+                        </li>
+                        <li class="tree-line">
+                            <div class="flex items-center">├── 📁 products/</div>
+                            <div class="flex items-center">└── 📁 blogs/</div>
+                        </li>
+
+                        <!-- Root Files -->
+                        <li class="flex items-start mt-2 text-white">
+                            <span class="mr-2">├──</span> 📄 .htaccess <span class="text-gray-500 ml-2">// Rewrite URL (SEO)</span>
+                        </li>
+                        <li class="flex items-start text-white">
+                            <span class="mr-2">└──</span> 📄 index.php <span class="text-gray-500 ml-2">// Router Chính</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Explanation -->
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-xl card-shadow border-l-4 border-blue-500">
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">🔑 Key Files (Tệp quan trọng)</h3>
+                        <ul class="space-y-3 text-sm text-gray-600">
+                            <li>
+                                <strong class="text-[#2E7D32]">config/db_connect.php:</strong> "Trái tim" của hệ thống. Chứa thông tin kết nối Database. Chỉ cần sửa file này khi đổi Hosting.
+                            </li>
+                            <li>
+                                <strong class="text-[#2E7D32]">index.php (Router):</strong> Nhận mọi yêu cầu từ trình duyệt, gọi file cấu hình và điều hướng đến trang `pages/` tương ứng.
+                            </li>
+                            <li>
+                                <strong class="text-[#2E7D32]">.htaccess:</strong> Chịu trách nhiệm biến URL xấu (`?id=123`) thành URL chuẩn SEO (`/cay-kim-tien`).
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl card-shadow border-l-4 border-yellow-500">
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">🔄 Luồng dữ liệu (Data Flow)</h3>
+                        <p class="text-sm text-gray-600 mb-3">Ví dụ khi khách xem "Cây Kim Tiền":</p>
+                        <ol class="list-decimal list-inside space-y-2 text-sm text-gray-700 bg-gray-50 p-4 rounded-lg">
+                            <li>Khách truy cập: <span class="font-mono text-xs bg-gray-200 px-1 rounded">/cay-kim-tien</span></li>
+                            <li><strong>.htaccess</strong> bắt link, gửi về <strong>index.php</strong>.</li>
+                            <li><strong>index.php</strong> gọi <strong>db_connect.php</strong> kết nối MySQL.</li>
+                            <li>Hệ thống load <strong>pages/product_detail.php</strong>.</li>
+                            <li>Trang này `include` <strong>header.php</strong> và hiển thị dữ liệu cây.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: User Roles & Features (Interactive Tabs) -->
+        <section id="users" class="scroll-mt-24 bg-white p-8 rounded-2xl card-shadow">
+            <div class="mb-6">
+                <h2 class="text-3xl font-bold text-gray-800">3. Phân Quyền & Chức Năng</h2>
+                <p class="mt-2 text-gray-600">Hệ thống phục vụ hai nhóm đối tượng chính với các luồng chức năng riêng biệt.</p>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="flex border-b border-gray-200 mb-6">
+                <button onclick="switchRole('user')" id="btn-user" class="tab-active px-6 py-3 text-lg focus:outline-none transition">
+                    🛍️ Khách Hàng (End User)
+                </button>
+                <button onclick="switchRole('admin')" id="btn-admin" class="px-6 py-3 text-lg text-gray-500 hover:text-[#2E7D32] focus:outline-none transition">
+                    🛠️ Quản Trị Viên (Admin)
+                </button>
+            </div>
+
+            <!-- Content Area -->
+            <div id="role-content-user" class="block animate-fade-in">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold text-[#2E7D32] mb-4">Trải nghiệm Mua sắm</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="bg-[#e8f5e9] text-[#2E7D32] p-2 rounded-lg mr-3">🔍</span>
+                                <div>
+                                    <strong class="block text-gray-800">Bộ lọc thông minh (Smart Filter)</strong>
+                                    <span class="text-sm text-gray-600">Lọc theo Mệnh phong thủy, Mức độ ánh sáng, Độ khó chăm sóc.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-[#e8f5e9] text-[#2E7D32] p-2 rounded-lg mr-3">🌿</span>
+                                <div>
+                                    <strong class="block text-gray-800">Chi tiết sản phẩm trực quan</strong>
+                                    <span class="text-sm text-gray-600">Icon chăm sóc (Nước/Sáng), Chọn size, Chọn loại chậu (Giá thay đổi tự động).</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-[#e8f5e9] text-[#2E7D32] p-2 rounded-lg mr-3">🛒</span>
+                                <div>
+                                    <strong class="block text-gray-800">Checkout tối giản</strong>
+                                    <span class="text-sm text-gray-600">Thanh toán COD hoặc Chuyển khoản, không cần đăng ký rườm rà.</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-[#FAFAF5] p-6 rounded-xl border border-gray-200">
+                        <h4 class="font-bold text-gray-700 mb-3 text-center">Luồng người dùng</h4>
+                        <div class="flex flex-col md:flex-row justify-between items-center text-sm font-semibold text-[#2E7D32]">
+                            <div class="bg-white p-3 rounded shadow flow-arrow">Trang Chủ</div>
+                            <div class="bg-white p-3 rounded shadow flow-arrow">Bộ Lọc</div>
+                            <div class="bg-white p-3 rounded shadow flow-arrow">Chi Tiết SP</div>
+                            <div class="bg-[#2E7D32] text-white p-3 rounded shadow">Thanh Toán</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="role-content-admin" class="hidden animate-fade-in">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold text-[#795548] mb-4">Hệ thống Quản trị</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="bg-[#efebe9] text-[#795548] p-2 rounded-lg mr-3">📊</span>
+                                <div>
+                                    <strong class="block text-gray-800">Dashboard Real-time</strong>
+                                    <span class="text-sm text-gray-600">Xem doanh thu ngày, cảnh báo tồn kho (Stock < 5).</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-[#efebe9] text-[#795548] p-2 rounded-lg mr-3">📝</span>
+                                <div>
+                                    <strong class="block text-gray-800">Content Management</strong>
+                                    <span class="text-sm text-gray-600">Viết Blog và gắn sản phẩm liên quan trực tiếp vào bài viết để tăng sale.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="bg-[#efebe9] text-[#795548] p-2 rounded-lg mr-3">📦</span>
+                                <div>
+                                    <strong class="block text-gray-800">Quản lý Đơn hàng</strong>
+                                    <span class="text-sm text-gray-600">In phiếu gửi hàng, cập nhật trạng thái, lọc đơn chưa xử lý.</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-[#FAFAF5] p-6 rounded-xl border border-gray-200">
+                        <h4 class="font-bold text-gray-700 mb-3 text-center">Cấu trúc dữ liệu đặc biệt</h4>
+                        <div class="space-y-2 text-sm text-gray-700">
+                            <p><strong>Table Products:</strong></p>
+                            <code class="block bg-gray-800 text-green-400 p-2 rounded">
+                                light_level (enum: low, high)<br>
+                                water_frequency (int: days)<br>
+                                is_toxic (boolean)
+                            </code>
+                            <p class="mt-2 text-xs text-gray-500">Các trường này phục vụ cho tính năng lọc nâng cao.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Design UI/UX -->
+        <section id="design" class="scroll-mt-24">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-800">4. Thiết Kế UI/UX</h2>
+                <p class="mt-2 text-gray-600">Mood: Clean - Fresh - Modern. Sử dụng nhiều khoảng trắng để tôn vinh vẻ đẹp tự nhiên của cây.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Color Palette -->
+                <div class="bg-white p-6 rounded-xl card-shadow">
+                    <h3 class="font-bold text-lg mb-4 text-gray-700">Bảng màu (Color Palette)</h3>
+                    <div class="grid grid-cols-3 gap-4 text-center">
+                        <div>
+                            <div class="h-24 rounded-lg bg-[#2E7D32] shadow-md mb-2"></div>
+                            <span class="font-bold text-[#2E7D32]">Forest Green</span>
+                            <br><span class="text-xs text-gray-500">#2E7D32</span>
+                        </div>
+                        <div>
+                            <div class="h-24 rounded-lg bg-[#FAFAF5] border border-gray-200 shadow-sm mb-2"></div>
+                            <span class="font-bold text-gray-700">Cream White</span>
+                            <br><span class="text-xs text-gray-500">#FAFAF5</span>
+                        </div>
+                        <div>
+                            <div class="h-24 rounded-lg bg-[#795548] shadow-md mb-2"></div>
+                            <span class="font-bold text-[#795548]">Earth Brown</span>
+                            <br><span class="text-xs text-gray-500">#795548</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Assets & Typography -->
+                <div class="bg-white p-6 rounded-xl card-shadow flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-lg mb-4 text-gray-700">Typography & Assets</h3>
+                        <div class="mb-4">
+                            <p class="text-3xl font-extrabold text-[#2E7D32] mb-1">Montserrat / Nunito</p>
+                            <p class="text-gray-500">Font không chân, hiện đại, thân thiện.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm text-gray-600 mb-2">Bộ Icon "Gardening" (Yêu cầu)</h4>
+                        <div class="flex gap-4 text-3xl">
+                            <span title="Tưới nước">🚿</span>
+                            <span title="Ánh sáng">☀️</span>
+                            <span title="Nhiệt độ">🌡️</span>
+                            <span title="Dụng cụ">⛏️</span>
+                            <span title="Cây giống">🌱</span>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-2">*Icon minh họa (Sẽ dùng Custom Icon Set khi dev)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Admin Dashboard Simulation (The WOW Factor) -->
+        <section id="dashboard-sim" class="scroll-mt-24">
+            <div class="bg-gray-900 text-white p-8 rounded-2xl card-shadow relative overflow-hidden">
+                <!-- Background decorative element -->
+                <div class="absolute top-0 right-0 w-64 h-64 bg-[#2E7D32] opacity-10 rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
+
+                <div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center relative z-10">
+                    <div>
+                        <h2 class="text-3xl font-bold text-white flex items-center gap-2">
+                            <span class="text-[#4caf50]">📊</span> Mô phỏng Dashboard Admin
+                        </h2>
+                        <p class="mt-2 text-gray-300 text-sm">Hiển thị các chỉ số thời gian thực và biểu đồ doanh thu như yêu cầu trong Spec Backend.</p>
+                    </div>
+                    <div class="mt-4 md:mt-0 flex gap-2">
+                        <span class="px-3 py-1 bg-[#2E7D32] rounded-full text-xs font-bold">Live Preview</span>
+                    </div>
+                </div>
+
+                <!-- Metrics Row -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 relative z-10">
+                    <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                        <div class="text-gray-400 text-xs uppercase font-bold">Doanh thu hôm nay</div>
+                        <div class="text-2xl font-bold text-[#4caf50] mt-1">2.500.000đ</div>
+                        <div class="text-xs text-gray-400 mt-1">↗️ 12% so với hôm qua</div>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                        <div class="text-gray-400 text-xs uppercase font-bold">Đơn chờ xử lý</div>
+                        <div class="text-2xl font-bold text-yellow-400 mt-1">05</div>
+                        <div class="text-xs text-gray-400 mt-1">Cần xử lý ngay</div>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                        <div class="text-gray-400 text-xs uppercase font-bold">Sắp hết hàng</div>
+                        <div class="text-2xl font-bold text-red-400 mt-1">03</div>
+                        <div class="text-xs text-gray-400 mt-1">Stock < 5 items</div>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-lg border border-gray-700">
+                        <div class="text-gray-400 text-xs uppercase font-bold">Khách hàng mới</div>
+                        <div class="text-2xl font-bold text-blue-400 mt-1">12</div>
+                        <div class="text-xs text-gray-400 mt-1">Tuần này</div>
+                    </div>
+                </div>
+
+                <!-- Main Chart -->
+                <div class="bg-white rounded-xl p-4 relative z-10">
+                    <h3 class="text-gray-800 font-bold mb-4 text-sm">Biểu đồ doanh thu 7 ngày gần nhất</h3>
+                    <!-- Chart Container as required -->
+                    <div class="chart-container">
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Roadmap (Timeline) -->
+        <section id="roadmap" class="scroll-mt-24 pb-12">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-gray-800">5. Kế Hoạch Triển Khai (4 Tuần)</h2>
+                <p class="mt-2 text-gray-600">Lộ trình chi tiết từ thiết kế đến khi Go-live.</p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Week 1 -->
+                <div class="flex flex-col md:flex-row gap-4 items-center bg-white p-6 rounded-xl card-shadow border-l-8 border-gray-300 hover:border-[#2E7D32] transition-colors group">
+                    <div class="w-full md:w-32 font-bold text-gray-500 group-hover:text-[#2E7D32]">TUẦN 1</div>
+                    <div class="flex-grow">
+                        <h4 class="font-bold text-lg">Design & Database</h4>
+                        <p class="text-sm text-gray-600">Thiết kế UI/UX trên Figma. Thiết kế Schema Database MySQL. Chốt flow chi tiết.</p>
+                    </div>
+                    <div class="text-2xl opacity-50 group-hover:opacity-100">🎨</div>
+                </div>
+
+                <!-- Week 2 -->
+                <div class="flex flex-col md:flex-row gap-4 items-center bg-white p-6 rounded-xl card-shadow border-l-8 border-gray-300 hover:border-[#2E7D32] transition-colors group">
+                    <div class="w-full md:w-32 font-bold text-gray-500 group-hover:text-[#2E7D32]">TUẦN 2</div>
+                    <div class="flex-grow">
+                        <h4 class="font-bold text-lg">Frontend Cut & Backend Core</h4>
+                        <p class="text-sm text-gray-600">Cắt HTML/CSS/JS. Code chức năng lõi: Auth, CRUD Sản phẩm.</p>
+                    </div>
+                    <div class="text-2xl opacity-50 group-hover:opacity-100">⚙️</div>
+                </div>
+
+                <!-- Week 3 -->
+                <div class="flex flex-col md:flex-row gap-4 items-center bg-white p-6 rounded-xl card-shadow border-l-8 border-gray-300 hover:border-[#2E7D32] transition-colors group">
+                    <div class="w-full md:w-32 font-bold text-gray-500 group-hover:text-[#2E7D32]">TUẦN 3</div>
+                    <div class="flex-grow">
+                        <h4 class="font-bold text-lg">Frontend Logic & Order System</h4>
+                        <p class="text-sm text-gray-600">Tích hợp giỏ hàng, bộ lọc (Filter), Logic xử lý đơn hàng Admin.</p>
+                    </div>
+                    <div class="text-2xl opacity-50 group-hover:opacity-100">🛒</div>
+                </div>
+
+                <!-- Week 4 -->
+                <div class="flex flex-col md:flex-row gap-4 items-center bg-white p-6 rounded-xl card-shadow border-l-8 border-[#2E7D32] bg-green-50 group">
+                    <div class="w-full md:w-32 font-bold text-[#2E7D32]">TUẦN 4</div>
+                    <div class="flex-grow">
+                        <h4 class="font-bold text-lg text-[#2E7D32]">Testing & Deploy</h4>
+                        <p class="text-sm text-gray-700">Kiểm thử lỗi (Bug fix). Triển khai lên Hosting. Bàn giao.</p>
+                    </div>
+                    <div class="text-2xl">🚀</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#2E7D32] text-white py-8 mt-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="font-bold text-lg mb-2">Greenspace Project</p>
+            <p class="text-sm opacity-80">© 2025 Prepared for CTO & Development Team</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- State Management ---
+        const state = {
+            activeRole: 'user'
+        };
+
+        // --- Navigation Logic ---
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // --- Tab Switching Logic (User vs Admin) ---
+        function switchRole(role) {
+            state.activeRole = role;
+            
+            // Update Buttons
+            const btnUser = document.getElementById('btn-user');
+            const btnAdmin = document.getElementById('btn-admin');
+            
+            if (role === 'user') {
+                btnUser.classList.add('tab-active', 'text-[#2E7D32]');
+                btnUser.classList.remove('text-gray-500');
+                btnAdmin.classList.remove('tab-active', 'text-[#2E7D32]');
+                btnAdmin.classList.add('text-gray-500');
+                
+                document.getElementById('role-content-user').classList.remove('hidden');
+                document.getElementById('role-content-admin').classList.add('hidden');
+            } else {
+                btnAdmin.classList.add('tab-active', 'text-[#2E7D32]');
+                btnAdmin.classList.remove('text-gray-500');
+                btnUser.classList.remove('tab-active', 'text-[#2E7D32]');
+                btnUser.classList.add('text-gray-500');
+
+                document.getElementById('role-content-admin').classList.remove('hidden');
+                document.getElementById('role-content-user').classList.add('hidden');
+            }
+        }
+
+        // --- Chart.js Visualization (Admin Dashboard Simulation) ---
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            
+            // Mock Data for the last 7 days
+            const labels = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];
+            const dataValues = [1200000, 1900000, 1500000, 2100000, 2500000, 3200000, 3800000];
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Doanh thu (VNĐ)',
+                        data: dataValues,
+                        backgroundColor: '#4caf50',
+                        borderRadius: 4,
+                        hoverBackgroundColor: '#2E7D32'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: '#f3f3f3'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return (value / 1000000) + 'M';
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
