@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Greenspace - Giỏ hàng</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "primary-dark": "#0ea340",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2e22",
+                        "text-main": "#0d1b12",
+                        "text-main-dark": "#e7f3eb",
+                        "text-secondary": "#4c9a66",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-main dark:text-text-main-dark font-display min-h-screen flex flex-col">
+<div class="bg-[#102216] text-white text-xs py-2 text-center font-medium tracking-wide relative z-50">
+    🌿 Miễn phí vận chuyển cho đơn hàng từ 500k - Giao hỏa tốc 2h
+</div>
+<header class="sticky top-0 z-40 bg-white/95 dark:bg-background-dark/95 backdrop-blur-md border-b border-[#e7f3eb] dark:border-[#2a4030] transition-all duration-300 shadow-sm">
+<div class="max-w-[1280px] mx-auto px-4 lg:px-10 h-16 lg:h-20 flex items-center justify-between relative">
+<div class="flex items-center">
+<button class="lg:hidden p-2 -ml-2 text-[#0d1b12] dark:text-white hover:text-primary transition-colors rounded-lg">
+<span class="material-symbols-outlined text-[24px]">menu</span>
+</button>
+<a class="hidden lg:flex items-center gap-2 group" href="#">
+<div class="size-8 text-primary">
+<svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z"></path>
+</svg>
+</div>
+<span class="text-[#0d1b12] dark:text-white text-xl font-bold tracking-tight group-hover:text-primary transition-colors">Greenspace</span>
+</a>
+</div>
+<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+<a class="lg:hidden flex items-center gap-2 group" href="#">
+<div class="size-8 text-primary">
+<svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17,8C8,10 5.9,16.17 3.82,21.34L5.71,22L6.66,19.7C7.14,19.87 7.64,20 8,20C19,20 22,3 22,3C21,5 14,5.25 9,6.25C4,7.25 2,11.5 2,13.5C2,15.5 3.75,17.25 3.75,17.25C7,8 17,8 17,8Z"></path>
+</svg>
+</div>
+<span class="text-[#0d1b12] dark:text-white text-xl font-bold tracking-tight">Greenspace</span>
+</a>
+<nav class="hidden lg:flex items-center gap-8">
+<a class="text-sm font-medium text-[#0d1b12] dark:text-white hover:text-primary transition-colors" href="#">Trang chủ</a>
+<div class="relative group h-20 flex items-center">
+<button class="flex items-center gap-1 text-sm font-medium text-[#0d1b12] dark:text-white group-hover:text-primary transition-colors">
+                        Sản phẩm <span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+<div class="absolute top-full left-1/2 -translate-x-1/2 w-52 bg-white dark:bg-surface-dark shadow-xl rounded-xl border border-gray-100 dark:border-gray-800 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-4 group-hover:translate-y-0">
+<div class="p-2 flex flex-col gap-1">
+<a class="px-3 py-2 text-sm text-[#0d1b12] dark:text-white hover:bg-[#f6f8f6] dark:hover:bg-[#102216] rounded-md transition-colors" href="#">Cây trong nhà</a>
+<a class="px-3 py-2 text-sm text-[#0d1b12] dark:text-white hover:bg-[#f6f8f6] dark:hover:bg-[#102216] rounded-md transition-colors" href="#">Cây văn phòng</a>
+<a class="px-3 py-2 text-sm text-[#0d1b12] dark:text-white hover:bg-[#f6f8f6] dark:hover:bg-[#102216] rounded-md transition-colors" href="#">Sen đá &amp; Xương rồng</a>
+<a class="px-3 py-2 text-sm text-[#0d1b12] dark:text-white hover:bg-[#f6f8f6] dark:hover:bg-[#102216] rounded-md transition-colors" href="#">Chậu &amp; Phụ kiện</a>
+</div>
+</div>
+</div>
+<div class="relative group h-20 flex items-center">
+<button class="flex items-center gap-1 text-sm font-medium text-[#0d1b12] dark:text-white group-hover:text-primary transition-colors">
+                        Kiến thức <span class="material-symbols-outlined text-[18px]">expand_more</span>
+</button>
+<div class="absolute top-full left-1/2 -translate-x-1/2 w-52 bg-white dark:bg-surface-dark shadow-xl rounded-xl border border-gray-100 dark:border-gray-800 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-4 group-hover:translate-y-0">
+<div class="p-2 flex flex-col gap-1">
+<a class="px-3 py-2 text-sm text-[#0d1b12] dark:text-white hover:bg-[#f6f8f6] dark:hover:bg-[#102216] rounded-md transition-colors" href="#">Hướng dẫn chăm sóc</a>
+<a class="px-3 py-2 text-sm text-[#0d1b12] dark:text-white hover:bg-[#f6f8f6] dark:hover:bg-[#102216] rounded-md transition-colors" href="#">Ý tưởng xanh</a>
+<a class="px-3 py-2 text-sm text-[#0d1b12] dark:text-white hover:bg-[#f6f8f6] dark:hover:bg-[#102216] rounded-md transition-colors" href="#">Cộng đồng Greenspace</a>
+</div>
+</div>
+</div>
+<a class="text-sm font-medium text-[#0d1b12] dark:text-white hover:text-primary transition-colors" href="#">Về chúng tôi</a>
+<a class="text-sm font-medium text-[#0d1b12] dark:text-white hover:text-primary transition-colors" href="#">Liên hệ</a>
+</nav>
+</div>
+<div class="flex items-center gap-1 sm:gap-2">
+<button class="hidden lg:flex p-2 text-[#0d1b12] dark:text-white hover:text-primary transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-white/5">
+<span class="material-symbols-outlined text-[24px]">search</span>
+</button>
+<div class="relative group hidden lg:block">
+<button class="flex p-2 text-[#0d1b12] dark:text-white hover:text-primary transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-white/5">
+<span class="material-symbols-outlined text-[24px]">person</span>
+</button>
+<div class="absolute top-full right-0 mt-2 w-52 bg-white dark:bg-surface-dark shadow-xl rounded-xl border border-gray-100 dark:border-gray-800 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-4 group-hover:translate-y-0 z-50">
+<div class="p-2">
+<a class="block px-4 py-2 text-sm text-[#0d1b12] dark:text-white hover:bg-[#f6f8f6] dark:hover:bg-[#102216] rounded-lg transition-colors" href="#">Tài khoản của tôi</a>
+<a class="block px-4 py-2 text-sm text-[#0d1b12] dark:text-white hover:bg-[#f6f8f6] dark:hover:bg-[#102216] rounded-lg transition-colors" href="#">Đơn mua</a>
+<div class="h-px bg-gray-100 dark:bg-gray-800 my-1"></div>
+<a class="block px-4 py-2 text-sm text-red-500 hover:bg-[#f6f8f6] dark:hover:bg-[#102216] rounded-lg transition-colors" href="#">Đăng xuất</a>
+</div>
+</div>
+</div>
+<div class="relative group">
+<button class="flex p-2 text-[#0d1b12] dark:text-white hover:text-primary transition-colors rounded-full hover:bg-gray-100 dark:hover:bg-white/5 relative">
+<span class="material-symbols-outlined text-[24px]">shopping_cart</span>
+<span class="absolute top-0 right-0 bg-primary text-[#0d1b12] text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center border-2 border-white dark:border-background-dark transform scale-90">3</span>
+</button>
+<div class="absolute top-full right-0 mt-2 w-80 bg-white dark:bg-surface-dark shadow-xl rounded-xl border border-gray-100 dark:border-gray-800 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform translate-y-4 group-hover:translate-y-0 z-50">
+<div class="p-4">
+<div class="flex justify-between items-center mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">
+<h3 class="font-semibold text-[#0d1b12] dark:text-white">Giỏ hàng (3)</h3>
+<span class="text-xs text-[#4c9a66] cursor-pointer hover:text-primary">Xem tất cả</span>
+</div>
+<div class="space-y-4 max-h-64 overflow-y-auto pr-1">
+<div class="flex gap-3">
+<div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhHE5kqHa09RFe4uABITw5HAKFwYd7iy215ETabjeZ7y7PkmkxyrKqFtdzsqBX6QC9-tx1A7lymH5tffynKssvGXkod1Ee1ZhnqidzlnkuDJJg1XtAVPShGBOhGJVEgLDMJ4-k7Ag4okZ89d7NGrzaOg5BTR6DTrzpfDKJ7eQZs6ZLfNP-4FgUYTXkisFcU8C_iswRkhiuqYjOWrLZVDUQo6yQ9H_Je4A8ct-0skmcBVKyncqodTw0y-h9fCnTBWneMuXNGAk1kh4"/>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-sm font-medium text-[#0d1b12] dark:text-white truncate">Monstera Deliciosa</h4>
+<div class="flex justify-between items-center mt-1">
+<span class="text-xs text-gray-500">1 x 250.000đ</span>
+<span class="text-xs font-bold text-primary">250.000đ</span>
+</div>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjesVQ6xLdovR1MHnM9wp--orT_M1l600fTFUGKAtB9_H0Lllya32KNubTuYa3bz5tNg9WZ8LHvxC5jYaA7MkBsWuool6gaGY7yzIWKu3FesanXt3V1ZQ8v9eAFr0zDDPpxflB9NNL1rTeOQnJBGlgRiFqmgvcVgyPrP1xc23UvqBBxUrAlajvRCjtRuucLLHnbb4oBy3RxamPvigQm_tevxfEe6ChGY2gGlHRGrwZyXF_0LNmwi72uepKoDl6mETEacCQdSuWJXk"/>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-sm font-medium text-[#0d1b12] dark:text-white truncate">Cây Lưỡi Hổ</h4>
+<div class="flex justify-between items-center mt-1">
+<span class="text-xs text-gray-500">2 x 120.000đ</span>
+<span class="text-xs font-bold text-primary">240.000đ</span>
+</div>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="w-12 h-12 bg-gray-100 dark:bg-gray-800 rounded-lg overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPNVG1D_HIXU26-L-MPmc9CuCKhZBlLouaHxk6wMncj1BAV5Rj_7SKjD2g96Ej8mDedr-1nhSDmb29PhNAZuC5Nr-7hPAzr8bQQAISGmN32A6r90U9RHWEe17TKkvDNAPjVRhQ_3AOvdCI2QKKCfvsJ451n4vYN4cjS8VfQz6ncIErswQev7AeSOFX8bdUm5gy_zd02A1mMbq4_mW-Z1F-G82mLWEdQCLJVqriGGsw9UGeTLgYIumLF6jc9mYMrRhj-um1bi-m0Y8"/>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="text-sm font-medium text-[#0d1b12] dark:text-white truncate">Bàng Singapore</h4>
+<div class="flex justify-between items-center mt-1">
+<span class="text-xs text-gray-500">1 x 450.000đ</span>
+<span class="text-xs font-bold text-primary">450.000đ</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-gray-100 dark:border-gray-800">
+<div class="flex justify-between items-center mb-3">
+<span class="text-sm font-medium text-[#0d1b12] dark:text-white">Tổng cộng:</span>
+<span class="text-base font-bold text-primary">940.000đ</span>
+</div>
+<button class="w-full bg-primary hover:bg-[#10d452] text-[#0d1b12] font-bold py-2.5 rounded-lg text-sm transition-colors shadow-sm">
+                                    Thanh toán ngay
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow w-full max-w-[1280px] mx-auto px-4 lg:px-10 py-6 lg:py-10">
+<div class="flex flex-wrap gap-2 mb-6">
+<a class="text-[#4c9a66] hover:text-primary text-sm font-medium" href="#">Trang chủ</a>
+<span class="text-[#4c9a66] text-sm font-medium">/</span>
+<span class="text-[#0d1b12] dark:text-white text-sm font-medium">Giỏ hàng</span>
+</div>
+<h1 class="text-[#0d1b12] dark:text-white text-3xl md:text-4xl font-bold tracking-tight mb-8">Giỏ hàng của bạn</h1>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<div class="lg:col-span-8 flex flex-col gap-6">
+<div class="overflow-hidden rounded-xl border border-[#cfe7d7] dark:border-[#2a4030] bg-surface-light dark:bg-surface-dark shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-[#f8fcf9] dark:bg-[#15281e] border-b border-[#cfe7d7] dark:border-[#2a4030]">
+<th class="px-6 py-4 text-[#0d1b12] dark:text-[#e7f3eb] text-sm font-semibold">Sản phẩm</th>
+<th class="px-6 py-4 text-[#0d1b12] dark:text-[#e7f3eb] text-sm font-semibold">Đơn giá</th>
+<th class="px-6 py-4 text-[#0d1b12] dark:text-[#e7f3eb] text-sm font-semibold">Số lượng</th>
+<th class="px-6 py-4 text-[#0d1b12] dark:text-[#e7f3eb] text-sm font-semibold text-right">Thành tiền</th>
+<th class="px-6 py-4 w-10"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#cfe7d7] dark:divide-[#2a4030]">
+<tr class="group hover:bg-[#f8fcf9] dark:hover:bg-[#15281e] transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4 min-w-[200px]">
+<div class="h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
+<img alt="Monstera Deliciosa plant in pot" class="h-full w-full object-cover object-center" data-alt="Monstera Deliciosa plant in pot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhHE5kqHa09RFe4uABITw5HAKFwYd7iy215ETabjeZ7y7PkmkxyrKqFtdzsqBX6QC9-tx1A7lymH5tffynKssvGXkod1Ee1ZhnqidzlnkuDJJg1XtAVPShGBOhGJVEgLDMJ4-k7Ag4okZ89d7NGrzaOg5BTR6DTrzpfDKJ7eQZs6ZLfNP-4FgUYTXkisFcU8C_iswRkhiuqYjOWrLZVDUQo6yQ9H_Je4A8ct-0skmcBVKyncqodTw0y-h9fCnTBWneMuXNGAk1kh4"/>
+</div>
+<div class="flex flex-col">
+<a class="text-[#0d1b12] dark:text-white font-medium hover:text-primary transition-colors" href="#">Monstera Deliciosa</a>
+<span class="text-xs text-[#4c9a66]">Kích thước: Lớn</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-[#0d1b12] dark:text-[#e7f3eb] font-medium whitespace-nowrap">250.000đ</td>
+<td class="px-6 py-4">
+<div class="flex items-center border border-[#cfe7d7] dark:border-[#2a4030] rounded-lg w-fit">
+<button aria-label="Decrease quantity" class="px-3 py-1 text-[#4c9a66] hover:text-primary hover:bg-[#e7f3eb] dark:hover:bg-[#2a4030] transition-colors rounded-l-lg">
+<span class="material-symbols-outlined text-sm font-bold">remove</span>
+</button>
+<input class="w-10 text-center border-none p-0 text-sm bg-transparent text-[#0d1b12] dark:text-white focus:ring-0" readonly="" type="text" value="1"/>
+<button aria-label="Increase quantity" class="px-3 py-1 text-[#4c9a66] hover:text-primary hover:bg-[#e7f3eb] dark:hover:bg-[#2a4030] transition-colors rounded-r-lg">
+<span class="material-symbols-outlined text-sm font-bold">add</span>
+</button>
+</div>
+</td>
+<td class="px-6 py-4 text-[#0d1b12] dark:text-[#e7f3eb] font-bold text-right whitespace-nowrap">250.000đ</td>
+<td class="px-6 py-4 text-right">
+<button aria-label="Remove item" class="text-gray-400 hover:text-red-500 transition-colors p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</td>
+</tr>
+<tr class="group hover:bg-[#f8fcf9] dark:hover:bg-[#15281e] transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4 min-w-[200px]">
+<div class="h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
+<img alt="Snake Plant in white pot" class="h-full w-full object-cover object-center" data-alt="Snake Plant in white pot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjesVQ6xLdovR1MHnM9wp--orT_M1l600fTFUGKAtB9_H0Lllya32KNubTuYa3bz5tNg9WZ8LHvxC5jYaA7MkBsWuool6gaGY7yzIWKu3FesanXt3V1ZQ8v9eAFr0zDDPpxflB9NNL1rTeOQnJBGlgRiFqmgvcVgyPrP1xc23UvqBBxUrAlajvRCjtRuucLLHnbb4oBy3RxamPvigQm_tevxfEe6ChGY2gGlHRGrwZyXF_0LNmwi72uepKoDl6mETEacCQdSuWJXk"/>
+</div>
+<div class="flex flex-col">
+<a class="text-[#0d1b12] dark:text-white font-medium hover:text-primary transition-colors" href="#">Cây Lưỡi Hổ</a>
+<span class="text-xs text-[#4c9a66]">Kích thước: Trung bình</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-[#0d1b12] dark:text-[#e7f3eb] font-medium whitespace-nowrap">120.000đ</td>
+<td class="px-6 py-4">
+<div class="flex items-center border border-[#cfe7d7] dark:border-[#2a4030] rounded-lg w-fit">
+<button aria-label="Decrease quantity" class="px-3 py-1 text-[#4c9a66] hover:text-primary hover:bg-[#e7f3eb] dark:hover:bg-[#2a4030] transition-colors rounded-l-lg">
+<span class="material-symbols-outlined text-sm font-bold">remove</span>
+</button>
+<input class="w-10 text-center border-none p-0 text-sm bg-transparent text-[#0d1b12] dark:text-white focus:ring-0" readonly="" type="text" value="2"/>
+<button aria-label="Increase quantity" class="px-3 py-1 text-[#4c9a66] hover:text-primary hover:bg-[#e7f3eb] dark:hover:bg-[#2a4030] transition-colors rounded-r-lg">
+<span class="material-symbols-outlined text-sm font-bold">add</span>
+</button>
+</div>
+</td>
+<td class="px-6 py-4 text-[#0d1b12] dark:text-[#e7f3eb] font-bold text-right whitespace-nowrap">240.000đ</td>
+<td class="px-6 py-4 text-right">
+<button aria-label="Remove item" class="text-gray-400 hover:text-red-500 transition-colors p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</td>
+</tr>
+<tr class="group hover:bg-[#f8fcf9] dark:hover:bg-[#15281e] transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4 min-w-[200px]">
+<div class="h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100 dark:bg-gray-800">
+<img alt="Fiddle Leaf Fig tree indoors" class="h-full w-full object-cover object-center" data-alt="Fiddle Leaf Fig tree indoors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPNVG1D_HIXU26-L-MPmc9CuCKhZBlLouaHxk6wMncj1BAV5Rj_7SKjD2g96Ej8mDedr-1nhSDmb29PhNAZuC5Nr-7hPAzr8bQQAISGmN32A6r90U9RHWEe17TKkvDNAPjVRhQ_3AOvdCI2QKKCfvsJ451n4vYN4cjS8VfQz6ncIErswQev7AeSOFX8bdUm5gy_zd02A1mMbq4_mW-Z1F-G82mLWEdQCLJVqriGGsw9UGeTLgYIumLF6jc9mYMrRhj-um1bi-m0Y8"/>
+</div>
+<div class="flex flex-col">
+<a class="text-[#0d1b12] dark:text-white font-medium hover:text-primary transition-colors" href="#">Bàng Singapore</a>
+<span class="text-xs text-[#4c9a66]">Kích thước: Lớn</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-[#0d1b12] dark:text-[#e7f3eb] font-medium whitespace-nowrap">450.000đ</td>
+<td class="px-6 py-4">
+<div class="flex items-center border border-[#cfe7d7] dark:border-[#2a4030] rounded-lg w-fit">
+<button aria-label="Decrease quantity" class="px-3 py-1 text-[#4c9a66] hover:text-primary hover:bg-[#e7f3eb] dark:hover:bg-[#2a4030] transition-colors rounded-l-lg">
+<span class="material-symbols-outlined text-sm font-bold">remove</span>
+</button>
+<input class="w-10 text-center border-none p-0 text-sm bg-transparent text-[#0d1b12] dark:text-white focus:ring-0" readonly="" type="text" value="1"/>
+<button aria-label="Increase quantity" class="px-3 py-1 text-[#4c9a66] hover:text-primary hover:bg-[#e7f3eb] dark:hover:bg-[#2a4030] transition-colors rounded-r-lg">
+<span class="material-symbols-outlined text-sm font-bold">add</span>
+</button>
+</div>
+</td>
+<td class="px-6 py-4 text-[#0d1b12] dark:text-[#e7f3eb] font-bold text-right whitespace-nowrap">450.000đ</td>
+<td class="px-6 py-4 text-right">
+<button aria-label="Remove item" class="text-gray-400 hover:text-red-500 transition-colors p-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 border-t border-[#cfe7d7] dark:border-[#2a4030] flex justify-between items-center bg-[#f8fcf9] dark:bg-[#15281e]">
+<a class="inline-flex items-center gap-2 text-sm font-medium text-[#4c9a66] hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">arrow_back</span>
+                            Tiếp tục mua sắm
+                        </a>
+<button class="text-red-500 text-sm font-medium hover:underline">Xóa tất cả</button>
+</div>
+</div>
+</div>
+<div class="lg:col-span-4 space-y-6">
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-[#cfe7d7] dark:border-[#2a4030] p-6 shadow-sm sticky top-28">
+<h2 class="text-xl font-bold text-[#0d1b12] dark:text-white mb-6 pb-4 border-b border-[#cfe7d7] dark:border-[#2a4030]">Cộng giỏ hàng</h2>
+<div class="space-y-4 mb-6">
+<div class="flex justify-between items-center text-[#0d1b12] dark:text-[#e7f3eb]">
+<span class="text-sm font-medium">Tạm tính</span>
+<span class="font-semibold">940.000đ</span>
+</div>
+<div class="flex justify-between items-center text-[#0d1b12] dark:text-[#e7f3eb]">
+<span class="text-sm font-medium">Phí vận chuyển</span>
+<span class="font-semibold">30.000đ</span>
+</div>
+<div class="pt-4">
+<label class="block text-xs font-medium text-[#4c9a66] mb-2 uppercase tracking-wide">Mã giảm giá</label>
+<div class="flex gap-2">
+<input class="flex-1 rounded-lg border-[#cfe7d7] dark:border-[#2a4030] bg-[#f8fcf9] dark:bg-[#102216] text-sm focus:border-primary focus:ring-1 focus:ring-primary px-3 py-2 text-[#0d1b12] dark:text-white" placeholder="Nhập mã" type="text"/>
+<button class="px-4 py-2 bg-[#f8fcf9] dark:bg-[#102216] border border-[#cfe7d7] dark:border-[#2a4030] text-[#0d1b12] dark:text-white rounded-lg text-sm font-semibold hover:bg-[#e7f3eb] dark:hover:bg-[#15281e] hover:text-primary hover:border-primary transition-colors">
+                                    Áp dụng
+                                </button>
+</div>
+</div>
+</div>
+<div class="border-t border-[#cfe7d7] dark:border-[#2a4030] pt-4 mb-6">
+<div class="flex justify-between items-end">
+<span class="text-base font-bold text-[#0d1b12] dark:text-white">Tổng cộng</span>
+<div class="text-right">
+<span class="block text-2xl font-bold text-[#0d1b12] dark:text-primary">970.000đ</span>
+<span class="text-xs text-[#4c9a66]">(Đã bao gồm VAT)</span>
+</div>
+</div>
+</div>
+<a href="../payment/payment.html" class="w-full bg-primary hover:bg-[#10d452] text-[#0d1b12] font-bold text-base py-3.5 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2">
+                        Tiến hành Thanh toán
+                        <span class="material-symbols-outlined text-lg">arrow_forward</span>
+</a>
+<div class="mt-4 flex items-center justify-center gap-2 text-[#4c9a66]">
+<span class="material-symbols-outlined text-lg">verified_user</span>
+<span class="text-xs font-medium">Bảo mật thanh toán 100%</span>
+</div>
+</div>
+</div>
+</div>
+<section class="mt-16">
+<h3 class="text-xl font-bold text-[#0d1b12] dark:text-white mb-6">Có thể bạn sẽ thích</h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+<div class="group cursor-pointer">
+<div class="aspect-square bg-[#f0f7f2] dark:bg-[#1a2e22] rounded-xl mb-3 overflow-hidden relative">
+<img alt="Small succulent in geometric pot" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300" data-alt="Small succulent in geometric pot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgajbVm1wtzctJDOxIJglLtwrSVs9tkzFD4GnEVIOF5zJ4fDo9zeQbyoBa-9pD_D7CIlg4OeScT2mbY5GXvAI5JA8lh3xDmTJA00t3tp3n96P2vhhHlLtLAwMoWdt7jUStOjMHIqs2W8GjaMYGkSY_KjmybrElk7Akb2FRdep3M-pMPEo2ZFSkQXhebXplqSBGNvKGyex_N9e7lPxJHSVXrEDwTmMHRjlVpvAFRDwGEcm5cetvPd4VbLwD9PCcJpx8LzrQiDn0F0g"/>
+<button class="absolute bottom-3 right-3 bg-white dark:bg-[#102216] p-2 rounded-full shadow-md text-[#0d1b12] dark:text-primary hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+</button>
+</div>
+<h4 class="text-sm font-semibold text-[#0d1b12] dark:text-white">Sen Đá Kim Cương</h4>
+<p class="text-sm text-[#4c9a66]">85.000đ</p>
+</div>
+<div class="group cursor-pointer">
+<div class="aspect-square bg-[#f0f7f2] dark:bg-[#1a2e22] rounded-xl mb-3 overflow-hidden relative">
+<img alt="Potted aloe vera plant on table" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300" data-alt="Potted aloe vera plant on table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWh_Umi3EKetLK7mm537qwrD11RtHLasDu8DGAQ6r-Ytwg4mTkxcdWDW9cYueVCF7QuCIZ4eYE82hb5S2Vs60Db-xAA2L97gyOcRWa0VCDG5cDy_6-BEPTLzphRQRuDTNUsOlOpKn7JScjxFxY8U-dgOUnajS8G_zHJ3Nj3-8czMZp9uqbanpp2v-zRFM1NXmLBNplQlw4Y_VsU3qR8HQ2LvldXR-FOQCGEv_-w8L6SxCxz5ob7p3GBkyRSD_CgrGat0PuO_GFC60"/>
+<button class="absolute bottom-3 right-3 bg-white dark:bg-[#102216] p-2 rounded-full shadow-md text-[#0d1b12] dark:text-primary hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+</button>
+</div>
+<h4 class="text-sm font-semibold text-[#0d1b12] dark:text-white">Nha Đam Mỹ</h4>
+<p class="text-sm text-[#4c9a66]">95.000đ</p>
+</div>
+<div class="group cursor-pointer">
+<div class="aspect-square bg-[#f0f7f2] dark:bg-[#1a2e22] rounded-xl mb-3 overflow-hidden relative">
+<img alt="Pothos hanging plant" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300" data-alt="Pothos hanging plant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLRDSV0BAfBRjYJdeKwZkeUHLdrqzApi354FMP0eu8LbDDZx1x12wH5a5gaz2iwjn_yc4zrvBBoqj9NNn89UCaUgzvpzy2LN6lG5edyLuGnu3a5yLZHLsxLInBPzyTsHTA-4GZ5QT7UBFvosE58gwp8iUFPBV53m-toFA25fp6oyBxGqr296UKkQ9tVreasWMC60sX_6tgDCjc46b_JXuvQT_B3oJx1T1sM8tFnrNEkqUwPgz-xldnFgfu4eJ1ehgbEdW2jbKYa68"/>
+<button class="absolute bottom-3 right-3 bg-white dark:bg-[#102216] p-2 rounded-full shadow-md text-[#0d1b12] dark:text-primary hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+</button>
+</div>
+<h4 class="text-sm font-semibold text-[#0d1b12] dark:text-white">Trầu Bà Vàng</h4>
+<p class="text-sm text-[#4c9a66]">65.000đ</p>
+</div>
+<div class="group cursor-pointer">
+<div class="aspect-square bg-[#f0f7f2] dark:bg-[#1a2e22] rounded-xl mb-3 overflow-hidden relative">
+<img alt="Small cactus collection" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300" data-alt="Small cactus collection" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRS3F7Zi_eo7ymJDN0RJ2FCH_ab8ZgtszBWZGBpmWUYEmBIIHTEwz15RxO67ZwY78EeTC2wSN4JiD5MShZ9kr4ER9AJKj8agfTa2xtmSdPVJMcHYuDVtP44RI6285KSLMEEQr6kafGgqlC14YL-A08AoPVR-QccvLDLskkmuZdp_64IlEdLtXItIxADJO6tjbPY2_yuU5qonXf7dWMytwZz5fhV3yDJMuxXgSQjaoqD94tllC9UFd2STiBQum9K9dg2xnC704MCXg"/>
+<button class="absolute bottom-3 right-3 bg-white dark:bg-[#102216] p-2 rounded-full shadow-md text-[#0d1b12] dark:text-primary hover:bg-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">add_shopping_cart</span>
+</button>
+</div>
+<h4 class="text-sm font-semibold text-[#0d1b12] dark:text-white">Bộ Xương Rồng Mini</h4>
+<p class="text-sm text-[#4c9a66]">150.000đ</p>
+</div>
+</div>
+</section>
+</main>
+<footer class="bg-surface-light dark:bg-[#15281e] border-t border-[#cfe7d7] dark:border-[#2a4030] py-8 mt-auto">
+<div class="max-w-[1280px] mx-auto px-4 lg:px-10 text-center text-[#4c9a66] text-sm">
+<p>© 2024 Greenspace. Design for plant lovers.</p>
+</div>
+</footer>
+</body></html>

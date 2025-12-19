@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Greenspace - Đăng nhập / Đăng ký</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "primary-dark": "#0eb545",
+                        "forest-green": "#152e1e",
+                        "background-light": "#f8fcf9",
+                        "background-dark": "#102216",
+                        "text-main": "#0d1b12",
+                        "text-secondary": "#4c9a66",
+                        "border-color": "#cfe7d7",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }.scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased min-h-screen flex flex-col">
+<div class="bg-forest-green text-white text-xs md:text-sm font-medium py-2.5 px-4 text-center tracking-wide">
+    🌿 Miễn phí vận chuyển cho đơn hàng từ 500k - Giao hỏa tốc 2h
+</div>
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-border-color dark:bg-background-dark/95 dark:border-gray-800 transition-all">
+<div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-10 h-16 md:h-20 flex items-center justify-between">
+<div class="lg:hidden flex-none z-20">
+<button class="text-text-main dark:text-white p-1 -ml-1 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[28px]">menu</span>
+</button>
+</div>
+<div class="flex-none flex items-center gap-2 lg:mr-12 absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0 z-10">
+<div class="text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl md:text-4xl">eco</span>
+</div>
+<a class="text-text-main dark:text-white text-xl md:text-2xl font-bold leading-tight tracking-tight hover:opacity-80 transition-opacity" href="#">
+                Greenspace
+            </a>
+</div>
+<nav class="hidden lg:flex flex-1 justify-center items-center gap-8 xl:gap-10">
+<a class="text-sm font-medium text-text-main dark:text-gray-200 hover:text-primary transition-colors py-2" href="#">Trang chủ</a>
+<div class="relative group">
+<button class="flex items-center gap-1 text-sm font-medium text-text-main dark:text-gray-200 hover:text-primary transition-colors py-2">
+                    Sản phẩm <span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
+</button>
+<div class="absolute top-full left-0 w-56 bg-white dark:bg-gray-800 shadow-xl rounded-xl mt-1 py-2 hidden group-hover:block border border-gray-100 dark:border-gray-700 animate-fade-in origin-top-left">
+<a class="block px-5 py-2.5 text-sm text-text-main dark:text-gray-200 hover:bg-background-light dark:hover:bg-gray-700 hover:text-primary transition-colors" href="#">Cây trong nhà</a>
+<a class="block px-5 py-2.5 text-sm text-text-main dark:text-gray-200 hover:bg-background-light dark:hover:bg-gray-700 hover:text-primary transition-colors" href="#">Cây văn phòng</a>
+<a class="block px-5 py-2.5 text-sm text-text-main dark:text-gray-200 hover:bg-background-light dark:hover:bg-gray-700 hover:text-primary transition-colors" href="#">Chậu cây &amp; Phụ kiện</a>
+<a class="block px-5 py-2.5 text-sm text-text-main dark:text-gray-200 hover:bg-background-light dark:hover:bg-gray-700 hover:text-primary transition-colors" href="#">Quà tặng cây xanh</a>
+</div>
+</div>
+<div class="relative group">
+<button class="flex items-center gap-1 text-sm font-medium text-text-main dark:text-gray-200 hover:text-primary transition-colors py-2">
+                    Kiến thức <span class="material-symbols-outlined text-[18px]">keyboard_arrow_down</span>
+</button>
+<div class="absolute top-full left-0 w-56 bg-white dark:bg-gray-800 shadow-xl rounded-xl mt-1 py-2 hidden group-hover:block border border-gray-100 dark:border-gray-700 animate-fade-in origin-top-left">
+<a class="block px-5 py-2.5 text-sm text-text-main dark:text-gray-200 hover:bg-background-light dark:hover:bg-gray-700 hover:text-primary transition-colors" href="#">Cẩm nang chăm sóc</a>
+<a class="block px-5 py-2.5 text-sm text-text-main dark:text-gray-200 hover:bg-background-light dark:hover:bg-gray-700 hover:text-primary transition-colors" href="#">Blog sống xanh</a>
+<a class="block px-5 py-2.5 text-sm text-text-main dark:text-gray-200 hover:bg-background-light dark:hover:bg-gray-700 hover:text-primary transition-colors" href="#">Workshop</a>
+</div>
+</div>
+<a class="text-sm font-medium text-text-main dark:text-gray-200 hover:text-primary transition-colors py-2" href="#">Về chúng tôi</a>
+<a class="text-sm font-medium text-text-main dark:text-gray-200 hover:text-primary transition-colors py-2" href="#">Liên hệ</a>
+</nav>
+<div class="flex items-center gap-3 md:gap-5 flex-none z-20">
+<button class="hidden lg:flex items-center justify-center w-10 h-10 rounded-full hover:bg-background-light dark:hover:bg-gray-800 text-text-main dark:text-white hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[26px]">search</span>
+</button>
+<div class="hidden lg:block relative group">
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-background-light dark:hover:bg-gray-800 text-text-main dark:text-white hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[26px]">person</span>
+</button>
+<div class="absolute right-0 top-full w-56 bg-white dark:bg-gray-800 shadow-xl rounded-xl mt-2 py-2 hidden group-hover:block border border-gray-100 dark:border-gray-700 animate-fade-in">
+<div class="px-5 py-3 border-b border-gray-100 dark:border-gray-700">
+<p class="text-xs text-text-secondary dark:text-gray-400 font-medium uppercase tracking-wider mb-1">Tài khoản</p>
+<p class="text-sm font-bold text-text-main dark:text-white">Khách hàng</p>
+</div>
+<div class="py-1">
+<a class="flex items-center gap-3 px-5 py-2.5 text-sm text-text-main dark:text-gray-200 hover:bg-background-light dark:hover:bg-gray-700 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">login</span> Đăng nhập
+                         </a>
+<a class="flex items-center gap-3 px-5 py-2.5 text-sm text-text-main dark:text-gray-200 hover:bg-background-light dark:hover:bg-gray-700 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">person_add</span> Đăng ký
+                         </a>
+</div>
+</div>
+</div>
+<div class="relative group">
+<a class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-background-light dark:hover:bg-gray-800 text-text-main dark:text-white hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[26px]">shopping_bag</span>
+<span class="absolute top-0.5 right-0 bg-primary text-white text-[10px] font-bold h-4 w-4 flex items-center justify-center rounded-full border border-white dark:border-gray-900">0</span>
+</a>
+<div class="absolute right-0 top-full w-80 bg-white dark:bg-gray-800 shadow-xl rounded-xl mt-2 p-6 hidden lg:group-hover:block border border-gray-100 dark:border-gray-700 z-50">
+<div class="flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-4xl text-gray-300 mb-2">shopping_basket</span>
+<p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Giỏ hàng của bạn đang trống</p>
+<a class="w-full block bg-primary hover:bg-primary-dark text-white text-sm font-bold py-3 rounded-lg transition-colors" href="#">
+                            Tiếp tục mua sắm
+                        </a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 flex items-center justify-center py-8 px-4 sm:px-6 lg:px-8">
+<div class="flex w-full max-w-6xl bg-white dark:bg-gray-900 rounded-2xl shadow-xl overflow-hidden min-h-[600px] border border-border-color dark:border-gray-800">
+<div class="hidden lg:block w-1/2 relative">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Lush green indoor plants in a clean modern living room filled with natural light" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCOCgurFyHJN9eT4ZDYV9Xfesu6E9-50wvOBUVzeTslaPPhGKlWCLQZ_3HlFN33qWwWFy5xsZfAZpIRMWYqPRajrW5dTa3279zC3j7ph5fkCyGoy-99Ef_tYk9rU9tpN8lVVCQBpYMGOSVg4qKATc3JHVeSdjZh3HNRpmud0sZHye4eeMWxy4_-wtnbUq54qV-ExDhyOVv3HUa-f97r-mpn0HR-NK0DosgTvS_t-3f_npB_GKNA0udKI_dSQBFRBBX13oW-qGCAq9I');">
+<div class="absolute inset-0 bg-black/10"></div> 
+</div>
+<div class="absolute bottom-10 left-10 right-10 text-white z-10">
+<h2 class="text-4xl font-black tracking-tight mb-4 drop-shadow-md">Mang thiên nhiên vào không gian sống</h2>
+<p class="text-lg font-medium drop-shadow-md text-gray-100">Khám phá bộ sưu tập cây xanh được tuyển chọn kỹ lưỡng cho ngôi nhà của bạn.</p>
+</div>
+</div>
+<div class="w-full lg:w-1/2 flex flex-col justify-center p-8 sm:p-12 lg:p-16 relative bg-white dark:bg-[#152e1e]">
+<div class="mb-8">
+<h1 class="text-text-main dark:text-white text-3xl font-black leading-tight tracking-[-0.033em] mb-2">Chào mừng trở lại!</h1>
+<p class="text-text-secondary dark:text-gray-400 text-base font-normal leading-normal">Vui lòng nhập thông tin để tiếp tục.</p>
+</div>
+<div class="mb-8 border-b border-border-color dark:border-gray-700">
+<div class="flex gap-8">
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-primary text-text-main dark:text-white pb-3 pt-2 cursor-pointer transition-colors" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Đăng nhập</p>
+</a>
+<a class="flex flex-col items-center justify-center border-b-[3px] border-b-transparent text-text-secondary dark:text-gray-400 hover:text-text-main dark:hover:text-gray-200 pb-3 pt-2 cursor-pointer transition-colors" href="#">
+<p class="text-sm font-bold leading-normal tracking-[0.015em]">Đăng ký</p>
+</a>
+</div>
+</div>
+<form class="flex flex-col gap-5">
+<label class="flex flex-col w-full">
+<p class="text-text-main dark:text-gray-200 text-sm font-medium leading-normal pb-2">Email hoặc Số điện thoại</p>
+<div class="relative">
+<input class="form-input flex w-full rounded-lg text-text-main dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-color dark:border-gray-600 bg-background-light dark:bg-gray-800 focus:border-primary h-12 px-4 text-base font-normal placeholder:text-text-secondary/60" placeholder="example@email.com" type="text"/>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary pointer-events-none">
+<span class="material-symbols-outlined text-[20px]">mail</span>
+</div>
+</div>
+</label>
+<label class="flex flex-col w-full">
+<div class="flex justify-between items-center pb-2">
+<p class="text-text-main dark:text-gray-200 text-sm font-medium leading-normal">Mật khẩu</p>
+<a class="text-primary hover:text-primary-dark text-xs font-bold" href="#">Quên mật khẩu?</a>
+</div>
+<div class="relative">
+<input class="form-input flex w-full rounded-lg text-text-main dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-border-color dark:border-gray-600 bg-background-light dark:bg-gray-800 focus:border-primary h-12 px-4 text-base font-normal placeholder:text-text-secondary/60" placeholder="••••••••" type="password"/>
+<div class="absolute right-3 top-1/2 -translate-y-1/2 text-text-secondary cursor-pointer hover:text-text-main transition-colors">
+<span class="material-symbols-outlined text-[20px]">visibility_off</span>
+</div>
+</div>
+</label>
+<button class="mt-4 flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-primary hover:bg-primary-dark transition-all text-text-main text-base font-bold leading-normal tracking-[0.015em] shadow-sm hover:shadow-md" type="button">
+<span class="truncate">Đăng nhập ngay</span>
+</button>
+</form>
+<div class="relative my-8">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-border-color dark:border-gray-700"></div>
+</div>
+<div class="relative flex justify-center text-sm">
+<span class="bg-white dark:bg-[#152e1e] px-2 text-text-secondary dark:text-gray-400">Hoặc tiếp tục với</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<button class="flex items-center justify-center gap-2 h-12 rounded-lg border border-border-color dark:border-gray-600 bg-background-light dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+<img alt="Google Logo" class="w-5 h-5" data-alt="Google colorful G logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCysQwi9BoqZ0E2Y9CMufq_XpQ1_sKwMlK1fx3EiBE_WLH2LkufbYxN8aBiWExurS9Dred_wSvKbbHOS2o97oVFzASpP-5LthPIwj8CjfzNX_aIKkLnwUdHvKYN9L5N72Kk0m-K86A_sGfUQD1pwfzyL4tHBjnHcM_0vmrMy0vdKvlOO8d6ze3XAtAGP1LPSmxTB-2o3O7g2rOQmyY35Ee3rjx6MgMc8tLAz01lSjKIj_jy8CML_NsYAjrV2NugxVxlwuT3_oBHyiQ"/>
+<span class="text-text-main dark:text-white text-sm font-medium">Google</span>
+</button>
+<button class="flex items-center justify-center gap-2 h-12 rounded-lg border border-border-color dark:border-gray-600 bg-background-light dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+<img alt="Facebook Logo" class="w-5 h-5" data-alt="Facebook blue f logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOiouSrFu-X7rRMPN1Ul0p5TnEKbGdiwBnVYBy17rt7ljBNq1MgAixQG2oGqxKW-zhB3PPN-4LhKkSnCALir7ehw-Xk1-WUvzcWsCOklHk2fNbAXryOduhGH3Ggegq7qImY6uNL4GkMjlJZAWm4QTUe-cjSax-HRbSAAGh3msNX31Dc3Usdxg7-2R__KFWeBdPezHob8zFNlSYA10GPxcrdNC3B4efJNeZ92IrgE4tv_XysezASCThZr4NzHekVTGu7Kr_vV8mSvY"/>
+<span class="text-text-main dark:text-white text-sm font-medium">Facebook</span>
+</button>
+</div>
+<div class="mt-8 text-center">
+<p class="text-text-secondary dark:text-gray-400 text-sm">
+                        Chưa có tài khoản? 
+                        <a class="text-primary font-bold hover:underline" href="#">Đăng ký tài khoản mới</a>
+</p>
+</div>
+</div>
+</div>
+</main>
+<footer class="py-6 text-center text-text-secondary dark:text-gray-500 text-xs">
+<p>© 2023 Greenspace. All rights reserved.</p>
+<div class="mt-2 flex justify-center gap-4">
+<a class="hover:text-text-main dark:hover:text-gray-300" href="#">Điều khoản</a>
+<a class="hover:text-text-main dark:hover:text-gray-300" href="#">Quyền riêng tư</a>
+</div>
+</footer>
+
+</body></html>
