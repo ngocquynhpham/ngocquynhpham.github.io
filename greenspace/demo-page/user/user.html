@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Hồ sơ tài khoản Greenspace</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "primary-dark": "#0ea341",
+                        "background-light": "#f8fcf9",
+                        "background-dark": "#102216",
+                        "text-main": "#0d1b12",
+                        "text-secondary": "#4c9a66",
+                        "border-green": "#e7f3eb",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main antialiased min-h-screen flex flex-col">
+<div class="bg-background-dark text-white text-xs sm:text-sm py-2 px-4 text-center font-medium relative z-50">
+    🌿 Miễn phí vận chuyển cho đơn hàng từ 500k - Giao hỏa tốc 2h
+</div>
+<header class="sticky top-0 z-40 w-full border-b border-border-green bg-white/95 backdrop-blur-md supports-[backdrop-filter]:bg-white/60 transition-all">
+<div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex h-16 md:h-20 items-center justify-between relative">
+<div class="flex lg:hidden shrink-0">
+<button class="p-2 -ml-2 text-text-main hover:text-primary transition-colors rounded-lg active:bg-background-light">
+<span class="material-symbols-outlined text-[26px]">menu</span>
+</button>
+</div>
+<div class="flex shrink-0 lg:flex-1 items-center justify-center lg:justify-start absolute left-1/2 -translate-x-1/2 lg:static lg:translate-x-0">
+<a class="flex items-center gap-2 group" href="#">
+<div class="size-8 text-primary transition-transform group-hover:scale-105">
+<svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M44 11.2727C44 14.0109 39.8386 16.3957 33.69 17.6364C39.8386 18.877 44 21.2618 44 24C44 26.7382 39.8386 29.123 33.69 30.3636C39.8386 31.6043 44 33.9891 44 36.7273C44 40.7439 35.0457 44 24 44C12.9543 44 4 40.7439 4 36.7273C4 33.9891 8.16144 31.6043 14.31 30.3636C8.16144 29.123 4 26.7382 4 24C4 21.2618 8.16144 18.877 14.31 17.6364C8.16144 16.3957 4 14.0109 4 11.2727C4 7.25611 12.9543 4 24 4C35.0457 4 44 7.25611 44 11.2727Z" fill="currentColor"></path>
+</svg>
+</div>
+<span class="hidden lg:block text-xl font-bold tracking-tight text-text-main">Greenspace</span>
+</a>
+</div>
+<nav class="hidden lg:flex items-center justify-center gap-8 absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2">
+<a class="text-sm font-semibold text-text-main hover:text-primary transition-colors py-2" href="#">Trang chủ</a>
+<div class="relative group">
+<button class="flex items-center gap-1 text-sm font-semibold text-text-main group-hover:text-primary transition-colors py-4">
+                        Sản phẩm <span class="material-symbols-outlined text-[20px]">expand_more</span>
+</button>
+<div class="absolute top-full left-1/2 -translate-x-1/2 w-56 bg-white border border-border-green shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0 before:absolute before:inset-0 before:-top-4 before:h-4 before:w-full">
+<a class="block px-5 py-2.5 text-sm text-text-main hover:bg-background-light hover:text-primary transition-colors" href="#">Cây trong nhà</a>
+<a class="block px-5 py-2.5 text-sm text-text-main hover:bg-background-light hover:text-primary transition-colors" href="#">Cây văn phòng</a>
+<a class="block px-5 py-2.5 text-sm text-text-main hover:bg-background-light hover:text-primary transition-colors" href="#">Chậu &amp; Phụ kiện</a>
+<div class="border-t border-border-green my-1"></div>
+<a class="block px-5 py-2.5 text-sm font-medium text-primary hover:underline" href="#">Tất cả sản phẩm</a>
+</div>
+</div>
+<div class="relative group">
+<button class="flex items-center gap-1 text-sm font-semibold text-text-main group-hover:text-primary transition-colors py-4">
+                        Kiến thức <span class="material-symbols-outlined text-[20px]">expand_more</span>
+</button>
+<div class="absolute top-full left-1/2 -translate-x-1/2 w-56 bg-white border border-border-green shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0 before:absolute before:inset-0 before:-top-4 before:h-4 before:w-full">
+<a class="block px-5 py-2.5 text-sm text-text-main hover:bg-background-light hover:text-primary transition-colors" href="#">Kỹ thuật trồng cây</a>
+<a class="block px-5 py-2.5 text-sm text-text-main hover:bg-background-light hover:text-primary transition-colors" href="#">Mẹo chăm sóc</a>
+<a class="block px-5 py-2.5 text-sm text-text-main hover:bg-background-light hover:text-primary transition-colors" href="#">Blog sống xanh</a>
+</div>
+</div>
+<a class="text-sm font-semibold text-text-main hover:text-primary transition-colors py-2" href="#">Về chúng tôi</a>
+<a class="text-sm font-semibold text-text-main hover:text-primary transition-colors py-2" href="#">Liên hệ</a>
+</nav>
+<div class="flex shrink-0 lg:flex-1 justify-end items-center gap-1 sm:gap-3">
+<div class="relative group hidden md:block">
+<button class="flex p-2 text-text-main hover:text-primary hover:bg-background-light rounded-full transition-all">
+<span class="material-symbols-outlined text-[24px]">search</span>
+</button>
+<div class="absolute right-0 top-full mt-2 w-80 bg-white border border-border-green shadow-xl rounded-xl p-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0 z-50">
+<div class="relative">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-text-secondary">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</span>
+<input class="w-full pl-10 pr-4 py-2 bg-background-light border-transparent focus:border-primary focus:bg-white focus:ring-0 rounded-lg text-sm transition-colors placeholder:text-text-secondary/60" placeholder="Tìm kiếm sản phẩm..." type="text"/>
+</div>
+</div>
+</div>
+<div class="relative group hidden md:block">
+<a class="flex p-2 text-text-main hover:text-primary hover:bg-background-light rounded-full transition-all" href="#">
+<span class="material-symbols-outlined text-[24px]">person</span>
+</a>
+<div class="absolute right-0 top-full mt-2 w-64 bg-white border border-border-green shadow-xl rounded-xl py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0 z-50">
+<div class="px-5 py-3 border-b border-border-green/50 bg-background-light/30">
+<p class="text-sm font-bold text-text-main">Nguyễn Văn A</p>
+<p class="text-xs text-text-secondary mt-0.5">nguyenvana@email.com</p>
+</div>
+<div class="py-1">
+<a class="flex items-center gap-3 px-5 py-2.5 text-sm text-text-main hover:bg-background-light hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">account_circle</span> Hồ sơ tài khoản
+                            </a>
+<a class="flex items-center gap-3 px-5 py-2.5 text-sm text-text-main hover:bg-background-light hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">shopping_bag</span> Đơn mua
+                            </a>
+<a class="flex items-center gap-3 px-5 py-2.5 text-sm text-text-main hover:bg-background-light hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">favorite</span> Yêu thích
+                            </a>
+</div>
+<div class="border-t border-border-green/50 py-1">
+<a class="flex items-center gap-3 px-5 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span> Đăng xuất
+                            </a>
+</div>
+</div>
+</div>
+<div class="relative group">
+<a class="flex p-2 text-text-main hover:text-primary hover:bg-background-light rounded-full transition-all relative" href="#">
+<span class="material-symbols-outlined text-[24px]">shopping_cart</span>
+<span class="absolute top-0 right-0 flex size-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white shadow-sm ring-2 ring-white">2</span>
+</a>
+<div class="absolute right-0 top-full mt-2 w-80 sm:w-96 bg-white border border-border-green shadow-xl rounded-xl p-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 translate-y-2 group-hover:translate-y-0 z-50">
+<div class="flex items-center justify-between mb-4 pb-3 border-b border-border-green/50">
+<h3 class="text-sm font-bold text-text-main">Giỏ hàng (2)</h3>
+<a class="text-xs font-medium text-primary hover:underline" href="#">Xem tất cả</a>
+</div>
+<div class="space-y-4 max-h-64 overflow-y-auto pr-1 custom-scrollbar">
+<div class="flex gap-4 group/item">
+<div class="size-16 rounded-lg bg-gray-100 bg-cover bg-center shrink-0 border border-border-green" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCpzuifM4swQrAqE9aoiM10G0hAilh5cYNGPHVPYuuG6oILRochaIZ6enM36dYCIFWtMKRsmNgXcaDhVMMQDyfVaSOhB6U0NioPK_QqSYk4maOgQ4AuP-QmdYXAXKFZEaha-loGugJiBtAcyUS-ZRRYRtR1lXLzxw2dSIMP_bBO6eIvoTzdIIkaDpNpej5jriWf6Ygu_2BQhERYNf0i-olHtshEHng8mnoUQ1BQjn7oqmCPWMBkNZyJ-99S3VpkdvGP98QkEuz9pSk");'></div>
+<div class="flex-1 min-w-0 flex flex-col justify-between py-0.5">
+<div>
+<h4 class="text-sm font-medium text-text-main truncate group-hover/item:text-primary transition-colors">Cây Bàng Singapore</h4>
+<p class="text-xs text-text-secondary mt-0.5">Size: L / Chậu sứ trắng</p>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-xs text-text-secondary">x1</span>
+<span class="text-sm font-bold text-primary">150.000đ</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-5 pt-4 border-t border-border-green">
+<div class="flex justify-between items-center mb-4">
+<span class="text-sm font-medium text-text-main">Tổng cộng:</span>
+<span class="text-lg font-bold text-primary">150.000đ</span>
+</div>
+<button class="w-full py-2.5 bg-primary hover:bg-primary-dark text-white text-sm font-semibold rounded-lg transition-all shadow-lg shadow-primary/20 active:scale-[0.98]">Thanh toán ngay</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow w-full max-w-[1200px] mx-auto px-4 sm:px-6 py-8">
+<div class="flex flex-col lg:flex-row gap-8">
+<aside class="w-full lg:w-72 flex-shrink-0">
+<div class="bg-white rounded-xl border border-border-green shadow-sm p-4 sticky top-28">
+<div class="flex items-center gap-4 p-4 mb-4 border-b border-border-green/50">
+<div class="size-12 rounded-full bg-cover bg-center" data-alt="User profile avatar sidebar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD69yJuE_Yhd4JmieNsjPs-ZGjD59a6kW8f_GD4F-9hFV_Y0HIHrOxrrCcmCnVgn33tY6wQMtOU_UQ_Yj41zFMJLps_sK8WgalgICqbdf28uYNFA8AyRR9ALh6CrKcIA2wItxIC01TugC2MMrBuC4-Ob-K2ScH5ddAHw1ZiX9kjIwTpMOMp6VNVGUsQMfHulAGmztt19ZCzfcLyLaIWqM2DYRdcbiX4iMAMTLJvBKefBQ4FTvkeQ-gL5_LnboEMKrf-aMS9bpysvqo");'></div>
+<div class="flex flex-col">
+<h3 class="font-bold text-text-main text-sm truncate max-w-[140px]">Nguyễn Văn A</h3>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-primary text-[14px] fill-1">verified</span>
+<span class="text-xs text-text-secondary">Thành viên Bạc</span>
+</div>
+</div>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-border-green text-primary-dark font-medium transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] fill-1">person</span>
+<span class="text-sm">Thông tin tài khoản</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main hover:bg-border-green/50 hover:text-primary-dark transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-text-secondary group-hover:text-primary-dark">inventory_2</span>
+<span class="text-sm">Đơn hàng của tôi</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main hover:bg-border-green/50 hover:text-primary-dark transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-text-secondary group-hover:text-primary-dark">location_on</span>
+<span class="text-sm">Sổ địa chỉ</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main hover:bg-border-green/50 hover:text-primary-dark transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-text-secondary group-hover:text-primary-dark">favorite</span>
+<span class="text-sm">Sản phẩm yêu thích</span>
+</a>
+<div class="my-2 border-t border-border-green/50"></div>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-text-main hover:bg-red-50 hover:text-red-600 transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px] text-text-secondary group-hover:text-red-600">logout</span>
+<span class="text-sm">Đăng xuất</span>
+</a>
+</nav>
+</div>
+</aside>
+<div class="flex-1 min-w-0">
+<div class="bg-white rounded-xl border border-border-green shadow-sm overflow-hidden">
+<div class="p-6 border-b border-border-green/50 bg-background-light/30">
+<h1 class="text-2xl font-bold text-text-main">Hồ sơ của tôi</h1>
+<p class="text-text-secondary text-sm mt-1">Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
+</div>
+<div class="p-6 lg:p-8">
+<div class="flex flex-col-reverse lg:flex-row gap-8 lg:gap-12">
+<div class="flex-1 flex flex-col gap-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col gap-2">
+<span class="text-sm font-medium text-text-main">Họ và tên</span>
+<div class="relative">
+<input class="w-full rounded-lg border-border-green bg-background-light text-text-main px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-text-secondary/50" type="text" value="Nguyễn Văn A"/>
+</div>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-medium text-text-main">Số điện thoại</span>
+<div class="relative">
+<input class="w-full rounded-lg border-border-green bg-background-light text-text-main px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-text-secondary/50" type="tel" value="0912 345 678"/>
+</div>
+</label>
+</div>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-medium text-text-main">Email</span>
+<div class="relative group cursor-not-allowed">
+<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-text-secondary">
+<span class="material-symbols-outlined text-[20px]">mail</span>
+</span>
+<input class="w-full rounded-lg border-border-green bg-gray-50 text-text-secondary px-4 py-2.5 pl-10 text-sm focus:ring-0 focus:border-border-green cursor-not-allowed" readonly="" type="email" value="nguyenvana@email.com"/>
+<span class="absolute inset-y-0 right-0 flex items-center pr-3 text-text-secondary">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+</span>
+</div>
+<span class="text-xs text-text-secondary">Email không thể thay đổi. Vui lòng liên hệ CSKH nếu cần hỗ trợ.</span>
+</label>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<span class="text-sm font-medium text-text-main">Giới tính</span>
+<div class="flex items-center gap-6 py-2">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="size-4 text-primary focus:ring-primary border-gray-300" name="gender" type="radio"/>
+<span class="text-sm text-text-main group-hover:text-primary transition-colors">Nam</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="size-4 text-primary focus:ring-primary border-gray-300" name="gender" type="radio"/>
+<span class="text-sm text-text-main group-hover:text-primary transition-colors">Nữ</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="size-4 text-primary focus:ring-primary border-gray-300" name="gender" type="radio"/>
+<span class="text-sm text-text-main group-hover:text-primary transition-colors">Khác</span>
+</label>
+</div>
+</div>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-medium text-text-main">Ngày sinh</span>
+<div class="relative">
+<input class="w-full rounded-lg border-border-green bg-background-light text-text-main px-4 py-2.5 text-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-text-secondary/50" type="date"/>
+</div>
+</label>
+</div>
+<div class="pt-4 flex justify-end">
+<button class="bg-primary hover:bg-primary-dark text-white font-semibold py-2.5 px-8 rounded-lg shadow-sm shadow-primary/30 transition-all active:scale-95">
+                                    Lưu thay đổi
+                                </button>
+</div>
+</div>
+<div class="flex flex-col items-center gap-4 lg:w-64 lg:border-l lg:border-border-green/50 lg:pl-12 pt-4 lg:pt-0">
+<div class="relative group cursor-pointer">
+<div class="size-32 rounded-full border-4 border-border-green bg-cover bg-center shadow-sm overflow-hidden" data-alt="Large profile picture of the user" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCpzuifM4swQrAqE9aoiM10G0hAilh5cYNGPHVPYuuG6oILRochaIZ6enM36dYCIFWtMKRsmNgXcaDhVMMQDyfVaSOhB6U0NioPK_QqSYk4maOgQ4AuP-QmdYXAXKFZEaha-loGugJiBtAcyUS-ZRRYRtR1lXLzxw2dSIMP_bBO6eIvoTzdIIkaDpNpej5jriWf6Ygu_2BQhERYNf0i-olHtshEHng8mnoUQ1BQjn7oqmCPWMBkNZyJ-99S3VpkdvGP98QkEuz9pSk");'>
+<div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[32px]">photo_camera</span>
+</div>
+</div>
+<button class="absolute bottom-1 right-1 bg-white border border-border-green text-text-secondary rounded-full p-1.5 shadow-sm hover:text-primary hover:border-primary transition-colors">
+<span class="material-symbols-outlined text-[16px] block">edit</span>
+</button>
+</div>
+<div class="text-center">
+<p class="text-xs text-text-secondary mb-3">Dụng lượng file tối đa 1 MB<br/>Định dạng: .JPEG, .PNG</p>
+<button class="text-sm font-medium text-primary hover:text-primary-dark hover:underline">
+                                    Chọn ảnh
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+</body></html>
