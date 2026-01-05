@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PomoFocus - Tăng Cường Sự Tập Trung Của Bạn</title>
+    <!-- SEO Meta Tags -->
+        <meta name="description" content="PomoFocus - Extension Chrome giúp tăng cường sự tập trung với phương pháp Pomodoro. Miễn phí, không quảng cáo, bảo mật tuyệt đối. Tải ngay!">
+        <meta name="keywords" content="pomodoro, timer, productivity, focus, chrome extension, quản lý thời gian, tập trung, năng suất">
+        <meta name="author" content="QuynhP">
+        <meta name="robots" content="index, follow">
+        <link rel="canonical" href="https://ngocquynhpham.github.io/pomofocus.html">
+        <meta
+            content="https://ngocquynhpham.github.io/pomofocus/screenshot.png"
+            property="og:image"
+        />
+        
+        <link href="./logo.ico" rel="icon" />
+        <!-- Open Graph Meta Tags (Facebook, LinkedIn) -->
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="PomoFocus - Tăng Cường Sự Tập Trung Của Bạn">
+        <meta property="og:description" content="Extension Chrome tối giản giúp bạn làm chủ thời gian với phương pháp Pomodoro. Không quảng cáo, hoạt động offline.">
+        <meta property="og:url" content="https://ngocquynhpham.github.io/pomofocus.html">
+        <meta property="og:site_name" content="PomoFocus">
+        
+        <!-- Twitter Card Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="PomoFocus - Tăng Cường Sự Tập Trung Của Bạn">
+        <meta name="twitter:description" content="Extension Chrome tối giản với phương pháp Pomodoro. Miễn phí, bảo mật, hoạt động offline.">
+        <meta name="twitter:image" content="https://ngocquynhpham.github.io/assets/pomofocus-preview.jpg">
+        
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="https://ngocquynhpham.github.io/assets/favicon.png">
+        <link rel="apple-touch-icon" href="https://ngocquynhpham.github.io/assets/apple-touch-icon.png">
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome (Icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Cấu hình màu Brand -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pomo: {
+                            red: '#BA4949',    /* Focus */
+                            teal: '#38858A',   /* Short Break */
+                            blue: '#397097',   /* Long Break */
+                            dark: '#121212',
+                            surface: '#ffffff',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
+        
+        /* Hiệu ứng nổi */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Animation cho Hero Image */
+        .float-anim {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 bg-pomo-red transition-colors duration-500">
+
+    <!-- NAVIGATION -->
+    <nav class="container mx-auto px-6 py-6 flex justify-between items-center relative z-10">
+        <a href="#" class="text-2xl font-bold text-white flex items-center gap-2">
+            <i class="fa-regular fa-clock"></i> PomoFocus
+        </a>
+        <div class="hidden md:flex space-x-8">
+            <a href="#features" class="text-white/90 hover:text-white font-medium transition">Tính năng</a>
+            <a href="#tech" class="text-white/90 hover:text-white font-medium transition">Công nghệ</a>
+            <a href="#install" class="text-white/90 hover:text-white font-medium transition">Cài đặt</a>
+        </div>
+        <a href="https://github.com/ngocquynhpham/pomofocus" target="_blank" class="bg-white text-pomo-red px-5 py-2.5 rounded-lg font-bold shadow-lg hover:shadow-xl transition transform hover:-translate-y-1 flex items-center gap-2">
+            <i class="fa-brands fa-github"></i> GitHub
+        </a>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="container mx-auto px-6 pt-12 pb-24 text-center md:text-left relative z-10">
+        <div class="flex flex-col md:flex-row items-center gap-12">
+            <!-- Text Content -->
+            <div class="md:w-1/2">
+                <div class="inline-block bg-white/20 text-white px-4 py-1 rounded-full text-sm font-semibold mb-6 backdrop-blur-sm border border-white/10">
+                    🚀 Manifest V3 Ready
+                </div>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-white leading-tight mb-6">
+                    Làm Chủ Thời Gian <br> Với <span class="text-yellow-300">PomoFocus</span>
+                </h1>
+                <p class="text-lg text-white/90 mb-8 leading-relaxed max-w-lg mx-auto md:mx-0">
+                    Extension tối giản giúp bạn duy trì sự tập trung cao độ bằng phương pháp Pomodoro. 
+                    Không quảng cáo, không theo dõi, hoạt động 100% Offline.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                    <a href="#install" class="bg-white text-pomo-red px-8 py-4 rounded-xl font-bold shadow-lg hover:bg-gray-100 transition flex items-center justify-center gap-2 transform hover:scale-105 duration-200">
+                        <i class="fa-brands fa-chrome text-xl"></i> Cài đặt ngay
+                    </a>
+                    <a target="_blank" href="https://github.com/ngocquynhpham/pomofocus" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-xl font-bold hover:bg-white/10 transition flex items-center justify-center gap-2">
+                        <i class="fa-regular fa-star"></i> Star Repo
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Hero Image / Mockup -->
+            <div class="md:w-1/2 relative w-full mt-8 md:mt-0">
+                <div class="relative float-anim mx-auto max-w-md">
+                    <!-- Browser Window Frame -->
+                    <div class="bg-gray-800 rounded-t-xl p-2 flex items-center gap-2 shadow-2xl">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        <div class="ml-4 bg-gray-700 h-6 w-full rounded text-xs text-gray-400 flex items-center px-3">
+                            chrome://extensions/pomofocus
+                        </div>
+                    </div>
+                    <!-- Placeholder Screenshot -->
+                    <div class="bg-white rounded-b-xl shadow-2xl p-4 border-x border-b border-gray-200">
+                        <img src="./pomofocus/pomofocus.png" alt="PomoFocus Interface" class="rounded-lg w-full shadow-inner border border-gray-100">
+                    </div>
+                    
+                    <!-- Floating Badge -->
+                    <div class="absolute -bottom-6 -right-6 bg-white p-4 rounded-xl shadow-xl flex items-center gap-3 animate-bounce hidden md:flex">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">Trạng thái</p>
+                            <p class="font-bold text-gray-800">Đang tập trung</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Background Decorations -->
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full bg-white/5 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- WAVE DIVIDER -->
+    <div class="relative -mt-1 z-0">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#F9FAFB" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        </svg>
+    </div>
+
+    <!-- FEATURES SECTION -->
+    <section id="features" class="bg-gray-50 py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-pomo-red font-bold tracking-wider uppercase text-sm mb-2 block">Tính Năng Nổi Bật</span>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">Tại Sao Chọn PomoFocus?</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Được thiết kế tối giản, tập trung vào hiệu suất và loại bỏ mọi yếu tố gây xao nhãng.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-1">
+                    <div class="w-14 h-14 bg-red-100 text-pomo-red rounded-xl flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-stopwatch"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Pomodoro Timer Chuẩn</h3>
+                    <p class="text-gray-600 leading-relaxed">Chu trình làm việc khoa học: 25 phút tập trung, 5 phút nghỉ ngắn và 15 phút nghỉ dài.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-1">
+                    <div class="w-14 h-14 bg-teal-100 text-pomo-teal rounded-xl flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-palette"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Giao Diện Dynamic</h3>
+                    <p class="text-gray-600 leading-relaxed">Màu sắc tự động thay đổi theo trạng thái (Focus/Break) giúp não bộ nhận diện ngữ cảnh.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-1">
+                    <div class="w-14 h-14 bg-blue-100 text-pomo-blue rounded-xl flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Quản Lý Task</h3>
+                    <p class="text-gray-600 leading-relaxed">Theo dõi danh sách việc cần làm và xem lại lịch sử chi tiết số phiên bạn đã hoàn thành.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-1">
+                    <div class="w-14 h-14 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Âm Thanh & Thông Báo</h3>
+                    <p class="text-gray-600 leading-relaxed">Không bao giờ lỡ nhịp nghỉ ngơi với âm thanh báo hiệu và thông báo hệ thống thông minh.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-1">
+                    <div class="w-14 h-14 bg-gray-100 text-gray-700 rounded-xl flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Riêng Tư Tuyệt Đối</h3>
+                    <p class="text-gray-600 leading-relaxed">Dữ liệu của bạn chỉ nằm trên máy tính của bạn (Local Storage). Không thu thập, không gửi đi đâu cả.</p>
+                </div>
+
+                <!-- Feature 6 (Tech) -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-1">
+                    <div class="w-14 h-14 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center text-2xl mb-6">
+                        <i class="fa-brands fa-html5"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Công Nghệ Hiện Đại</h3>
+                    <p class="text-gray-600 leading-relaxed">Xây dựng bằng HTML5, CSS3, JS thuần và tuân thủ chuẩn Manifest V3 mới nhất của Google.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TECH STACK SECTION -->
+    <section id="tech" class="py-20 bg-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold text-gray-900 mb-12">Tech Stack Mạnh Mẽ</h2>
+            <div class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-80">
+                <div class="flex flex-col items-center gap-3 group">
+                    <div class="w-16 h-16 rounded-full bg-orange-50 flex items-center justify-center group-hover:scale-110 transition duration-300">
+                        <i class="fa-brands fa-html5 text-4xl text-orange-500"></i>
+                    </div>
+                    <span class="font-bold text-gray-700">HTML5</span>
+                </div>
+                <div class="flex flex-col items-center gap-3 group">
+                    <div class="w-16 h-16 rounded-full bg-blue-50 flex items-center justify-center group-hover:scale-110 transition duration-300">
+                        <i class="fa-brands fa-css3-alt text-4xl text-blue-500"></i>
+                    </div>
+                    <span class="font-bold text-gray-700">CSS3</span>
+                </div>
+                <div class="flex flex-col items-center gap-3 group">
+                    <div class="w-16 h-16 rounded-full bg-yellow-50 flex items-center justify-center group-hover:scale-110 transition duration-300">
+                        <i class="fa-brands fa-js text-4xl text-yellow-400"></i>
+                    </div>
+                    <span class="font-bold text-gray-700">JavaScript</span>
+                </div>
+                <div class="flex flex-col items-center gap-3 group">
+                    <div class="w-16 h-16 rounded-full bg-green-50 flex items-center justify-center group-hover:scale-110 transition duration-300">
+                        <i class="fa-brands fa-chrome text-4xl text-green-500"></i>
+                    </div>
+                    <span class="font-bold text-gray-700">Manifest V3</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INSTALLATION SECTION -->
+    <section id="install" class="py-24 bg-gray-900 text-white relative overflow-hidden">
+        <!-- Background Glow -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-pomo-red/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row gap-16 items-center">
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Cài đặt dành cho Developer</h2>
+                    <p class="text-gray-400 mb-8 text-lg">Vì đây là dự án mã nguồn mở, bạn có thể cài đặt và tùy chỉnh trực tiếp thông qua Chrome Developer Mode.</p>
+                    
+                    <div class="space-y-8">
+                        <div class="flex gap-6">
+                            <div class="w-12 h-12 rounded-full bg-pomo-red flex items-center justify-center font-bold text-lg flex-shrink-0 shadow-lg shadow-red-900/50">1</div>
+                            <div class="flex-1">
+                                <h4 class="font-bold text-xl mb-2">Tải mã nguồn</h4>
+                                <p class="text-sm text-gray-400 mb-3">Clone repo từ GitHub về máy tính của bạn.</p>
+                                <div class="bg-black/50 rounded-xl p-4 font-mono text-sm text-green-400 flex justify-between items-center border border-gray-700 group">
+                                    <code id="git-command" class="break-all">git clone https://github.com/ngocquynhpham/pomofocus.git</code>
+                                    <button onclick="copyCode()" class="text-gray-500 hover:text-white ml-4 p-2 rounded transition">
+                                        <i class="fa-regular fa-copy text-lg"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-6">
+                            <div class="w-12 h-12 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center font-bold text-lg flex-shrink-0">2</div>
+                            <div>
+                                <h4 class="font-bold text-xl mb-2">Mở Chrome Extension</h4>
+                                <p class="text-sm text-gray-400">Truy cập <code class="bg-gray-800 px-2 py-1 rounded">chrome://extensions/</code> và bật chế độ <strong>Developer mode</strong> ở góc phải.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-6">
+                            <div class="w-12 h-12 rounded-full bg-gray-800 border border-gray-700 flex items-center justify-center font-bold text-lg flex-shrink-0">3</div>
+                            <div>
+                                <h4 class="font-bold text-xl mb-2">Load Unpacked</h4>
+                                <p class="text-sm text-gray-400">Bấm nút "Load unpacked" và chọn thư mục <code>PomoFocus</code> vừa tải về. Xong!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 w-full">
+                    <div class="bg-gray-800 rounded-2xl p-8 border border-gray-700 shadow-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 opacity-10">
+                            <i class="fa-solid fa-code text-9xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-6 flex items-center gap-3">
+                            <i class="fa-solid fa-folder-tree text-yellow-500"></i> Cấu trúc dự án
+                        </h3>
+                        <pre class="font-mono text-sm text-gray-300 overflow-x-auto whitespace-pre leading-relaxed p-2">
+PomoFocus/
+├── <span class="text-yellow-400">manifest.json</span>       <span class="text-gray-500"># Core Configuration (V3)</span>
+├── <span class="text-blue-400">background.js</span>       <span class="text-gray-500"># Service Worker Logic</span>
+├── <span class="text-green-400">popup.html</span>          <span class="text-gray-500"># Main Interface</span>
+├── <span class="text-green-400">popup.js</span>            <span class="text-gray-500"># UI Logic</span>
+├── <span class="text-pink-400">style.css</span>           <span class="text-gray-500"># Design System</span>
+└── <span class="text-purple-400">icons/</span>              <span class="text-gray-500"># App Assets</span></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-950 text-gray-400 py-12 border-t border-gray-900">
+        <div class="container mx-auto px-6 text-center">
+            <div class="mb-8">
+                <a href="#" class="text-2xl font-bold text-white flex items-center justify-center gap-2 mb-2">
+                    <i class="fa-regular fa-clock text-pomo-red"></i> PomoFocus
+                </a>
+                <p class="text-sm opacity-60">Stay Focused. Get Things Done.</p>
+            </div>
+            
+            <div class="flex justify-center gap-8 mb-8">
+                <a href="https://github.com/ngocquynhpham/pomofocus" class="hover:text-white transition transform hover:scale-110"><i class="fa-brands fa-github text-2xl"></i></a>
+                <a href="#" class="hover:text-white transition transform hover:scale-110"><i class="fa-brands fa-twitter text-2xl"></i></a>
+                <a href="#" class="hover:text-white transition transform hover:scale-110"><i class="fa-solid fa-envelope text-2xl"></i></a>
+            </div>
+            
+            <div class="border-t border-gray-900 pt-8 mt-8">
+                <p class="text-sm">
+                    Author: <span class="text-white font-bold">QuynhP</span> <br>
+                    Made with <i class="fa-solid fa-heart text-red-500 animate-pulse mx-1"></i> for productivity lovers.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Copy Code Function
+        function copyCode() {
+            const codeText = document.getElementById('git-command').innerText;
+            navigator.clipboard.writeText(codeText);
+            
+            // Feedback UI
+            const btn = document.querySelector('button[onclick="copyCode()"]');
+            const originalIcon = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check text-green-500 text-lg"></i>';
+            setTimeout(() => {
+                btn.innerHTML = originalIcon;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
