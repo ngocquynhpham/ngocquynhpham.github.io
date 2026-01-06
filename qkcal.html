@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QKcal - Personal Nutrition Tracker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="./logo.ico" rel="icon" />
+    <meta
+      content="https://assets-global.website-files.com/61d59ec665a5ad81e194acc6/63d857b7a69b6b426a24f940_61e9a0384c4b0a524e3cc541_upload-settings-small%5B1%5D.gif"
+      property="og:image"
+    />
+    <meta name="description" content="QKcal - Ứng dụng theo dõi dinh dưỡng tối giản, log món ăn chỉ 5 giây. Kiểm soát cân nặng đơn giản, không phức tạp. PWA Ready, siêu nhanh." />
+        <meta name="keywords" content="theo dõi dinh dưỡng, ứng dụng calo, kiểm soát cân nặng, QKcal, nutrition tracker, TDEE calculator, PWA" />
+        <meta name="author" content="Ngoc Quynh Pham" />
+        <meta name="robots" content="index, follow" />
+        
+        <!-- Open Graph Meta Tags -->
+        <meta property="og:title" content="QKcal - Personal Nutrition Tracker" />
+        <meta property="og:description" content="Kiểm soát cân nặng đơn giản, tinh tế. Log món ăn chỉ dưới 5 giây." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://ngocquynhpham.github.io/qkcal.html" />
+        
+        <!-- Twitter Card Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="QKcal - Personal Nutrition Tracker" />
+        <meta name="twitter:description" content="Kiểm soát cân nặng đơn giản, tinh tế. Log món ăn chỉ dưới 5 giây." />
+        <meta name="twitter:image" content="https://assets-global.website-files.com/61d59ec665a5ad81e194acc6/63d857b7a69b6b426a24f940_61e9a0384c4b0a524e3cc541_upload-settings-small%5B1%5D.gif" />
+        
+        <!-- Additional SEO -->
+        <meta name="theme-color" content="#10b981" />
+        <link rel="canonical" href="https://ngocquynhpham.github.io/qkcal.html" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        
+        /* Phone Mockup Styling */
+        .phone-mockup {
+            border: 12px solid #1f2937;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+            background: white;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            /* Responsive width for phone */
+            width: 300px;
+            height: 600px;
+            max-width: 90vw; 
+            max-height: 80vh;
+        }
+        
+        @media (max-width: 640px) {
+            .phone-mockup {
+                border-width: 8px;
+                border-radius: 30px;
+            }
+        }
+
+        .notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 25px;
+            background: #1f2937;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            z-index: 10;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #10b981, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .blob {
+            position: absolute;
+            filter: blur(40px);
+            z-index: -1;
+            opacity: 0.5;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(10px, -20px) scale(1.05); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        .tech-card {
+            transition: all 0.3s ease;
+        }
+        .tech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -15px rgba(16, 185, 129, 0.15);
+            border-color: #a7f3d0;
+        }
+
+        /* Hide Scrollbar for internal mockup elements */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 overflow-x-hidden selection:bg-emerald-100 selection:text-emerald-900">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold flex items-center gap-2 group">
+                <i class="fa-solid fa-leaf text-emerald-500 group-hover:rotate-12 transition-transform duration-300"></i>
+                <span class="tracking-tight">QKcal</span>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex gap-8 text-sm font-medium text-gray-600">
+                <a href="#features" class="hover:text-emerald-600 transition relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-emerald-500 after:transition-all hover:after:w-full">Tính năng</a>
+                <a href="#philosophy" class="hover:text-emerald-600 transition relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-emerald-500 after:transition-all hover:after:w-full">Triết lý</a>
+                <a href="#tech" class="hover:text-emerald-600 transition relative after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-emerald-500 after:transition-all hover:after:w-full">Công nghệ</a>
+            </div>
+
+            <!-- Mobile Menu Button (Optional placeholder) -->
+            <a href="#" class="bg-emerald-500 hover:bg-emerald-600 text-white px-6 py-2.5 rounded-full font-semibold text-sm transition shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:-translate-y-0.5">
+                Trải nghiệm ngay
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex flex-col justify-center min-h-[90vh]">
+        <!-- Background Blobs with Animation -->
+        <div class="blob bg-emerald-200 w-64 h-64 md:w-96 md:h-96 rounded-full top-10 left-10 md:top-0 md:left-0 opacity-40"></div>
+        <div class="blob bg-blue-200 w-64 h-64 md:w-80 md:h-80 rounded-full bottom-10 right-10 md:bottom-0 md:right-0 opacity-40 animation-delay-2000"></div>
+
+        <div class="container mx-auto px-6 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <!-- Text Content -->
+            <div class="text-center lg:text-left space-y-8 order-2 lg:order-1">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-emerald-50 border border-emerald-100 text-emerald-700 rounded-full text-xs font-bold tracking-wide uppercase shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    Personal Nutrition Tracker
+                </div>
+                
+                <h1 class="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight tracking-tight">
+                    Kiểm soát cân nặng <br>
+                    <span class="gradient-text">Đơn giản. Tinh tế.</span>
+                </h1>
+                
+                <p class="text-lg md:text-xl text-gray-600 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                    Ứng dụng theo dõi dinh dưỡng tối giản dành cho người bận rộn. Log món ăn chỉ dưới 5 giây. Không mạng xã hội, không phức tạp.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2">
+                    <button class="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-xl shadow-emerald-500/30 transition transform hover:-translate-y-1 w-full sm:w-auto flex items-center justify-center gap-2">
+                        <span>Bắt đầu Setup TDEE</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <!-- Removed Source Code Button -->
+                </div>
+                
+                <div class="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm text-gray-500 font-medium">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-check-circle text-emerald-500 text-lg"></i> PWA Ready
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-bolt text-yellow-500 text-lg"></i> Siêu nhanh
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved text-blue-500 text-lg"></i> Private
+                    </div>
+                </div>
+            </div>
+
+            <!-- App Mockup -->
+            <div class="flex justify-center relative z-10 order-1 lg:order-2">
+                <!-- Mockup Container -->
+                <div class="phone-mockup bg-gray-50 flex flex-col transform hover:rotate-1 transition duration-500">
+                    <div class="notch"></div>
+                    <!-- Mockup Header -->
+                    <div class="bg-white p-6 pt-12 pb-4 shadow-sm z-20 border-b border-gray-50">
+                        <div class="flex justify-between items-center mb-1">
+                            <div>
+                                <h3 class="text-xs text-gray-400 font-medium uppercase tracking-wider">17:00 PM</h3>
+                                <h2 class="text-xl font-bold text-gray-800">Hi, Quỳnh 👋</h2>
+                            </div>
+                            <div class="w-10 h-10 bg-gray-100 rounded-full overflow-hidden border-2 border-white shadow-sm">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Quynh&backgroundColor=b6e3f4" alt="Avatar" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mockup Body (Dashboard) -->
+                    <div class="flex-1 p-5 overflow-y-auto hide-scrollbar space-y-5 bg-gray-50/50">
+                        <!-- Card Calo -->
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border border-emerald-100/50 relative overflow-hidden group">
+                            <div class="absolute top-0 right-0 w-20 h-20 bg-emerald-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+                            
+                            <div class="relative z-10">
+                                <div class="flex justify-between items-end mb-3">
+                                    <span class="text-sm font-medium text-gray-500">Remaining</span>
+                                    <span class="text-2xl font-bold text-emerald-600">550 Kcal</span>
+                                </div>
+                                <!-- Progress Bar -->
+                                <div class="w-full bg-gray-100 rounded-full h-3 mb-3 overflow-hidden">
+                                    <div class="bg-emerald-500 h-3 rounded-full relative" style="width: 70%">
+                                        <div class="absolute inset-0 bg-white/20 animate-[shimmer_2s_infinite]"></div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between text-xs font-medium text-gray-400">
+                                    <span class="flex items-center gap-1"><i class="fa-solid fa-utensils text-orange-400"></i> Ăn: 1250</span>
+                                    <span class="flex items-center gap-1"><i class="fa-solid fa-fire text-red-400"></i> Tập: 150</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card Water -->
+                        <div class="bg-blue-50 p-4 rounded-2xl border border-blue-100 flex items-center justify-between cursor-pointer hover:bg-blue-100 transition shadow-sm group">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center text-white text-lg shadow-lg shadow-blue-500/30 group-hover:scale-110 transition">
+                                    <i class="fa-solid fa-glass-water"></i>
+                                </div>
+                                <div>
+                                    <div class="font-bold text-gray-800 text-lg">1,250 ml</div>
+                                    <div class="text-xs text-blue-500 font-medium">Mục tiêu: 2,000 ml</div>
+                                </div>
+                            </div>
+                            <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-blue-500 hover:bg-blue-500 hover:text-white transition font-bold text-xl shadow-sm">
+                                +
+                            </div>
+                        </div>
+
+                        <!-- Recent Logs -->
+                        <div>
+                            <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3 pl-1">Vừa mới log</h4>
+                            <div class="space-y-3">
+                                <div class="bg-white p-3.5 rounded-xl flex justify-between items-center shadow-sm border border-gray-100 hover:shadow-md transition cursor-pointer">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-lg bg-green-50 flex items-center justify-center text-xl">🚶‍♀️</div>
+                                        <div>
+                                            <div class="text-sm font-semibold text-gray-700">Walking</div>
+                                            <div class="text-xs text-gray-400">30 mins</div>
+                                        </div>
+                                    </div>
+                                    <span class="text-sm font-bold text-green-500 bg-green-50 px-2 py-1 rounded">+150</span>
+                                </div>
+                                <div class="bg-white p-3.5 rounded-xl flex justify-between items-center shadow-sm border border-gray-100 hover:shadow-md transition cursor-pointer">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-lg bg-orange-50 flex items-center justify-center text-xl">🍜</div>
+                                        <div>
+                                            <div class="text-sm font-semibold text-gray-700">Phở bò</div>
+                                            <div class="text-xs text-gray-400">Bát nhỏ</div>
+                                        </div>
+                                    </div>
+                                    <span class="text-sm font-bold text-orange-500 bg-orange-50 px-2 py-1 rounded">-350</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mockup Footer (FAB) -->
+                    <div class="absolute bottom-6 right-6">
+                        <button class="w-14 h-14 bg-emerald-500 rounded-full shadow-lg shadow-emerald-500/40 flex items-center justify-center text-white text-2xl hover:bg-emerald-600 hover:scale-110 active:scale-95 transition duration-300">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-24 bg-white relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20">
+                <h2 class="text-3xl lg:text-4xl font-bold mb-4">Tại sao chọn QKcal?</h2>
+                <p class="text-gray-500 max-w-2xl mx-auto text-lg">Tập trung vào trải nghiệm người dùng với triết lý tối giản, giúp bạn hình thành thói quen mà không cảm thấy áp lực.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-10">
+                <!-- Feature 1 -->
+                <div class="p-8 rounded-3xl bg-gray-50 hover:bg-emerald-50 transition duration-300 border border-transparent hover:border-emerald-100 group cursor-default">
+                    <div class="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center text-emerald-600 text-2xl mb-6 group-hover:scale-110 group-hover:rotate-6 transition duration-300 shadow-sm">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-900">Quick Log 5s</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Chọn món ăn từ Template có sẵn. Không cần gõ tên, không cần nhớ số calo. Chạm và Lưu nhanh chóng.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="p-8 rounded-3xl bg-gray-50 hover:bg-blue-50 transition duration-300 border border-transparent hover:border-blue-100 group cursor-default">
+                    <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 text-2xl mb-6 group-hover:scale-110 group-hover:-rotate-6 transition duration-300 shadow-sm">
+                        <i class="fa-solid fa-droplet"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-900">Water Tracking</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Theo dõi lượng nước uống hàng ngày chỉ với 1 cú chạm (Tap-to-track). Hiệu ứng visual sinh động, dễ theo dõi.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="p-8 rounded-3xl bg-gray-50 hover:bg-orange-50 transition duration-300 border border-transparent hover:border-orange-100 group cursor-default">
+                    <div class="w-14 h-14 bg-orange-100 rounded-2xl flex items-center justify-center text-orange-600 text-2xl mb-6 group-hover:scale-110 group-hover:rotate-6 transition duration-300 shadow-sm">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-900">Real-time Dashboard</h3>
+                    <p class="text-gray-600 leading-relaxed">
+                        Tự động tính TDEE. Biết ngay số Calo còn lại (Remaining) để quyết định bữa ăn tiếp theo thoải mái nhất.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy Section -->
+    <section id="philosophy" class="py-24 bg-gray-900 text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+        <!-- Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-b from-gray-900 via-transparent to-gray-900 z-0"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <div class="inline-block px-4 py-1.5 border border-gray-700 rounded-full text-xs font-bold text-gray-400 mb-6 uppercase tracking-widest bg-gray-800">
+                    Our Philosophy
+                </div>
+                <h2 class="text-4xl md:text-6xl font-bold mb-6">
+                    Simple - Beautiful - Smooth
+                </h2>
+                <p class="text-gray-400 text-lg leading-relaxed">
+                    QKcal không chỉ là một ứng dụng, đó là lời giải cho bài toán kiên trì. Chúng tôi loại bỏ mọi rào cản để hành trình sức khỏe của bạn trở nên nhẹ nhàng nhất.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Philosophy 1 -->
+                <div class="bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl border border-gray-700 hover:border-emerald-500 transition duration-300 group hover:bg-gray-800">
+                    <div class="text-5xl font-bold text-emerald-500 mb-6 opacity-50 group-hover:opacity-100 transition-opacity duration-300">01.</div>
+                    <h3 class="text-2xl font-bold mb-4">Simple (Đơn giản)</h3>
+                    <p class="text-gray-400 leading-relaxed mb-6">
+                        Tập trung tối đa vào MVP. Loại bỏ hoàn toàn các tính năng gây xao nhãng như Mạng xã hội, Feed, hay Quảng cáo.
+                    </p>
+                    <ul class="space-y-3 text-sm text-gray-300">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-emerald-500 bg-emerald-500/10 p-1 rounded-full text-xs"></i> Không cần đăng ký phức tạp</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-emerald-500 bg-emerald-500/10 p-1 rounded-full text-xs"></i> Chỉ giữ lại tính năng cốt lõi</li>
+                    </ul>
+                </div>
+
+                <!-- Philosophy 2 -->
+                <div class="bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl border border-gray-700 hover:border-blue-500 transition duration-300 group hover:bg-gray-800">
+                    <div class="text-5xl font-bold text-blue-500 mb-6 opacity-50 group-hover:opacity-100 transition-opacity duration-300">02.</div>
+                    <h3 class="text-2xl font-bold mb-4">Beautiful (Tinh tế)</h3>
+                    <p class="text-gray-400 leading-relaxed mb-6">
+                        Giao diện được thiết kế để truyền cảm hứng. Khoảng trắng hợp lý giúp mắt nghỉ ngơi, màu xanh ngọc mang lại cảm giác an tâm.
+                    </p>
+                    <ul class="space-y-3 text-sm text-gray-300">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-blue-500 bg-blue-500/10 p-1 rounded-full text-xs"></i> UI sạch sẽ, không rối mắt</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-blue-500 bg-blue-500/10 p-1 rounded-full text-xs"></i> Visual Feedback sinh động</li>
+                    </ul>
+                </div>
+
+                <!-- Philosophy 3 -->
+                <div class="bg-gray-800/50 backdrop-blur-sm p-8 rounded-2xl border border-gray-700 hover:border-orange-500 transition duration-300 group hover:bg-gray-800">
+                    <div class="text-5xl font-bold text-orange-500 mb-6 opacity-50 group-hover:opacity-100 transition-opacity duration-300">03.</div>
+                    <h3 class="text-2xl font-bold mb-4">Smooth (Mượt mà)</h3>
+                    <p class="text-gray-400 leading-relaxed mb-6">
+                        Tốc độ là chìa khóa. Mọi thao tác đều phải được phản hồi tức thì. Không loading, không độ trễ, không chờ đợi.
+                    </p>
+                    <ul class="space-y-3 text-sm text-gray-300">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-orange-500 bg-orange-500/10 p-1 rounded-full text-xs"></i> Thao tác dưới 5 giây</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-orange-500 bg-orange-500/10 p-1 rounded-full text-xs"></i> Animation nhẹ nhàng</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section id="tech" class="py-24 bg-gray-50 border-t border-gray-200">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl lg:text-4xl font-bold mb-4">Công nghệ nền tảng</h2>
+                <p class="text-gray-600 text-lg">
+                    Sự kết hợp hoàn hảo giữa hiệu năng của Python và tính linh hoạt của Web hiện đại, đảm bảo hệ thống vận hành ổn định và dễ dàng mở rộng.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Tech Card 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 tech-card group">
+                    <div class="w-14 h-14 bg-yellow-100 rounded-xl flex items-center justify-center text-yellow-600 text-2xl mb-6 group-hover:scale-110 transition duration-300">
+                        <i class="fa-brands fa-python"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Backend: Python FastAPI</h3>
+                    <p class="text-gray-500 text-sm mb-4 leading-relaxed">
+                        Framework hiện đại, hiệu năng cao (ngang ngửa NodeJS/Go) nhờ Starlette và Pydantic. Xử lý request bất đồng bộ cực nhanh.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="px-2.5 py-1 bg-yellow-50 text-yellow-700 text-xs rounded-md font-semibold border border-yellow-100">Async IO</span>
+                        <span class="px-2.5 py-1 bg-yellow-50 text-yellow-700 text-xs rounded-md font-semibold border border-yellow-100">Auto Docs</span>
+                        <span class="px-2.5 py-1 bg-yellow-50 text-yellow-700 text-xs rounded-md font-semibold border border-yellow-100">Type Hints</span>
+                    </div>
+                </div>
+
+                <!-- Tech Card 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 tech-card group">
+                    <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 text-2xl mb-6 group-hover:scale-110 transition duration-300">
+                        <i class="fa-solid fa-database"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Database: PostgreSQL</h3>
+                    <p class="text-gray-500 text-sm mb-4 leading-relaxed">
+                        Hệ quản trị cơ sở dữ liệu quan hệ mạnh mẽ, đảm bảo tính toàn vẹn và an toàn dữ liệu tuyệt đối cho thông tin sức khỏe của bạn.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="px-2.5 py-1 bg-blue-50 text-blue-700 text-xs rounded-md font-semibold border border-blue-100">Reliability</span>
+                        <span class="px-2.5 py-1 bg-blue-50 text-blue-700 text-xs rounded-md font-semibold border border-blue-100">Complex Queries</span>
+                        <span class="px-2.5 py-1 bg-blue-50 text-blue-700 text-xs rounded-md font-semibold border border-blue-100">ACID</span>
+                    </div>
+                </div>
+
+                <!-- Tech Card 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 tech-card group">
+                    <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 text-2xl mb-6 group-hover:scale-110 transition duration-300">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Platform: PWA</h3>
+                    <p class="text-gray-500 text-sm mb-4 leading-relaxed">
+                        Progressive Web App mang lại trải nghiệm như Native App: Cài đặt trực tiếp, không cần App Store, hoạt động cả khi offline.
+                    </p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="px-2.5 py-1 bg-purple-50 text-purple-700 text-xs rounded-md font-semibold border border-purple-100">Installable</span>
+                        <span class="px-2.5 py-1 bg-purple-50 text-purple-700 text-xs rounded-md font-semibold border border-purple-100">Offline Mode</span>
+                        <span class="px-2.5 py-1 bg-purple-50 text-purple-700 text-xs rounded-md font-semibold border border-purple-100">Responsive</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Architecture Diagram Simplified -->
+            <div class="mt-20 bg-white p-8 md:p-12 rounded-3xl border border-gray-200 text-center shadow-sm">
+                <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-10">Kiến trúc hệ thống</h4>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 text-sm font-bold text-gray-700">
+                    <div class="w-full md:w-auto px-8 py-4 bg-purple-50 text-purple-700 rounded-2xl border border-purple-100 shadow-sm">User (PWA Client)</div>
+                    <div class="text-gray-300 text-xl animate-pulse"><i class="fa-solid fa-arrow-right-long hidden md:block"></i><i class="fa-solid fa-arrow-down-long md:hidden"></i></div>
+                    <div class="w-full md:w-auto px-8 py-4 bg-yellow-50 text-yellow-700 rounded-2xl border border-yellow-100 shadow-sm">RESTful API (FastAPI)</div>
+                    <div class="text-gray-300 text-xl animate-pulse"><i class="fa-solid fa-arrow-right-long hidden md:block"></i><i class="fa-solid fa-arrow-down-long md:hidden"></i></div>
+                    <div class="w-full md:w-auto px-8 py-4 bg-blue-50 text-blue-700 rounded-2xl border border-blue-100 shadow-sm">Database (PostgreSQL)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-100 pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
+                <div class="text-center md:text-left space-y-2">
+                    <div class="text-2xl font-bold flex items-center gap-2 justify-center md:justify-start">
+                        <i class="fa-solid fa-leaf text-emerald-500"></i>
+                        <span>QKcal</span>
+                    </div>
+                    <p class="text-sm text-gray-500">Người bạn đồng hành cho sức khỏe của bạn.</p>
+                </div>
+                
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-emerald-500 hover:text-white transition duration-300"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-blue-600 hover:text-white transition duration-300"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center text-gray-600 hover:bg-orange-500 hover:text-white transition duration-300"><i class="fa-solid fa-envelope"></i></a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-100 pt-8 text-center">
+                <p class="text-sm text-gray-400">
+                    &copy; <span id="current-year"></span> Project Owner: <span class="text-gray-700 font-semibold">Ngoc Quynh Pham</span>. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script to set current year -->
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
