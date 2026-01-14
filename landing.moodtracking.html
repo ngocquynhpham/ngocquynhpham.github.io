@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Mood Pixel - Nhật Ký Tâm Trạng Kỹ Thuật Số</title>
+    <meta name="description" content="Ghi lại hành trình cảm xúc mỗi ngày bằng những điểm ảnh rực rỡ. Đơn giản, tinh tế và riêng tư.">
+    <meta name="keywords" content="mood tracker, year in pixels, sức khỏe tinh thần, nhật ký cảm xúc">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ngocquynhpham.github.io/moodtracking.html">
+    <meta property="og:title" content="Mood Pixel - Kiến Tạo Bức Tranh Tâm Trạng">
+    <meta property="og:description" content="Mỗi ngày là một điểm ảnh. Hãy để bức tranh tâm trí của bạn tự kể câu chuyện của nó.">
+    <meta property="og:image" content="https://assets-global.website-files.com/61d59ec665a5ad81e194acc6/63d857b7a69b6b426a24f940_61e9a0384c4b0a524e3cc541_upload-settings-small%5B1%5D.gif">
+
+    <!-- Favicon -->
+    <link href="./logo.ico" rel="icon" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #fcfcfc;
+            color: #1e293b; /* Darker default text */
+        }
+
+        /* Glow effects for light mode */
+        .glow-indigo {
+            background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.05) 0%, transparent 70%);
+        }
+        .glow-rose {
+            background: radial-gradient(circle at 80% 20%, rgba(244, 63, 94, 0.03) 0%, transparent 60%);
+        }
+        
+        .glass-light {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        @keyframes float-subtle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float { animation: float-subtle 8s ease-in-out infinite; }
+
+        .hero-title {
+            font-size: clamp(3rem, 10vw, 5.5rem);
+            line-height: 0.95;
+        }
+
+        /* FAQ Toggle Style */
+        details summary::-webkit-details-marker {
+            display: none;
+        }
+        details[open] summary i {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden selection:bg-indigo-100 selection:text-indigo-600">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-50 bg-white/60 backdrop-blur-lg border-b border-slate-100">
+        <div class="container mx-auto px-10 py-5 flex justify-between items-center max-w-6xl">
+            <a href="#" class="flex items-center gap-2 font-bold text-xl group">
+                <span class="text-indigo-600 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-face-smile"></i>
+                </span>
+                <span class="text-slate-900">MPixel</span>
+            </a>
+            <div class="hidden md:flex gap-10 text-sm font-bold uppercase text-slate-500">
+                <a href="#about" class="hover:text-indigo-500 transition-colors">Về dự án</a>
+                <a href="#features" class="hover:text-indigo-500 transition-colors">Tính năng</a>
+                <a href="#workflow" class="hover:text-indigo-500 transition-colors">Cách dùng</a>
+                <a href="#faq" class="hover:text-indigo-500 transition-colors">Hỏi đáp</a>
+            </div>
+            <a href="./moodtracking.html" target="_blank" class="text-sm font-bold uppercase bg-slate-900 text-white px-8 py-3 rounded-full hover:bg-indigo-600 transition-all duration-500 shadow-md shadow-slate-200">
+                Khám phá
+            </a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="relative min-h-screen flex flex-col items-center justify-center pt-10 glow-indigo">
+        <div class="absolute inset-0 glow-rose"></div>
+        
+        <div class="container mx-auto px-6 text-center max-w-4xl relative z-10">
+            <div class="inline-block px-5 py-2 bg-indigo-50/80 text-indigo-700 rounded-full text-xs font-bold uppercase mb-10 border border-indigo-100">
+                Personalized Mood Journaling
+            </div>
+            <h1 class="hero-title font-black text-slate-900 mb-10 leading-[1.25]">
+                Kiến tạo <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 via-purple-500 to-rose-400">bản đồ tâm trí.</span>
+            </h1>
+            <p class="text-base md:text-lg text-slate-600 mb-12 max-w-3xl mx-auto leading-[1.25] font-medium">
+                Mỗi cảm xúc đều xứng đáng được ghi nhận. Hãy để từng ngày trôi qua được định danh bằng những sắc thái màu nhiệm, tạo nên bức tranh chân thực nhất về chính bạn.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <a href="./moodtracking.html" target="_blank" class="px-8 py-4 bg-indigo-600 text-white font-semibold rounded-2xl shadow-xl shadow-indigo-100 hover:bg-indigo-700 transition-all duration-700 hover:scale-105 active:scale-95 text-base">
+                     Bắt đầu ngay
+                </a>
+                <a href="#about" class="text-slate-500 font-bold hover:text-slate-900 transition-colors uppercase text-xs">Tìm hiểu thêm</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: WHY TRACK? -->
+    <section id="about" class="w-full py-12 relative overflow-hidden bg-white">
+        <div class="container mx-auto px-10 max-w-5xl relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-8">
+                    <!-- Changed text-indigo-400 to text-indigo-950 for deeper purple primary -->
+                    <h2 class="text-xl md:text-2xl font-bold uppercase text-indigo-950 leading-tight">
+                        Tại sao phải theo dõi <br> tâm trạng mỗi ngày?
+                    </h2>
+                    <p class="text-slate-700 text-base md:text-lg leading-[1.25] font-medium max-w-sm">
+                        Cảm xúc là ngôn ngữ thầm lặng của tâm hồn. Việc ghi lại chúng giúp bạn nhận diện những quy luật nội tại, tìm thấy sự tĩnh lặng giữa nhịp sống hối hả.
+                    </p>
+                    <div class="flex flex-col gap-6 pt-4">
+                        <div class="flex gap-5 items-center group">
+                            <div class="w-10 h-10 rounded-full border border-slate-200 flex shrink-0 items-center justify-center text-slate-400 group-hover:border-indigo-500 transition-all duration-500 text-base"><i class="fa-solid fa-bahai"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-lg">Thấu hiểu chiều sâu</h4>
+                                <p class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Minh bạch hóa nội tâm</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-5 items-center group">
+                            <div class="w-10 h-10 rounded-full border border-slate-200 flex shrink-0 items-center justify-center text-slate-400 group-hover:border-rose-500 transition-all duration-500 text-base"><i class="fa-solid fa-leaf"></i></div>
+                            <div>
+                                <h4 class="font-bold text-slate-800 text-lg">Cân bằng tinh thần</h4>
+                                <p class="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Nuôi dưỡng & Chữa lành</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative flex justify-center lg:justify-end">
+                    <div class="w-56 h-56 bg-indigo-100/30 rounded-full blur-[70px] absolute -z-10 animate-pulse"></div>
+                    <div class="relative grid grid-cols-7 gap-2 p-8 glass-light rounded-[40px] shadow-sm w-full max-w-sm">
+                        <script>
+                            for(let i=0; i<35; i++) {
+                                const colors = ['bg-indigo-300/40', 'bg-rose-200/40', 'bg-emerald-200/40', 'bg-slate-200'];
+                                const c = colors[Math.floor(Math.random()*4)];
+                                document.write(`<div class="aspect-square rounded-md ${c} hover:scale-125 transition-transform cursor-pointer"></div>`);
+                            }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: FEATURES -->
+    <section id="features" class="py-12 bg-[#fafafa]">
+        <div class="container mx-auto px-10 max-w-6xl">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-3 text-slate-900">Tính năng cốt lõi</h2>
+                <p class="text-slate-500 text-xs font-bold uppercase">Less is more</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-10">
+                <!-- Removed hover effect, made shadow-xl default state -->
+                <div class="p-10 rounded-[32px] bg-white border border-slate-100 shadow-xl shadow-slate-200/50">
+                    <div class="text-[11px] font-black text-indigo-600 mb-6 uppercase">01. Yearly View</div>
+                    <h3 class="text-lg font-bold mb-4 text-slate-900">Toàn cảnh 365 ngày</h3>
+                    <p class="text-slate-600 text-base leading-[1.25]">Một giao diện duy nhất để nhìn lại cả năm. Tối giản hóa mọi thao tác phức tạp.</p>
+                </div>
+                <div class="p-10 rounded-[32px] bg-white border border-slate-100 shadow-xl shadow-slate-200/50">
+                    <div class="text-[11px] font-black text-rose-500 mb-6 uppercase">02. Insights</div>
+                    <h3 class="text-lg font-bold mb-4 text-slate-900">Số liệu trực quan</h3>
+                    <p class="text-slate-600 text-base leading-[1.25]">Phân tích thông minh giúp bạn nhận ra nhịp điệu cảm xúc cá nhân một cách khách quan.</p>
+                </div>
+                <div class="p-10 rounded-[32px] bg-white border border-slate-100 shadow-xl shadow-slate-200/50">
+                    <div class="text-[11px] font-black text-emerald-600 mb-6 uppercase">03. Privacy</div>
+                    <h3 class="text-lg font-bold mb-4 text-slate-900">Tuyệt đối riêng tư</h3>
+                    <p class="text-slate-600 text-base leading-[1.25]">Mọi dữ liệu đều nằm trên máy của bạn. Chúng tôi không lưu trữ bất kỳ thông tin nào.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: WORKFLOW -->
+    <section id="workflow" class="py-12 bg-slate-900 text-white">
+        <div class="container mx-auto px-10 max-w-5xl">
+            <div class="grid md:grid-cols-3 gap-16">
+                <div class="text-center group">
+                    <div class="text-xs font-bold text-slate-500 uppercase mb-6">Phase 01</div>
+                    <h4 class="text-xl font-black text-indigo-400 mb-5 uppercase">Định danh</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed max-w-[180px] mx-auto uppercase">Lắng nghe và chọn ra gam màu phản ánh tâm hồn.</p>
+                </div>
+                <div class="text-center group">
+                    <div class="text-xs font-bold text-slate-500 uppercase mb-6">Phase 02</div>
+                    <h4 class="text-xl font-black text-indigo-400 mb-5 uppercase">Lấy đầy</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed max-w-[180px] mx-auto uppercase">Điền vào lưới thời gian những điểm ảnh đầy ký ức.</p>
+                </div>
+                <div class="text-center group">
+                    <div class="text-xs font-bold text-slate-500 uppercase mb-6">Phase 03</div>
+                    <h4 class="text-xl font-black text-indigo-400 mb-5 uppercase">Chiêm nghiệm</h4>
+                    <p class="text-slate-400 text-sm leading-relaxed max-w-[180px] mx-auto uppercase">Nhìn lại hành trình và thấu hiểu chính bản thân.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: FAQ -->
+    <section id="faq" class="py-12 bg-white">
+        <div class="container mx-auto px-10 max-w-2xl relative z-10">
+            <!-- Questions & Answers header increased font-size by 30% from base -->
+            <h2 class="text-xl font-black mb-12 text-center uppercase text-slate-400">Questions & Answers</h2>
+            
+            <div class="space-y-6">
+                <!-- Question 1 -->
+                <details class="group bg-slate-50 rounded-2xl p-5 border border-transparent open:border-indigo-100 open:bg-white transition-all duration-300">
+                    <summary class="flex justify-between items-center font-bold text-slate-800 text-lg cursor-pointer list-none">
+                        <span class="flex items-center gap-3">
+                            <i class="fa-solid fa-database text-indigo-400 text-base"></i>
+                            Dữ liệu được lưu ở đâu?
+                        </span>
+                        <i class="fa-solid fa-chevron-down text-sm text-slate-400 transition-transform duration-300"></i>
+                    </summary>
+                    <p class="mt-4 text-slate-600 text-base md:text-lg leading-[1.25] pl-8">
+                        Toàn bộ dữ liệu nằm tại Local Storage trong trình duyệt của bạn. Nó hoàn toàn an toàn và không bị chia sẻ với bất kỳ máy chủ nào.
+                    </p>
+                </details>
+
+                <!-- Question 2 -->
+                <details class="group bg-slate-50 rounded-2xl p-5 border border-transparent open:border-indigo-100 open:bg-white transition-all duration-300">
+                    <summary class="flex justify-between items-center font-bold text-slate-800 text-lg cursor-pointer list-none">
+                        <span class="flex items-center gap-3">
+                            <i class="fa-solid fa-sync text-indigo-400 text-base"></i>
+                            Tôi có thể đồng bộ không?
+                        </span>
+                        <i class="fa-solid fa-chevron-down text-sm text-slate-400 transition-transform duration-300"></i>
+                    </summary>
+                    <p class="mt-4 text-slate-600 text-base md:text-lg leading-[1.25] pl-8">
+                        Vì tính bảo mật và riêng tư tối đa, chúng tôi không hỗ trợ đồng bộ đám mây. Bạn có thể sử dụng tính năng "Xuất ảnh" để lưu giữ hành trình của mình.
+                    </p>
+                </details>
+
+                <!-- Question 3 -->
+                <details class="group bg-slate-50 rounded-2xl p-5 border border-transparent open:border-indigo-100 open:bg-white transition-all duration-300">
+                    <summary class="flex justify-between items-center font-bold text-slate-800 text-lg cursor-pointer list-none">
+                        <span class="flex items-center gap-3">
+                            <i class="fa-solid fa-pen-to-square text-indigo-400 text-base"></i>
+                            Cách chỉnh sửa cảm xúc đã lưu?
+                        </span>
+                        <i class="fa-solid fa-chevron-down text-sm text-slate-400 transition-transform duration-300"></i>
+                    </summary>
+                    <p class="mt-4 text-slate-600 text-base md:text-lg leading-[1.25] pl-8">
+                        Rất đơn giản, bạn chỉ cần bấm lại vào ô ngày đó trong App. Một bảng chọn sẽ hiện ra cho phép bạn thay đổi màu sắc hoặc xóa dữ liệu của ngày hôm đó.
+                    </p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-12 text-center border-t border-slate-100 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-center gap-3 font-bold text-base mb-10 text-slate-800">
+                <span class="text-indigo-600 text-xl"><i class="fa-solid fa-face-smile"></i></span>
+                <span class="text-lg">MPixel</span>
+            </div>
+            <div class="flex justify-center gap-10 text-[11px] font-bold uppercase text-slate-400 mb-12">
+                <a href="#" class="hover:text-indigo-600 transition">Terms</a>
+                <a href="#" class="hover:text-indigo-600 transition">Privacy</a>
+                <a href="#" class="hover:text-indigo-600 transition">Support</a>
+            </div>
+            <p class="text-[10px] font-black text-slate-400 uppercase">
+                © <span id="current-year">2026</span> Ngoc Quynh Pham • Darkness brings Light
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+
+</body>
+</html>
