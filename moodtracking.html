@@ -1,50 +1,33 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-   <!DOCTYPE html>
-<html lang="vi">
-<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mood Pixel</title>
     <link href="./logo.ico" rel="icon" />
-     <meta
-      content="https://assets-global.website-files.com/61d59ec665a5ad81e194acc6/63d857b7a69b6b426a24f940_61e9a0384c4b0a524e3cc541_upload-settings-small%5B1%5D.gif"
-      property="og:image"
-    />
-    <meta name="description" content="Mood Pixel - Ứng dụng theo dõi tâm trạng hàng ngày với giao diện pixel đẹp mắt. Ghi lại cảm xúc, xem thống kê tâm trạng theo năm, tháng, tuần." />
-        <meta name="keywords" content="mood tracker, theo dõi tâm trạng, mood pixel, ghi chú cảm xúc, nhật ký tâm trạng, sức khỏe tinh thần" />
-        <meta name="author" content="Ngoc Quynh Pham" />
-        <meta name="robots" content="index, follow" />
-        
-        <!-- Open Graph / Facebook -->
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://ngocquynhpham.github.io/moodtracking.html" />
-        <meta property="og:title" content="Mood Pixel - Theo dõi tâm trạng hàng ngày" />
-        <meta property="og:description" content="Ứng dụng theo dõi tâm trạng với giao diện pixel đẹp mắt. Ghi lại cảm xúc và xem thống kê chi tiết." />
-        
-        <!-- Twitter -->
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://ngocquynhpham.github.io/moodtracking.html" />
-        <meta property="twitter:title" content="Mood Pixel - Theo dõi tâm trạng hàng ngày" />
-        <meta property="twitter:description" content="Ứng dụng theo dõi tâm trạng với giao diện pixel đẹp mắt. Ghi lại cảm xúc và xem thống kê chi tiết." />
-        <meta property="twitter:image" content="https://assets-global.website-files.com/61d59ec665a5ad81e194acc6/63d857b7a69b6b426a24f940_61e9a0384c4b0a524e3cc541_upload-settings-small%5B1%5D.gif" />
+    <meta content="https://assets-global.website-files.com/61d59ec665a5ad81e194acc6/63d857b7a69b6b426a24f940_61e9a0384c4b0a524e3cc541_upload-settings-small%5B1%5D.gif" property="og:image" />
+    <meta name="description" content="Mood Pixel - Ứng dụng theo dõi tâm trạng hàng ngày với giao diện pixel đẹp mắt." />
+    <meta name="keywords" content="mood tracker, theo dõi tâm trạng, mood pixel, sức khỏe tinh thần" />
+    <meta name="author" content="Ngoc Quynh Pham" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ngocquynhpham.github.io/moodtracking.html" />
+    <meta property="og:title" content="Mood Pixel - Theo dõi tâm trạng hàng ngày" />
+    <meta property="og:description" content="Ứng dụng theo dõi tâm trạng với giao diện pixel đẹp mắt." />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         
-        .pixel-grid-container::-webkit-scrollbar { height: 8px; }
-        .pixel-grid-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
-        .pixel-grid-container::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
-        .pixel-grid-container::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+        .pixel-grid-container::-webkit-scrollbar { height: 6px; }
+        .pixel-grid-container::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        .pixel-grid-container::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
 
         .pixel-cell { transition: all 0.2s ease; }
         .pixel-cell:hover {
-            transform: scale(1.1);
-            border: 1px solid rgba(0,0,0,0.1);
+            transform: scale(1.15);
             z-index: 10;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
@@ -52,143 +35,172 @@
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         .modal-animate { animation: fadeIn 0.2s ease-out forwards; }
         
-        .tab-active { background-color: #f3f4f6; color: #111827; font-weight: 600; }
-        .tab-inactive { color: #6b7280; hover:text-gray-900; }
+        .tab-active { background-color: #4f46e5 !important; color: white !important; font-weight: 700; }
+        .tab-inactive { color: #6b7280; }
+        
+        /* Focus state for mood selection in modal */
+        .mood-focus {
+            ring: 4px;
+            ring-color: #4f46e5;
+            background-color: #f5f3ff !important;
+            transform: scale(1.05);
+            border-color: #4f46e5 !important;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
 
     <!-- Header -->
-    <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
-        <div class="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-4">
-                <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-purple-600 shadow-sm">
-                    <i class="fa-solid fa-face-smile text-2xl"></i>
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-30 shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3 w-full md:w-auto">
+                <div class="w-10 h-10 md:w-12 md:h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white shadow-md">
+                    <i class="fa-solid fa-face-smile text-xl md:text-2xl"></i>
                 </div>
-                <div>
-                    <h1 class="text-xl font-bold text-gray-800">Mood Pixel</h1>
-                    <!-- Year Switcher Control -->
-                    <div class="flex items-center gap-2 mt-1">
+                <div class="flex-1">
+                    <h1 class="text-lg md:text-xl font-bold text-gray-800 leading-tight">Mood Pixel</h1>
+                    <div class="flex items-center gap-2 mt-0.5">
                         <button onclick="changeYear(-1)" class="w-6 h-6 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-xs transition"><i class="fa-solid fa-chevron-left"></i></button>
-                        <span id="header-year-display" class="text-sm font-semibold text-purple-600 min-w-[40px] text-center">2026</span>
+                        <span id="header-year-display" class="text-sm font-semibold text-indigo-600 min-w-[35px] text-center tracking-tight">2026</span>
                         <button onclick="changeYear(1)" class="w-6 h-6 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-xs transition"><i class="fa-solid fa-chevron-right"></i></button>
                     </div>
                 </div>
             </div>
             
             <!-- View Switcher -->
-            <div class="flex bg-white border border-gray-200 p-1 rounded-lg shadow-sm">
-                <button onclick="switchView('year')" id="tab-year" class="px-4 py-1.5 rounded-md text-sm transition tab-active">Năm</button>
-                <button onclick="switchView('month')" id="tab-month" class="px-4 py-1.5 rounded-md text-sm transition tab-inactive">Tháng</button>
-                <button onclick="switchView('week')" id="tab-week" class="px-4 py-1.5 rounded-md text-sm transition tab-inactive">Tuần</button>
+            <div class="flex bg-gray-100 p-1 rounded-xl w-full md:w-auto overflow-x-auto hide-scrollbar">
+                <button onclick="switchView('year')" id="tab-year" class="flex-1 md:flex-none px-4 py-2 rounded-lg text-xs md:text-sm transition tab-active">Năm</button>
+                <button onclick="switchView('month')" id="tab-month" class="flex-1 md:flex-none px-4 py-2 rounded-lg text-xs md:text-sm transition tab-inactive">Tháng</button>
+                <button onclick="switchView('week')" id="tab-week" class="flex-1 md:flex-none px-4 py-2 rounded-lg text-xs md:text-sm transition tab-inactive">Tuần</button>
             </div>
 
-            <button onclick="exportImage()" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-600 px-4 py-2 rounded-lg font-medium transition flex items-center shadow-sm">
-                <i class="fa-solid fa-download mr-2"></i> Xuất ảnh
+            <button onclick="exportImage()" class="hidden md:flex text-sm bg-indigo-50 hover:bg-indigo-100 text-indigo-600 px-5 py-2.5 rounded-xl font-bold transition items-center shadow-sm border border-indigo-100">
+                <i class="fa-solid fa-download mr-2 text-xs"></i> Xuất ảnh
             </button>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="flex-1 container mx-auto px-4 py-8 overflow-hidden flex flex-col">
+    <main class="flex-1 container mx-auto px-4 py-6 md:py-8 overflow-y-auto">
         
         <!-- Stats Cards -->
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-            <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center hover:shadow-md transition">
-                <div class="w-2 h-2 rounded-full bg-emerald-500 mb-2"></div>
-                <span class="text-xs text-gray-400 uppercase font-semibold">Tuyệt vời</span>
-                <span class="text-2xl font-bold text-gray-700 mt-1" id="count-5">0</span>
+        <div class="grid grid-cols-3 md:grid-cols-5 gap-3 mb-6 md:mb-8">
+            <div class="bg-white p-3 md:p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center">
+                <div class="w-2 h-2 rounded-full bg-emerald-500 mb-1.5 md:mb-2"></div>
+                <span class="text-[9px] md:text-xs text-gray-400 uppercase font-bold tracking-tight">Tuyệt vời</span>
+                <span class="text-lg md:text-2xl font-bold text-gray-700" id="count-5">0</span>
             </div>
-            <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center hover:shadow-md transition">
-                <div class="w-2 h-2 rounded-full bg-blue-500 mb-2"></div>
-                <span class="text-xs text-gray-400 uppercase font-semibold">Vui vẻ</span>
-                <span class="text-2xl font-bold text-gray-700 mt-1" id="count-4">0</span>
+            <div class="bg-white p-3 md:p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center">
+                <div class="w-2 h-2 rounded-full bg-blue-500 mb-1.5 md:mb-2"></div>
+                <span class="text-[9px] md:text-xs text-gray-400 uppercase font-bold tracking-tight">Vui vẻ</span>
+                <span class="text-lg md:text-2xl font-bold text-gray-700" id="count-4">0</span>
             </div>
-            <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center hover:shadow-md transition">
-                <div class="w-2 h-2 rounded-full bg-yellow-400 mb-2"></div>
-                <span class="text-xs text-gray-400 uppercase font-semibold">Bình thường</span>
-                <span class="text-2xl font-bold text-gray-700 mt-1" id="count-3">0</span>
+            <div class="bg-white p-3 md:p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center">
+                <div class="w-2 h-2 rounded-full bg-yellow-400 mb-1.5 md:mb-2"></div>
+                <span class="text-[9px] md:text-xs text-gray-400 uppercase font-bold tracking-tight">Bình thường</span>
+                <span class="text-lg md:text-2xl font-bold text-gray-700" id="count-3">0</span>
             </div>
-            <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center hover:shadow-md transition">
-                <div class="w-2 h-2 rounded-full bg-orange-400 mb-2"></div>
-                <span class="text-xs text-gray-400 uppercase font-semibold">Mệt mỏi</span>
-                <span class="text-2xl font-bold text-gray-700 mt-1" id="count-2">0</span>
+            <div class="bg-white p-3 md:p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center">
+                <div class="w-2 h-2 rounded-full bg-orange-400 mb-1.5 md:mb-2"></div>
+                <span class="text-[9px] md:text-xs text-gray-400 uppercase font-bold tracking-tight">Mệt mỏi</span>
+                <span class="text-lg md:text-2xl font-bold text-gray-700" id="count-2">0</span>
             </div>
-            <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center hover:shadow-md transition">
-                <div class="w-2 h-2 rounded-full bg-red-500 mb-2"></div>
-                <span class="text-xs text-gray-400 uppercase font-semibold">Tồi tệ</span>
-                <span class="text-2xl font-bold text-gray-700 mt-1" id="count-1">0</span>
+            <div class="bg-white p-3 md:p-4 rounded-2xl border border-gray-100 shadow-sm flex flex-col items-center col-span-2 md:col-span-1">
+                <div class="w-2 h-2 rounded-full bg-red-500 mb-1.5 md:mb-2"></div>
+                <span class="text-[9px] md:text-xs text-gray-400 uppercase font-bold tracking-tight">Tồi tệ</span>
+                <span class="text-lg md:text-2xl font-bold text-gray-700" id="count-1">0</span>
             </div>
         </div>
 
         <!-- The Pixel Grid Container -->
-        <div id="capture-area" class="bg-white p-6 rounded-3xl shadow-sm border border-gray-200 overflow-hidden flex flex-col transition-all relative">
+        <div id="capture-area" class="bg-white p-4 md:p-8 rounded-[32px] shadow-sm border border-gray-100 flex flex-col transition-all relative">
             
             <!-- Controls cho Month/Week View -->
-            <div id="view-controls" class="hidden justify-between items-center mb-6 px-4">
-                <button onclick="changePeriod(-1)" class="w-10 h-10 rounded-full bg-gray-50 hover:bg-gray-100 text-gray-600 flex items-center justify-center transition shadow-sm"><i class="fa-solid fa-chevron-left"></i></button>
-                <h3 id="current-period-label" class="font-bold text-xl text-gray-800">Tháng 1, 2026</h3>
-                <button onclick="changePeriod(1)" class="w-10 h-10 rounded-full bg-gray-50 hover:bg-gray-100 text-gray-600 flex items-center justify-center transition shadow-sm"><i class="fa-solid fa-chevron-right"></i></button>
+            <div id="view-controls" class="hidden justify-between items-center mb-6 px-2">
+                <button onclick="changePeriod(-1)" class="w-10 h-10 rounded-full bg-gray-50 hover:bg-indigo-50 text-indigo-600 flex items-center justify-center transition shadow-sm border border-gray-100"><i class="fa-solid fa-chevron-left"></i></button>
+                <h3 id="current-period-label" class="font-bold text-base md:text-xl text-gray-800">Tháng 1, 2026</h3>
+                <button onclick="changePeriod(1)" class="w-10 h-10 rounded-full bg-gray-50 hover:bg-indigo-50 text-indigo-600 flex items-center justify-center transition shadow-sm border border-gray-100"><i class="fa-solid fa-chevron-right"></i></button>
             </div>
 
-            <div class="pixel-grid-container overflow-x-auto pb-4 flex justify-center custom-scrollbar">
+            <div class="pixel-grid-container overflow-x-auto pb-4 flex justify-start md:justify-center">
                 <!-- Grid sẽ được JS render vào đây -->
                 <div id="grid-content" class="min-w-full"></div>
             </div>
             
             <!-- Legend (Chú thích) -->
-            <div class="flex flex-wrap justify-center gap-6 mt-6 pt-6 border-t border-gray-100">
-                <div class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition" onclick="filterMood(5)">
-                    <span class="w-4 h-4 rounded bg-emerald-500 shadow-sm"></span><span class="text-sm text-gray-600 font-medium">Tuyệt vời</span>
-                </div>
-                <div class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition" onclick="filterMood(4)">
-                    <span class="w-4 h-4 rounded bg-blue-500 shadow-sm"></span><span class="text-sm text-gray-600 font-medium">Vui vẻ</span>
-                </div>
-                <div class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition" onclick="filterMood(3)">
-                    <span class="w-4 h-4 rounded bg-yellow-400 shadow-sm"></span><span class="text-sm text-gray-600 font-medium">Bình thường</span>
-                </div>
-                <div class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition" onclick="filterMood(2)">
-                    <span class="w-4 h-4 rounded bg-orange-400 shadow-sm"></span><span class="text-sm text-gray-600 font-medium">Mệt mỏi</span>
-                </div>
-                <div class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition" onclick="filterMood(1)">
-                    <span class="w-4 h-4 rounded bg-red-500 shadow-sm"></span><span class="text-sm text-gray-600 font-medium">Tồi tệ</span>
-                </div>
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-4 mt-6 pt-6 border-t border-gray-50">
+                <div class="flex items-center gap-2 cursor-default"><span class="w-3 h-3 md:w-4 md:h-4 rounded bg-emerald-500"></span><span class="text-[10px] md:text-xs text-gray-500 font-bold uppercase tracking-tight">Tuyệt vời</span></div>
+                <div class="flex items-center gap-2 cursor-default"><span class="w-3 h-3 md:w-4 md:h-4 rounded bg-blue-500"></span><span class="text-[10px] md:text-xs text-gray-500 font-bold uppercase tracking-tight">Vui vẻ</span></div>
+                <div class="flex items-center gap-2 cursor-default"><span class="w-3 h-3 md:w-4 md:h-4 rounded bg-yellow-400"></span><span class="text-[10px] md:text-xs text-gray-500 font-bold uppercase tracking-tight">Bình thường</span></div>
+                <div class="flex items-center gap-2 cursor-default"><span class="w-3 h-3 md:w-4 md:h-4 rounded bg-orange-400"></span><span class="text-[10px] md:text-xs text-gray-500 font-bold uppercase tracking-tight">Mệt mỏi</span></div>
+                <div class="flex items-center gap-2 cursor-default"><span class="w-3 h-3 md:w-4 md:h-4 rounded bg-red-500"></span><span class="text-[10px] md:text-xs text-gray-500 font-bold uppercase tracking-tight">Tồi tệ</span></div>
             </div>
         </div>
+
+        <!-- Mobile Export Button -->
+        <button onclick="exportImage()" class="mt-6 w-full md:hidden flex justify-center items-center bg-indigo-600 text-white p-4 rounded-2xl font-bold shadow-lg shadow-indigo-200">
+            <i class="fa-solid fa-download mr-2"></i> Lưu ảnh về máy
+        </button>
     </main>
 
-    <!-- Modal Log Mood -->
-    <div id="mood-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 backdrop-blur-sm transition-opacity">
-        <div class="bg-white rounded-2xl p-6 w-full max-w-sm mx-4 modal-animate shadow-2xl relative">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition">
-                <i class="fa-solid fa-xmark text-lg"></i>
-            </button>
-            <h3 class="text-lg font-bold mb-1 text-gray-800">Hôm nay thế nào?</h3>
-            <p id="modal-date" class="text-sm text-gray-500 mb-6 font-medium">...</p>
-            <div class="grid grid-cols-1 gap-3">
-                <button onclick="saveMood(5)" class="flex items-center gap-4 p-3.5 rounded-xl border border-gray-100 hover:bg-emerald-50 hover:border-emerald-200 transition group bg-white shadow-sm hover:shadow-md"><div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl group-hover:scale-110 transition">😆</div><span class="font-medium text-gray-700">Tuyệt vời</span></button>
-                <button onclick="saveMood(4)" class="flex items-center gap-4 p-3.5 rounded-xl border border-gray-100 hover:bg-blue-50 hover:border-blue-200 transition group bg-white shadow-sm hover:shadow-md"><div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xl group-hover:scale-110 transition">🙂</div><span class="font-medium text-gray-700">Vui vẻ</span></button>
-                <button onclick="saveMood(3)" class="flex items-center gap-4 p-3.5 rounded-xl border border-gray-100 hover:bg-yellow-50 hover:border-yellow-200 transition group bg-white shadow-sm hover:shadow-md"><div class="w-10 h-10 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center text-xl group-hover:scale-110 transition">😐</div><span class="font-medium text-gray-700">Bình thường</span></button>
-                <button onclick="saveMood(2)" class="flex items-center gap-4 p-3.5 rounded-xl border border-gray-100 hover:bg-orange-50 hover:border-orange-200 transition group bg-white shadow-sm hover:shadow-md"><div class="w-10 h-10 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-xl group-hover:scale-110 transition">😓</div><span class="font-medium text-gray-700">Mệt mỏi</span></button>
-                <button onclick="saveMood(1)" class="flex items-center gap-4 p-3.5 rounded-xl border border-gray-100 hover:bg-red-50 hover:border-red-200 transition group bg-white shadow-sm hover:shadow-md"><div class="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xl group-hover:scale-110 transition">😡</div><span class="font-medium text-gray-700">Tồi tệ</span></button>
-                <button onclick="saveMood(0)" class="mt-2 text-xs text-gray-400 hover:text-red-500 font-medium py-2">Xóa dữ liệu ngày này</button>
+    <!-- Modal Log Mood (Popup) -->
+   <div id="mood-modal" class="fixed inset-0 bg-black/60 hidden items-center justify-center z-[100] backdrop-blur-sm transition-opacity px-4">
+        <div class="bg-white rounded-[32px] p-6 md:p-8 w-full max-w-lg mx-auto modal-animate shadow-2xl relative flex flex-col max-h-[90vh]">
+            
+            <!-- Header cố định -->
+            <div class="mb-6">
+                <button onclick="closeModal()" class="absolute top-6 right-6 text-gray-400 hover:text-indigo-600 transition">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
+                <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-1">Cảm xúc hôm nay?</h3>
+                <p id="modal-date" class="text-[10px] md:text-xs text-indigo-500 font-bold uppercase tracking-wider">...</p>
+            </div>
+
+            <!-- Body có thể cuộn -->
+            <div class="grid grid-cols-1 gap-3 overflow-y-auto p-6 modal-scroll-area flex-1">
+                <button id="btn-mood-5" onclick="saveMood(5)" class="mood-opt-btn flex items-center gap-4 p-4 md:p-5 rounded-2xl border border-gray-100 hover:bg-emerald-50 transition group bg-white shrink-0">
+                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl md:text-2xl group-hover:scale-110 transition">😆</div>
+                    <span class="font-bold text-gray-700 text-sm md:text-base">Hôm nay tuyệt vời!</span>
+                </button>
+                <button id="btn-mood-4" onclick="saveMood(4)" class="mood-opt-btn flex items-center gap-4 p-4 md:p-5 rounded-2xl border border-gray-100 hover:bg-blue-50 transition group bg-white shrink-0">
+                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl md:text-2xl group-hover:scale-110 transition">🙂</div>
+                    <span class="font-bold text-gray-700 text-sm md:text-base">Vui vẻ, tích cực</span>
+                </button>
+                <button id="btn-mood-3" onclick="saveMood(3)" class="mood-opt-btn flex items-center gap-4 p-4 md:p-5 rounded-2xl border border-gray-100 hover:bg-yellow-50 transition group bg-white shrink-0">
+                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-yellow-100 text-yellow-600 flex items-center justify-center text-xl md:text-2xl group-hover:scale-110 transition">😐</div>
+                    <span class="font-bold text-gray-700 text-sm md:text-base">Bình thường, ổn</span>
+                </button>
+                <button id="btn-mood-2" onclick="saveMood(2)" class="mood-opt-btn flex items-center gap-4 p-4 md:p-5 rounded-2xl border border-gray-100 hover:bg-orange-50 transition group bg-white shrink-0">
+                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center text-xl md:text-2xl group-hover:scale-110 transition">😓</div>
+                    <span class="font-bold text-gray-700 text-sm md:text-base">Mệt mỏi, hơi buồn</span>
+                </button>
+                <button id="btn-mood-1" onclick="saveMood(1)" class="mood-opt-btn flex items-center gap-4 p-4 md:p-5 rounded-2xl border border-gray-100 hover:bg-red-50 transition group bg-white shrink-0">
+                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-xl md:text-2xl group-hover:scale-110 transition">😡</div>
+                    <span class="font-bold text-gray-700 text-sm md:text-base">Rất tệ, bế tắc</span>
+                </button>
+            </div>
+
+            <!-- Footer cố định -->
+            <div class="mt-6 pt-4 border-t border-gray-50 flex justify-center">
+                <button onclick="saveMood(0)" class="text-[11px] text-gray-400 hover:text-red-500 font-bold uppercase transition flex items-center gap-2">
+                    <i class="fa-solid fa-trash-can text-[10px]"></i> Xóa cảm xúc ngày này
+                </button>
             </div>
         </div>
     </div>
 
     <!-- Script Logic -->
     <script>
-        // Config
-        let currentYear = new Date().getFullYear(); // Mặc định lấy năm hiện tại
-        const monthsShort = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
-        const monthsFull = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
+        // Config & State
+        let currentYear = new Date().getFullYear(); 
+        const monthsShort = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+        const monthsFull = ['Tháng Một', 'Tháng Hai', 'Tháng Ba', 'Tháng Tư', 'Tháng Năm', 'Tháng Sáu', 'Tháng Bảy', 'Tháng Tám', 'Tháng Chín', 'Tháng Mười', 'Tháng Mười Một', 'Tháng Mười Hai'];
         const moodColors = { 1: 'bg-red-500', 2: 'bg-orange-400', 3: 'bg-yellow-400', 4: 'bg-blue-500', 5: 'bg-emerald-500', 0: 'bg-gray-100' };
-
-        // State
+        
         let moodData = {}; 
         let currentSelectedDate = null;
         let currentView = 'year'; 
-        let displayDate = new Date(currentYear, 0, 1); 
+        let displayDate = new Date(); 
 
         // --- CORE FUNCTIONS ---
 
@@ -200,15 +212,12 @@
         }
 
         function loadDataForYear(year) {
-            // Load data riêng biệt cho từng năm
             moodData = JSON.parse(localStorage.getItem(`moodData${year}`)) || {};
         }
 
         function changeYear(delta) {
             currentYear += delta;
-            // Update displayDate nếu đang xem Năm, để nó nhảy theo năm mới
-            displayDate = new Date(currentYear, displayDate.getMonth(), displayDate.getDate());
-            
+            displayDate.setFullYear(currentYear);
             loadDataForYear(currentYear);
             updateHeaderYear();
             renderView();
@@ -216,7 +225,8 @@
         }
 
         function updateHeaderYear() {
-            document.getElementById('header-year-display').innerText = currentYear;
+            const hDisplay = document.getElementById('header-year-display');
+            if(hDisplay) hDisplay.innerText = currentYear;
             document.title = `Mood Pixel - ${currentYear}`;
         }
 
@@ -224,6 +234,7 @@
             currentView = view;
             ['year', 'month', 'week'].forEach(v => {
                 const btn = document.getElementById(`tab-${v}`);
+                if (!btn) return;
                 if (v === view) {
                     btn.classList.add('tab-active');
                     btn.classList.remove('tab-inactive');
@@ -232,31 +243,22 @@
                     btn.classList.remove('tab-active');
                 }
             });
-
-            // Khi switch view, đảm bảo displayDate nằm trong năm hiện tại đang chọn
-            if(displayDate.getFullYear() !== currentYear) {
-                displayDate.setFullYear(currentYear);
-            }
             renderView();
         }
 
         function renderView() {
             const container = document.getElementById('grid-content');
             const controls = document.getElementById('view-controls');
+            if(!container) return;
             container.innerHTML = '';
 
             if (currentView === 'year') {
-                controls.classList.add('hidden');
-                controls.classList.remove('flex');
+                if(controls) controls.classList.add('hidden');
                 renderYearGrid(container);
-            } else if (currentView === 'month') {
-                controls.classList.remove('hidden');
-                controls.classList.add('flex');
-                renderMonthGrid(container);
-            } else if (currentView === 'week') {
-                controls.classList.remove('hidden');
-                controls.classList.add('flex');
-                renderWeekGrid(container);
+            } else {
+                if(controls) { controls.classList.remove('hidden'); controls.classList.add('flex'); }
+                if(currentView === 'month') renderMonthGrid(container);
+                else renderWeekGrid(container);
             }
         }
 
@@ -267,31 +269,32 @@
                 displayDate.setDate(displayDate.getDate() + (delta * 7));
             }
             
-            // Nếu lỡ nhảy qua năm khác thì tự động đổi năm luôn
             if (displayDate.getFullYear() !== currentYear) {
                 currentYear = displayDate.getFullYear();
                 loadDataForYear(currentYear);
                 updateHeaderYear();
                 updateStats();
             }
-            
             renderView();
         }
 
         // --- RENDERERS ---
 
         function renderYearGrid(container) {
-            let html = '<div class="grid grid-cols-[30px_repeat(12,_1fr)] gap-1 min-w-[800px]">';
+            let html = '<div class="grid grid-cols-[30px_repeat(12,_1fr)] gap-1.5 min-w-[850px]">';
             html += '<div class="h-8"></div>';
-            monthsShort.forEach(m => html += `<div class="h-8 flex items-end justify-center font-bold text-gray-400 text-sm pb-1">${m}</div>`);
+            monthsShort.forEach(m => html += `<div class="h-8 flex items-end justify-center font-bold text-slate-300 text-[10px] pb-1">${m}</div>`);
             
             for (let day = 1; day <= 31; day++) {
-                html += `<div class="h-8 flex items-center justify-center text-xs text-gray-300 font-mono">${day}</div>`;
+                html += `<div class="h-8 flex items-center justify-center text-[10px] text-slate-200 font-bold">${day}</div>`;
                 for (let month = 0; month < 12; month++) {
-                    const dateStr = formatDate(new Date(currentYear, month, day));
                     const daysInMonth = new Date(currentYear, month + 1, 0).getDate();
                     if (day <= daysInMonth) {
-                        html += createPixelCell(dateStr, day, month);
+                        const dateStr = formatDate(new Date(currentYear, month, day));
+                        const mood = moodData[dateStr] || 0;
+                        html += `<div onclick="openModal('${dateStr}', ${day}, ${month})" 
+                                    class="h-8 w-full rounded-md cursor-pointer pixel-cell ${moodColors[mood]}" 
+                                    title="${day}/${month + 1}/${currentYear}"></div>`;
                     } else {
                         html += `<div class="h-8 w-full bg-transparent opacity-0"></div>`;
                     }
@@ -302,29 +305,27 @@
         }
 
         function renderMonthGrid(container) {
-            const monthIdx = displayDate.getMonth();
-            document.getElementById('current-period-label').innerText = `${monthsFull[monthIdx]} ${currentYear}`;
+            const m = displayDate.getMonth();
+            const label = document.getElementById('current-period-label');
+            if(label) label.innerText = `${monthsFull[m]} ${currentYear}`;
 
-            let html = '<div class="grid grid-cols-7 gap-2 max-w-2xl mx-auto">';
+            let html = '<div class="grid grid-cols-7 gap-3 max-w-2xl mx-auto w-full">';
             ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'].forEach(d => {
-                html += `<div class="text-center text-sm font-bold text-gray-400 py-2">${d}</div>`;
+                html += `<div class="text-center text-[10px] font-bold text-slate-300 uppercase py-2">${d}</div>`;
             });
 
-            const firstDay = new Date(currentYear, monthIdx, 1);
-            const daysInMonth = new Date(currentYear, monthIdx + 1, 0).getDate();
+            const firstDay = new Date(currentYear, m, 1);
+            const daysCount = new Date(currentYear, m + 1, 0).getDate();
             const startDay = firstDay.getDay(); 
 
             for (let i = 0; i < startDay; i++) html += '<div></div>';
 
-            for (let day = 1; day <= daysInMonth; day++) {
-                const dateStr = formatDate(new Date(currentYear, monthIdx, day));
+            for (let day = 1; day <= daysCount; day++) {
+                const dateStr = formatDate(new Date(currentYear, m, day));
                 const mood = moodData[dateStr] || 0;
-                const colorClass = moodColors[mood];
-                
                 html += `
-                    <div 
-                        onclick="openModal('${dateStr}', ${day}, ${monthIdx})"
-                        class="aspect-square rounded-lg cursor-pointer ${colorClass} hover:opacity-80 transition flex items-center justify-center text-xs font-medium ${mood === 0 ? 'text-gray-400 bg-gray-50 border border-gray-100' : 'text-white shadow-md transform hover:scale-105'}"
+                    <div onclick="openModal('${dateStr}', ${day}, ${m})"
+                        class="aspect-square rounded-2xl cursor-pointer ${moodColors[mood]} flex items-center justify-center text-xs font-bold transition-transform hover:scale-110 ${mood === 0 ? 'text-slate-300 border border-gray-100' : 'text-white shadow-lg shadow-black/10'}"
                     >
                         ${day}
                     </div>
@@ -337,39 +338,29 @@
         function renderWeekGrid(container) {
             const curr = new Date(displayDate);
             const first = curr.getDate() - curr.getDay();
-            const firstDayOfWeek = new Date(curr.setDate(first));
+            const sun = new Date(curr.setDate(first));
+            const label = document.getElementById('current-period-label');
+            if(label) label.innerText = `Tuần từ ${sun.toLocaleDateString('vi-VN')}`;
 
-            const options = { day: 'numeric', month: 'short' };
-            const labelStr = `Tuần từ ${firstDayOfWeek.toLocaleDateString('vi-VN', options)}, ${currentYear}`;
-            document.getElementById('current-period-label').innerText = labelStr;
-
-            let html = '<div class="grid grid-cols-7 gap-4 max-w-4xl mx-auto">';
+            // Mobile: flex-col, Desktop: grid-7
+            let html = '<div class="flex flex-col md:grid md:grid-cols-7 gap-4 max-w-4xl mx-auto w-full">';
             
             for (let i = 0; i < 7; i++) {
-                const dayDate = new Date(firstDayOfWeek);
-                dayDate.setDate(firstDayOfWeek.getDate() + i);
-                
-                // Hiển thị ngày của năm khác mờ đi (nếu tuần giao thừa)
-                const isDifferentYear = dayDate.getFullYear() !== currentYear;
-                const opacityClass = isDifferentYear ? 'opacity-30 pointer-events-none' : '';
-
-                const dateStr = formatDate(dayDate);
-                // Nếu khác năm, thử lấy data của năm đó (optional logic, ở đây mình chỉ hiển thị cho currentYear để đơn giản)
-                // Nhưng để mượt, mình sẽ check moodData hiện tại (chỉ chứa currentYear). 
-                // Nếu muốn xịn hơn thì phải load data của cả năm trước/sau. Tạm thời mình ẩn đi cho gọn.
-                
-                const mood = !isDifferentYear ? (moodData[dateStr] || 0) : 0;
-                const colorClass = moodColors[mood];
-                const dayName = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'][dayDate.getDay()];
+                const d = new Date(sun);
+                d.setDate(sun.getDate() + i);
+                const isDiffYear = d.getFullYear() !== currentYear;
+                const dateStr = formatDate(d);
+                const mood = !isDiffYear ? (moodData[dateStr] || 0) : 0;
+                const dayName = ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'][d.getDay()];
 
                 html += `
-                    <div onclick="openModal('${dateStr}', ${dayDate.getDate()}, ${dayDate.getMonth()})" 
-                         class="flex flex-col gap-2 cursor-pointer group ${opacityClass}">
-                        <div class="text-center font-bold text-gray-500 text-sm uppercase">${dayName}</div>
-                        <div class="h-32 rounded-2xl ${colorClass} shadow-sm group-hover:scale-105 transition border border-black/5 flex items-center justify-center">
-                             ${mood !== 0 ? '<span class="text-3xl text-white drop-shadow-md filter">' + getMoodIcon(mood) + '</span>' : '<span class="text-gray-300 text-2xl group-hover:text-gray-400 transition">+</span>'}
+                    <div onclick="${isDiffYear ? '' : `openModal('${dateStr}', ${d.getDate()}, ${d.getMonth()})`}" 
+                         class="flex flex-row md:flex-col gap-4 md:gap-2 items-center md:items-stretch p-4 md:p-0 bg-white md:bg-transparent rounded-[24px] md:rounded-none border border-gray-100 md:border-none shadow-sm md:shadow-none cursor-pointer group ${isDiffYear ? 'opacity-20 pointer-events-none' : ''}">
+                        <div class="text-center font-bold text-gray-400 text-[10px] md:text-xs uppercase w-8 md:w-auto shrink-0">${dayName}</div>
+                        <div class="flex-1 md:h-32 rounded-2xl ${moodColors[mood]} shadow-md md:shadow-sm group-hover:scale-105 transition flex items-center justify-center py-4 md:py-0 border border-black/5">
+                             ${mood !== 0 ? '<span class="text-2xl md:text-xl">' + getMoodIcon(mood) + '</span>' : '<span class="text-slate-300 text-2xl">+</span>'}
                         </div>
-                        <div class="text-center text-xs text-gray-400 font-medium">${dayDate.getDate()}/${dayDate.getMonth()+1}</div>
+                        <div class="text-center text-[10px] md:text-xs text-gray-400 font-bold w-12 md:w-auto shrink-0">${d.getDate()}/${d.getMonth()+1}</div>
                     </div>
                 `;
             }
@@ -379,66 +370,57 @@
 
         // --- HELPER FUNCTIONS ---
 
-        function createPixelCell(dateStr, day, month) {
-            const mood = moodData[dateStr] || 0;
-            const colorClass = moodColors[mood];
-            // Tooltip style native title for simplicity
-            return `<div id="cell-${dateStr}" onclick="openModal('${dateStr}', ${day}, ${month})" 
-                        class="h-8 w-full rounded-sm cursor-pointer pixel-cell ${colorClass}" 
-                        title="${day} Tháng ${month + 1}, ${currentYear}"></div>`;
-        }
-
-        function formatDate(date) {
-            const y = date.getFullYear();
-            const m = String(date.getMonth() + 1).padStart(2, '0');
-            const d = String(date.getDate()).padStart(2, '0');
-            return `${y}-${m}-${d}`;
-        }
-
-        function getMoodIcon(mood) {
-            return ['?', '😡', '😓', '😐', '🙂', '😆'][mood];
-        }
+        function formatDate(d) { return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; }
+        function getMoodIcon(m) { return ['?', '😡', '😓', '😐', '🙂', '😆'][m]; }
 
         function exportImage() {
-            const element = document.getElementById("capture-area");
-            // Ẩn control khi chụp
+            const area = document.getElementById("capture-area");
             const controls = document.getElementById('view-controls');
-            const wasFlex = controls.classList.contains('flex');
-            if(wasFlex) { controls.classList.remove('flex'); controls.classList.add('hidden'); }
-            
-            html2canvas(element, { scale: 2 }).then(canvas => {
+            if(controls) controls.style.display = 'none';
+
+            html2canvas(area, { scale: 3, backgroundColor: '#ffffff', borderRadius: 32 }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = `Mood-Pixel-${currentYear}.png`;
+                link.download = `MoodPixel-${currentYear}.png`;
                 link.href = canvas.toDataURL();
                 link.click();
-                
-                // Hiện lại control
-                if(wasFlex) { controls.classList.add('flex'); controls.classList.remove('hidden'); }
+                if(controls) controls.style.display = 'flex';
             });
         }
 
-        // --- MODAL & SAVING ---
+        // --- MODAL FOCUS LOGIC ---
         function openModal(dateStr, day, monthIdx) {
             currentSelectedDate = dateStr;
+            const existingMood = moodData[dateStr] || 0;
+
             document.getElementById('modal-date').innerText = `Ngày ${day} ${monthsFull[monthIdx]} năm ${currentYear}`;
-            document.getElementById('mood-modal').classList.remove('hidden');
-            document.getElementById('mood-modal').classList.add('flex');
+            
+            // RESET FOCUS
+            document.querySelectorAll('.mood-opt-btn').forEach(btn => btn.classList.remove('mood-focus'));
+
+            // SET FOCUS nếu đã có dữ liệu
+            if (existingMood > 0) {
+                const targetBtn = document.getElementById(`btn-mood-${existingMood}`);
+                if (targetBtn) targetBtn.classList.add('mood-focus');
+            }
+
+            const modal = document.getElementById('mood-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden'; // Khóa cuộn trang
         }
 
         function closeModal() {
-            document.getElementById('mood-modal').classList.add('hidden');
-            document.getElementById('mood-modal').classList.remove('flex');
+            const modal = document.getElementById('mood-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
             currentSelectedDate = null;
         }
 
-        function saveMood(moodLevel) {
+        function saveMood(level) {
             if (!currentSelectedDate) return;
-            
-            if (moodLevel === 0) {
-                delete moodData[currentSelectedDate];
-            } else {
-                moodData[currentSelectedDate] = moodLevel;
-            }
+            if (level === 0) delete moodData[currentSelectedDate];
+            else moodData[currentSelectedDate] = level;
             
             localStorage.setItem(`moodData${currentYear}`, JSON.stringify(moodData));
             renderView(); 
@@ -448,16 +430,11 @@
 
         function updateStats() {
             const counts = {1:0, 2:0, 3:0, 4:0, 5:0};
-            Object.values(moodData).forEach(mood => {
-                if (counts[mood] !== undefined) counts[mood]++;
-            });
-            for (let i = 1; i <= 5; i++) document.getElementById(`count-${i}`).innerText = counts[i];
-        }
-        
-        function filterMood(mood) {
-             // Tính năng filter highlight (đơn giản là alert count cho demo)
-             // Hoặc có thể làm mờ các ô không phải mood này
-             alert("Tính năng lọc màu sẽ được cập nhật trong phiên bản sau! 😉");
+            Object.values(moodData).forEach(m => { if (counts[m] !== undefined) counts[m]++; });
+            for (let i = 1; i <= 5; i++) {
+                const el = document.getElementById(`count-${i}`);
+                if(el) el.innerText = counts[i];
+            }
         }
 
         document.addEventListener('DOMContentLoaded', initApp);
