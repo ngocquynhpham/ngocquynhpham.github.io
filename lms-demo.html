@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeanLMS - Học Python & Product Mindset</title>
+
+    <!-- SEO Meta Tags -->
+        <meta name="description" content="LeanLMS - Nền tảng học Python & Product Mindset miễn phí. Dự án phi lợi nhuận với triết lý Simple - Beautiful - Smooth. Học lập trình Python, tư duy sản phẩm và phát triển Fullstack.">
+        <meta name="keywords" content="học python, python tiếng việt, product mindset, lập trình fullstack, học lập trình miễn phí, LMS, online learning, khóa học python, reactjs, fastapi">
+        <meta name="author" content="Quỳnh Phạm">
+        <meta name="robots" content="index, follow">
+        <link rel="canonical" href="https://ngocquynhpham.github.io/lms-demo.html">
+        
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://ngocquynhpham.github.io/lms-demo.html">
+        <meta property="og:title" content="LeanLMS - Học Python & Product Mindset Miễn Phí">
+        <meta property="og:description" content="Nền tảng học lập trình Python và tư duy sản phẩm miễn phí. Simple - Beautiful - Smooth. Cộng đồng phi lợi nhuận dành cho developer Việt Nam.">
+        <meta property="og:image" content="https://ngocquynhpham.github.io/assets/lms-og-image.png">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:url" content="https://ngocquynhpham.github.io/lms-demo.html">
+        <meta name="twitter:title" content="LeanLMS - Học Python & Product Mindset Miễn Phí">
+        <meta name="twitter:description" content="Nền tảng học lập trình Python và tư duy sản phẩm miễn phí. Simple - Beautiful - Smooth.">
+        <meta name="twitter:image" content="https://ngocquynhpham.github.io/assets/lms-og-image.png">
+        
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" sizes="32x32" href="./logo.ico">
+        <link rel="icon" type="image/png" sizes="16x16" href="./logo.ico">
+        <link rel="apple-touch-icon" sizes="180x180" href="./logo.ico">
+        
+        <!-- Additional SEO -->
+        <meta name="theme-color" content="#4f46e5">
+        <meta name="language" content="Vietnamese">
+        <meta name="revisit-after" content="7 days">
+    
+    <!-- 1. TAILWIND CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 2. LUCIDE ICONS (CDN) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- 3. CANVAS CONFETTI (Pháo hoa) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <!-- Google Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Ẩn scrollbar nhưng vẫn scroll được */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Animation cơ bản */
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen">
+
+    <!-- ROOT CONTAINER (Nơi JS sẽ vẽ giao diện vào đây) -->
+    <div id="app"></div>
+
+    <script>
+        // --- 1. MOCK DATA (Y chang bản React) ---
+        const DATA = {
+            user: {
+                name: "Quỳnh Phạm",
+                avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Quynh",
+                xp: 1850,
+                streak: 3
+            },
+            courseData: {
+                id: 'course-001',
+                title: 'Fullstack Python & Product Mindset 2026',
+                author: 'Tech Lead Mentor',
+                modules: [
+                    {
+                        id: 'mod-1',
+                        title: 'Chương 1: Tư duy Product Owner',
+                        lessons: [
+                            { id: 'les-1', title: 'LMS là gì? Phân biệt Marketplace vs Internal', duration: '10:05', isCompleted: true },
+                            { id: 'les-2', title: 'User Story & Acceptance Criteria', duration: '15:20', isCompleted: true },
+                            { id: 'les-3', title: 'MVP: Bỏ bớt để đi nhanh hơn', duration: '08:45', isCompleted: false },
+                        ]
+                    },
+                    {
+                        id: 'mod-2',
+                        title: 'Chương 2: Kiến trúc hệ thống',
+                        lessons: [
+                            { id: 'les-4', title: 'Database Design: 1-N và N-N', duration: '12:00', isCompleted: false },
+                            { id: 'les-5', title: 'Video Streaming: Tại sao không upload file mp4?', duration: '20:10', isCompleted: false },
+                        ]
+                    }
+                ]
+            },
+            myCourses: [
+                { id: 1, title: 'Fullstack Python 2026', progress: 35, image: 'https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=800&auto=format&fit=crop&q=60' },
+                { id: 2, title: 'ReactJS Advanced Patterns', progress: 0, image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&auto=format&fit=crop&q=60' },
+                { id: 3, title: 'English for IT Professionals', progress: 80, image: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=800&auto=format&fit=crop&q=60' },
+            ],
+            discoveryCourses: [
+                { id: 101, title: 'Python for Data Science Zero to Hero', author: 'Dr. Angela Yu', rating: 4.8, students: 1200, image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop&q=60', category: 'Data Science' },
+                { id: 102, title: 'Mastering FastAPI & Docker', author: 'Sebastian Ramirez', rating: 4.9, students: 850, image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=60', category: 'Backend' },
+                { id: 103, title: 'UI/UX Design Systems 2026', author: 'Google Design Team', rating: 4.7, students: 3000, image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=60', category: 'Design' },
+                { id: 104, title: 'DevOps for Beginners', author: 'Nana Janashia', rating: 4.6, students: 500, image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=60', category: 'DevOps' },
+            ],
+            badges: [
+                { id: 1, name: "Khởi đầu nan", icon: "star", color: "bg-blue-100 text-blue-600", desc: "Hoàn thành bài 1", earned: true },
+                { id: 2, name: "Kẻ hủy diệt MVP", icon: "award", color: "bg-purple-100 text-purple-600", desc: "Xong Chương 1", earned: true },
+                { id: 3, name: "Python Master", icon: "trophy", color: "bg-yellow-100 text-yellow-600", desc: "Fullstack", earned: false },
+            ],
+            leaderboard: [
+                { rank: 1, name: "Hoàng Dev", xp: 2450, avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Hoang" },
+                { rank: 2, name: "Lan UIUX", xp: 2100, avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Lan" },
+                { rank: 3, name: "Quỳnh Phạm", xp: 1850, avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Quynh", isMe: true },
+                { rank: 4, name: "Tuấn Backend", xp: 1600, avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Tuan" },
+            ],
+            qaList: [
+                { id: 1, user: "Tuấn Backend", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Tuan", question: "Tại sao dùng S3 mà ko lưu video vào DB?", likes: 5 },
+                { id: 2, user: "Lan UIUX", avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Lan", question: "Nút Mark Complete màu gì thì đẹp?", likes: 2 }
+            ],
+            categories: ['All', 'Frontend', 'Backend', 'Product', 'Design', 'Data Science']
+        };
+
+        // --- 2. STATE MANAGEMENT (Trái tim của App) ---
+        // Thay vì React useState, ta dùng object này
+        const state = {
+            view: 'discovery', // discovery | dashboard | player | leaderboard
+            activeCategory: 'All',
+            activeLessonId: 'les-3',
+            completedLessons: ['les-1', 'les-2'],
+            activeTab: 'resources',
+            isSidebarOpen: false
+        };
+
+        // --- 3. ACTIONS (Hàm xử lý logic) ---
+        
+        const actions = {
+            navigate: (viewName) => {
+                state.view = viewName;
+                renderApp();
+                window.scrollTo(0,0);
+            },
+            setCategory: (cat) => {
+                state.activeCategory = cat;
+                renderApp();
+            },
+            toggleComplete: (lessonId) => {
+                if (state.completedLessons.includes(lessonId)) {
+                    state.completedLessons = state.completedLessons.filter(id => id !== lessonId);
+                } else {
+                    state.completedLessons.push(lessonId);
+                    confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } }); // Bắn pháo hoa
+                }
+                renderApp();
+            },
+            selectLesson: (lessonId) => {
+                state.activeLessonId = lessonId;
+                state.isSidebarOpen = false; // Đóng sidebar trên mobile
+                renderApp();
+            },
+            setTab: (tabName) => {
+                state.activeTab = tabName;
+                renderApp();
+            },
+            toggleSidebar: () => {
+                state.isSidebarOpen = !state.isSidebarOpen;
+                renderApp();
+            },
+            postQuestion: () => {
+                const input = document.getElementById('qa-input');
+                if(input && input.value.trim()) {
+                    DATA.qaList.unshift({
+                        id: Date.now(),
+                        user: DATA.user.name,
+                        avatar: DATA.user.avatar,
+                        question: input.value,
+                        likes: 0
+                    });
+                    renderApp(); // Re-render để hiện câu hỏi mới
+                }
+            }
+        };
+
+        // --- 4. RENDER FUNCTIONS (Vẽ HTML ra màn hình) ---
+        // Đây là phần thay thế JSX của React
+        
+        const Icons = {
+            trophy: '<i data-lucide="trophy" class="w-4 h-4"></i>',
+            flame: '<i data-lucide="flame" class="w-3 h-3 text-orange-600"></i>',
+            play: '<i data-lucide="play" class="w-16 h-16 text-white ml-1"></i>',
+            search: '<i data-lucide="search" class="w-5 h-5"></i>',
+            star: '<i data-lucide="star" class="w-3 h-3 fill-current"></i>',
+            checkCircle: '<i data-lucide="check-circle" class="w-5 h-5"></i>',
+            circle: '<i data-lucide="circle" class="w-5 h-5"></i>',
+            menu: '<i data-lucide="menu" class="w-5 h-5"></i>',
+            chevronLeft: '<i data-lucide="chevron-left" class="w-5 h-5"></i>',
+            fileText: '<i data-lucide="file-text" class="w-5 h-5"></i>',
+            download: '<i data-lucide="download" class="w-5 h-5"></i>',
+            send: '<i data-lucide="send" class="w-4 h-4"></i>',
+            thumbsUp: '<i data-lucide="thumbs-up" class="w-3 h-3"></i>',
+            home: '<i data-lucide="home" class="w-5 h-5"></i>',
+            bookOpen: '<i data-lucide="book-open" class="w-5 h-5"></i>',
+            arrowRight: '<i data-lucide="arrow-right" class="w-4 h-4"></i>'
+        };
+
+        // Header chung cho mọi trang
+        const renderHeader = (showSearch = true) => `
+            <header class="bg-white shadow-sm sticky top-0 z-40 backdrop-blur bg-white/90">
+                <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+                    <div class="flex items-center gap-2 cursor-pointer" onclick="actions.navigate('discovery')">
+                        <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold shadow-indigo-200 shadow-lg">L</div>
+                        <span class="font-bold text-xl tracking-tight text-slate-800">Lean<span class="text-indigo-600">LMS</span></span>
+                    </div>
+                    
+                    <div class="flex items-center gap-4">
+                        <div class="hidden sm:flex items-center gap-1 text-xs font-medium text-orange-600 bg-orange-50 px-3 py-1.5 rounded-full border border-orange-100">
+                            ${Icons.flame} ${DATA.user.streak} Day Streak
+                        </div>
+                        <div onclick="actions.navigate('dashboard')" class="w-9 h-9 rounded-full bg-slate-200 overflow-hidden border-2 border-indigo-100 shadow-sm ring-2 ring-indigo-50 cursor-pointer">
+                            <img src="${DATA.user.avatar}" alt="Avatar" />
+                        </div>
+                    </div>
+                </div>
+            </header>
+        `;
+
+        // PAGE 1: DISCOVERY (HOME)
+        const renderDiscovery = () => {
+            const filtered = DATA.discoveryCourses.filter(c => 
+                state.activeCategory === 'All' || c.category === state.activeCategory
+            );
+
+            return `
+                ${renderHeader()}
+                <main class="max-w-7xl mx-auto px-4 py-8 pb-20 fade-in">
+                    <!-- Search & Filter -->
+                    <div class="mb-8">
+                        <div class="relative mb-4">
+                            <div class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">${Icons.search}</div>
+                            <input type="text" placeholder="Tìm khóa học..." class="w-full bg-white border border-slate-200 rounded-full py-3 pl-10 pr-4 focus:ring-2 focus:ring-indigo-500 outline-none shadow-sm">
+                        </div>
+                        <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2">
+                            ${DATA.categories.map(cat => `
+                                <button onclick="actions.setCategory('${cat}')" 
+                                    class="px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors border ${state.activeCategory === cat ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}">
+                                    ${cat}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Hero Banner -->
+                    <div class="bg-indigo-900 rounded-2xl p-6 md:p-10 mb-10 text-white relative overflow-hidden flex items-center shadow-xl">
+                        <div class="relative z-10 flex-1">
+                            <span class="bg-indigo-500/30 text-indigo-100 text-xs font-bold px-3 py-1 rounded-full mb-4 inline-block border border-indigo-400/30">COMMUNITY FREE</span>
+                            <h2 class="text-2xl md:text-4xl font-bold mb-4">Học Python & Product Mindset</h2>
+                            <p class="text-indigo-200 mb-6 text-sm md:text-base max-w-lg">Dự án phi lợi nhuận. "Simple - Beautiful - Smooth".</p>
+                            <button class="bg-white text-indigo-900 px-6 py-3 rounded-lg font-bold hover:bg-indigo-50 shadow-lg active:scale-95">Khám phá ngay</button>
+                        </div>
+                        <div class="hidden sm:block relative z-10 w-1/3 aspect-video bg-indigo-800 rounded-lg shadow-2xl overflow-hidden border-4 border-indigo-700/50">
+                            <div class="absolute inset-0 flex items-center justify-center cursor-pointer hover:scale-110 transition-transform">
+                                <div class="w-16 h-16 bg-white/20 backdrop-blur rounded-full flex items-center justify-center border border-white/30">${Icons.play}</div>
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format&fit=crop&q=60" class="w-full h-full object-cover opacity-80">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-r from-indigo-900 via-indigo-900/90 to-transparent"></div>
+                    </div>
+
+                    <!-- List Course -->
+                    <h3 class="font-bold text-xl text-slate-800 mb-6">Khóa học ${state.activeCategory}</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        ${filtered.map(c => `
+                            <div onclick="actions.navigate('player')" class="bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden hover:shadow-lg transition-all group cursor-pointer flex flex-col h-full">
+                                <div class="aspect-video relative overflow-hidden">
+                                    <img src="${c.image}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                    <div class="absolute top-2 left-2 bg-black/60 backdrop-blur text-white text-[10px] px-2 py-1 rounded font-medium">${c.category}</div>
+                                </div>
+                                <div class="p-4 flex flex-col flex-1">
+                                    <h4 class="font-bold text-slate-800 mb-1 line-clamp-2 group-hover:text-indigo-600">${c.title}</h4>
+                                    <p class="text-xs text-slate-500 mb-3">${c.author}</p>
+                                    <div class="flex items-center gap-1 text-yellow-500 text-xs mb-4 mt-auto font-medium">
+                                        ${Icons.star} ${c.rating} <span class="text-slate-400 font-normal">(${c.students} học viên)</span>
+                                    </div>
+                                    <div class="flex items-center justify-between border-t border-slate-100 pt-3 mt-auto">
+                                        <span class="font-bold text-green-600 text-sm bg-green-50 px-2 py-1 rounded">Miễn phí</span>
+                                        <button class="px-3 py-1.5 bg-indigo-600 text-white text-xs font-bold rounded-lg hover:bg-indigo-700 flex items-center gap-1">
+                                            Học ngay ${Icons.arrowRight}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </main>
+            `;
+        };
+
+        // PAGE 2: DASHBOARD (MY LEARNING)
+        const renderDashboard = () => `
+            ${renderHeader()}
+            <main class="max-w-7xl mx-auto px-4 py-8 fade-in">
+                <!-- Welcome -->
+                <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 mb-8">
+                    <div>
+                        <h1 class="text-2xl font-bold text-slate-800">Hồ sơ học tập</h1>
+                        <p class="text-slate-500">Xin chào ${DATA.user.name}, phong độ tuyệt vời!</p>
+                    </div>
+                    <button onclick="actions.navigate('leaderboard')" class="flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-slate-200 text-indigo-600 font-medium text-sm hover:border-indigo-300 shadow-sm">
+                        ${Icons.trophy} Bảng xếp hạng
+                    </button>
+                </div>
+
+                <!-- Badges -->
+                <div class="bg-white rounded-xl p-5 border border-slate-100 shadow-sm mb-8">
+                    <h3 class="text-sm font-bold text-slate-700 uppercase tracking-wide mb-3 flex items-center gap-2">Bộ sưu tập huy hiệu</h3>
+                    <div class="flex gap-3 overflow-x-auto pb-2 no-scrollbar">
+                        ${DATA.badges.map(b => `
+                            <div class="flex items-center gap-3 p-3 rounded-lg border min-w-[200px] shrink-0 ${b.earned ? 'bg-white border-slate-200' : 'bg-slate-50 border-slate-100 opacity-60 grayscale'}">
+                                <div class="w-10 h-10 rounded-full flex items-center justify-center ${b.color}"><i data-lucide="${b.icon}" class="w-5 h-5"></i></div>
+                                <div><p class="font-bold text-sm text-slate-800">${b.name}</p><p class="text-[10px] text-slate-500">${b.desc}</p></div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <!-- My Courses -->
+                <h3 class="font-bold text-xl text-slate-800 mb-6 flex items-center gap-2">${Icons.bookOpen} Đang học dở</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    ${DATA.myCourses.map(c => `
+                        <div onclick="actions.navigate('player')" class="group bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all cursor-pointer">
+                            <div class="h-40 overflow-hidden relative">
+                                <img src="${c.image}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                ${c.progress >= 80 ? `<div class="absolute top-2 right-2 bg-yellow-400 text-yellow-900 text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1 shadow-sm animate-bounce">${Icons.trophy} Excellence</div>` : ''}
+                            </div>
+                            <div class="p-4">
+                                <h3 class="font-semibold text-slate-800 mb-2 group-hover:text-indigo-600 line-clamp-1">${c.title}</h3>
+                                <div class="w-full bg-slate-100 rounded-full h-1.5 mt-2 overflow-hidden">
+                                    <div class="bg-indigo-600 h-1.5 rounded-full" style="width: ${c.progress}%"></div>
+                                </div>
+                                <div class="flex justify-between items-center mt-3 text-xs text-slate-400">
+                                    <span>${c.progress}% Hoàn thành</span>
+                                    ${c.progress > 0 ? `<span class="text-orange-500 flex items-center gap-1">${Icons.flame} 3 day streak</span>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                    <!-- Add New -->
+                    <div onclick="actions.navigate('discovery')" class="border-2 border-dashed border-slate-300 rounded-xl p-6 flex flex-col items-center justify-center text-slate-400 hover:border-indigo-400 hover:text-indigo-500 transition-all cursor-pointer min-h-[250px] bg-slate-50/50 hover:bg-white">
+                        <div class="w-14 h-14 rounded-full bg-slate-100 flex items-center justify-center mb-3 group-hover:bg-indigo-50 group-hover:scale-110 transition-all"><i data-lucide="plus" class="w-6 h-6"></i></div>
+                        <p class="font-medium">Tìm khóa học mới</p>
+                    </div>
+                </div>
+            </main>
+        `;
+
+        // PAGE 3: LEADERBOARD
+        const renderLeaderboard = () => `
+            <div class="max-w-2xl mx-auto p-4 min-h-screen bg-slate-50 fade-in">
+                <button onclick="actions.navigate('dashboard')" class="flex items-center gap-2 text-slate-500 hover:text-slate-800 mb-6 font-medium">
+                    ${Icons.chevronLeft} Quay lại
+                </button>
+                <div class="bg-white rounded-2xl shadow-lg border border-indigo-100 overflow-hidden">
+                    <div class="bg-indigo-600 p-8 text-center text-white relative overflow-hidden">
+                        <div class="relative z-10">
+                            <div class="mx-auto w-12 h-12 text-yellow-300 mb-2"><i data-lucide="trophy" class="w-12 h-12"></i></div>
+                            <h2 class="text-2xl font-bold">Bảng Phong Thần</h2>
+                            <p class="text-indigo-200 text-sm">Top tuần này</p>
+                        </div>
+                    </div>
+                    <div>
+                        ${DATA.leaderboard.map((u, idx) => `
+                            <div class="flex items-center gap-4 p-4 border-b border-slate-50 hover:bg-slate-50 transition-colors ${u.isMe ? 'bg-indigo-50 border-l-4 border-l-indigo-600' : ''}">
+                                <div class="w-8 text-center font-bold text-slate-400 text-lg">${idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : idx + 1}</div>
+                                <img src="${u.avatar}" class="w-10 h-10 rounded-full border border-slate-200">
+                                <div class="flex-1">
+                                    <h4 class="font-semibold ${u.isMe ? 'text-indigo-700' : 'text-slate-700'}">${u.name} ${u.isMe ? '(Bạn)' : ''}</h4>
+                                    <p class="text-xs text-slate-400">Level ${Math.floor(u.xp/500)}</p>
+                                </div>
+                                <div class="font-mono font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full text-xs">${u.xp} XP</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // PAGE 4: LEARNING PLAYER (Core Feature)
+        const renderPlayer = () => {
+            const course = DATA.courseData;
+            const activeLesson = course.modules.flatMap(m => m.lessons).find(l => l.id === state.activeLessonId);
+            const isCompleted = state.completedLessons.includes(state.activeLessonId);
+            const progressPercent = Math.round((state.completedLessons.length / 5) * 100);
+
+            // Tab Content Logic
+            let tabContent = '';
+            if (state.activeTab === 'description') {
+                tabContent = `<div class="prose prose-slate max-w-none text-slate-600 text-sm md:text-base fade-in"><p>Trong bài học này, chúng ta sẽ đi sâu vào kiến thức về ${activeLesson.title}. Tư duy MVP giúp loại bỏ rườm rà.</p></div>`;
+            } else if (state.activeTab === 'exercise') {
+                tabContent = `
+                    <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm fade-in">
+                        <h3 class="font-bold text-slate-800 flex items-center gap-2 mb-3 text-lg">${Icons.fileText} Bài tập về nhà</h3>
+                        <p class="text-slate-700 mb-4 bg-slate-50 p-4 rounded-lg border border-slate-100 italic">"Hãy liệt kê 3 tính năng bạn sẽ CẮT BỎ khỏi dự án LMS?"</p>
+                        <textarea class="w-full border border-slate-300 rounded-lg p-4 text-sm focus:ring-2 focus:ring-indigo-500 outline-none min-h-[100px]" placeholder="Nhập câu trả lời..."></textarea>
+                        <div class="flex justify-end mt-4"><button class="bg-indigo-600 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 flex items-center gap-2">${Icons.send} Nộp bài</button></div>
+                    </div>
+                `;
+            } else if (state.activeTab === 'resources') {
+                tabContent = `
+                    <div class="fade-in">
+                        <div class="flex items-center justify-between p-4 bg-white border border-slate-200 rounded-xl mb-6 hover:border-indigo-300 transition-colors cursor-pointer">
+                             <div class="flex items-center gap-4">
+                                 <div class="w-10 h-10 bg-red-50 text-red-600 rounded-lg flex items-center justify-center">${Icons.fileText}</div>
+                                 <div><p class="font-medium text-slate-800 text-sm md:text-base">Slide bài giảng (PDF)</p></div>
+                             </div>
+                             ${Icons.download}
+                        </div>
+                        <div class="border-t border-slate-100 pt-6">
+                            <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2 text-lg">Hỏi đáp (${DATA.qaList.length})</h3>
+                            <div class="flex gap-3 mb-8">
+                                <img src="${DATA.user.avatar}" class="w-10 h-10 rounded-full bg-slate-200 border border-white shadow-sm shrink-0">
+                                <div class="flex-1">
+                                    <textarea id="qa-input" class="w-full border border-slate-200 bg-slate-50 rounded-lg p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none focus:bg-white transition-all resize-none" rows="2" placeholder="Đặt câu hỏi..."></textarea>
+                                    <div class="flex justify-end mt-2"><button onclick="actions.postQuestion()" class="bg-indigo-600 text-white px-4 py-1.5 rounded-md text-sm font-medium hover:bg-indigo-700">Gửi</button></div>
+                                </div>
+                            </div>
+                            <div class="space-y-6">
+                                ${DATA.qaList.map(qa => `
+                                    <div class="flex gap-3">
+                                        <img src="${qa.avatar}" class="w-10 h-10 rounded-full border border-slate-100 shrink-0">
+                                        <div class="flex-1">
+                                            <div class="flex items-center gap-2 mb-1"><span class="font-bold text-slate-800 text-sm">${qa.user}</span><span class="text-xs text-slate-400">• Vừa xong</span></div>
+                                            <p class="text-slate-700 text-sm mb-2">${qa.question}</p>
+                                            <div class="flex items-center gap-4 text-xs text-slate-500"><button class="flex items-center gap-1 hover:text-indigo-600">${Icons.thumbsUp} ${qa.likes}</button><button class="hover:text-indigo-600">Trả lời</button></div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="flex flex-col h-screen bg-slate-50 relative overflow-hidden">
+                    <!-- Player Header -->
+                    <div class="h-16 bg-white border-b border-slate-200 flex items-center px-4 justify-between shrink-0 z-20">
+                        <div class="flex items-center gap-3">
+                            <button onclick="actions.navigate('dashboard')" class="p-2 hover:bg-slate-100 rounded-lg text-slate-500">${Icons.chevronLeft}</button>
+                            <h1 class="font-bold text-slate-800 text-sm md:text-lg line-clamp-1 flex-1">${course.title}</h1>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="actions.toggleSidebar()" class="lg:hidden p-2 hover:bg-slate-100 rounded text-slate-500">${Icons.menu}</button>
+                            <div class="hidden md:flex items-center gap-2 text-sm text-slate-500">
+                                <span>Tiến độ: ${progressPercent}%</span>
+                                <div class="w-24 bg-slate-100 rounded-full h-2"><div class="bg-green-500 h-2 rounded-full transition-all duration-500" style="width: ${progressPercent}%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-1 overflow-hidden relative">
+                        <!-- Main Area -->
+                        <div class="flex-1 flex flex-col overflow-y-auto w-full">
+                            <div class="aspect-video bg-black w-full flex items-center justify-center relative group shrink-0">
+                                <div class="text-center text-white/50 cursor-pointer hover:text-white transition-colors">
+                                    <div class="mx-auto w-16 h-16 mb-2 opacity-80 group-hover:scale-110 transition-transform">${Icons.play}</div>
+                                    <p>Video Player Area (HLS Streaming)</p>
+                                </div>
+                            </div>
+
+                            <div class="max-w-4xl mx-auto w-full p-4 md:p-6 pb-20">
+                                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                                    <h2 class="text-xl md:text-2xl font-bold text-slate-800">${activeLesson.title}</h2>
+                                    <button onclick="actions.toggleComplete('${activeLesson.id}')" 
+                                        class="flex items-center justify-center gap-2 px-6 py-3 rounded-lg font-medium transition-all shadow-sm w-full md:w-auto ${isCompleted ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-indigo-200'}">
+                                        ${isCompleted ? Icons.checkCircle + ' Đã hoàn thành' : Icons.circle + ' Đánh dấu hoàn thành'}
+                                    </button>
+                                </div>
+
+                                <!-- Tabs -->
+                                <div class="border-b border-slate-200 mb-6 flex gap-6 overflow-x-auto no-scrollbar">
+                                    ${['description', 'exercise', 'resources'].map(tab => `
+                                        <button onclick="actions.setTab('${tab}')" class="pb-3 font-medium text-sm transition-colors relative capitalize whitespace-nowrap ${state.activeTab === tab ? 'text-indigo-600' : 'text-slate-500 hover:text-slate-700'}">
+                                            ${tab === 'description' ? 'Mô tả' : tab === 'exercise' ? 'Bài tập' : 'Hỏi đáp & Tài liệu'}
+                                            ${state.activeTab === tab ? '<div class="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600 rounded-t-full"></div>' : ''}
+                                        </button>
+                                    `).join('')}
+                                </div>
+                                ${tabContent}
+                            </div>
+                        </div>
+
+                        <!-- Sidebar (List bài học) -->
+                        <div class="${state.isSidebarOpen ? 'translate-x-0' : 'translate-x-full'} lg:translate-x-0 absolute lg:static top-0 right-0 h-full w-80 bg-white border-l border-slate-200 transition-transform duration-300 z-30 shadow-2xl lg:shadow-none flex flex-col">
+                            <div class="p-4 border-b border-slate-100 font-semibold text-slate-700 flex items-center justify-between bg-slate-50/50">
+                                <div class="flex items-center gap-2">${Icons.bookOpen} Nội dung khóa học</div>
+                                <button onclick="actions.toggleSidebar()" class="lg:hidden p-1 text-slate-400">${Icons.arrowRight}</button>
+                            </div>
+                            <div class="flex-1 overflow-y-auto">
+                                ${course.modules.map(mod => `
+                                    <div class="border-b border-slate-50">
+                                        <div class="bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700 sticky top-0 z-10">${mod.title}</div>
+                                        <div>
+                                            ${mod.lessons.map(les => {
+                                                const isActive = les.id === state.activeLessonId;
+                                                const isDone = state.completedLessons.includes(les.id);
+                                                return `
+                                                    <button onclick="actions.selectLesson('${les.id}')" class="w-full text-left px-4 py-3 flex items-start gap-3 transition-colors text-sm border-l-4 ${isActive ? 'bg-indigo-50 border-indigo-600' : 'border-transparent hover:bg-slate-50'}">
+                                                        <div class="mt-0.5 shrink-0 text-slate-400 ${isDone ? 'text-green-500' : isActive ? 'text-indigo-600' : ''}">
+                                                            ${isDone ? Icons.checkCircle : isActive ? Icons.play : Icons.circle}
+                                                        </div>
+                                                        <div class="flex-1">
+                                                            <span class="block mb-1 line-clamp-2 ${isActive ? 'text-indigo-700 font-medium' : 'text-slate-600'}">${les.title}</span>
+                                                            <span class="text-xs text-slate-400">${les.duration}</span>
+                                                        </div>
+                                                    </button>
+                                                `;
+                                            }).join('')}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <!-- Overlay mobile -->
+                        ${state.isSidebarOpen ? `<div onclick="actions.toggleSidebar()" class="absolute inset-0 bg-black/50 z-20 lg:hidden"></div>` : ''}
+                    </div>
+                </div>
+            `;
+        };
+
+        // --- 5. MAIN RENDER (Router) ---
+        const renderApp = () => {
+            const app = document.getElementById('app');
+            let html = '';
+            
+            if (state.view === 'discovery') html = renderDiscovery();
+            else if (state.view === 'dashboard') html = renderDashboard();
+            else if (state.view === 'leaderboard') html = renderLeaderboard();
+            else if (state.view === 'player') html = renderPlayer();
+            
+            app.innerHTML = html;
+            
+            // Re-init Icons sau khi render HTML mới
+            lucide.createIcons();
+        };
+
+        // --- 6. INIT ---
+        // Chạy lần đầu
+        renderApp();
+
+    </script>
+</body>
+</html>
