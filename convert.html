@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Transformer - StudyX</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Công cụ miễn phí chuyển đổi HTML sang Markdown, Plain Text và Rich Text. Giữ nguyên định dạng, highlight code, hỗ trợ copy nhanh cho Developer và Content Writer.">
+    <meta name="keywords" content="html to markdown, html to text, html converter, turndown service, convert html, studyx tool, chuyển đổi html, html transformer">
+    <meta name="author" content="Ngoc Quynh Pham">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ngocquynhpham.github.io/convert.html">
+    <meta property="og:title" content="HTML Transformer - Convert HTML to Markdown & Text | StudyX">
+    <meta property="og:description" content="Chuyển đổi HTML thành Markdown hoặc văn bản thuần túy chỉ trong 1 cú click. Giao diện tối giản, xử lý ngay trên trình duyệt.">
+    <meta property="og:image" content="https://studyx.me/assets/og-html-transformer.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ngocquynhpham.github.io/convert.html">
+    <meta property="twitter:title" content="HTML Transformer - Convert HTML to Markdown & Text | StudyX">
+    <meta property="twitter:description" content="Chuyển đổi HTML thành Markdown hoặc văn bản thuần túy chỉ trong 1 cú click. Giao diện tối giản, xử lý ngay trên trình duyệt.">
+    <meta property="twitter:image" content="https://studyx.me/assets/og-html-transformer.jpg">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://ngocquynhpham.github.io/convert.html">
+
+    <!-- Favicon -->
+    <link href="./logo.ico" rel="icon" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Thư viện Turndown để convert HTML sang Markdown -->
+    <script src="https://unpkg.com/turndown/dist/turndown.js"></script>
+    <!-- Thư viện PrismJS để highlight code -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markdown.min.js"></script>
+    
+    <style>
+        body { font-family: 'Inter', system-ui, sans-serif; background-color: #f8fafc; }
+        .editor-container { height: calc(100vh - 140px); }
+        textarea { resize: none; }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #1e293b; }
+        ::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        
+        /* Rich Text Preview Style */
+        .rich-text-content h1 { font-size: 2em; font-weight: bold; margin-bottom: 0.5em; color: #e2e8f0; }
+        .rich-text-content h2 { font-size: 1.5em; font-weight: bold; margin-bottom: 0.5em; color: #e2e8f0; }
+        .rich-text-content p { margin-bottom: 1em; line-height: 1.6; }
+        .rich-text-content strong { font-weight: bold; color: #60a5fa; } /* Blue bold for visibility */
+        .rich-text-content em { font-style: italic; }
+        .rich-text-content ul { list-style-type: disc; padding-left: 20px; margin-bottom: 1em; }
+        .rich-text-content ol { list-style-type: decimal; padding-left: 20px; margin-bottom: 1em; }
+        .rich-text-content a { color: #3b82f6; text-decoration: underline; }
+        .rich-text-content blockquote { border-left: 4px solid #475569; padding-left: 1em; color: #94a3b8; font-style: italic; }
+    </style>
+</head>
+<body class="flex flex-col h-screen overflow-hidden text-slate-800">
+
+    <!-- Header -->
+    <header class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between shadow-sm z-10">
+        <div class="flex items-center gap-3">
+            <div class="bg-blue-600 text-white p-2 rounded-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+            </div>
+            <div>
+                <h1 class="font-bold text-lg text-slate-900 tracking-tight">HTML Transformer</h1>
+                <p class="text-xs text-slate-500 font-medium">Convert HTML to Markdown, Text & Rich Format</p>
+            </div>
+        </div>
+
+        <div class="flex gap-3">
+            <button onclick="clearAll()" class="px-4 py-2 text-sm font-medium text-slate-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path></svg>
+                Clear
+            </button>
+            <button onclick="copyOutput()" id="btn-copy" class="px-4 py-2 text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-lg shadow-blue-200 transition-all flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Copy Result
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col md:flex-row bg-slate-900 editor-container">
+        
+        <!-- INPUT: HTML -->
+        <div class="w-full md:w-1/2 flex flex-col border-r border-slate-700">
+            <div class="bg-slate-800 px-4 py-2 flex justify-between items-center border-b border-slate-700">
+                <span class="text-xs font-bold text-blue-400 uppercase tracking-wider flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                    Input (HTML)
+                </span>
+                <span class="text-xs text-slate-500" id="char-count">0 chars</span>
+            </div>
+            <textarea 
+                id="input-html" 
+                class="flex-1 w-full bg-[#1e293b] text-slate-300 p-4 font-mono text-sm focus:outline-none focus:ring-0 placeholder-slate-600 leading-relaxed"
+                placeholder="<!-- Paste your HTML here... -->
+<h1>Hello World</h1>
+<p>This is a <strong>bold</strong> statement and <em>italic</em> text.</p>
+<ul>
+  <li>Item 1</li>
+  <li>Item 2</li>
+</ul>"
+                oninput="handleConvert()"
+            ></textarea>
+        </div>
+
+        <!-- OUTPUT: Markdown / Text / Rich -->
+        <div class="w-full md:w-1/2 flex flex-col bg-[#0f172a]">
+            <!-- Tab Selection -->
+            <div class="bg-slate-800 px-2 py-1 flex items-center border-b border-slate-700 gap-1 overflow-x-auto">
+                <button onclick="setMode('markdown')" id="tab-markdown" class="px-4 py-1.5 text-xs font-bold rounded text-white bg-slate-700 transition-colors whitespace-nowrap">Markdown</button>
+                <button onclick="setMode('text')" id="tab-text" class="px-4 py-1.5 text-xs font-bold rounded text-slate-400 hover:text-slate-200 transition-colors whitespace-nowrap">Plain Text</button>
+                <button onclick="setMode('richtext')" id="tab-richtext" class="px-4 py-1.5 text-xs font-bold rounded text-slate-400 hover:text-slate-200 transition-colors whitespace-nowrap flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                    Rich Text (Copy)
+                </button>
+            </div>
+            
+            <div class="relative flex-1 group overflow-hidden">
+                <!-- Hidden textarea for raw value -->
+                <textarea id="output-result" class="hidden"></textarea>
+                
+                <!-- Code Preview (Markdown/Text) -->
+                <pre id="preview-container" class="m-0 h-full w-full p-4 overflow-auto bg-[#0f172a] text-sm font-mono"><code id="preview-code" class="language-markdown"></code></pre>
+
+                <!-- Rich Text Preview (WYSIWYG) -->
+                <div id="preview-richtext" class="hidden m-0 h-full w-full p-6 overflow-auto bg-[#0f172a] text-slate-300 rich-text-content font-sans"></div>
+
+                <!-- Copy Indicator -->
+                <div id="copy-toast" class="absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-3 py-1.5 rounded opacity-0 transition-opacity pointer-events-none z-20">
+                    Copied!
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-slate-500 text-xs py-2 px-6 flex justify-between items-center border-t border-slate-700">
+        <div>StudyX Ecosystem</div>
+        <div>
+            <span id="status-indicator" class="inline-block w-2 h-2 rounded-full bg-green-500 mr-1"></span> Ready
+        </div>
+    </footer>
+
+    <script>
+        // Init Turndown Service (HTML to Markdown)
+        const turndownService = new TurndownService({
+            headingStyle: 'atx',
+            codeBlockStyle: 'fenced'
+        });
+
+        // Elements
+        const inputEl = document.getElementById('input-html');
+        const outputEl = document.getElementById('output-result');
+        const previewEl = document.getElementById('preview-code');
+        const previewContainer = document.getElementById('preview-container');
+        const previewRich = document.getElementById('preview-richtext');
+        
+        const tabMarkdown = document.getElementById('tab-markdown');
+        const tabText = document.getElementById('tab-text');
+        const tabRich = document.getElementById('tab-richtext');
+        const charCountEl = document.getElementById('char-count');
+
+        let currentMode = 'markdown'; // 'markdown' | 'text' | 'richtext'
+
+        // 1. Logic Convert chính
+        function handleConvert() {
+            const html = inputEl.value;
+            charCountEl.innerText = `${html.length} chars`;
+
+            if (!html.trim()) {
+                outputEl.value = '';
+                previewEl.innerHTML = '';
+                previewRich.innerHTML = '';
+                return;
+            }
+
+            let result = '';
+
+            if (currentMode === 'markdown') {
+                try {
+                    result = turndownService.turndown(html);
+                } catch (e) {
+                    result = "Error converting to Markdown: " + e.message;
+                }
+                updateCodePreview(result, 'language-markdown');
+                
+            } else if (currentMode === 'text') {
+                const doc = new DOMParser().parseFromString(html, 'text/html');
+                result = doc.body.textContent || "";
+                result = result.replace(/\n\s*\n/g, '\n').trim();
+                updateCodePreview(result, 'language-text');
+                
+            } else if (currentMode === 'richtext') {
+                // Rich Text Mode: Render HTML trực tiếp vào div
+                previewRich.innerHTML = html;
+                // Không cần updateCodePreview
+            }
+        }
+
+        function updateCodePreview(content, langClass) {
+            outputEl.value = content;
+            previewEl.className = langClass;
+            previewEl.innerHTML = content
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+            Prism.highlightElement(previewEl);
+        }
+
+        // 2. Chuyển chế độ (Tabs)
+        function setMode(mode) {
+            currentMode = mode;
+            
+            // Reset styles
+            const activeStyle = "px-4 py-1.5 text-xs font-bold rounded text-white bg-slate-700 transition-colors whitespace-nowrap";
+            const inactiveStyle = "px-4 py-1.5 text-xs font-bold rounded text-slate-400 hover:text-slate-200 transition-colors whitespace-nowrap";
+            const activeRichStyle = "px-4 py-1.5 text-xs font-bold rounded text-white bg-slate-700 transition-colors whitespace-nowrap flex items-center gap-1";
+            const inactiveRichStyle = "px-4 py-1.5 text-xs font-bold rounded text-slate-400 hover:text-slate-200 transition-colors whitespace-nowrap flex items-center gap-1";
+
+            tabMarkdown.className = mode === 'markdown' ? activeStyle : inactiveStyle;
+            tabText.className = mode === 'text' ? activeStyle : inactiveStyle;
+            tabRich.className = mode === 'richtext' ? activeRichStyle : inactiveRichStyle;
+
+            // Toggle views
+            if (mode === 'richtext') {
+                previewContainer.classList.add('hidden');
+                previewRich.classList.remove('hidden');
+            } else {
+                previewContainer.classList.remove('hidden');
+                previewRich.classList.add('hidden');
+            }
+
+            handleConvert();
+        }
+
+        // 3. Copy kết quả (Logic quan trọng cho Rich Text)
+        async function copyOutput() {
+            // Case 1: Rich Text Copy (Giữ nguyên định dạng)
+            if (currentMode === 'richtext') {
+                try {
+                    const htmlContent = inputEl.value;
+                    const plainText = previewRich.innerText;
+                    
+                    // Tạo Blob HTML để copy định dạng
+                    const blobHtml = new Blob([htmlContent], { type: 'text/html' });
+                    const blobText = new Blob([plainText], { type: 'text/plain' });
+                    
+                    const data = [new ClipboardItem({
+                        'text/html': blobHtml,
+                        'text/plain': blobText
+                    })];
+                    
+                    await navigator.clipboard.write(data);
+                    showToast("Copied Formatted!");
+                } catch (err) {
+                    console.error("Rich copy failed:", err);
+                    // Fallback nếu trình duyệt không hỗ trợ Clipboard API
+                    showToast("Error Copying");
+                }
+            } 
+            // Case 2: Markdown / Plain Text Copy (Chỉ lấy chữ)
+            else {
+                const text = outputEl.value;
+                if (!text) return;
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast("Copied!");
+                });
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('copy-toast');
+            toast.innerText = msg;
+            toast.classList.remove('opacity-0');
+            setTimeout(() => toast.classList.add('opacity-0'), 2000);
+        }
+
+        function clearAll() {
+            if(confirm("Clear all content?")) {
+                inputEl.value = '';
+                handleConvert();
+            }
+        }
+
+        // Init
+        window.onload = function() {
+            if(!inputEl.value) {
+                inputEl.value = `<h1>Welcome to StudyX</h1>
+<p>Convert your <strong>HTML</strong> effortlessly.</p>
+<ul>
+  <li>Fast</li>
+  <li>Secure</li>
+  <li>Client-side only</li>
+</ul>
+<a href="https://studyx.me">Visit us</a>`;
+                handleConvert();
+            }
+        }
+
+    </script>
+</body>
+</html>
