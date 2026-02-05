@@ -276,8 +276,9 @@
         window.onload = function() {
             if(!inputEl.value) {
                 inputEl.value = `<h1>Welcome to StudyX</h1><p>Paste HTML here to see Magic!</p><ul><li>Auto Format</li><li>Instant Convert</li></ul>`;
-                handleConvert();
             }
+            // Auto-format immediately on load
+            formatHTML();
         }
     </script>
 </body>
