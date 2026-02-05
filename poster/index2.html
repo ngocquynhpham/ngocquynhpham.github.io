@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Poster Critic - Trợ Lý Phân Tích UI/UX</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #d4af37;
+            --dark: #0a0a0a;
+        }
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: var(--dark);
+            color: #e5e7eb;
+        }
+        .glass {
+            background: rgba(23, 23, 23, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .gold-border { border-color: var(--gold); }
+        .gold-text { color: var(--gold); }
+        .gold-bg { background-color: var(--gold); }
+
+        #drop-zone.dragover {
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.05);
+        }
+        
+        /* Loading animation */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255,255,255,0.1);
+            border-left-color: var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360px); } }
+    </style>
+</head>
+<body class="min-h-screen pb-20">
+
+    <!-- Header -->
+    <nav class="border-b border-white/5 bg-black/50 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 gold-bg text-black font-black flex items-center justify-center rounded">AI</div>
+                <span class="font-bold tracking-tighter uppercase">Poster <span class="gold-text">Critic</span></span>
+            </div>
+            <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest hidden md:block">
+                Powered by Gemini 2.5 Flash
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-6 pt-12">
+        <!-- Hero Section -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-black mb-4 uppercase tracking-tighter">Phân tích Poster <br> <span class="gold-text text-3xl md:text-5xl">Bằng Trí Tuệ Nhân Tạo</span></h1>
+            <p class="text-slate-400 max-w-2xl mx-auto text-sm md:text-base">Upload poster của bà lên, AI sẽ tự động đánh giá dựa trên các tiêu chí Visual Hierarchy, Typography, Semantics và Accessibility.</p>
+        </header>
+
+        <!-- Upload Section -->
+        <section class="mb-12">
+            <div id="drop-zone" class="glass border-2 border-dashed border-white/10 rounded-[2rem] p-12 text-center transition-all cursor-pointer">
+                <input type="file" id="file-input" class="hidden" accept="image/*">
+                <div id="upload-prompt">
+                    <div class="text-5xl mb-4">🖼️</div>
+                    <p class="font-bold mb-2">Kéo thả poster vào đây</p>
+                    <p class="text-xs text-slate-500 uppercase tracking-widest">Hoặc click để chọn file từ máy tính</p>
+                </div>
+                <div id="preview-container" class="hidden">
+                    <img id="image-preview" class="max-h-80 mx-auto rounded-lg shadow-2xl mb-4">
+                    <button id="remove-btn" class="text-xs font-bold text-red-500 uppercase tracking-widest hover:underline">Chọn hình khác</button>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-center">
+                <button id="analyze-btn" class="hidden gold-bg text-black font-black px-10 py-4 rounded-full uppercase tracking-widest shadow-xl shadow-yellow-500/10 hover:scale-105 transition active:scale-95 disabled:opacity-50 disabled:pointer-events-none">
+                    Bắt đầu phân tích
+                </button>
+            </div>
+        </section>
+
+        <!-- Loading State -->
+        <div id="loading" class="hidden flex flex-col items-center gap-4 py-20">
+            <div class="spinner"></div>
+            <p class="text-xs font-black gold-text uppercase tracking-[0.3em] animate-pulse">AI đang soi lỗi thiết kế...</p>
+        </div>
+
+        <!-- Results Section -->
+        <section id="results" class="hidden space-y-8 animate-in fade-in duration-700">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Radar Chart Card -->
+                <div class="glass p-8 rounded-[2rem]">
+                    <h3 class="text-center text-xs font-black uppercase text-slate-500 tracking-widest mb-8">Biểu đồ Radar UI/UX</h3>
+                    <div class="h-80 relative">
+                        <canvas id="resultChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Analysis Summary -->
+                <div class="space-y-4">
+                    <div class="glass p-8 rounded-[2rem] border-l-4 border-yellow-500">
+                        <h4 class="gold-text font-black uppercase text-xs mb-2 tracking-widest">Tóm tắt đánh giá</h4>
+                        <p id="ai-summary" class="text-sm leading-relaxed text-slate-300"></p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="glass p-6 rounded-2xl text-center">
+                            <div id="total-score" class="text-3xl font-black gold-text">--</div>
+                            <div class="text-[10px] font-black uppercase text-slate-500">Overall Score</div>
+                        </div>
+                        <div class="glass p-6 rounded-2xl text-center">
+                            <div id="ai-verdict" class="text-3xl font-black text-white">--</div>
+                            <div class="text-[10px] font-black uppercase text-slate-500">Verdict</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Breakdown -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass p-6 rounded-2xl border-t-4 border-emerald-500">
+                    <h5 class="font-black text-xs uppercase mb-4 text-emerald-500">Ưu điểm (Strengths)</h5>
+                    <ul id="list-strengths" class="text-xs text-slate-400 space-y-2 list-disc pl-4"></ul>
+                </div>
+                <div class="glass p-6 rounded-2xl border-t-4 border-rose-500">
+                    <h5 class="font-black text-xs uppercase mb-4 text-rose-500">Nhược điểm (Weaknesses)</h5>
+                    <ul id="list-weaknesses" class="text-xs text-slate-400 space-y-2 list-disc pl-4"></ul>
+                </div>
+                <div class="glass p-6 rounded-2xl border-t-4 border-sky-500">
+                    <h5 class="font-black text-xs uppercase mb-4 text-sky-500">Đề xuất (Suggestions)</h5>
+                    <ul id="list-suggestions" class="text-xs text-slate-400 space-y-2 list-disc pl-4"></ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center py-12 text-[10px] font-black uppercase text-slate-600 tracking-[0.3em]">
+        &copy; 2026 AI Design Auditor | Private Preview
+    </footer>
+
+    <script>
+        const apiKey = ""; // Runtime provided
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const previewContainer = document.getElementById('preview-container');
+        const uploadPrompt = document.getElementById('upload-prompt');
+        const imagePreview = document.getElementById('image-preview');
+        const analyzeBtn = document.getElementById('analyze-btn');
+        const removeBtn = document.getElementById('remove-btn');
+        const resultsSection = document.getElementById('results');
+        const loadingSection = document.getElementById('loading');
+        
+        let chartInstance = null;
+        let base64Image = null;
+
+        // --- Interaction Logic ---
+
+        dropZone.onclick = () => fileInput.click();
+        
+        dropZone.ondragover = (e) => {
+            e.preventDefault();
+            dropZone.classList.add('dragover');
+        };
+
+        dropZone.ondragleave = () => dropZone.classList.remove('dragover');
+
+        dropZone.ondrop = (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('dragover');
+            handleFile(e.dataTransfer.files[0]);
+        };
+
+        fileInput.onchange = (e) => handleFile(e.target.files[0]);
+
+        removeBtn.onclick = (e) => {
+            e.stopPropagation();
+            resetUpload();
+        };
+
+        function handleFile(file) {
+            if (!file || !file.type.startsWith('image/')) return;
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                base64Image = e.target.result.split(',')[1];
+                imagePreview.src = e.target.result;
+                uploadPrompt.classList.add('hidden');
+                previewContainer.classList.remove('hidden');
+                analyzeBtn.classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function resetUpload() {
+            base64Image = null;
+            fileInput.value = "";
+            uploadPrompt.classList.remove('hidden');
+            previewContainer.classList.add('hidden');
+            analyzeBtn.classList.add('hidden');
+            resultsSection.classList.add('hidden');
+        }
+
+        // --- AI Analysis Logic ---
+
+        analyzeBtn.onclick = async () => {
+            analyzeBtn.disabled = true;
+            loadingSection.classList.remove('hidden');
+            resultsSection.classList.add('hidden');
+            
+            try {
+                const response = await callGeminiAI(base64Image);
+                displayResults(response);
+            } catch (err) {
+                console.error(err);
+                alert("Có lỗi xảy ra khi AI đang phân tích. Bà thử lại nhen!");
+            } finally {
+                analyzeBtn.disabled = false;
+                loadingSection.classList.add('hidden');
+            }
+        };
+
+        async function callGeminiAI(imageData) {
+            const systemPrompt = `BẠN LÀ CHUYÊN GIA CRITIQUE POSTER UI/UX. 
+            Nhiệm vụ: Phân tích poster được gửi.
+            Hãy đánh giá dựa trên:
+            1. Visual Hierarchy (Thứ bậc thị giác)
+            2. Design Semantics (Ý nghĩa thiết kế)
+            3. Accessibility (Tính tiếp cận/độ tương phản)
+            4. Visual Aesthetics (Thẩm mỹ)
+            5. Composition (Bố cục)
+            
+            YÊU CẦU PHẢN HỒI BẰNG TIẾNG VIỆT TRONG ĐỊNH DẠNG JSON SAU:
+            {
+              "scores": { "hierarchy": 0-100, "semantics": 0-100, "accessibility": 0-100, "aesthetics": 0-100, "composition": 0-100 },
+              "overall_score": 0-100,
+              "verdict": "S (Xuất sắc), A, B, C, hoặc D (Cần làm lại)",
+              "summary": "Tóm tắt ngắn gọn nhận xét",
+              "strengths": ["Ưu điểm 1", "Ưu điểm 2"],
+              "weaknesses": ["Nhược điểm 1", "Nhược điểm 2"],
+              "suggestions": ["Đề xuất 1", "Đề xuất 2"]
+            }`;
+
+            const url = ``;
+            
+            const payload = {
+                contents: [{
+                    parts: [
+                        { text: "Hãy phân tích poster này thật chi tiết giúp tui nhen!" },
+                        { inlineData: { mimeType: "image/png", data: imageData } }
+                    ]
+                }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+                generationConfig: {
+                    responseMimeType: "application/json"
+                }
+            };
+
+            // Simple retry logic
+            let attempt = 0;
+            const maxRetries = 3;
+            while (attempt < maxRetries) {
+                try {
+                    const res = await fetch(url, {
+                        method: 'POST',
+                        body: JSON.stringify(payload)
+                    });
+                    const data = await res.json();
+                    const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+                    return JSON.parse(text);
+                } catch (e) {
+                    attempt++;
+                    if (attempt === maxRetries) throw e;
+                    await new Promise(r => setTimeout(r, 1000 * Math.pow(2, attempt)));
+                }
+            }
+        }
+
+        function displayResults(data) {
+            resultsSection.classList.remove('hidden');
+            document.getElementById('ai-summary').innerText = data.summary;
+            document.getElementById('total-score').innerText = data.overall_score;
+            document.getElementById('ai-verdict').innerText = data.verdict;
+
+            // Fill lists
+            updateList('list-strengths', data.strengths);
+            updateList('list-weaknesses', data.weaknesses);
+            updateList('list-suggestions', data.suggestions);
+
+            // Init Chart
+            initChart(data.scores);
+            
+            // Scroll to results
+            resultsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function updateList(id, items) {
+            const list = document.getElementById(id);
+            list.innerHTML = items.map(i => `<li>${i}</li>`).join('');
+        }
+
+        function initChart(scores) {
+            if (chartInstance) chartInstance.destroy();
+            
+            const ctx = document.getElementById('resultChart').getContext('2d');
+            chartInstance = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Hierarchy', 'Semantics', 'Accessibility', 'Aesthetics', 'Composition'],
+                    datasets: [{
+                        label: 'Thiết kế Score',
+                        data: [scores.hierarchy, scores.semantics, scores.accessibility, scores.aesthetics, scores.composition],
+                        backgroundColor: 'rgba(212, 175, 55, 0.2)',
+                        borderColor: '#d4af37',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#d4af37'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(255,255,255,0.1)' },
+                            grid: { color: 'rgba(255,255,255,0.1)' },
+                            pointLabels: { color: '#94a3b8', font: { size: 10, weight: 'bold' } },
+                            ticks: { display: false },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
