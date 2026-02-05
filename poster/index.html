@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nghệ Thuật Critique Poster Film - UI/UX Perspective</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts: Be Vietnam Pro -->
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;300;400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --gold: #d4af37;
+            --dark-bg: #0d0d0d;
+            --card-bg: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: var(--dark-bg);
+            color: #d1d5db;
+            scroll-behavior: smooth;
+        }
+
+        .tab-content {
+            display: none;
+            animation: slideUp 0.4s ease-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .nav-link {
+            position: relative;
+            padding: 0.5rem 0.75rem;
+            color: #9ca3af;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            transition: all 0.3s;
+        }
+
+        @media (min-width: 768px) {
+            .nav-link {
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+                letter-spacing: 0.1em;
+            }
+        }
+
+        .nav-link.active {
+            color: var(--gold);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0.75rem;
+            right: 0.75rem;
+            height: 2px;
+            background-color: var(--gold);
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 250px;
+        }
+        
+        @media (min-width: 768px) {
+            .chart-container { height: 300px; }
+        }
+
+        /* Chỉ Sticky trên màn hình lớn từ LG trở lên */
+        @media (min-width: 1024px) {
+            .poster-sticky {
+                position: sticky;
+                top: 120px;
+            }
+        }
+
+        .accent-border {
+            border-left: 4px solid var(--gold);
+        }
+
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+    </style>
+</head>
+<body class="selection:bg-yellow-500/20">
+
+    <!-- Header & Tabs Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-black/90 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 h-16 md:h-20 flex justify-between items-center">
+            <div class="flex items-center gap-2 md:gap-3">
+                <div class="w-8 h-8 md:w-10 md:h-10 bg-[#d4af37] text-black font-black flex items-center justify-center rounded-md text-sm md:text-base">C</div>
+                <span class="text-sm md:text-lg font-bold uppercase tracking-tighter">Critique <span class="text-[#d4af37]">Master</span></span>
+            </div>
+            
+            <div class="flex gap-1 md:gap-2">
+                <button onclick="switchTab('guide', this)" class="nav-link active">1. Hướng Dẫn</button>
+                <button onclick="switchTab('casestudy', this)" class="nav-link">2. Case Study</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 md:px-6 pt-24 md:pt-32 pb-12 md:pb-20">
+
+        <!-- TAB 1: HƯỚNG DẪN -->
+        <div id="guide" class="tab-content active">
+            <header class="mb-10 md:mb-16">
+                <h2 class="text-[10px] md:text-xs font-black text-[#d4af37] uppercase tracking-[0.4em] mb-3 md:mb-4">Phần 1</h2>
+                <h3 class="text-3xl md:text-6xl font-black text-white mb-4 md:mb-6 uppercase tracking-tighter leading-relaxed md:leading-relaxed">
+                    Quy Trình & <br class="hidden md:block"> Tiêu Chí Đánh Giá
+                </h3>
+                <p class="max-w-2xl text-slate-400 text-sm md:text-lg leading-relaxed">Kiến trúc hóa tư duy nhận xét dưới góc độ UI/UX chuyên nghiệp để bóc tách một tuyệt tác thiết kế.</p>
+            </header>
+
+            <!-- 4 Pillars GRID -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12 md:mb-20">
+                <div class="glass-card p-6 md:p-8">
+                    <div class="text-2xl md:text-3xl mb-4">👁️</div>
+                    <h4 class="font-bold text-white mb-1 uppercase tracking-wider text-[10px] md:text-xs text-[#d4af37]">Visual Hierarchy</h4>
+                    <h5 class="font-bold text-white mb-3 text-sm md:text-base">Thứ bậc thị giác</h5>
+                    <p class="text-[11px] md:text-xs text-slate-400 leading-relaxed">Luồng điều hướng mắt (F-pattern, Z-pattern) có dẫn đến thông tin quan trọng nhất không?</p>
+                </div>
+                <div class="glass-card p-6 md:p-8">
+                    <div class="text-2xl md:text-3xl mb-4">🖋️</div>
+                    <h4 class="font-bold text-white mb-1 uppercase tracking-wider text-[10px] md:text-xs text-[#d4af37]">Design Semantics</h4>
+                    <h5 class="font-bold text-white mb-3 text-sm md:text-base">Ngôn ngữ thiết kế</h5>
+                    <p class="text-[11px] md:text-xs text-slate-400 leading-relaxed">Font chữ, màu sắc và hình ảnh có truyền tải đúng "mood" và ý nghĩa của tác phẩm?</p>
+                </div>
+                <div class="glass-card p-6 md:p-8">
+                    <div class="text-2xl md:text-3xl mb-4">♿</div>
+                    <h4 class="font-bold text-white mb-1 uppercase tracking-wider text-[10px] md:text-xs text-[#d4af37]">Accessibility</h4>
+                    <h5 class="font-bold text-white mb-3 text-sm md:text-base">Tính tiếp cận</h5>
+                    <p class="text-[11px] md:text-xs text-slate-400 leading-relaxed">Độ tương phản, kích thước chữ có đủ để đọc từ xa hoặc trong môi trường thiếu sáng?</p>
+                </div>
+                <div class="glass-card p-6 md:p-8">
+                    <div class="text-2xl md:text-3xl mb-4">✨</div>
+                    <h4 class="font-bold text-white mb-1 uppercase tracking-wider text-[10px] md:text-xs text-[#d4af37]">Visual Aesthetics</h4>
+                    <h5 class="font-bold text-white mb-3 text-sm md:text-base">Tính thẩm mỹ</h5>
+                    <p class="text-[11px] md:text-xs text-slate-400 leading-relaxed">Sự cân bằng, khoảng trắng (whitespace) và tỷ lệ vàng trong việc sắp đặt các thành phần.</p>
+                </div>
+            </div>
+
+            <!-- Pro Techniques -->
+            <section class="bg-white/5 rounded-[2rem] md:rounded-[2.5rem] p-6 md:p-16 border border-white/5">
+                <h4 class="text-lg md:text-2xl font-black text-white mb-8 md:mb-12 text-center uppercase tracking-widest">Kỹ Thuật Soi Lỗi Chuyên Sâu</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+                    <div class="flex gap-4 md:gap-6">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-yellow-500/10 text-[#d4af37] flex items-center justify-center shrink-0 font-black text-sm md:text-base">01</div>
+                        <div>
+                            <h5 class="font-bold text-white mb-2 text-sm md:text-base">The Squint Test</h5>
+                            <p class="text-xs md:text-sm text-slate-400">Nheo mắt lại để kiểm tra xem mảng màu hoặc hình ảnh nào nổi bật nhất. Điểm đó có phải là thông điệp chính?</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 md:gap-6">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-yellow-500/10 text-[#d4af37] flex items-center justify-center shrink-0 font-black text-sm md:text-base">02</div>
+                        <div>
+                            <h5 class="font-bold text-white mb-2 text-sm md:text-base">Reading Gravity</h5>
+                            <p class="text-xs md:text-sm text-slate-400">Kiểm tra xem các yếu tố có tuân theo trọng lực đọc tự nhiên (từ trên xuống dưới, trái sang phải) không.</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 md:gap-6">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-yellow-500/10 text-[#d4af37] flex items-center justify-center shrink-0 font-black text-sm md:text-base">03</div>
+                        <div>
+                            <h5 class="font-bold text-white mb-2 text-sm md:text-base">Law of Proximity</h5>
+                            <p class="text-xs md:text-sm text-slate-400">Các nhóm thông tin (Ngày chiếu, Đạo diễn) có được gom nhóm logic để giảm tải nhận thức?</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 md:gap-6">
+                        <div class="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-yellow-500/10 text-[#d4af37] flex items-center justify-center shrink-0 font-black text-sm md:text-base">04</div>
+                        <div>
+                            <h5 class="font-bold text-white mb-2 text-sm md:text-base">Alignment Audit</h5>
+                            <p class="text-xs md:text-sm text-slate-400">Kiểm tra các đường dóng hàng. Sự lệch hàng dù chỉ 1px cũng tạo cảm giác thiếu chuyên nghiệp.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- TAB 2: CASE STUDY -->
+        <div id="casestudy" class="tab-content">
+            <header class="mb-8 md:mb-12">
+                <h2 class="text-[10px] md:text-xs font-black text-[#d4af37] uppercase tracking-[0.4em] mb-3 md:mb-4">Phần 2</h2>
+                <h3 class="text-3xl md:text-4xl font-black text-white uppercase tracking-tighter">Film: Ký Sinh Trùng (Parasite)</h3>
+            </header>
+
+            <!-- Responsive Grid: Stack on Mobile (1 col), Split on Desktop (2 cols) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-12 items-start">
+                
+                <!-- Left Side (Top on mobile) -->
+                <div class="poster-sticky space-y-6 md:space-y-8">
+                    <div class="bg-[#1a1a1a] rounded-[2rem] overflow-hidden border border-white/5 shadow-2xl">
+                        <img src="https://visualliteracy.blog/wp-content/uploads/2023/04/parasite.webp?w=640" 
+                             alt="Parasite Poster" 
+                             class="w-full h-auto opacity-90 hover:opacity-100 transition-opacity duration-500">
+                    </div>
+                    <div class="glass-card p-6 md:p-8">
+                        <h5 class="text-[10px] md:text-xs font-black text-slate-500 uppercase tracking-widest mb-6">Chỉ số Hiệu Quả Truyền Tải</h5>
+                        <div class="chart-container">
+                            <canvas id="parasiteChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side (Bottom on mobile) -->
+                <div class="space-y-10 md:space-y-14">
+                    <!-- Section 1 -->
+                    <div class="accent-border pl-5 md:pl-6">
+                        <h4 class="text-xl md:text-2xl font-black text-white mb-4 uppercase tracking-tight">Bố Cục & Hierarchy</h4>
+                        <div class="space-y-4 text-slate-400 text-sm md:text-base leading-relaxed">
+                            <p><strong class="text-white">Điểm Nhấn Thị Giác:</strong> Poster sử dụng bố cục trung tâm nhưng đầy phá cách. Ánh mắt bị thu hút ngay vào vệt đen/trắng che mắt các nhân vật - tạo cảm giác ẩn danh và bất ổn.</p>
+                            <p><strong class="text-white">Z-Pattern:</strong> Mắt di chuyển từ Tiêu đề (Top/Center) -> Các nhân vật -> Đôi chân người chết (Bottom Left) -> Thông tin khởi chiếu (Bottom Right).</p>
+                            <p><strong class="text-white">Màu sắc:</strong> Màu xanh của cỏ tạo nền tương phản hoàn hảo cho các trang phục trung tính, làm bật lên sự sống động giả tạo của bối cảnh thượng lưu.</p>
+                        </div>
+                    </div>
+
+                    <!-- Section 2 -->
+                    <div class="accent-border pl-5 md:pl-6">
+                        <h4 class="text-xl md:text-2xl font-black text-white mb-4 uppercase tracking-tight">Biểu Tượng Học</h4>
+                        <div class="space-y-4 text-slate-400 text-sm md:text-base leading-relaxed">
+                            <p><strong class="text-white">Ẩn Ý Về Giai Cấp:</strong> Vệt đen che mắt nhà nghèo và vệt trắng che mắt nhà giàu không chỉ là thiết kế, đó là **UX của sự phân tầng**. Nó ngăn cản sự kết nối ánh mắt, tạo ra khoảng cách lạnh lẽo.</p>
+                            <p><strong class="text-white">Easter Egg:</strong> Chi tiết đôi chân ở góc dưới là một điểm chạm tuyệt vời, buộc người xem phải quan sát kỹ - tăng thời gian tương tác với poster.</p>
+                            <p><strong class="text-white">Phản Chiếu Nội Tâm:</strong> Hình ảnh phản chiếu trên cửa kính tạo ra các lớp không gian (layers), ẩn dụ cho việc "ký sinh" vào cuộc sống của người khác.</p>
+                        </div>
+                    </div>
+
+                    <!-- Section 3 -->
+                    <div class="accent-border pl-5 md:pl-6">
+                        <h4 class="text-xl md:text-2xl font-black text-white mb-4 uppercase tracking-tight">Typography</h4>
+                        <div class="glass-card p-5 md:p-6 mb-4 bg-yellow-500/5">
+                            <p class="text-xs md:text-sm italic text-[#d4af37]">"Việc Việt hóa tiêu đề vẫn giữ được tinh thần của bản gốc với các nét cắt sắc lẹm và biểu tượng vòng xoắn ở chữ 'I'."</p>
+                        </div>
+                        <p class="text-xs md:text-sm text-slate-400 leading-relaxed">Tuy nhiên, một số chi tiết nhỏ trong dấu tiếng Việt có thể gây nhiễu nếu nhìn từ rất xa. Đây là bài toán cân bằng giữa **Visual Semantics** và **Accessibility**.</p>
+                    </div>
+
+                    <!-- Matrix Table - Responsive Font -->
+                    <div class="overflow-hidden rounded-2xl border border-white/5 shadow-lg">
+                        <table class="w-full text-left text-[10px] md:text-xs">
+                            <thead class="bg-white/5 text-[#d4af37] font-black uppercase tracking-widest">
+                                <tr>
+                                    <th class="p-4 md:p-5">Tiêu chí</th>
+                                    <th class="p-4 md:p-5 text-right">Điểm</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-slate-400">
+                                <tr class="border-b border-white/5">
+                                    <td class="p-4 md:p-5 uppercase">Composition</td>
+                                    <td class="p-4 md:p-5 font-bold text-white text-right">9.5/10</td>
+                                </tr>
+                                <tr class="border-b border-white/5">
+                                    <td class="p-4 md:p-5 uppercase">Typography</td>
+                                    <td class="p-4 md:p-5 font-bold text-white text-right">9.0/10</td>
+                                </tr>
+                                <tr class="border-b border-white/5">
+                                    <td class="p-4 md:p-5 uppercase">Visual Metaphor</td>
+                                    <td class="p-4 md:p-5 font-bold text-white text-right">10/10</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-4 md:p-5 uppercase">Color Palette</td>
+                                    <td class="p-4 md:p-5 font-bold text-white text-right">10/10</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="py-10 md:py-16 border-t border-white/5 text-center px-4">
+        <p class="text-[8px] md:text-[10px] font-black uppercase text-slate-600 tracking-[0.4em] leading-relaxed">
+            &copy; 2026 UI/UX Poster Workshop | Multi-Device Optimization <br class="md:hidden"> | No SVG/Mermaid Used
+        </p>
+    </footer>
+
+    <script>
+        // Tab switching logic
+        function switchTab(tabId, btn) {
+            // Hide all contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            // Show selected
+            document.getElementById(tabId).classList.add('active');
+            
+            // Manage active buttons
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            btn.classList.add('active');
+
+            // Scroll to top when switching for better UX
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Trigger chart update if entering case study
+            if (tabId === 'casestudy') {
+                initChart();
+            }
+        }
+
+        // Chart.js implementation
+        let chartInstance = null;
+        function initChart() {
+            if (chartInstance) return; // Prevent duplicate init
+
+            const ctx = document.getElementById('parasiteChart').getContext('2d');
+            
+            // Custom label wrapping for Chart.js as per best practices
+            const labels = ['Sự tò mò', 'Nhận diện', 'Dễ đọc', 'Cảm xúc'];
+
+            chartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Hiệu quả (%)',
+                        data: [100, 95, 85, 100],
+                        backgroundColor: [
+                            '#d4af37',
+                            '#d4af37',
+                            '#4b5563',
+                            '#d4af37'
+                        ],
+                        borderRadius: 8,
+                        barPercentage: 0.5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { 
+                            beginAtZero: true, 
+                            max: 100,
+                            grid: { color: 'rgba(255,255,255,0.05)' },
+                            ticks: { color: '#666', font: { size: 9 } }
+                        },
+                        x: { 
+                            grid: { display: false },
+                            ticks: { color: '#999', font: { size: 10, weight: 'bold' } }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#1a1a1a',
+                            titleFont: { size: 12, family: 'Be Vietnam Pro' },
+                            bodyFont: { size: 11, family: 'Be Vietnam Pro' },
+                            padding: 12,
+                            cornerRadius: 10,
+                            callbacks: {
+                                title: function(tooltipItems) {
+                                    return tooltipItems[0].label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
