@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ngoc Quynh Pham | Product Engineer</title>
+    
+    <!-- 1. Fonts: Playfair Display (Serif - Sang trọng) + Manrope (Sans - Hiện đại) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- 2. Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'bg-cream': '#F3F3F3', /* Màu nền đặc trưng */
+                        'text-black': '#111111',
+                        'border-gray': '#D1D1D1',
+                        'accent-gray': '#666666'
+                    },
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'marquee': 'marquee 40s linear infinite',
+                        'spin-slow': 'spin 12s linear infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- 3. Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            background-color: #F3F3F3;
+            color: #111111;
+            overflow-x: hidden;
+        }
+        ::selection {
+            background-color: #111;
+            color: #fff;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #F3F3F3; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #111; }
+
+        /* Modal Transitions */
+        .modal-wrap {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(243, 243, 243, 0.95); /* High opacity cream bg */
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .modal-wrap.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-inner {
+            transform: translateY(30px);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-wrap.active .modal-inner {
+            transform: translateY(0);
+        }
+
+        /* Mobile Menu Transition */
+        #mobile-menu {
+            transform: translateY(-100%);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #mobile-menu.open {
+            transform: translateY(0%);
+        }
+
+        /* Accordion Transition */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 500px; /* Adjust based on content */
+        }
+        .accordion-icon {
+            transition: transform 0.3s ease;
+        }
+        .accordion-item.active .accordion-icon {
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body class="antialiased relative">
+
+    <!-- HEADER: Grid Layout -->
+    <header class="fixed top-0 w-full z-40 bg-bg-cream/90 backdrop-blur-sm border-b border-border-gray">
+        <div class="grid grid-cols-2 md:grid-cols-4 h-16 md:h-20">
+            <!-- Logo -->
+            <div class="col-span-1 border-r border-border-gray flex items-center px-6">
+                <a href="#" class="text-xl font-serif font-bold tracking-tight">Q.PHAM</a>
+            </div>
+
+            <!-- Desktop Nav (Middle) -->
+            <div class="hidden md:flex col-span-2 border-r border-border-gray items-center justify-center gap-12 text-sm font-medium tracking-wide uppercase">
+                <a href="#about" class="hover:line-through transition-all">About</a>
+                <a href="#experience" class="hover:line-through transition-all">Experience</a>
+                <a href="#work" class="hover:line-through transition-all">Projects</a>
+            </div>
+
+            <!-- CTA / Resume (Right) -->
+            <div class="hidden md:flex col-span-1 items-center justify-center">
+                <button onclick="toggleModal('resume-modal')" class="text-sm font-bold uppercase hover:bg-text-black hover:text-white transition-colors w-full h-full flex items-center justify-center gap-2">
+                    Resume <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden col-span-1 flex items-center justify-end px-6">
+                <div class="space-y-1.5 cursor-pointer group">
+                    <span class="block w-6 h-0.5 bg-black transition-transform group-hover:rotate-180"></span>
+                    <span class="block w-6 h-0.5 bg-black transition-transform group-hover:-rotate-180"></span>
+                </div>
+            </button>
+        </div>
+    </header>
+
+    <!-- MOBILE MENU OVERLAY -->
+    <div id="mobile-menu" class="fixed inset-0 z-30 bg-bg-cream flex flex-col items-center justify-center gap-8">
+        <a href="#about" class="text-5xl font-serif hover:italic transition-all" onclick="toggleMenu()">About</a>
+        <a href="#experience" class="text-5xl font-serif hover:italic transition-all" onclick="toggleMenu()">Experience</a>
+        <a href="#work" class="text-5xl font-serif hover:italic transition-all" onclick="toggleMenu()">Projects</a>
+        <button onclick="toggleMenu(); toggleModal('resume-modal')" class="text-lg font-mono mt-8 border-b border-black">View Resume</button>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="pt-20 md:pt-24 min-h-[90vh] flex flex-col">
+        <div class="flex-1 grid grid-cols-1 md:grid-cols-4">
+            <!-- Left Empty/Decorative -->
+            <div class="hidden md:block col-span-1 border-r border-border-gray relative overflow-hidden bg-white">
+                <div class="absolute bottom-10 left-6 text-xs font-mono uppercase text-accent-gray rotate-90 origin-bottom-left">
+                    Ngoc Quynh Pham
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-span-1 md:col-span-3 flex flex-col justify-center px-6 md:px-20 py-20 relative">
+                <h1 class="text-[12vw] md:text-[8vw] leading-[0.9] font-serif tracking-tighter mb-8">
+                    <span class="block italic">Front-end</span>
+                    <span class="block ml-[5vw] md:ml-[10vw]">Developer &</span>
+                    <span class="block">Engineer</span>
+                </h1>
+                <div class="flex flex-col md:flex-row items-start justify-between md:items-end gap-8 border-t border-border-gray pt-8 mt-4 max-w-4xl">
+                    <p class="text-lg md:text-xl font-light max-w-xl leading-relaxed">
+                        Experienced website developer with a focus on building engaging & accessible digital experiences - things that look good but are also built well under the hood.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                        <span class="text-sm font-mono uppercase">Based in HCMC</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MARQUEE (Scrolling Text) -->
+    <div class="border-y border-border-gray py-4 overflow-hidden bg-white">
+        <div class="whitespace-nowrap flex animate-marquee">
+            <span class="text-4xl font-serif italic mx-8">Responsive Design</span>
+            <span class="text-4xl font-sans font-bold mx-8 uppercase text-transparent" style="-webkit-text-stroke: 1px #000;">ReactJS</span>
+            <span class="text-4xl font-serif italic mx-8">ECharts.js</span>
+            <span class="text-4xl font-sans font-bold mx-8 uppercase text-transparent" style="-webkit-text-stroke: 1px #000;">SEO Optimization</span>
+            <span class="text-4xl font-serif italic mx-8">Agile/Scrum</span>
+            <span class="text-4xl font-sans font-bold mx-8 uppercase text-transparent" style="-webkit-text-stroke: 1px #000;">UI/UX Mindset</span>
+        </div>
+    </div>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="grid grid-cols-1 md:grid-cols-2 border-b border-border-gray">
+        <div class="p-8 md:p-20 border-r border-border-gray border-b md:border-b-0 bg-white">
+            <h2 class="text-sm font-mono uppercase mb-8 tracking-widest text-accent-gray">Welcome</h2>
+            <div class="space-y-6 text-lg leading-relaxed font-light">
+                <p>Thanks for visiting my site.</p>
+                <p>I enjoy researching and experimenting with code, and seeing my projects accepted by users brings me great happiness. I have read and learned about interfaces, user experience, and new technologies.</p>
+                <p>I even studied <span class="font-serif italic text-xl">UI/UX design</span>, which helped me understand the designer's perspective. I am excited to hear from you and continue growing in this field.</p>
+            </div>
+        </div>
+        <div class="p-8 md:p-20 flex flex-col justify-center">
+             <blockquote class="text-3xl md:text-4xl leading-snug font-serif italic">
+                 "I build digital experiences that look good but are also built well under the hood."
+             </blockquote>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE SECTION (New Content) -->
+    <section id="experience" class="border-b border-border-gray">
+        <div class="grid grid-cols-1 md:grid-cols-4 border-b border-border-gray">
+            <div class="col-span-1 border-r border-border-gray p-6 flex items-end">
+                <h2 class="text-sm font-mono uppercase">Work History</h2>
+            </div>
+            <div class="col-span-3 p-6 flex justify-end">
+                <span class="text-sm font-mono text-accent-gray">4+ Years Experience</span>
+            </div>
+        </div>
+
+        <!-- Job 1 -->
+        <div class="accordion-item border-b border-border-gray group">
+            <div class="grid grid-cols-1 md:grid-cols-4 cursor-pointer hover:bg-white transition-colors" onclick="toggleAccordion(this)">
+                <div class="col-span-1 p-6 md:p-10 md:border-r border-border-gray flex flex-col justify-between">
+                    <span class="font-mono text-xs text-accent-gray">Dec 2024 - Present</span>
+                    <h3 class="text-2xl font-serif italic mt-2">Frontend<br>Engineer</h3>
+                </div>
+                <div class="col-span-3 p-6 md:p-10 relative">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="text-xl font-bold mb-2">TechX VN (formerly Sungrove Tech)</h4>
+                            <p class="text-accent-gray text-sm">HCMC, Vietnam</p>
+                        </div>
+                        <button class="accordion-icon w-8 h-8 flex items-center justify-center border border-border-gray rounded-full">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="accordion-content">
+                        <div class="pt-8 space-y-6">
+                            <p class="leading-relaxed">Engineered responsive, mobile-first user interfaces using HTML, CSS, and JavaScript. Created interactive UI components with ECharts.js and Swiper.js.</p>
+                            
+                            <div>
+                                <h5 class="font-bold text-sm uppercase mb-3">Key Achievements</h5>
+                                <ul class="list-disc pl-5 space-y-2 text-sm text-accent-gray leading-relaxed">
+                                    <li>Developed a UI template library with 10+ responsive layouts & modular components.</li>
+                                    <li>Integrated templates into Easier & It’szai platforms, supporting SMEs in Japan.</li>
+                                    <li>Improved UI performance by optimizing DOM & reducing JS bundle size.</li>
+                                </ul>
+                            </div>
+
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span class="border border-border-gray px-3 py-1 text-xs rounded-full bg-bg-cream">HTML/CSS</span>
+                                <span class="border border-border-gray px-3 py-1 text-xs rounded-full bg-bg-cream">JavaScript</span>
+                                <span class="border border-border-gray px-3 py-1 text-xs rounded-full bg-bg-cream">EChart.js</span>
+                                <span class="border border-border-gray px-3 py-1 text-xs rounded-full bg-bg-cream">Swiper.js</span>
+                                <span class="border border-border-gray px-3 py-1 text-xs rounded-full bg-bg-cream">SEO</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Job 2 -->
+        <div class="accordion-item border-b border-border-gray group">
+            <div class="grid grid-cols-1 md:grid-cols-4 cursor-pointer hover:bg-white transition-colors" onclick="toggleAccordion(this)">
+                <div class="col-span-1 p-6 md:p-10 md:border-r border-border-gray flex flex-col justify-between">
+                    <span class="font-mono text-xs text-accent-gray">Dec 2020 - Dec 2024</span>
+                    <h3 class="text-2xl font-serif italic mt-2">Frontend<br>Developer</h3>
+                </div>
+                <div class="col-span-3 p-6 md:p-10 relative">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="text-xl font-bold mb-2">Thang Loi Group</h4>
+                            <p class="text-accent-gray text-sm">HCMC, Vietnam</p>
+                        </div>
+                        <button class="accordion-icon w-8 h-8 flex items-center justify-center border border-border-gray rounded-full">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="accordion-content">
+                        <div class="pt-8 space-y-6">
+                            <p class="leading-relaxed">Built key features for Internal Business Management Toolkit using React and TypeScript. Collaborated with cross-functional teams to deliver refined digital solutions.</p>
+                            
+                            <div>
+                                <h5 class="font-bold text-sm uppercase mb-3">Key Achievements</h5>
+                                <ul class="list-disc pl-5 space-y-2 text-sm text-accent-gray leading-relaxed">
+                                    <li>Researched and developed a company design system with reusable UI components.</li>
+                                    <li>Built various event-focused web apps (booking platforms, digital magazines).</li>
+                                    <li>Mentored 3+ frontend interns on HTML, CSS, JS, and Git.</li>
+                                </ul>
+                            </div>
+
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span class="border border-border-gray px-3 py-1 text-xs rounded-full bg-bg-cream">ReactJS</span>
+                                <span class="border border-border-gray px-3 py-1 text-xs rounded-full bg-bg-cream">TypeScript</span>
+                                <span class="border border-border-gray px-3 py-1 text-xs rounded-full bg-bg-cream">Tailwind</span>
+                                <span class="border border-border-gray px-3 py-1 text-xs rounded-full bg-bg-cream">Bootstrap</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Job 3 -->
+        <div class="accordion-item group">
+            <div class="grid grid-cols-1 md:grid-cols-4 cursor-pointer hover:bg-white transition-colors" onclick="toggleAccordion(this)">
+                <div class="col-span-1 p-6 md:p-10 md:border-r border-border-gray flex flex-col justify-between">
+                    <span class="font-mono text-xs text-accent-gray">Sep 2019 - Jun 2020</span>
+                    <h3 class="text-2xl font-serif italic mt-2">Frontend<br>Developer</h3>
+                </div>
+                <div class="col-span-3 p-6 md:p-10 relative">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h4 class="text-xl font-bold mb-2">FIOP JSC</h4>
+                            <p class="text-accent-gray text-sm">HCMC, Vietnam</p>
+                        </div>
+                        <button class="accordion-icon w-8 h-8 flex items-center justify-center border border-border-gray rounded-full">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="accordion-content">
+                        <div class="pt-8 space-y-6">
+                            <p class="leading-relaxed">Maintained and developed client websites, landing pages, and a mobile application for financial management.</p>
+                            
+                            <div class="flex flex-wrap gap-2 pt-2">
+                                <span class="border border-border-gray px-3 py-1 text-xs rounded-full bg-bg-cream">JavaScript</span>
+                                <span class="border border-border-gray px-3 py-1 text-xs rounded-full bg-bg-cream">NextJS</span>
+                                <span class="border border-border-gray px-3 py-1 text-xs rounded-full bg-bg-cream">React Native</span>
+                                <span class="border border-border-gray px-3 py-1 text-xs rounded-full bg-bg-cream">jQuery</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SELECTED PROJECTS (Updated Content) -->
+    <section id="work" class="border-b border-border-gray">
+        <!-- Section Header -->
+        <div class="grid grid-cols-1 md:grid-cols-4 border-b border-border-gray">
+            <div class="col-span-1 border-r border-border-gray p-6 flex items-end">
+                <h2 class="text-sm font-mono uppercase">Selected Projects</h2>
+            </div>
+            <div class="col-span-3 p-6 flex justify-end">
+                <button onclick="toggleModal('archive-modal')" class="group flex items-center gap-2 text-sm uppercase font-bold hover:italic transition-all">
+                    View Archive <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Project 1 -->
+        <div class="grid grid-cols-1 md:grid-cols-4 group cursor-pointer" onclick="openProjectDetail(1)">
+            <div class="col-span-1 md:border-r border-border-gray p-6 md:p-10 flex flex-col justify-between bg-white md:bg-transparent">
+                <div>
+                    <span class="text-xs font-mono text-accent-gray mb-2 block">01</span>
+                    <h3 class="text-2xl font-serif italic mb-2">UI Template<br>Library</h3>
+                </div>
+                <div class="mt-8">
+                    <p class="text-sm border-t border-border-gray pt-4 text-accent-gray">SaaS / Responsive</p>
+                </div>
+            </div>
+            <div class="col-span-3 project-card overflow-hidden h-[40vh] md:h-[50vh] relative border-b md:border-b-0 border-border-gray bg-gray-50">
+                <div class="absolute inset-0 flex items-center justify-center p-12">
+                    <div class="w-full h-full bg-white shadow-xl border border-gray-100 flex items-center justify-center text-gray-300 font-serif text-4xl">Preview UI</div>
+                </div>
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center">
+                    <div class="bg-white text-black rounded-full w-24 h-24 flex items-center justify-center scale-0 group-hover:scale-100 transition-transform duration-300">
+                        <span class="text-xs font-bold uppercase">View</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="grid grid-cols-1 md:grid-cols-4 group cursor-pointer border-t border-border-gray" onclick="openProjectDetail(2)">
+            <div class="col-span-3 project-card overflow-hidden h-[40vh] md:h-[50vh] relative order-2 md:order-1 border-r border-border-gray bg-gray-50">
+                <div class="absolute inset-0 flex items-center justify-center p-12">
+                    <div class="w-full h-full bg-white shadow-xl border border-gray-100 flex items-center justify-center text-gray-300 font-serif text-4xl">Dashboard UI</div>
+                </div>
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center">
+                    <div class="bg-white text-black rounded-full w-24 h-24 flex items-center justify-center scale-0 group-hover:scale-100 transition-transform duration-300">
+                        <span class="text-xs font-bold uppercase">View</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-span-1 p-6 md:p-10 flex flex-col justify-between bg-white md:bg-transparent order-1 md:order-2">
+                <div>
+                    <span class="text-xs font-mono text-accent-gray mb-2 block">02</span>
+                    <h3 class="text-2xl font-serif italic mb-2">Business<br>Toolkit</h3>
+                </div>
+                <div class="mt-8">
+                    <p class="text-sm border-t border-border-gray pt-4 text-accent-gray">Internal Tool / React</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="grid grid-cols-1 md:grid-cols-4 group cursor-pointer border-t border-border-gray" onclick="openProjectDetail(3)">
+            <div class="col-span-1 md:border-r border-border-gray p-6 md:p-10 flex flex-col justify-between bg-white md:bg-transparent">
+                <div>
+                    <span class="text-xs font-mono text-accent-gray mb-2 block">03</span>
+                    <h3 class="text-2xl font-serif italic mb-2">Lumitechie<br>Website</h3>
+                </div>
+                <div class="mt-8">
+                    <p class="text-sm border-t border-border-gray pt-4 text-accent-gray">Redesign / SEO</p>
+                </div>
+            </div>
+            <div class="col-span-3 project-card overflow-hidden h-[40vh] md:h-[50vh] relative bg-gray-50">
+                <div class="absolute inset-0 flex items-center justify-center p-12">
+                    <div class="w-full h-full bg-white shadow-xl border border-gray-100 flex items-center justify-center text-gray-300 font-serif text-4xl">Website UI</div>
+                </div>
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors flex items-center justify-center">
+                    <div class="bg-white text-black rounded-full w-24 h-24 flex items-center justify-center scale-0 group-hover:scale-100 transition-transform duration-300">
+                        <span class="text-xs font-bold uppercase">View</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact" class="bg-text-black text-bg-cream pt-20 pb-8 px-6 md:px-12">
+        <div class="flex flex-col items-center text-center">
+            <p class="font-mono text-xs uppercase mb-6 tracking-widest text-accent-gray">I am looking forward to hearing from you</p>
+            <a href="mailto:contact@ngocquynhpham.com" class="text-[12vw] font-serif leading-none hover:italic transition-all duration-500">
+                Let's Talk
+            </a>
+            <div class="mt-12">
+                <a href="mailto:contact@ngocquynhpham.com" class="border border-white/20 px-8 py-3 rounded-full hover:bg-white hover:text-black transition-all inline-flex items-center gap-2">
+                    Start a Conversation <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-32 pt-8 border-t border-white/20 text-sm text-accent-gray">
+            <div class="col-span-2 md:col-span-1">© 2026 Ngoc Quynh Pham</div>
+            <div class="flex flex-col gap-2">
+                <span class="text-white font-bold uppercase text-xs">Socials</span>
+                <a href="#" class="hover:text-white">LinkedIn</a>
+                <a href="#" class="hover:text-white">GitHub</a>
+            </div>
+            <div class="flex flex-col gap-2">
+                <span class="text-white font-bold uppercase text-xs">Resources</span>
+                <button onclick="toggleModal('resume-modal')" class="hover:text-white text-left">Resume</button>
+            </div>
+            <div class="flex flex-col gap-2 text-right">
+                <span class="text-white font-bold uppercase text-xs">Local Time</span>
+                <span id="clock">00:00 AM</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL: ARCHIVE -->
+    <div id="archive-modal" class="modal-wrap">
+        <div class="modal-inner bg-white w-full max-w-5xl h-[85vh] shadow-2xl overflow-hidden flex flex-col border border-border-gray mx-4">
+            <div class="p-6 border-b border-border-gray flex justify-between items-center bg-bg-cream">
+                <h2 class="text-2xl font-serif italic">Project Archive</h2>
+                <button onclick="toggleModal('archive-modal')" class="hover:rotate-90 transition-transform"><i data-lucide="x" class="w-8 h-8"></i></button>
+            </div>
+            <div class="flex-1 overflow-auto p-0">
+                <table class="w-full text-left">
+                    <thead class="bg-bg-cream sticky top-0">
+                        <tr class="text-xs font-mono uppercase border-b border-border-gray">
+                            <th class="p-6 font-normal">#</th>
+                            <th class="p-6 font-normal">Project Name</th>
+                            <th class="p-6 font-normal hidden md:table-cell">Type</th>
+                            <th class="p-6 font-normal text-right">View</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <tr class="border-b border-border-gray hover:bg-bg-cream transition-colors cursor-pointer" onclick="openProjectDetail(1)">
+                            <td class="p-6 font-mono text-accent-gray">01</td>
+                            <td class="p-6 font-bold">UI Template Library</td>
+                            <td class="p-6 hidden md:table-cell text-accent-gray">SaaS Platform</td>
+                            <td class="p-6 text-right"><i data-lucide="arrow-up-right" class="w-4 h-4 ml-auto"></i></td>
+                        </tr>
+                        <tr class="border-b border-border-gray hover:bg-bg-cream transition-colors cursor-pointer" onclick="openProjectDetail(2)">
+                            <td class="p-6 font-mono text-accent-gray">02</td>
+                            <td class="p-6 font-bold">Business Management Toolkit</td>
+                            <td class="p-6 hidden md:table-cell text-accent-gray">Internal Tool</td>
+                            <td class="p-6 text-right"><i data-lucide="arrow-up-right" class="w-4 h-4 ml-auto"></i></td>
+                        </tr>
+                        <tr class="border-b border-border-gray hover:bg-bg-cream transition-colors cursor-pointer" onclick="openProjectDetail(3)">
+                            <td class="p-6 font-mono text-accent-gray">03</td>
+                            <td class="p-6 font-bold">Lumitechie Website</td>
+                            <td class="p-6 hidden md:table-cell text-accent-gray">Redesign / SEO</td>
+                            <td class="p-6 text-right"><i data-lucide="arrow-up-right" class="w-4 h-4 ml-auto"></i></td>
+                        </tr>
+                        <tr class="border-b border-border-gray hover:bg-bg-cream transition-colors cursor-pointer" onclick="openProjectDetail(4)">
+                            <td class="p-6 font-mono text-accent-gray">04</td>
+                            <td class="p-6 font-bold">Human Resource Management</td>
+                            <td class="p-6 hidden md:table-cell text-accent-gray">HRM System</td>
+                            <td class="p-6 text-right"><i data-lucide="arrow-up-right" class="w-4 h-4 ml-auto"></i></td>
+                        </tr>
+                        <tr class="border-b border-border-gray hover:bg-bg-cream transition-colors cursor-pointer" onclick="openProjectDetail(5)">
+                            <td class="p-6 font-mono text-accent-gray">05</td>
+                            <td class="p-6 font-bold">Online Running Tournament</td>
+                            <td class="p-6 hidden md:table-cell text-accent-gray">Event Platform</td>
+                            <td class="p-6 text-right"><i data-lucide="arrow-up-right" class="w-4 h-4 ml-auto"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: PROJECT DETAIL -->
+    <div id="detail-modal" class="modal-wrap">
+        <div class="modal-inner bg-white w-full max-w-5xl h-[90vh] shadow-2xl overflow-y-auto flex flex-col border border-border-gray mx-4 relative">
+             <button onclick="toggleModal('detail-modal')" class="absolute top-6 right-6 z-10 bg-white rounded-full p-2 hover:rotate-90 transition-transform shadow-lg border border-gray-200"><i data-lucide="x" class="w-6 h-6"></i></button>
+             <div id="detail-content">
+                 <!-- Injected via JS -->
+             </div>
+        </div>
+    </div>
+
+    <!-- MODAL: RESUME -->
+    <div id="resume-modal" class="modal-wrap">
+        <div class="modal-inner bg-white w-full max-w-3xl shadow-2xl border border-border-gray mx-4 p-8 md:p-12 text-center relative max-h-[90vh] overflow-y-auto">
+            <button onclick="toggleModal('resume-modal')" class="absolute top-6 right-6 hover:rotate-90 transition-transform"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <div class="mb-8">
+                <h2 class="text-4xl font-serif italic mb-2">Resume Preview</h2>
+                <p class="text-accent-gray font-mono text-sm">Updated: Feb 2026</p>
+            </div>
+            
+            <div class="bg-bg-cream border border-border-gray p-8 text-left mb-8 space-y-6">
+                <div class="flex justify-between items-start border-b border-gray-300 pb-4">
+                    <div>
+                        <h3 class="font-bold text-xl">Ngoc Quynh Pham</h3>
+                        <p class="text-sm text-accent-gray">Frontend Developer</p>
+                    </div>
+                    <div class="text-right text-xs font-mono">
+                        HCMC, Vietnam<br>
+                        4+ Years Exp
+                    </div>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-bold text-sm uppercase mb-2">Experience</h4>
+                        <ul class="text-sm space-y-2 text-accent-gray">
+                            <li><strong>TechX VN</strong> (2024-Present): Frontend Engineer</li>
+                            <li><strong>Thang Loi Group</strong> (2020-2024): Frontend Developer</li>
+                            <li><strong>FIOP JSC</strong> (2019-2020): Frontend Developer</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm uppercase mb-2">Skills</h4>
+                        <div class="flex flex-wrap gap-2 text-xs">
+                            <span class="bg-white border px-2 py-1">ReactJS</span>
+                            <span class="bg-white border px-2 py-1">NextJS</span>
+                            <span class="bg-white border px-2 py-1">TypeScript</span>
+                            <span class="bg-white border px-2 py-1">Tailwind</span>
+                            <span class="bg-white border px-2 py-1">SEO</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="bg-black text-white px-8 py-4 w-full font-bold uppercase tracking-widest hover:bg-gray-800 transition-colors flex items-center justify-center gap-2">
+                Download Full PDF <i data-lucide="download" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        lucide.createIcons();
+
+        // Clock
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Mobile Menu
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const isOpen = menu.classList.contains('open');
+            if (isOpen) menu.classList.remove('open');
+            else menu.classList.add('open');
+        }
+        document.getElementById('menu-btn').addEventListener('click', toggleMenu);
+
+        // Accordion Logic
+        function toggleAccordion(element) {
+            const parent = element.closest('.accordion-item');
+            const wasActive = parent.classList.contains('active');
+            
+            // Close all
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Toggle clicked
+            if (!wasActive) {
+                parent.classList.add('active');
+            }
+        }
+
+        // Generic Modal
+        function toggleModal(id) {
+            const modal = document.getElementById(id);
+            if (modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            } else {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Close modal on outside click
+        document.querySelectorAll('.modal-wrap').forEach(el => {
+            el.addEventListener('click', e => {
+                if (e.target === el) toggleModal(el.id);
+            });
+        });
+
+        // Project Data
+        const projects = {
+            1: {
+                title: 'UI Template Library',
+                desc: 'Library of 10+ responsive templates with modular components (tables, sliders, galleries), integrated into two platforms to support SMEs in Japan.',
+                tech: ['HTML/CSS', 'JavaScript', 'Responsive'],
+                type: 'SaaS Platform'
+            },
+            2: {
+                title: 'Business Toolkit',
+                desc: 'Built using modern React for an efficient, user-friendly frontend combined with an intuitive UX to transform and optimize core business operations.',
+                tech: ['ReactJS', 'TypeScript', 'UX Design'],
+                type: 'Internal Tool'
+            },
+            3: {
+                title: 'Lumitechie Website',
+                desc: 'Redesigned the company website to improve branding consistency, responsive layout, and SEO performance.',
+                tech: ['SEO', 'Responsive', 'Branding'],
+                type: 'Redesign'
+            },
+            4: {
+                title: 'HRM System',
+                desc: 'Feature-rich Human Resource Management System that streamlines employee lifecycle management, contract handling, attendance tracking, and payroll processing.',
+                tech: ['React', 'Data Viz', 'Complex Logic'],
+                type: 'System'
+            },
+            5: {
+                title: 'Online Running Tournament',
+                desc: 'An online charity race platform promoting a green lifestyle in the community. Features real-time tracking and leaderboards.',
+                tech: ['React', 'Gamification', 'Event'],
+                type: 'Event Platform'
+            }
+        };
+
+        function openProjectDetail(id) {
+            const p = projects[id];
+            if(!p) return;
+            const html = `
+                <div class="h-[40vh] md:h-[50vh] bg-gray-100 flex items-center justify-center border-b border-border-gray">
+                    <span class="text-4xl text-gray-300 font-serif italic">Project Image Placeholder</span>
+                </div>
+                <div class="p-8 md:p-16 grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <div class="col-span-2">
+                        <h2 class="text-4xl md:text-5xl font-serif italic mb-6">${p.title}</h2>
+                        <p class="text-lg md:text-xl font-light leading-relaxed mb-8 text-accent-gray">${p.desc}</p>
+                        <div class="border-t border-border-gray pt-6">
+                             <h4 class="font-bold uppercase text-xs mb-4">Tech Stack</h4>
+                             <div class="flex flex-wrap gap-2">
+                                ${p.tech.map(s => `<span class="border border-border-gray px-3 py-1 text-sm rounded-full">${s}</span>`).join('')}
+                             </div>
+                        </div>
+                    </div>
+                    <div class="col-span-1 md:border-l border-border-gray md:pl-8">
+                        <p class="font-mono text-sm text-accent-gray mb-2">Project Type</p>
+                        <p class="font-bold mb-8 text-xl">${p.type}</p>
+                        <button class="bg-black text-white px-6 py-4 w-full font-bold uppercase hover:bg-gray-800 transition-colors">Launch Project</button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('detail-content').innerHTML = html;
+            toggleModal('detail-modal');
+        }
+    </script>
+</body>
+</html>
