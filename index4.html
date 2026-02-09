@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ngoc Quynh | Digital Product Engineer</title>
+    
+    <!-- 1. Fonts: Syne (Tiêu đề nghệ thuật) + Space Grotesk (Tech) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- 2. Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'acid': '#CCFF00', /* Màu xanh Acid đặc trưng của Journey */
+                        'dark': '#050505',
+                        'subtle': '#222222',
+                        'gray-text': '#999999'
+                    },
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                        display: ['Syne', 'sans-serif'],
+                    },
+                    animation: {
+                        'marquee': 'marquee 20s linear infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- 3. Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            overflow-x: hidden;
+            cursor: default;
+        }
+        
+        ::selection {
+            background-color: #CCFF00;
+            color: #000;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #333; }
+        ::-webkit-scrollbar-thumb:hover { background: #CCFF00; }
+
+        /* Smooth Reveal Animation Class */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-up.in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hover Image Effect */
+        .hover-reveal-img {
+            opacity: 0;
+            transform: scale(0.8) rotate(-5deg);
+            transition: all 0.4s ease;
+            pointer-events: none;
+        }
+        .group:hover .hover-reveal-img {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+        }
+
+        /* Mobile Menu */
+        #mobile-nav {
+            transform: translateX(100%);
+            transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+        #mobile-nav.open {
+            transform: translateX(0%);
+        }
+
+        /* Modal Transitions */
+        .modal-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            transform: translateY(100%);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .modal-overlay.active .modal-content {
+            transform: translateY(0%);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed top-0 w-full z-50 px-6 py-6 md:px-12 md:py-8 flex justify-between items-center mix-blend-difference">
+        <a href="#" class="text-xl font-display font-bold tracking-tight text-white hover:text-acid transition-colors">
+            Q.PHAM
+        </a>
+        
+        <div class="hidden md:flex items-center gap-12 text-sm font-medium uppercase tracking-widest text-white">
+            <a href="#about" class="hover:text-acid transition-colors">About</a>
+            <a href="#experience" class="hover:text-acid transition-colors">Experience</a>
+            <a href="#work" class="hover:text-acid transition-colors">Work</a>
+            <button onclick="toggleModal('resume-modal')" class="border border-white/20 px-6 py-2 rounded-full hover:bg-white hover:text-black transition-all">Resume</button>
+        </div>
+
+        <button onclick="toggleMenu()" class="md:hidden text-white z-50 relative group">
+            <div class="space-y-2">
+                <span class="block w-8 h-[2px] bg-white transition-transform group-hover:bg-acid"></span>
+                <span class="block w-8 h-[2px] bg-white transition-transform group-hover:bg-acid"></span>
+            </div>
+        </button>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div id="mobile-nav" class="fixed inset-0 z-40 bg-acid flex flex-col justify-center px-8">
+        <div class="flex flex-col gap-6 text-black">
+            <a href="#about" onclick="toggleMenu()" class="text-6xl font-display font-bold hover:text-white transition-colors">About</a>
+            <a href="#experience" onclick="toggleMenu()" class="text-6xl font-display font-bold hover:text-white transition-colors">Experience</a>
+            <a href="#work" onclick="toggleMenu()" class="text-6xl font-display font-bold hover:text-white transition-colors">Work</a>
+            <button onclick="toggleMenu(); toggleModal('resume-modal')" class="text-3xl font-display font-bold hover:text-white text-left mt-8">Resume</button>
+        </div>
+        <div class="absolute bottom-12 left-8 text-black font-mono text-sm">
+            © 2026 Ngoc Quynh Pham
+        </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="min-h-screen flex flex-col justify-center px-6 md:px-12 pt-20 relative border-b border-subtle">
+        <div class="absolute top-1/4 right-[10%] w-[30vw] h-[30vw] bg-acid rounded-full blur-[150px] opacity-10 pointer-events-none"></div>
+        
+        <div class="reveal-up z-10">
+            <p class="text-acid font-mono text-sm mb-4 tracking-widest flex items-center gap-2">
+                <span class="w-2 h-2 bg-acid rounded-full animate-pulse"></span>
+                OPEN TO WORK
+            </p>
+            <h1 class="text-[13vw] leading-[0.85] font-display font-bold uppercase tracking-tighter text-white">
+                Front-end<br>
+                <span class="text-gray-text outline-text">Developer</span><br>
+                & Engineer
+            </h1>
+        </div>
+        
+        <div class="reveal-up mt-12 md:mt-24 flex flex-col md:flex-row justify-between items-end gap-8 pb-12">
+            <p class="text-lg md:text-xl text-gray-text max-w-xl leading-relaxed">
+                Experienced website developer with a focus on building engaging & accessible digital experiences - things that look good but are also built well under the hood.
+            </p>
+            <div class="flex gap-4">
+                 <button onclick="document.getElementById('work').scrollIntoView()" class="w-16 h-16 rounded-full border border-white/20 flex items-center justify-center hover:bg-acid hover:text-black hover:border-acid transition-all group">
+                    <i data-lucide="arrow-down" class="w-6 h-6 group-hover:animate-bounce"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="grid grid-cols-1 md:grid-cols-2 border-b border-subtle">
+        <div class="p-8 md:p-20 border-r border-subtle border-b md:border-b-0">
+            <h2 class="text-xs font-mono text-acid uppercase tracking-widest mb-12">Who I Am</h2>
+            <div class="reveal-up space-y-8 text-2xl md:text-3xl font-display font-bold leading-tight">
+                <p>I'm Ngoc Quynh.</p>
+                <p class="text-gray-text">I enjoy researching and experimenting with code, and seeing my projects accepted by users brings me great happiness.</p>
+                <p>I have read and learned about interfaces, user experience, and new technologies.</p>
+            </div>
+        </div>
+        <div class="p-8 md:p-20 flex flex-col justify-between relative overflow-hidden group">
+            <div class="reveal-up z-10">
+                <p class="text-gray-text text-lg leading-relaxed mb-8">
+                    I even studied <span class="text-white border-b border-acid">UI/UX design</span>, which helped me understand the designer's perspective. I am excited to hear from you and continue growing in this field.
+                </p>
+                <div class="flex flex-wrap gap-3 mt-12 font-mono text-xs uppercase text-acid">
+                    <span class="border border-white/20 px-3 py-1 rounded-full">HTML / CSS / JS</span>
+                    <span class="border border-white/20 px-3 py-1 rounded-full">ReactJS</span>
+                    <span class="border border-white/20 px-3 py-1 rounded-full">EChart.js</span>
+                    <span class="border border-white/20 px-3 py-1 rounded-full">SEO</span>
+                    <span class="border border-white/20 px-3 py-1 rounded-full">Responsive</span>
+                </div>
+            </div>
+            <!-- Interactive Element -->
+            <div class="absolute bottom-[-20%] right-[-20%] w-[400px] h-[400px] border border-white/5 rounded-full group-hover:scale-150 transition-transform duration-1000"></div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE SECTION (Timeline Style) -->
+    <section id="experience" class="py-24 px-6 md:px-12 border-b border-subtle">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+            <h2 class="text-6xl md:text-8xl font-display font-bold text-white">Experience</h2>
+            <p class="text-gray-text font-mono text-sm uppercase tracking-widest">A journey through code</p>
+        </div>
+
+        <div class="space-y-0">
+            <!-- Job 1 -->
+            <div class="group border-t border-subtle py-12 hover:bg-white/5 transition-colors cursor-pointer relative" onclick="toggleAccordion(this)">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+                    <div class="md:col-span-2 text-acid font-mono text-sm mt-1">Dec 2024 - Present</div>
+                    <div class="md:col-span-4">
+                        <h3 class="text-3xl font-display font-bold text-white mb-2">Frontend Engineer</h3>
+                        <p class="text-gray-text">TechX VN (formerly Sungrove)</p>
+                    </div>
+                    <div class="md:col-span-5 text-gray-text text-sm hidden md:block">
+                        Engineered responsive, mobile-first user interfaces using HTML, CSS, and JavaScript.
+                    </div>
+                    <div class="md:col-span-1 text-right">
+                        <i data-lucide="plus" class="w-6 h-6 text-white inline-block transition-transform group-[.active]:rotate-45"></i>
+                    </div>
+                </div>
+                
+                <!-- Accordion Content -->
+                <div class="hidden group-[.active]:block pt-8 md:pl-[16.6%] md:pr-[8.3%] animate-fade-in">
+                    <div class="p-8 bg-subtle/30 rounded-2xl border border-white/10">
+                        <ul class="list-disc pl-5 space-y-3 text-gray-300 mb-6">
+                            <li>Created interactive UI components and dynamic data visualizations with <span class="text-white">ECharts.js</span> and <span class="text-white">Swiper.js</span>.</li>
+                            <li>Implemented semantic HTML and foundational SEO strategies.</li>
+                            <li>Worked within Agile/Scrum processes and mentored Junior developers.</li>
+                        </ul>
+                        <div class="border-t border-white/10 pt-4 mt-4">
+                            <h4 class="text-xs font-mono uppercase text-acid mb-2">Key Achievement</h4>
+                            <p class="text-sm text-white">Developed a UI template library with 10+ responsive layouts, integrated into two platforms (Easier, It’szai) supporting SMEs in Japan.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job 2 -->
+            <div class="group border-t border-subtle py-12 hover:bg-white/5 transition-colors cursor-pointer relative" onclick="toggleAccordion(this)">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+                    <div class="md:col-span-2 text-acid font-mono text-sm mt-1">Dec 2020 - Dec 2024</div>
+                    <div class="md:col-span-4">
+                        <h3 class="text-3xl font-display font-bold text-white mb-2">Frontend Developer</h3>
+                        <p class="text-gray-text">Thang Loi Group</p>
+                    </div>
+                    <div class="md:col-span-5 text-gray-text text-sm hidden md:block">
+                        Built key Internal Business Management Toolkit features using React and TypeScript.
+                    </div>
+                    <div class="md:col-span-1 text-right">
+                        <i data-lucide="plus" class="w-6 h-6 text-white inline-block transition-transform group-[.active]:rotate-45"></i>
+                    </div>
+                </div>
+
+                 <!-- Accordion Content -->
+                 <div class="hidden group-[.active]:block pt-8 md:pl-[16.6%] md:pr-[8.3%] animate-fade-in">
+                    <div class="p-8 bg-subtle/30 rounded-2xl border border-white/10">
+                        <ul class="list-disc pl-5 space-y-3 text-gray-300 mb-6">
+                            <li>Researched and developed a company design system (Reusable UI components).</li>
+                            <li>Built event-focused web apps (booking platforms, digital magazines, minigames).</li>
+                            <li>Collaborated with cross-functional teams to deliver refined digital solutions.</li>
+                        </ul>
+                        <div class="border-t border-white/10 pt-4 mt-4">
+                            <h4 class="text-xs font-mono uppercase text-acid mb-2">Tech Stack</h4>
+                            <div class="flex gap-2 flex-wrap">
+                                <span class="bg-black border border-white/20 px-2 py-1 text-xs text-white">ReactJS</span>
+                                <span class="bg-black border border-white/20 px-2 py-1 text-xs text-white">TypeScript</span>
+                                <span class="bg-black border border-white/20 px-2 py-1 text-xs text-white">Tailwind</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Job 3 -->
+            <div class="group border-t border-subtle py-12 hover:bg-white/5 transition-colors cursor-pointer relative" onclick="toggleAccordion(this)">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+                    <div class="md:col-span-2 text-acid font-mono text-sm mt-1">Sep 2019 - Jun 2020</div>
+                    <div class="md:col-span-4">
+                        <h3 class="text-3xl font-display font-bold text-white mb-2">Frontend Developer</h3>
+                        <p class="text-gray-text">FIOP JSC</p>
+                    </div>
+                    <div class="md:col-span-5 text-gray-text text-sm hidden md:block">
+                        Maintained and developed client websites & mobile applications.
+                    </div>
+                    <div class="md:col-span-1 text-right">
+                        <i data-lucide="plus" class="w-6 h-6 text-white inline-block transition-transform group-[.active]:rotate-45"></i>
+                    </div>
+                </div>
+                 <!-- Accordion Content -->
+                 <div class="hidden group-[.active]:block pt-8 md:pl-[16.6%] md:pr-[8.3%] animate-fade-in">
+                    <div class="p-8 bg-subtle/30 rounded-2xl border border-white/10">
+                        <p class="text-gray-300 mb-4">Developed a client website, a landing page for a company's website, and a mobile application - an individual assistant aimed at financial management.</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="bg-black border border-white/20 px-2 py-1 text-xs text-white">NextJS</span>
+                            <span class="bg-black border border-white/20 px-2 py-1 text-xs text-white">React Native</span>
+                            <span class="bg-black border border-white/20 px-2 py-1 text-xs text-white">jQuery</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SELECTED PROJECTS (Grid Style) -->
+    <section id="work" class="pt-24 border-b border-subtle">
+        <div class="px-6 md:px-12 flex justify-between items-end mb-16">
+            <h2 class="text-6xl md:text-8xl font-display font-bold text-white">Selected<br>Work</h2>
+            <button onclick="toggleModal('archive-modal')" class="text-white border border-white/20 px-8 py-4 rounded-full hover:bg-acid hover:text-black hover:border-acid transition-all flex items-center gap-2">
+                View Archive <i data-lucide="arrow-right" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2">
+            <!-- Project 1 -->
+            <div class="group border-t border-r border-subtle p-8 md:p-16 cursor-pointer hover:bg-white/5 transition-colors relative overflow-hidden" onclick="openProjectDetail(1)">
+                <div class="mb-12 overflow-hidden h-[300px] rounded-lg">
+                    <img src="https://placehold.co/800x600/111/CCFF00?text=Template+Library" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                </div>
+                <div class="flex justify-between items-end">
+                    <div>
+                        <span class="text-acid font-mono text-sm mb-2 block">01</span>
+                        <h3 class="text-4xl font-display font-bold text-white mb-2">UI Template Library</h3>
+                        <p class="text-gray-text">SaaS / Responsive System</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-colors">
+                        <i data-lucide="arrow-up-right" class="w-6 h-6"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="group border-t border-subtle p-8 md:p-16 cursor-pointer hover:bg-white/5 transition-colors relative overflow-hidden" onclick="openProjectDetail(2)">
+                <div class="mb-12 overflow-hidden h-[300px] rounded-lg">
+                    <img src="https://placehold.co/800x600/1a1a1a/CCFF00?text=Business+Toolkit" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                </div>
+                <div class="flex justify-between items-end">
+                    <div>
+                        <span class="text-acid font-mono text-sm mb-2 block">02</span>
+                        <h3 class="text-4xl font-display font-bold text-white mb-2">Business Toolkit</h3>
+                        <p class="text-gray-text">Internal Tool / React</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-colors">
+                        <i data-lucide="arrow-up-right" class="w-6 h-6"></i>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Project 3 -->
+             <div class="group border-t border-r border-subtle p-8 md:p-16 cursor-pointer hover:bg-white/5 transition-colors relative overflow-hidden" onclick="openProjectDetail(4)">
+                <div class="mb-12 overflow-hidden h-[300px] rounded-lg">
+                    <img src="https://placehold.co/800x600/0f0f0f/CCFF00?text=HRM+System" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                </div>
+                <div class="flex justify-between items-end">
+                    <div>
+                        <span class="text-acid font-mono text-sm mb-2 block">03</span>
+                        <h3 class="text-4xl font-display font-bold text-white mb-2">HRM System</h3>
+                        <p class="text-gray-text">Management System</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-colors">
+                        <i data-lucide="arrow-up-right" class="w-6 h-6"></i>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Project 4 -->
+             <div class="group border-t border-subtle p-8 md:p-16 cursor-pointer hover:bg-white/5 transition-colors relative overflow-hidden" onclick="openProjectDetail(3)">
+                <div class="mb-12 overflow-hidden h-[300px] rounded-lg">
+                    <img src="https://placehold.co/800x600/222/CCFF00?text=Lumitechie" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                </div>
+                <div class="flex justify-between items-end">
+                    <div>
+                        <span class="text-acid font-mono text-sm mb-2 block">04</span>
+                        <h3 class="text-4xl font-display font-bold text-white mb-2">Lumitechie</h3>
+                        <p class="text-gray-text">Website Redesign / SEO</p>
+                    </div>
+                    <div class="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-colors">
+                        <i data-lucide="arrow-up-right" class="w-6 h-6"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-32 px-6 md:px-12 bg-dark">
+        <div class="flex flex-col items-center text-center">
+            <h2 class="text-[12vw] font-display font-bold text-white leading-none hover:text-acid transition-colors cursor-pointer select-none">
+                <a href="mailto:contact@ngocquynhpham.com">LET'S TALK</a>
+            </h2>
+            <p class="text-gray-text text-xl mt-8 font-mono">I am looking forward to hearing from you</p>
+            <div class="mt-12">
+                <a href="mailto:contact@ngocquynhpham.com" class="bg-acid text-black px-12 py-5 rounded-full text-lg font-bold hover:scale-105 transition-transform inline-flex items-center gap-3">
+                    Start a Conversation <i data-lucide="send" class="w-5 h-5"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="flex flex-col md:flex-row justify-between items-center mt-32 pt-8 border-t border-subtle text-gray-text text-sm">
+            <p>© 2026 Ngoc Quynh Pham</p>
+            <div class="flex gap-8 mt-4 md:mt-0">
+                <a href="#" class="hover:text-white">LinkedIn</a>
+                <a href="#" class="hover:text-white">GitHub</a>
+                <a href="#" class="hover:text-white">Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL: PROJECT ARCHIVE -->
+    <div id="archive-modal" class="modal-overlay fixed inset-0 z-50 flex items-end justify-center">
+        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="toggleModal('archive-modal')"></div>
+        <div class="modal-content relative bg-[#0a0a0a] w-full h-[85vh] border-t border-subtle rounded-t-3xl overflow-hidden flex flex-col">
+            <div class="p-8 border-b border-subtle flex justify-between items-center">
+                <h2 class="text-3xl font-display font-bold text-white">Full Project Archive</h2>
+                <button onclick="toggleModal('archive-modal')" class="text-white hover:text-acid"><i data-lucide="x" class="w-8 h-8"></i></button>
+            </div>
+            <div class="overflow-auto flex-1 p-0">
+                <table class="w-full text-left">
+                    <thead class="bg-[#0a0a0a] sticky top-0">
+                        <tr class="text-xs font-mono text-gray-text uppercase border-b border-subtle">
+                            <th class="p-6">#</th>
+                            <th class="p-6">Project</th>
+                            <th class="p-6 hidden md:table-cell">Type</th>
+                            <th class="p-6 text-right">View</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm text-gray-300">
+                        <!-- Rows injected via JS or static -->
+                        <tr class="border-b border-subtle hover:bg-white/5 cursor-pointer" onclick="openProjectDetail(1)">
+                            <td class="p-6 font-mono text-acid">01</td>
+                            <td class="p-6 font-bold text-white">UI Template Library</td>
+                            <td class="p-6 hidden md:table-cell">SaaS</td>
+                            <td class="p-6 text-right"><i data-lucide="arrow-right" class="w-4 h-4 ml-auto"></i></td>
+                        </tr>
+                         <tr class="border-b border-subtle hover:bg-white/5 cursor-pointer" onclick="openProjectDetail(2)">
+                            <td class="p-6 font-mono text-acid">02</td>
+                            <td class="p-6 font-bold text-white">Internal Business Toolkit</td>
+                            <td class="p-6 hidden md:table-cell">Internal Tool</td>
+                            <td class="p-6 text-right"><i data-lucide="arrow-right" class="w-4 h-4 ml-auto"></i></td>
+                        </tr>
+                        <tr class="border-b border-subtle hover:bg-white/5 cursor-pointer" onclick="openProjectDetail(3)">
+                            <td class="p-6 font-mono text-acid">03</td>
+                            <td class="p-6 font-bold text-white">Lumitechie Redesign</td>
+                            <td class="p-6 hidden md:table-cell">Website</td>
+                            <td class="p-6 text-right"><i data-lucide="arrow-right" class="w-4 h-4 ml-auto"></i></td>
+                        </tr>
+                        <tr class="border-b border-subtle hover:bg-white/5 cursor-pointer" onclick="openProjectDetail(4)">
+                            <td class="p-6 font-mono text-acid">04</td>
+                            <td class="p-6 font-bold text-white">HRM System</td>
+                            <td class="p-6 hidden md:table-cell">System</td>
+                            <td class="p-6 text-right"><i data-lucide="arrow-right" class="w-4 h-4 ml-auto"></i></td>
+                        </tr>
+                        <tr class="border-b border-subtle hover:bg-white/5 cursor-pointer" onclick="openProjectDetail(5)">
+                            <td class="p-6 font-mono text-acid">05</td>
+                            <td class="p-6 font-bold text-white">Online Running Tournament</td>
+                            <td class="p-6 hidden md:table-cell">Event</td>
+                            <td class="p-6 text-right"><i data-lucide="arrow-right" class="w-4 h-4 ml-auto"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: PROJECT DETAIL -->
+    <div id="detail-modal" class="modal-overlay fixed inset-0 z-50 flex items-end justify-center">
+        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="toggleModal('detail-modal')"></div>
+        <div class="modal-content relative bg-[#0a0a0a] w-full h-[90vh] border-t border-subtle rounded-t-3xl overflow-hidden flex flex-col">
+            <button onclick="toggleModal('detail-modal')" class="absolute top-6 right-6 z-10 bg-black/50 p-2 rounded-full text-white hover:text-acid border border-white/10"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <div id="detail-content" class="overflow-y-auto h-full">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: RESUME -->
+    <div id="resume-modal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="fixed inset-0 bg-black/90 backdrop-blur-md" onclick="toggleModal('resume-modal')"></div>
+        <div class="relative bg-[#111] w-full max-w-2xl border border-subtle p-10 rounded-xl shadow-2xl">
+            <button onclick="toggleModal('resume-modal')" class="absolute top-4 right-4 text-gray-500 hover:text-white"><i data-lucide="x" class="w-6 h-6"></i></button>
+            
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-display font-bold text-white mb-2">Ngoc Quynh Pham</h2>
+                <p class="text-acid font-mono">Frontend Engineer</p>
+            </div>
+
+            <div class="space-y-6 text-gray-300 text-sm border-t border-b border-white/10 py-6 my-6">
+                <div class="flex justify-between">
+                    <span>Experience</span>
+                    <span class="text-white font-bold">4+ Years</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Key Stack</span>
+                    <span class="text-white font-bold">React, JS, HTML/CSS</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Latest Role</span>
+                    <span class="text-white font-bold">TechX VN</span>
+                </div>
+            </div>
+
+            <button class="w-full bg-acid text-black font-bold py-4 uppercase tracking-widest hover:bg-white transition-colors">
+                Download Full PDF
+            </button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        lucide.createIcons();
+
+        // Reveal Animation on Scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('in-view');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+
+        // Mobile Menu
+        function toggleMenu() {
+            document.getElementById('mobile-nav').classList.toggle('open');
+        }
+
+        // Accordion
+        function toggleAccordion(el) {
+            // Close others
+            document.querySelectorAll('.group.active').forEach(item => {
+                if(item !== el) item.classList.remove('active');
+            });
+            el.classList.toggle('active');
+        }
+
+        // Modal Logic
+        function toggleModal(id) {
+            const modal = document.getElementById(id);
+            if(modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            } else {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        // Project Data
+        const projects = {
+            1: {
+                title: 'UI Template Library',
+                desc: 'Library of 10+ responsive templates with modular components (tables, sliders, galleries), integrated into two platforms to support SMEs in Japan.',
+                img: 'https://placehold.co/1200x600/111/CCFF00?text=UI+Library',
+                stack: ['HTML/CSS', 'JS', 'Responsive']
+            },
+            2: {
+                title: 'Internal Business Toolkit',
+                desc: 'Built using modern React for an efficient, user-friendly frontend combined with an intuitive UX to transform and optimize core business operations.',
+                img: 'https://placehold.co/1200x600/1a1a1a/CCFF00?text=Business+Toolkit',
+                stack: ['React', 'TypeScript', 'UX']
+            },
+            3: {
+                title: 'Lumitechie Redesign',
+                desc: 'Redesigned the company website to improve branding consistency, responsive layout, and SEO performance.',
+                img: 'https://placehold.co/1200x600/222/CCFF00?text=Lumitechie',
+                stack: ['SEO', 'Branding', 'Web']
+            },
+            4: {
+                title: 'HRM System',
+                desc: 'Feature-rich Human Resource Management System that streamlines employee lifecycle management, contract handling, attendance tracking, payroll processing.',
+                img: 'https://placehold.co/1200x600/0f0f0f/CCFF00?text=HRM+System',
+                stack: ['System', 'React', 'Complex Logic']
+            },
+            5: {
+                title: 'Online Running Tournament',
+                desc: 'It is an online charity race, promoting a green lifestyle in the community.',
+                img: 'https://placehold.co/1200x600/050505/CCFF00?text=Running+Event',
+                stack: ['Event', 'Gamification']
+            }
+        };
+
+        function openProjectDetail(id) {
+            const p = projects[id];
+            if(!p) return;
+
+            const html = `
+                <div class="h-[50vh] relative">
+                    <img src="${p.img}" class="w-full h-full object-cover">
+                    <div class="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-black to-transparent">
+                        <h2 class="text-4xl md:text-6xl font-display font-bold text-white uppercase">${p.title}</h2>
+                    </div>
+                </div>
+                <div class="p-8 md:p-16 grid grid-cols-1 md:grid-cols-3 gap-12 bg-[#050505]">
+                    <div class="col-span-2">
+                        <h3 class="text-acid font-mono text-sm uppercase mb-4">About Project</h3>
+                        <p class="text-xl text-gray-300 leading-relaxed">${p.desc}</p>
+                    </div>
+                    <div class="col-span-1 border-l border-white/10 pl-8">
+                        <h3 class="text-acid font-mono text-sm uppercase mb-4">Technologies</h3>
+                        <div class="flex flex-wrap gap-2">
+                            ${p.stack.map(s => `<span class="border border-white/20 px-3 py-1 text-white text-sm rounded-full">${s}</span>`).join('')}
+                        </div>
+                        <button class="mt-8 w-full bg-white text-black font-bold py-3 hover:bg-acid transition-colors">Launch Live</button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('detail-content').innerHTML = html;
+            toggleModal('detail-modal');
+        }
+    </script>
+</body>
+</html>
