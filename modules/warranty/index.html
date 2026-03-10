@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PWVS - Xác Thực & Hỗ Trợ Thông Minh</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Google Fonts: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
@@ -26,7 +23,6 @@
 </head>
 <body class="bg-slate-50 text-slate-900 antialiased selection:bg-slate-900 selection:text-white flex flex-col min-h-screen">
 
-    <!-- Navigation -->
     <nav class="fixed w-full z-50 glass-panel border-b border-slate-200/50">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
@@ -51,7 +47,6 @@
     </nav>
 
     <main class="flex-grow">
-        <!-- Hero Section -->
         <section id="home" class="pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
             <div class="flex-1 text-center md:text-left fade-in">
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-xs font-semibold text-slate-600 mb-6">
@@ -105,7 +100,6 @@
             </div>
         </section>
 
-        <!-- Verification Form Section -->
         <section id="verify" class="py-20 bg-white border-y border-slate-100">
             <div class="max-w-lg mx-auto px-4 sm:px-6">
                 <div class="text-center mb-10">
@@ -134,9 +128,7 @@
                         </button>
                     </form>
             
-                    <!-- Khu vực hiển thị kết quả -->
                     <div id="resultArea" class="mt-6 hidden">
-                        <!-- Content injected by JS -->
                     </div>
                 </div>
 
@@ -150,8 +142,7 @@
             </div>
         </section>
 
-        <!-- Features Section -->
-        <section id="features" class="py-24 bg-slate-50">
+        <section id="features" class="pt-24 bg-slate-50">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl font-bold text-slate-900 mb-4">Hệ thống thông minh - Vận hành tinh gọn</h2>
@@ -159,7 +150,6 @@
                 </div>
                 
                 <div class="grid md:grid-cols-3 gap-8">
-                    <!-- Feature 1 -->
                     <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
                         <div class="w-12 h-12 bg-slate-100 text-slate-900 rounded-xl flex items-center justify-center mb-6">
                             <i data-lucide="lock" class="w-6 h-6"></i>
@@ -167,7 +157,6 @@
                         <h3 class="text-xl font-bold text-slate-900 mb-3">Bảo mật tuyệt đối</h3>
                         <p class="text-slate-500 text-sm leading-relaxed">Sử dụng thuật toán HMAC-SHA256 kết hợp Honeypot để ngăn chặn hoàn toàn việc làm giả QR và Crawl dữ liệu (FR1 & FR5).</p>
                     </div>
-                    <!-- Feature 2 -->
                     <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
                         <div class="w-12 h-12 bg-slate-100 text-slate-900 rounded-xl flex items-center justify-center mb-6">
                             <i data-lucide="bot" class="w-6 h-6"></i>
@@ -175,7 +164,6 @@
                         <h3 class="text-xl font-bold text-slate-900 mb-3">AI Triage (GenAI)</h3>
                         <p class="text-slate-500 text-sm leading-relaxed">Tự động phân tích tình trạng lỗi của thiết bị khi khách hàng khai báo, giúp bộ phận Sale/Kỹ thuật chẩn đoán bệnh tức thì.</p>
                     </div>
-                    <!-- Feature 3 -->
                     <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
                         <div class="w-12 h-12 bg-slate-100 text-slate-900 rounded-xl flex items-center justify-center mb-6">
                             <i data-lucide="workflow" class="w-6 h-6"></i>
@@ -184,10 +172,17 @@
                         <p class="text-slate-500 text-sm leading-relaxed">Luồng xử lý Lead tự động gửi thông báo qua Telegram và lưu trữ vào Google Sheets với độ trễ bằng 0 (Zero-cost CRM).</p>
                     </div>
                 </div>
-            </div>
+
+                <div class="my-12 text-center fade-in" style="animation-delay: 0.3s;">
+                    <button onclick="openInfographicModal()" class="inline-flex bg-purple-50 text-purple-700 border border-purple-200 font-semibold py-3.5 px-8 rounded-xl text-sm hover:bg-purple-100 hover:shadow-md transition-all items-center justify-center gap-2 group">
+                        <i data-lucide="sparkles" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+                        Tạo Infographic Tổng Quan Hệ Thống (AI)
+                    </button>
+                    <p class="text-xs text-slate-400 mt-3">Sử dụng AI Agent để vẽ lại toàn bộ kiến trúc và luồng dữ liệu của PWVS.</p>
+                </div>
+              </div>
         </section>
 
-        <!-- Automation Workflow Visual Section -->
         <section class="py-24 bg-white border-t border-slate-100">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
@@ -202,10 +197,8 @@
                     <p class="text-slate-500 max-w-2xl mx-auto">Tích hợp AI và n8n giúp phân tích lỗi tức thì và phân bổ Lead về đúng bộ phận với độ trễ 0 giây.</p>
                 </div>
 
-                <!-- Visual Diagram -->
                 <div class="relative flex flex-col md:flex-row items-center justify-center gap-6 md:gap-8">
                     
-                    <!-- Step 1: User Input -->
                     <div class="z-10 bg-slate-50 p-5 rounded-2xl border border-slate-200 shadow-sm w-full md:w-48 text-center">
                         <div class="w-12 h-12 bg-white text-slate-600 rounded-xl border border-slate-200 shadow-sm flex items-center justify-center mx-auto mb-3">
                             <i data-lucide="user-plus" class="w-6 h-6"></i>
@@ -214,11 +207,9 @@
                         <div class="text-xs text-slate-500 mt-1">Submit Lead Form</div>
                     </div>
 
-                    <!-- Arrow 1 -->
                     <i data-lucide="arrow-right" class="hidden md:block text-slate-300 w-6 h-6 z-10"></i>
                     <i data-lucide="arrow-down" class="block md:hidden text-slate-300 w-6 h-6 z-10"></i>
 
-                    <!-- Step 2: n8n Orchestrator -->
                     <div class="z-10 bg-slate-900 p-6 rounded-2xl border border-slate-800 shadow-xl w-full md:w-56 text-center transform hover:-translate-y-1 transition-transform">
                         <div class="w-14 h-14 bg-white/10 text-white rounded-xl flex items-center justify-center mx-auto mb-3 relative backdrop-blur-sm border border-white/20">
                             <i data-lucide="webhook" class="w-7 h-7"></i>
@@ -227,7 +218,6 @@
                         <div class="text-xs text-slate-400 mt-1">Điều phối luồng dữ liệu</div>
                     </div>
 
-                    <!-- Arrow Branching -->
                     <div class="hidden md:flex flex-col justify-between h-44 py-2 z-10">
                         <i data-lucide="corner-right-up" class="text-slate-300 w-6 h-6 transform translate-y-2"></i>
                         <i data-lucide="arrow-right" class="text-slate-300 w-6 h-6"></i>
@@ -235,9 +225,7 @@
                     </div>
                     <i data-lucide="arrow-down" class="block md:hidden text-slate-300 w-6 h-6 z-10"></i>
 
-                    <!-- Step 3: Action Nodes -->
                     <div class="z-10 flex flex-col gap-4 w-full md:w-64">
-                        <!-- GenAI Node -->
                         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4 hover:border-purple-200 transition-colors cursor-default group">
                             <div class="bg-purple-50 p-2.5 rounded-lg text-purple-600 group-hover:bg-purple-100 transition-colors"><i data-lucide="bot" class="w-5 h-5"></i></div>
                             <div class="text-left">
@@ -245,7 +233,6 @@
                                 <div class="text-xs text-slate-500">Phân tích loại lỗi máy</div>
                             </div>
                         </div>
-                        <!-- Telegram Node -->
                         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4 hover:border-blue-200 transition-colors cursor-default group">
                             <div class="bg-blue-50 p-2.5 rounded-lg text-blue-500 group-hover:bg-blue-100 transition-colors"><i data-lucide="send" class="w-5 h-5"></i></div>
                             <div class="text-left">
@@ -253,7 +240,6 @@
                                 <div class="text-xs text-slate-500">Noti Telegram + Gợi ý AI</div>
                             </div>
                         </div>
-                        <!-- GG Sheets Node -->
                         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center gap-4 hover:border-green-200 transition-colors cursor-default group">
                             <div class="bg-green-50 p-2.5 rounded-lg text-green-600 group-hover:bg-green-100 transition-colors"><i data-lucide="table" class="w-5 h-5"></i></div>
                             <div class="text-left">
@@ -263,7 +249,6 @@
                         </div>
                     </div>
 
-                    <!-- Background Connecting Line (Desktop Only) -->
                     <div class="hidden md:block absolute top-1/2 left-32 right-32 h-px border-t border-dashed border-slate-300 -z-0 -translate-y-1/2"></div>
                 </div>
             </div>
@@ -276,7 +261,36 @@
         </div>
     </footer>
 
-    <!-- Logic Script -->
+    <div id="infographicModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 shadow-2xl transform scale-95 transition-transform duration-300" id="modalContent">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-bold text-slate-900 flex items-center gap-2">
+                    <i data-lucide="sparkles" class="w-5 h-5 text-purple-600"></i>
+                    AI Infographic Agent
+                </h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 transition-colors p-1">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div id="modalLoading" class="py-10 flex flex-col items-center justify-center text-center">
+                <i data-lucide="loader-2" class="w-12 h-12 animate-spin text-purple-600 mb-4"></i>
+                <p class="text-sm font-bold text-slate-900 mb-1" id="loadingText">Đang khởi tạo Agent...</p>
+                <p class="text-xs text-slate-500">Quá trình này có thể mất vài giây</p>
+                <div class="w-full bg-slate-100 rounded-full h-1.5 mt-5 overflow-hidden">
+                    <div class="bg-purple-600 h-1.5 rounded-full w-0 transition-all duration-300 ease-out" id="loadingProgress"></div>
+                </div>
+            </div>
+
+            <div id="modalResult" class="hidden fade-in">
+                <div class="rounded-xl overflow-hidden border border-slate-200 mb-5 bg-slate-50 flex items-center justify-center relative shadow-inner">
+                    <img src="./info.png" alt="Generated Infographic" class="w-full h-full object-content">
+                    <div class="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/20 to-transparent"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         lucide.createIcons();
 
@@ -307,7 +321,6 @@
             let htmlContent = '';
             
             if (serial === 'REAL123') {
-                // Trạng thái: Active (Không cần Lead Form)
                 htmlContent = `
                     <div class="fade-in bg-green-50/50 border border-green-200 rounded-2xl p-5">
                         <div class="flex items-center gap-3 mb-4">
@@ -321,9 +334,6 @@
                     </div>
                 `;
             } else if (serial === 'OLD123' || serial === 'STOLEN123') {
-                // Trạng thái: Expired (OLD123) hoặc Revoked (STOLEN123)
-                // Theo SRS (FR3): Yêu cầu hiển thị Lead Form
-                
                 const isExpired = serial === 'OLD123';
                 const bgColor = isExpired ? 'bg-yellow-50/50' : 'bg-red-50/50';
                 const borderColor = isExpired ? 'border-yellow-200' : 'border-red-200';
@@ -349,7 +359,6 @@
                             <p class="text-xs mt-2">${isExpired ? 'Thiết bị của bạn đã hết hạn bảo hành. Vui lòng để lại thông tin để kỹ thuật viên hỗ trợ.' : 'Thiết bị này đã bị báo mất cắp. Để lại thông tin để làm việc với bộ phận an ninh.'}</p>
                         </div>
 
-                        <!-- FR3: Lead Capture Mechanism -->
                         <form id="leadForm" class="space-y-3 bg-white p-4 rounded-xl border border-slate-100 shadow-sm" onsubmit="submitLead(event, '${serial}')">
                             <h4 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Thông tin liên hệ</h4>
                             <div>
@@ -374,7 +383,6 @@
                     </div>
                 `;
             } else {
-                // Trạng thái: Not Found
                 htmlContent = `
                     <div class="fade-in text-center p-6 border border-slate-200 rounded-2xl bg-slate-50">
                         <i data-lucide="search-x" class="mx-auto text-slate-400 w-8 h-8 mb-3"></i>
@@ -388,7 +396,6 @@
             lucide.createIcons();
         }
 
-        // Logic Demo FR4: Event-Driven Automation (n8n & AI)
         function submitLead(e, serial) {
             e.preventDefault();
             const btn = document.getElementById('leadBtn');
@@ -399,12 +406,74 @@
             btn.innerHTML = `<i data-lucide="bot" class="w-4 h-4 animate-bounce"></i><span>AI đang phân tích...</span>`;
             btn.disabled = true;
 
-            // Giả lập thời gian n8n gọi Webhook -> GenAI -> Telegram -> GG Sheets
             setTimeout(() => {
                 form.classList.add('hidden');
                 successMsg.classList.remove('hidden');
                 lucide.createIcons();
             }, 1500);
+        }
+
+        let loadingInterval;
+
+        function openInfographicModal() {
+            const modal = document.getElementById('infographicModal');
+            const content = document.getElementById('modalContent');
+            const loading = document.getElementById('modalLoading');
+            const result = document.getElementById('modalResult');
+            const text = document.getElementById('loadingText');
+            const progress = document.getElementById('loadingProgress');
+
+            document.body.classList.add('overflow-hidden');
+
+            loading.classList.remove('hidden');
+            result.classList.add('hidden');
+            progress.style.width = '0%';
+            text.innerText = "Đang khởi tạo Agent...";
+            
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                content.classList.remove('scale-95');
+            }, 10);
+
+            const aiStates = [
+                "Đang phân tích cấu trúc hệ thống...",
+                "Đang tổng hợp dữ liệu luồng n8n...",
+                "Đang Render sơ đồ Infographic...",
+                "Hoàn tất xử lý đồ họa!"
+            ];
+
+            let step = 0;
+            clearInterval(loadingInterval);
+            
+            loadingInterval = setInterval(() => {
+                step++;
+                progress.style.width = `${(step / aiStates.length) * 100}%`;
+                
+                if(step < aiStates.length) {
+                    text.innerText = aiStates[step];
+                } else {
+                    clearInterval(loadingInterval);
+                    setTimeout(() => {
+                        loading.classList.add('hidden');
+                        result.classList.remove('hidden');
+                        lucide.createIcons(); 
+                    }, 500);
+                }
+            }, 1200); 
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('infographicModal');
+            const content = document.getElementById('modalContent');
+            
+            modal.classList.add('opacity-0');
+            content.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                clearInterval(loadingInterval);
+                document.body.classList.remove('overflow-hidden');
+            }, 300);
         }
     </script>
 </body>
