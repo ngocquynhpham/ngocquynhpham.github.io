@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth overflow-x-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ngoc Quynh | Creative Frontend Developer</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- ECharts CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+    
+    <!-- Font Space Grotesk -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        orange: '#e9450a',
+                        dark: '#312b2a',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
+    <style>
+        body { 
+            font-family: 'Space Grotesk', sans-serif; 
+            cursor: none; 
+            background-color: #eaebef;
+            color: #1c1c1c;
+        }
+        
+        /* Dark Mode Transitions */
+        body, nav, section, div, h1, h2, h3, h4, p, span, a, button {
+            transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+        }
+        
+        /* Exclude animations from transition */
+        .transform, .reveal-elem, .marquee-content, #loader-text, #loader-bar {
+            transition-property: transform, opacity, width !important;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 4px; }
+        html.dark ::-webkit-scrollbar-thumb { background: #333; }
+
+        /* Text Outline */
+        .text-outline { color: transparent; -webkit-text-stroke: 1px #312b2a; }
+        html.dark .text-outline { -webkit-text-stroke: 1px #fff; }
+        .text-outline:hover { color: #e9450a; -webkit-text-stroke: 1px #e9450a; }
+
+        /* Marquee */
+        .marquee-container { overflow: hidden; white-space: nowrap; display: flex; }
+        .marquee-content { display: flex; animation: marquee 20s linear infinite; }
+        .marquee-content:hover { animation-play-state: paused; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* Custom Cursor */
+        .cursor-dot, .cursor-outline {
+            position: fixed; top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%; z-index: 9999; pointer-events: none;
+        }
+        .cursor-dot { width: 8px; height: 8px; background-color: #e9450a; }
+        .cursor-outline { width: 40px; height: 40px; border: 1px solid rgba(233, 69, 10, 0.5); transition: width 0.2s, height 0.2s, background-color 0.2s; }
+        
+        a:hover ~ .cursor-outline, button:hover ~ .cursor-outline, .interactive:hover ~ .cursor-outline {
+            width: 60px !important; height: 60px !important; background-color: rgba(233, 69, 10, 0.1) !important;
+        }
+
+        /* Scroll Reveal Utility */
+        .reveal-elem {
+            opacity: 0;
+            transform: translateY(3rem);
+            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal-elem.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Preloader */
+        .loader-hide {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+    </style>
+
+    <!-- Prevent FOUC for Dark Mode -->
+    <script>
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+<body class="antialiased selection:bg-orange selection:text-white relative bg-[#eaebef] dark:bg-[#0a0a0a] text-[#1c1c1c] dark:text-gray-100 min-h-screen overflow-clip">
+
+    <!-- PRELOADER -->
+    <div id="preloader" class="fixed inset-0 z-[99999] bg-[#312b2a] flex flex-col items-center justify-center transition-all duration-[1000ms] ease-[cubic-bezier(0.7,0,0.3,1)]">
+        <div class="overflow-hidden mb-8">
+            <h1 id="loader-text" class="text-white text-5xl md:text-8xl font-bold uppercase tracking-tighter translate-y-full transition-transform duration-700 ease-out">Ngoc.Quynh</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="w-48 md:w-64 h-[2px] bg-white/10 overflow-hidden relative rounded">
+                <div id="loader-bar" class="absolute top-0 left-0 h-full bg-[#e9450a] transition-all duration-75" style="width: 0%"></div>
+            </div>
+            <span id="loader-counter" class="text-[#e9450a] font-bold text-sm md:text-base w-10 text-right">0%</span>
+        </div>
+    </div>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+
+    <!-- NAVBAR -->
+    <nav class="fixed w-full z-50 p-6 flex justify-between items-center bg-[#eaebef]/90 dark:bg-[#0a0a0a]/90 backdrop-blur-md border-b border-[rgba(0,0,0,0.07)] dark:border-white/10 transition-colors duration-500">
+        <a href="#" class="text-xl font-bold tracking-tighter uppercase hover:text-[#e9450a] transition-colors interactive">Ngoc.Quynh</a>
+        
+        <div class="flex items-center gap-4">
+            <button id="theme-toggle" class="w-10 h-10 flex items-center justify-center rounded-full bg-white dark:bg-[#1a1a1a] border border-[rgba(0,0,0,0.15)] dark:border-white/10 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors interactive">
+                <!-- Sun icon -->
+                <svg id="theme-toggle-light-icon" class="hidden w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <!-- Moon icon -->
+                <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5 text-[#312b2a]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            </button>
+        </div>
+
+        <div class="hidden md:flex items-center gap-8 text-sm font-bold uppercase tracking-wide">
+            <a href="#experience" class="hover:text-[#e9450a] transition-colors interactive">Experience</a>
+            <a href="#projects" class="hover:text-[#e9450a] transition-colors interactive">Projects</a>
+            <a href="#about" class="hover:text-[#e9450a] transition-colors interactive">About</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="min-h-screen flex flex-col justify-center px-6 md:px-20 relative pt-20">
+        <div class="z-10 reveal-elem">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="w-3 h-3 rounded-full bg-[#e9450a] animate-pulse"></span>
+                <p class="font-bold uppercase tracking-widest text-xs md:text-sm text-[#605e58] dark:text-gray-400">Available for freelance work</p>
+            </div>
+            <h1 class="text-[3.5rem] sm:text-7xl md:text-8xl lg:text-[10rem] font-bold uppercase leading-[0.9] tracking-tighter">
+                Creative<br/>
+                <span class="text-outline">Frontend</span><br/>
+                Developer.
+            </h1>
+        </div>
+        
+        <div class="mt-12 md:absolute md:right-10 md:bottom-20 lg:right-32 lg:bottom-32 max-w-sm reveal-elem" style="transition-delay: 200ms;">
+            <p class="text-sm md:text-base text-[#605e58] dark:text-gray-400 border-l-2 border-[#e9450a] pl-4 font-medium leading-relaxed">
+                I don't just build interfaces; I engineer experiences. Specialized in Conversion Funnels, Core Web Vitals, and Technical UX to ensure every interaction drives business value.
+            </p>
+            <div class="mt-8 flex gap-4 items-center">
+                <a href="#projects" class="inline-flex items-center gap-2 pb-1 border-b-2 border-[#312b2a] dark:border-white hover:border-[#e9450a] dark:hover:border-[#e9450a] hover:text-[#e9450a] transition-all font-bold uppercase text-sm interactive">
+                    Explore Work
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MARQUEE -->
+    <section class="py-8 bg-[#e9450a] text-white rotate-[-2deg] scale-105 my-10 md:my-20 z-20 relative shadow-xl overflow-hidden">
+        <div class="marquee-container">
+            <div class="marquee-content text-4xl md:text-7xl font-bold uppercase tracking-tighter items-center gap-8">
+                <!-- Group 1 -->
+                <span>React.js</span> <span class="text-[#312b2a] dark:text-black">•</span>
+                <span>Core Web Vitals</span> <span class="text-[#312b2a] dark:text-black">•</span>
+                <span>TailwindCSS</span> <span class="text-[#312b2a] dark:text-black">•</span>
+                <span>Technical UX</span> <span class="text-[#312b2a] dark:text-black">•</span>
+                <span>ECharts.js</span> <span class="text-[#312b2a] dark:text-black">•</span>
+                <span>GA4 Funnel</span> <span class="text-[#312b2a] dark:text-black">•</span>
+                <span>Performance</span> <span class="text-[#312b2a] dark:text-black">•</span>
+                <!-- Group 2 for infinite loop -->
+                <span>React.js</span> <span class="text-[#312b2a] dark:text-black">•</span>
+                <span>Core Web Vitals</span> <span class="text-[#312b2a] dark:text-black">•</span>
+                <span>TailwindCSS</span> <span class="text-[#312b2a] dark:text-black">•</span>
+                <span>Technical UX</span> <span class="text-[#312b2a] dark:text-black">•</span>
+                <span>ECharts.js</span> <span class="text-[#312b2a] dark:text-black">•</span>
+                <span>GA4 Funnel</span> <span class="text-[#312b2a] dark:text-black">•</span>
+                <span>Performance</span> <span class="text-[#312b2a] dark:text-black">•</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="px-6 md:px-20 py-24 bg-white dark:bg-[#111] transition-colors duration-500">
+        <h2 class="text-4xl md:text-6xl font-bold uppercase mb-16 reveal-elem">
+            Work<br/><span class="text-[#e9450a] text-outline">Experience</span>
+        </h2>
+        
+        <div class="flex flex-col border-t-2 border-[#312b2a] dark:border-white/20">
+            
+            <div class="group py-12 border-b border-[rgba(0,0,0,0.15)] dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors px-4 md:px-8 interactive reveal-elem" style="transition-delay: 100ms;">
+                <div class="flex flex-col lg:flex-row gap-8 lg:gap-16">
+                    <div class="w-full lg:w-1/3">
+                        <h3 class="text-2xl md:text-3xl font-bold group-hover:text-[#e9450a] transition-colors">Frontend Engineer</h3>
+                        <div class="mt-3">
+                            <p class="font-bold text-lg">TechX VN</p>
+                            <p class="text-[#605e58] dark:text-gray-400 text-sm font-medium">(formerly Sungrove Tech Vietnam)</p>
+                        </div>
+                        <div class="mt-6">
+                            <p class="font-bold text-sm uppercase tracking-widest border-l-2 border-[#e9450a] pl-3">Dec 2024 - Present</p>
+                            <p class="text-sm text-[#605e58] dark:text-gray-400 mt-1 pl-3.5">Ho Chi Minh City</p>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full lg:w-2/3">
+                        <div class="text-[#605e58] dark:text-gray-400 text-base leading-relaxed space-y-4">
+                            <p>Engineered responsive, mobile-first user interfaces, ensuring seamless cross-browser compatibility. Worked within Agile/Scrum processes.</p>
+                            <h4 class="font-bold text-[#312b2a] dark:text-white text-sm uppercase tracking-wider mt-6 mb-2">Key Achievements</h4>
+                            <ul class="list-disc pl-5 space-y-2 marker:text-[#e9450a]">
+                                <li>Developed a UI template library with 10+ responsive layouts, built with modular components.</li>
+                                <li>Integrated templates into two platforms (Easier, It’szai) for SMEs in Japan.</li>
+                                <li>Created interactive UI components and dynamic data visualizations with ECharts.js.</li>
+                            </ul>
+                        </div>
+                        <div class="mt-8 flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-white dark:bg-[#1a1a1a] border border-[rgba(0,0,0,0.07)] dark:border-white/10 rounded text-xs font-bold uppercase shadow-sm">HTML / CSS / JS</span>
+                            <span class="px-3 py-1 bg-white dark:bg-[#1a1a1a] border border-[rgba(0,0,0,0.07)] dark:border-white/10 rounded text-xs font-bold uppercase shadow-sm">EChart.js</span>
+                            <span class="px-3 py-1 bg-white dark:bg-[#1a1a1a] border border-[rgba(0,0,0,0.07)] dark:border-white/10 rounded text-xs font-bold uppercase shadow-sm">Swiper.js</span>
+                            <span class="px-3 py-1 bg-white dark:bg-[#1a1a1a] border border-[rgba(0,0,0,0.07)] dark:border-white/10 rounded text-xs font-bold uppercase shadow-sm">Next.js</span>
+                            <span class="px-3 py-1 bg-white dark:bg-[#1a1a1a] border border-[rgba(0,0,0,0.07)] dark:border-white/10 rounded text-xs font-bold uppercase shadow-sm">SEO</span>
+                            <span class="px-3 py-1 bg-white dark:bg-[#1a1a1a] border border-[rgba(0,0,0,0.07)] dark:border-white/10 rounded text-xs font-bold uppercase shadow-sm">Docker</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="group py-12 border-b border-[rgba(0,0,0,0.15)] dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors px-4 md:px-8 interactive reveal-elem" style="transition-delay: 200ms;">
+                <div class="flex flex-col lg:flex-row gap-8 lg:gap-16">
+                    <div class="w-full lg:w-1/3">
+                        <h3 class="text-2xl md:text-3xl font-bold group-hover:text-[#e9450a] transition-colors">Frontend Developer</h3>
+                        <div class="mt-3">
+                            <p class="font-bold text-lg">Thang Loi Group</p>
+                        </div>
+                        <div class="mt-6">
+                            <p class="font-bold text-sm uppercase tracking-widest border-l-2 border-[#e9450a] pl-3">Dec 2020 - Dec 2024</p>
+                            <p class="text-sm text-[#605e58] dark:text-gray-400 mt-1 pl-3.5">Ho Chi Minh City</p>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full lg:w-2/3">
+                        <div class="text-[#605e58] dark:text-gray-400 text-base leading-relaxed space-y-4">
+                            <p>Collaborated with cross-functional teams to deliver refined digital solutions. Mentored 3+ frontend development interns, providing technical guidance.</p>
+                            <h4 class="font-bold text-[#312b2a] dark:text-white text-sm uppercase tracking-wider mt-6 mb-2">Key Contributions</h4>
+                            <ul class="list-disc pl-5 space-y-2 marker:text-[#e9450a]">
+                                <li>Built key Internal Business Management Toolkit features using React and TypeScript.</li>
+                                <li>Researched and developed a company design system and component libraries.</li>
+                                <li>Built various event-focused web apps including booking platforms and minigames.</li>
+                            </ul>
+                        </div>
+                        <div class="mt-8 flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-white dark:bg-[#1a1a1a] border border-[rgba(0,0,0,0.07)] dark:border-white/10 rounded text-xs font-bold uppercase shadow-sm">ReactJS</span>
+                            <span class="px-3 py-1 bg-white dark:bg-[#1a1a1a] border border-[rgba(0,0,0,0.07)] dark:border-white/10 rounded text-xs font-bold uppercase shadow-sm">TypeScript</span>
+                            <span class="px-3 py-1 bg-white dark:bg-[#1a1a1a] border border-[rgba(0,0,0,0.07)] dark:border-white/10 rounded text-xs font-bold uppercase shadow-sm">Tailwind CSS</span>
+                            <span class="px-3 py-1 bg-white dark:bg-[#1a1a1a] border border-[rgba(0,0,0,0.07)] dark:border-white/10 rounded text-xs font-bold uppercase shadow-sm">JavaScript</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- PROJECTS (STACKING CARDS) -->
+    <section id="projects" class="px-6 md:px-20 py-24 scroll-mt-20">
+        <h2 class="text-4xl md:text-6xl font-bold uppercase mb-16 reveal-elem">
+            Featured <br/><span class="text-[#e9450a]">Projects</span>
+        </h2>
+        
+        <div id="stacking-cards-container" class="flex flex-col relative w-full pb-10">
+            <!-- Cards will be generated here by JS -->
+        </div>
+        
+        <!-- Other Projects List -->
+        <div class="mt-32">
+            <h3 class="text-2xl font-bold uppercase border-b-2 border-[#312b2a] dark:border-white/20 pb-4 mb-4 reveal-elem">Other Notable Work</h3>
+            <div id="other-projects-container" class="flex flex-col">
+                <!-- List will be generated here by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="px-6 md:px-20 py-24 bg-white dark:bg-[#111] border-y border-[rgba(0,0,0,0.07)] dark:border-white/10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="reveal-elem order-2 md:order-1">
+                <h2 class="text-4xl md:text-6xl font-bold uppercase mb-8">Product Design<br/>Thinking.</h2>
+                <p class="text-[#605e58] dark:text-gray-400 text-lg mb-6 leading-relaxed">
+                    I don't just build UI; I solve business problems. By combining technical expertise with a strong understanding of User Behavior and Conversion Funnels, I ensure every product is performant, scalable, and user-centric.
+                </p>
+                <div class="flex flex-col gap-4 text-sm uppercase tracking-widest font-bold mt-8">
+                    <p class="flex items-center gap-4"><span class="w-10 h-px bg-[#e9450a]"></span> Technical UX Optimization</p>
+                    <p class="flex items-center gap-4"><span class="w-10 h-px bg-[#e9450a]"></span> Data-Driven Development</p>
+                    <p class="flex items-center gap-4"><span class="w-10 h-px bg-[#e9450a]"></span> Core Web Vitals Focus</p>
+                </div>
+            </div>
+            <div class="reveal-elem order-1 md:order-2 overflow-hidden aspect-square md:aspect-auto md:h-[500px] rounded-2xl bg-gray-200 dark:bg-black/20 relative" style="transition-delay: 200ms;">
+                <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop" 
+                     alt="Coding environment" 
+                     class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 opacity-90 hover:opacity-100" />
+                <div class="absolute inset-0 border-2 border-[#312b2a]/10 dark:border-white/10 rounded-2xl pointer-events-none"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact" class="px-6 md:px-20 py-24 md:py-32 relative overflow-hidden bg-[#312b2a] dark:bg-[#050505] text-white">
+        <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+            <h1 class="text-[20vw] font-bold whitespace-nowrap text-white">HIRE ME</h1>
+        </div>
+        <div class="text-center relative z-10 reveal-elem">
+            <p class="text-[#e9450a] uppercase tracking-widest text-sm font-bold mb-6">Got a problem to solve?</p>
+            <h2 class="text-5xl md:text-8xl lg:text-[9rem] font-bold uppercase tracking-tighter hover:text-[#e9450a] transition-colors cursor-pointer inline-block mb-12 interactive">
+                Let's Talk.
+            </h2>
+            <div class="flex flex-wrap justify-center gap-6 md:gap-12 text-base md:text-lg font-medium">
+                <a href="mailto:hello@ngocquynh.dev" class="hover:text-[#e9450a] transition-colors border-b border-transparent hover:border-[#e9450a] pb-1 interactive">hello@ngocquynh.dev</a>
+                <a href="#" class="hover:text-[#e9450a] transition-colors border-b border-transparent hover:border-[#e9450a] pb-1 interactive">LinkedIn</a>
+                <a href="#" class="hover:text-[#e9450a] transition-colors border-b border-transparent hover:border-[#e9450a] pb-1 interactive">GitHub</a>
+            </div>
+        </div>
+        
+        <div class="mt-24 md:mt-32 text-center text-sm text-gray-400 flex flex-col md:flex-row justify-center items-center gap-4 relative z-10">
+            <p>© 2026 Ngoc Quynh. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL HIỂN THỊ CHI TIẾT DỰ ÁN KÈM TÙY CHỌN VIEW -->
+    <div id="project-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 md:p-8 bg-[#312b2a]/80 dark:bg-black/80 backdrop-blur-md opacity-0 transition-opacity duration-300">
+        <div id="modal-content" class="bg-[#eaebef] dark:bg-[#151515] w-full max-w-6xl max-h-[95vh] overflow-y-auto rounded-2xl shadow-2xl relative flex flex-col lg:flex-row transform scale-95 transition-transform duration-300">
+            
+            <button id="close-modal" class="absolute top-4 right-4 z-20 w-10 h-10 bg-white dark:bg-[#312b2a] text-[#312b2a] dark:text-white rounded-full flex items-center justify-center hover:bg-[#e9450a] dark:hover:bg-[#e9450a] hover:text-white transition-colors interactive shadow-md border border-transparent dark:border-white/20">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+
+            <!-- Cột Trái: Ảnh -->
+            <div class="w-full lg:w-2/5 h-64 lg:h-auto bg-gray-200 dark:bg-black/20 relative">
+                <img id="modal-img" src="" alt="Project" class="w-full h-full object-cover absolute inset-0" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent lg:hidden"></div>
+            </div>
+
+            <!-- Cột Phải: Nội dung và View Options -->
+            <div class="w-full lg:w-3/5 p-6 md:p-10 flex flex-col justify-start">
+                <div id="modal-tag" class="inline-block px-3 py-1 bg-[#312b2a] dark:bg-white text-white dark:text-[#312b2a] text-xs font-bold uppercase tracking-wider rounded w-fit mb-4">Tag</div>
+                
+                <div class="flex justify-between items-start gap-4 mb-4">
+                    <h3 id="modal-title" class="text-3xl md:text-5xl font-bold uppercase">Title</h3>
+                    
+                    <!-- TOGGLE VIEW (Chỉ hiện trên Tablet/Desktop) -->
+                    <div class="hidden md:flex bg-black/5 dark:bg-white/5 p-1 rounded-full border border-[rgba(0,0,0,0.05)] dark:border-white/10 shrink-0 mt-2">
+                        <button id="btn-view-mindmap" class="px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full transition-all interactive">Mindmap</button>
+                        <button id="btn-view-list" class="px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full transition-all interactive">List</button>
+                    </div>
+                </div>
+                
+                <!-- Hiển thị Tech và Role -->
+                <div class="flex flex-col md:flex-row md:items-center gap-4 mb-6 pb-6 border-b border-[rgba(0,0,0,0.1)] dark:border-white/10">
+                    <div class="flex-1">
+                        <span class="block text-[10px] uppercase tracking-widest text-[#605e58] dark:text-gray-500 font-bold mb-1">Technologies</span>
+                        <p id="modal-tech" class="text-[#312b2a] dark:text-gray-300 font-medium text-sm">Tech Stack</p>
+                    </div>
+                    <div class="hidden md:block w-px h-8 bg-[rgba(0,0,0,0.1)] dark:bg-white/10"></div>
+                    <div class="flex-1">
+                        <span class="block text-[10px] uppercase tracking-widest text-[#605e58] dark:text-gray-500 font-bold mb-1">My Role</span>
+                        <p id="modal-role" class="text-[#e9450a] font-bold text-sm">Frontend Developer</p>
+                    </div>
+                </div>
+
+                <!-- BỔ SUNG: VÙNG HIỂN THỊ MODULES (Chỉ hiện khi có data) -->
+                <div id="modal-modules-container" class="bg-white/50 dark:bg-white/5 p-5 rounded-xl border border-[rgba(0,0,0,0.05)] dark:border-white/10 relative overflow-hidden group mb-6 hidden">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-purple-500"></div>
+                    <h4 class="font-bold uppercase text-xs tracking-widest text-purple-600 dark:text-purple-500 mb-2">Core Modules Included</h4>
+                    <div id="modal-modules" class="text-[#312b2a] dark:text-gray-300 text-sm md:text-base leading-relaxed"></div>
+                </div>
+                
+                <!-- ================= 2 CHẾ ĐỘ VIEW (MINDMAP vs LIST) ================= -->
+                
+                <!-- VIEW 1: ECHARTS PISI MINDMAP (Fix lỗi hidden md:block thành hidden để JS kiểm soát hoàn toàn) -->
+                <div id="pisi-mindmap-view" class="flex-grow w-full min-h-[450px] relative bg-white/50 dark:bg-black/20 rounded-xl border border-[rgba(0,0,0,0.05)] dark:border-white/10 overflow-hidden hidden">
+                    <div class="absolute top-4 left-4 text-[10px] text-gray-500 uppercase tracking-widest z-10 flex items-center gap-2">
+                        <svg class="w-3 h-3 animate-pulse text-[#e9450a]" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle></svg>
+                        Hover nodes to explore P.I.S.I Framework
+                    </div>
+                    <div id="mindmap-container" class="w-full h-full absolute inset-0"></div>
+                </div>
+
+                <!-- VIEW 2: LIST VIEW TRUYỀN THỐNG (Mặc định cho SP) -->
+                <div id="pisi-list-view" class="space-y-6 flex-grow hidden">
+                    <!-- TIN NHẮN CHỈ HIỆN TRÊN MOBILE (NHẮC SANG PC ĐỂ XEM MINDMAP) -->
+                    <div class="md:hidden flex items-center gap-3 p-4 bg-[#e9450a]/10 dark:bg-[#e9450a]/20 border border-[#e9450a]/20 rounded-xl text-[#e9450a] dark:text-[#ff7b47] text-xs font-medium leading-relaxed">
+                        <svg class="w-8 h-8 shrink-0 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        <span>Psst! For the ultimate interactive P.I.S.I Mindmap experience, switch to a PC/Desktop! 🖥️✨</span>
+                    </div>
+
+                    <!-- PROBLEM -->
+                    <div class="bg-white/50 dark:bg-white/5 p-5 rounded-xl border border-[rgba(0,0,0,0.05)] dark:border-white/10 relative overflow-hidden group">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-red-500"></div>
+                        <h4 class="font-bold uppercase text-xs tracking-widest text-red-500 mb-2">1. The Problem</h4>
+                        <p id="modal-problem" class="text-[#312b2a] dark:text-gray-300 text-sm md:text-base leading-relaxed">...</p>
+                    </div>
+                    <!-- INSIGHT -->
+                    <div class="bg-white/50 dark:bg-white/5 p-5 rounded-xl border border-[rgba(0,0,0,0.05)] dark:border-white/10 relative overflow-hidden group">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-yellow-500"></div>
+                        <h4 class="font-bold uppercase text-xs tracking-widest text-yellow-600 dark:text-yellow-500 mb-2">2. User Insight</h4>
+                        <p id="modal-insight" class="text-[#312b2a] dark:text-gray-300 text-sm md:text-base leading-relaxed">...</p>
+                    </div>
+                    <!-- SOLUTION -->
+                    <div class="bg-white/50 dark:bg-white/5 p-5 rounded-xl border border-[rgba(0,0,0,0.05)] dark:border-white/10 relative overflow-hidden group">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-blue-500"></div>
+                        <h4 class="font-bold uppercase text-xs tracking-widest text-blue-500 mb-2">3. Tech Solution</h4>
+                        <p id="modal-solution" class="text-[#312b2a] dark:text-gray-300 text-sm md:text-base leading-relaxed">...</p>
+                    </div>
+                    <!-- IMPACT -->
+                    <div class="bg-white/50 dark:bg-white/5 p-5 rounded-xl border border-[rgba(0,0,0,0.05)] dark:border-white/10 relative overflow-hidden group">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-green-500"></div>
+                        <h4 class="font-bold uppercase text-xs tracking-widest text-green-600 dark:text-green-500 mb-2">4. Business Impact</h4>
+                        <p id="modal-impact" class="text-[#312b2a] dark:text-gray-300 text-sm md:text-base font-medium leading-relaxed">...</p>
+                    </div>
+                </div>
+
+                <div id="modal-link-container" class="mt-8 pt-6 border-t border-[rgba(0,0,0,0.1)] dark:border-white/10">
+                    <a id="modal-link" href="#" target="_blank" rel="noreferrer" class="px-8 py-4 bg-[#e9450a] text-white rounded-full hover:bg-[#ba3708] transition-colors font-bold uppercase text-sm inline-flex items-center justify-center interactive shadow-md">
+                        Visit Live Site <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- VANILLA JAVASCRIPT LOGIC -->
+    <script>
+        // ================= DATA (WITH PISI FOR MINDMAP & LIST) =================
+        const projectData = {
+            p_toolkit: { 
+                title: 'Business Management Toolkit', tag: 'Thang Loi Group', tech: 'React, Django REST, UI/UX Architecture',
+                role: 'Frontend Developer (4 Years)', 
+                problem: 'Over 4 years of rapid scaling in the real estate industry, Thang Loi Group relied on fragmented legacy systems and paper-based workflows across HR, CRM, Assets, and Documents, leading to massive operational bottlenecks and data silos.',
+                insight: 'Enterprise users suffer from "tool fatigue" when forced to learn multiple disconnected interfaces. A successful digital transformation requires a unified ecosystem with a consistent, intuitive UX that seamlessly communicates with backend APIs.',
+                solution: 'Architected and developed an end-to-end Enterprise Toolkit encompassing 8 core platforms. Built with modern React and integrated with Django REST APIs, establishing a company-wide design system.',
+                impact: 'Successfully transformed core business operations into a centralized digital ecosystem. Empowered the entire organization to manage resources effectively, acting as the digital backbone of Thang Loi Group for 4 consecutive years.',
+                modules: `<ul class="list-decimal pl-5 space-y-2 mt-2 font-medium marker:text-[#e9450a]">
+                    <li>Human Resource Management - HRM</li>
+                    <li>E-Signature & Workflow Automation Platform</li>
+                    <li>Goal & Task Management</li>
+                    <li>Document Management</li>
+                    <li>Call Center & CRM Integration Platform</li>
+                    <li>Asset Management</li>
+                    <li>Internal Digital Library</li>
+                    <li>Personalized invitation card (E-Thiep)</li>
+                </ul>`,
+                img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop', link: '#' 
+            },
+            p4: { 
+                title: 'E-Signature & Workflow', tag: 'Thang Loi Group (Module Deep-dive)', tech: 'React, TypeScript, BPMN, React-PDF',
+                role: 'Design & Developer', 
+                problem: 'Traditional document approval processes across the enterprise were causing massive delays, high human-error rates in data entry, and a complete lack of tracking visibility across multiple subsidiary companies.',
+                insight: 'Key approvers are frequently on the move. A complex, desktop-only BPMN interface would bottleneck the process. They required a mobile-first, intuitive touch interface combined with auto-validating dynamic forms to prevent errors.',
+                solution: 'Designed and engineered a dynamic platform using React and TypeScript. Integrated Camunda BPMN to auto-generate context-aware forms. Built a custom drag-and-drop PDF signature placement interface and a mobile-first timeline dashboard.',
+                impact: 'Slashed document approval times by 50% and decreased document errors by 80%. Successfully processed 500+ complex workflows across multiple companies, proving high scalability and excellent user adoption.',
+                img: 'https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?q=80&w=2000&auto=format&fit=crop', link: '#' 
+            },
+            p1: { 
+                title: 'UI Template Library', tag: 'TechX Viet Nam', tech: 'React, Next.js, Swiper.js, Core Web Vitals',
+                role: 'Developer', 
+                problem: 'Building individual landing pages for Japanese SMEs from scratch was time-consuming, expensive, and lacked consistent technical SEO and MEO (Map Engine Optimization) standards across different domains.',
+                insight: 'To scale the SaaS platforms (Easier & It\'szai), the 20+ member team realized we couldn\'t rely on monolithic page builds. The system needed a modular, component-driven approach allowing rapid assembly without sacrificing performance.',
+                solution: 'Developed a library of 10+ responsive themes with plug-and-play UI components (Swiper sliders, ECharts). Collaborated closely with Japanese designers to ensure localized UX and strictly applied semantic HTML for top-tier SEO/MEO optimization.',
+                impact: 'Drastically reduced landing page development time. Successfully integrated into two major platforms, empowering SMEs in Japan with scalable digital marketing solutions and improved local search visibility.',
+                img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2464&auto=format&fit=crop', link: '#' 
+            },
+            p2: { 
+                title: 'Lumitechie Redesign', tag: 'Freelance', tech: 'ReactJS, TanStack, Tailwind CSS',
+                role: 'UI Design & Front-end Developer', 
+                problem: 'As a tech solutions provider, Lumitechie\'s legacy landing page suffered from outdated branding, slow loading performance, and poor search visibility, which undermined their online credibility.',
+                insight: 'Potential clients judge a tech company by its own website. The legacy site\'s heavy JavaScript and lack of mobile-first responsiveness were actively increasing bounce rates and hurting organic reach.',
+                solution: 'Led a complete UI redesign and frontend architectural overhaul. Adopted a mobile-first approach with Tailwind CSS, implemented TanStack for smooth interactions, and heavily optimized rendering cycles and JS bundle sizes alongside strict semantic HTML for SEO.',
+                impact: 'Delivered a significantly faster, modern, and engaging web presence. The technical performance and UX improvements successfully enhanced Lumitechie\'s digital credibility, aligning perfectly with their business growth goals.',
+                img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2426&auto=format&fit=crop', link: 'https://lumitechie.com/' 
+            }
+        };
+
+        const otherProjects = [
+            { id: 'p3', title: 'HRM - Human Resource Management', tag: 'Thang Loi Group', desc: 'Employee lifecycle & payroll processing' },
+            { id: 'p5', title: 'Goal & Task Management', tag: 'Thang Loi Group', desc: 'Meeting-to-execution workflow' },
+            { id: 'p8', title: 'Call Center & CRM', tag: 'Thang Loi Group', desc: 'Real-time call handling & data management' },
+            { id: 'p7', title: 'Asset Management', tag: 'Thang Loi Group', desc: 'QR-based tracking & lifecycle management' },
+            { id: 'p6', title: 'Document Management', tag: 'Thang Loi Group', desc: 'Scheduled publishing & analytics' },
+            { id: 'p9', title: 'Internal Digital Library', tag: 'Thang Loi Group', desc: 'Streaming video & E-book cross-device' },
+            { id: 'p10', title: 'E-Thiep (Personalized Invitation)', tag: 'Thang Loi Group', desc: 'QR Check-in & Canvas Minigames' },
+            { id: 'p13', title: 'Tan Son Nhat Rating System', tag: 'Outsource', desc: 'Customer Feedback System via Text/Audio/Video' }
+        ];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // ================= 1. RENDER HTML CONTENT DYNAMICALLY =================
+            const stackingContainer = document.getElementById('stacking-cards-container');
+            let featuredHtml = '';
+            Object.keys(projectData).forEach((key, index) => {
+                const p = projectData[key];
+                featuredHtml += `
+                    <div class="reveal-elem sticky w-full mb-16 md:mb-32" style="top: ${100 + (index * 32)}px; z-index: ${10 + index}">
+                        <div onclick="openModal('${key}')" class="w-full bg-white dark:bg-[#151515] rounded-[2rem] border border-[rgba(0,0,0,0.07)] dark:border-white/10 shadow-[0_-10px_40px_rgba(0,0,0,0.08)] overflow-hidden flex flex-col md:flex-row h-auto md:h-[65vh] cursor-pointer interactive group transition-transform duration-300 hover:-translate-y-2">
+                            <div class="w-full md:w-2/5 p-8 md:p-12 flex flex-col justify-center bg-white dark:bg-[#151515] z-10">
+                                <div class="inline-block px-4 py-1.5 bg-[#312b2a] dark:bg-white text-white dark:text-[#312b2a] text-xs font-bold uppercase tracking-wider rounded-full w-fit mb-6">${p.tag}</div>
+                                <h3 class="text-3xl md:text-5xl font-bold uppercase mb-4 group-hover:text-[#e9450a] transition-colors">${p.title}</h3>
+                                <p class="text-[#605e58] dark:text-gray-400 font-medium text-lg">${p.tech}</p>
+                                <div class="mt-12 hidden md:flex items-center gap-3 text-sm font-bold uppercase tracking-widest text-[#e9450a] group-hover:translate-x-2 transition-transform">
+                                    View Case Study <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
+                                </div>
+                            </div>
+                            <div class="w-full md:w-3/5 h-64 md:h-full relative overflow-hidden bg-gray-100 dark:bg-black/20">
+                                <img src="${p.img}" alt="${p.title}" class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100" />
+                            </div>
+                        </div>
+                    </div>`;
+            });
+            stackingContainer.innerHTML = featuredHtml;
+
+            const otherContainer = document.getElementById('other-projects-container');
+            let otherHtml = '';
+            otherProjects.forEach((p, idx) => {
+                otherHtml += `
+                    <div class="reveal-elem" style="transition-delay: ${idx * 50}ms">
+                        <div onclick="openModal('${p.id}')" class="group flex justify-between items-center py-4 border-b border-[rgba(0,0,0,0.15)] dark:border-white/10 hover:bg-white dark:hover:bg-[#151515] transition-colors cursor-pointer interactive px-2">
+                            <div class="w-full md:w-2/5 font-bold text-lg md:text-xl group-hover:text-[#e9450a] transition-colors">${p.title}</div>
+                            <div class="hidden md:block w-1/5 text-sm text-[#605e58] dark:text-gray-400 font-medium">${p.tag}</div>
+                            <div class="hidden md:block w-2/5 text-sm text-[#605e58] dark:text-gray-400 text-right">${p.desc}</div>
+                        </div>
+                    </div>`;
+            });
+            otherContainer.innerHTML = otherHtml;
+
+
+            // ================= 2. PRELOADER & SCROLL REVEAL =================
+            const loaderText = document.getElementById('loader-text');
+            const loaderBar = document.getElementById('loader-bar');
+            const loaderCounter = document.getElementById('loader-counter');
+            const preloader = document.getElementById('preloader');
+            
+            document.body.style.overflow = 'hidden'; 
+
+            setTimeout(() => loaderText.classList.remove('translate-y-full'), 100);
+
+            let progress = 0;
+            const updateLoader = setInterval(() => {
+                progress += Math.floor(Math.random() * 15) + 1; 
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(updateLoader);
+                    setTimeout(() => {
+                        preloader.classList.add('loader-hide');
+                        document.body.style.overflow = ''; 
+                        setTimeout(initReveal, 300); 
+                    }, 800); 
+                }
+                loaderCounter.innerText = progress + '%';
+                loaderBar.style.width = progress + '%';
+            }, 40);
+
+            function initReveal() {
+                const reveals = document.querySelectorAll(".reveal-elem");
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("active");
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                reveals.forEach((el) => observer.observe(el));
+            }
+
+            // ================= 3. DARK MODE TOGGLE =================
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const darkIcon = document.getElementById('theme-toggle-dark-icon');
+            const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+            if (document.documentElement.classList.contains('dark')) {
+                lightIcon.classList.remove('hidden');
+            } else {
+                darkIcon.classList.remove('hidden');
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                darkIcon.classList.toggle('hidden');
+                lightIcon.classList.toggle('hidden');
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+                // Update chart colors if it exists
+                if (pisiChart && currentProjectData) renderPisiMindmap(currentProjectData);
+            });
+
+            // ================= 4. CUSTOM CURSOR =================
+            const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
+
+            if (window.matchMedia("(pointer: fine)").matches) {
+                window.addEventListener('mousemove', (e) => {
+                    cursorDot.style.left = `${e.clientX}px`;
+                    cursorDot.style.top = `${e.clientY}px`;
+                    cursorOutline.animate({
+                        left: `${e.clientX}px`, top: `${e.clientY}px`
+                    }, { duration: 500, fill: "forwards" });
+                });
+            }
+
+            // ================= 5. MODAL, TOGGLE VIEW & ECHARTS LOGIC =================
+            const modal = document.getElementById('project-modal');
+            const modalContent = document.getElementById('modal-content');
+            
+            // View containers & buttons
+            const viewMindmap = document.getElementById('pisi-mindmap-view');
+            const viewList = document.getElementById('pisi-list-view');
+            const btnMindmap = document.getElementById('btn-view-mindmap');
+            const btnList = document.getElementById('btn-view-list');
+            
+            let pisiChart = null; 
+            let currentProjectData = null;
+
+            // View Switcher Function
+            function setView(type) {
+                if (type === 'mindmap') {
+                    // Update buttons
+                    btnMindmap.className = "px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full bg-white dark:bg-[#312b2a] text-[#e9450a] shadow transition-all interactive";
+                    btnList.className = "px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full text-gray-500 hover:text-[#312b2a] dark:hover:text-white transition-all interactive";
+                    // Toggle visibility
+                    viewMindmap.classList.remove('hidden');
+                    viewList.classList.add('hidden');
+                    // Resize Echart because it might be distorted if container was hidden
+                    if (pisiChart) setTimeout(() => pisiChart.resize(), 50);
+                } else {
+                    // Update buttons
+                    btnList.className = "px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full bg-white dark:bg-[#312b2a] text-[#e9450a] shadow transition-all interactive";
+                    btnMindmap.className = "px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full text-gray-500 hover:text-[#312b2a] dark:hover:text-white transition-all interactive";
+                    // Toggle visibility
+                    viewList.classList.remove('hidden');
+                    viewMindmap.classList.add('hidden');
+                }
+            }
+
+            btnMindmap.addEventListener('click', () => setView('mindmap'));
+            btnList.addEventListener('click', () => setView('list'));
+
+            // Auto-switch based on window resize
+            window.addEventListener('resize', () => {
+                if (window.innerWidth < 768) {
+                    // Force List view on Mobile
+                    if (viewList.classList.contains('hidden')) setView('list');
+                } else {
+                    // Make sure Echart resizes smoothly if we are on Mindmap view
+                    if (pisiChart && !viewMindmap.classList.contains('hidden')) pisiChart.resize();
+                }
+            });
+
+            window.openModal = function(id) {
+                let data = projectData[id];
+                if (!data) {
+                    const fallbackProj = otherProjects.find(p => p.id === id);
+                    data = {
+                        title: fallbackProj ? fallbackProj.title : 'Project Details',
+                        tag: 'Overview', tech: 'General Development', role: 'Developer',
+                        problem: 'Updating problem analysis...',
+                        insight: 'Updating UX metrics...',
+                        solution: 'Updating tech solution...',
+                        impact: 'Updating business impact...',
+                        img: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2000&auto=format&fit=crop',
+                        link: '#'
+                    };
+                }
+                currentProjectData = data;
+
+                // Fill standard data
+                document.getElementById('modal-img').src = data.img;
+                document.getElementById('modal-tag').innerText = data.tag;
+                document.getElementById('modal-title').innerText = data.title;
+                document.getElementById('modal-tech').innerText = data.tech || 'Development';
+                document.getElementById('modal-role').innerText = data.role || 'Developer';
+                
+                // Fill List View data
+                document.getElementById('modal-problem').innerText = data.problem;
+                document.getElementById('modal-insight').innerText = data.insight;
+                document.getElementById('modal-solution').innerText = data.solution;
+                document.getElementById('modal-impact').innerText = data.impact;
+                
+                // Hiển thị Modules nếu là Toolkit
+                const modulesContainer = document.getElementById('modal-modules-container');
+                if (data.modules) {
+                    document.getElementById('modal-modules').innerHTML = data.modules;
+                    modulesContainer.classList.remove('hidden');
+                } else {
+                    modulesContainer.classList.add('hidden');
+                }
+
+                const linkContainer = document.getElementById('modal-link-container');
+                if(data.link && data.link !== '#') {
+                    document.getElementById('modal-link').href = data.link;
+                    linkContainer.style.display = 'block';
+                } else {
+                    linkContainer.style.display = 'none';
+                }
+
+                // Determine which view to show initially based on screen size
+                if (window.innerWidth >= 768) {
+                    setView('mindmap'); // Default to Mindmap on PC
+                } else {
+                    setView('list'); // Force List on Mobile
+                }
+
+                // Show modal
+                modal.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    modalContent.classList.remove('scale-95');
+                    modalContent.classList.add('scale-100');
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Render Mindmap ECharts
+                    renderPisiMindmap(data);
+                }, 50);
+            };
+
+            function renderPisiMindmap(data) {
+                const chartDom = document.getElementById('mindmap-container');
+                
+                // Khởi tạo nếu chưa có
+                if (!pisiChart) {
+                    pisiChart = echarts.init(chartDom);
+                }
+
+                // Check xem theme hiện tại là dark hay light để đổi màu chữ cho dễ đọc
+                const isDarkTheme = document.documentElement.classList.contains('dark');
+                const textColor = isDarkTheme ? '#fff' : '#1c1c1c';
+                const hubColor = isDarkTheme ? '#1a1a1a' : '#fff';
+                const nodeBgColor = isDarkTheme ? '#262626' : '#f3f4f6';
+
+                // Tách title thành nhiều dòng nếu quá dài
+                const formattedTitle = data.title.split(' ').join('\n');
+
+                const chartData = {
+                    name: formattedTitle,
+                    symbolSize: 70,
+                    itemStyle: { 
+                        color: hubColor, 
+                        borderColor: '#e9450a', 
+                        borderWidth: 3,
+                        shadowBlur: 10,
+                        shadowColor: 'rgba(233, 69, 10, 0.3)'
+                    },
+                    label: { show: true, position: 'inside', color: textColor, fontSize: 11, fontWeight: 'bold', fontFamily: 'Space Grotesk', rotate: 0 },
+                    children: [
+                        { name: '1. PROBLEM', value: data.problem, symbolSize: 20, itemStyle: { color: nodeBgColor, borderColor: '#ef4444', borderWidth: 2 }, label: { position: 'outside', color: '#ef4444', fontFamily: 'Space Grotesk', fontWeight: 'bold', fontSize: 13, rotate: 0 } },
+                        { name: '2. INSIGHT', value: data.insight, symbolSize: 20, itemStyle: { color: nodeBgColor, borderColor: '#eab308', borderWidth: 2 }, label: { position: 'outside', color: '#eab308', fontFamily: 'Space Grotesk', fontWeight: 'bold', fontSize: 13, rotate: 0 } },
+                        { name: '3. SOLUTION', value: data.solution, symbolSize: 20, itemStyle: { color: nodeBgColor, borderColor: '#3b82f6', borderWidth: 2 }, label: { position: 'outside', color: '#3b82f6', fontFamily: 'Space Grotesk', fontWeight: 'bold', fontSize: 13, rotate: 0 } },
+                        { name: '4. IMPACT', value: data.impact, symbolSize: 20, itemStyle: { color: nodeBgColor, borderColor: '#22c55e', borderWidth: 2 }, label: { position: 'outside', color: '#22c55e', fontFamily: 'Space Grotesk', fontWeight: 'bold', fontSize: 13, rotate: 0 } }
+                    ]
+                };
+
+                const option = {
+                    tooltip: {
+                        trigger: 'item',
+                        confine: true, /* FIX CHỐNG TRÀN TOOLTIP */
+                        backgroundColor: isDarkTheme ? 'rgba(20, 20, 20, 0.95)' : 'rgba(255, 255, 255, 0.95)',
+                        borderColor: isDarkTheme ? '#333' : '#e5e5e5',
+                        padding: 16,
+                        borderRadius: 8,
+                        formatter: function (info) {
+                            if (!info.data.value) return ''; // Bỏ qua tooltip của node Tâm (Hub)
+                            const titleColor = info.data.itemStyle.borderColor;
+                            const descColor = isDarkTheme ? '#e5e5e5' : '#312b2a';
+                            /* GIỚI HẠN WIDTH THEO YÊU CẦU: min(80vw, 350px) - vừa khớp với mobile lẫn màn hình to */
+                            return `<div style="max-width: min(80vw, 350px); white-space: normal; word-wrap: break-word; font-family: 'Space Grotesk', sans-serif;">
+                                        <div style="color: ${titleColor}; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; font-size: 13px;">${info.data.name}</div>
+                                        <div style="color: ${descColor}; font-size: 13px; line-height: 1.5;">${info.data.value}</div>
+                                    </div>`;
+                        }
+                    },
+                    series: [{
+                        type: 'tree',
+                        data: [chartData],
+                        layout: 'radial',
+                        symbol: 'circle',
+                        top: '15%', bottom: '15%', left: '15%', right: '15%',
+                        animationDuration: 800,
+                        animationEasing: 'cubicOut',
+                        expandAndCollapse: false,
+                        lineStyle: { color: isDarkTheme ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.15)', width: 2, curveness: 0.3 }
+                    }]
+                };
+
+                pisiChart.setOption(option);
+                pisiChart.resize(); // Bắt buộc resize lại để tránh chart bị co rút trong modal
+            }
+
+            document.getElementById('close-modal').addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if(e.target === modal) closeModal();
+            });
+
+            function closeModal() {
+                modal.classList.add('opacity-0');
+                modalContent.classList.remove('scale-100');
+                modalContent.classList.add('scale-95');
+                
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    document.body.style.overflow = '';
+                    if(pisiChart) pisiChart.clear(); 
+                }, 300); 
+            }
+        });
+    </script>
+</body>
+</html>
