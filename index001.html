@@ -536,12 +536,29 @@
 
             // Preloader logic
             const loaderText = document.getElementById('loader-text');
+            const loaderBar = document.getElementById('loader-bar');
+            const loaderCounter = document.getElementById('loader-counter');
             const preloader = document.getElementById('preloader');
+            
+            document.body.classList.add('lock-scroll');
+
             setTimeout(() => loaderText.classList.remove('translate-y-full'), 100);
-            setTimeout(() => {
-                preloader.classList.add('loader-hide');
-                setTimeout(initReveal, 300); 
-            }, 800); 
+
+            let progress = 0;
+            const updateLoader = setInterval(() => {
+                progress += Math.floor(Math.random() * 15) + 1; 
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(updateLoader);
+                    setTimeout(() => {
+                        preloader.classList.add('loader-hide');
+                        document.body.classList.remove('lock-scroll');
+                        setTimeout(initReveal, 300); 
+                    }, 800); 
+                }
+                loaderCounter.innerText = progress + '%';
+                loaderBar.style.width = progress + '%';
+            }, 40);
 
             function initReveal() {
                 const reveals = document.querySelectorAll(".reveal-elem");
