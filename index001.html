@@ -57,6 +57,11 @@
         ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 4px; }
         html.dark ::-webkit-scrollbar-thumb { background: #333; }
 
+        /* Lock Scroll when Modal is Open */
+        .lock-scroll {
+            overflow: hidden !important;
+        }
+
         /* Text Outline */
         .text-outline { color: transparent; -webkit-text-stroke: 1px #312b2a; }
         html.dark .text-outline { -webkit-text-stroke: 1px #fff; }
@@ -344,34 +349,28 @@
 
     <!-- MODAL HIỂN THỊ CHI TIẾT DỰ ÁN KÈM TÙY CHỌN VIEW -->
     <div id="project-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 md:p-8 bg-[#312b2a]/80 dark:bg-black/80 backdrop-blur-md opacity-0 transition-opacity duration-300">
-        <div id="modal-content" class="bg-[#eaebef] dark:bg-[#151515] w-full max-w-6xl max-h-[95vh] overflow-y-auto rounded-2xl shadow-2xl relative flex flex-col lg:flex-row transform scale-95 transition-transform duration-300">
+        
+        <!-- CỐ ĐỊNH CHIỀU CAO 90vh & ẨN CUỘN NGOÀI CHUNG CỦA MODAL -->
+        <div id="modal-content" class="bg-[#eaebef] dark:bg-[#151515] w-full max-w-6xl h-[90vh] rounded-2xl shadow-2xl relative flex flex-col lg:flex-row transform scale-95 transition-transform duration-300 overflow-hidden">
             
             <button id="close-modal" class="absolute top-4 right-4 z-20 w-10 h-10 bg-white dark:bg-[#312b2a] text-[#312b2a] dark:text-white rounded-full flex items-center justify-center hover:bg-[#e9450a] dark:hover:bg-[#e9450a] hover:text-white transition-colors interactive shadow-md border border-transparent dark:border-white/20">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
 
-            <!-- Cột Trái: Ảnh -->
-            <div class="w-full lg:w-2/5 h-64 lg:h-auto bg-gray-200 dark:bg-black/20 relative">
+            <!-- Cột Trái: Ảnh (Cố định shrink-0) -->
+            <div class="w-full lg:w-2/5 h-[30vh] lg:h-full bg-gray-200 dark:bg-black/20 relative shrink-0">
                 <img id="modal-img" src="" alt="Project" class="w-full h-full object-cover absolute inset-0" />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent lg:hidden"></div>
             </div>
 
-            <!-- Cột Phải: Nội dung và View Options -->
-            <div class="w-full lg:w-3/5 p-6 md:p-10 flex flex-col justify-start">
+            <!-- Cột Phải: Nội dung (Cuộn độc lập) -->
+            <div class="w-full lg:w-3/5 p-6 md:p-10 flex flex-col justify-start overflow-y-auto h-full">
                 <div id="modal-tag" class="inline-block px-3 py-1 bg-[#312b2a] dark:bg-white text-white dark:text-[#312b2a] text-xs font-bold uppercase tracking-wider rounded w-fit mb-4">Tag</div>
                 
-                <div class="flex justify-between items-start gap-4 mb-4">
-                    <h3 id="modal-title" class="text-3xl md:text-5xl font-bold uppercase">Title</h3>
-                    
-                    <!-- TOGGLE VIEW (Chỉ hiện trên Tablet/Desktop) -->
-                    <div class="hidden md:flex bg-black/5 dark:bg-white/5 p-1 rounded-full border border-[rgba(0,0,0,0.05)] dark:border-white/10 shrink-0 mt-2">
-                        <button id="btn-view-mindmap" class="px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full transition-all interactive">Mindmap</button>
-                        <button id="btn-view-list" class="px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full transition-all interactive">List</button>
-                    </div>
-                </div>
+                <h3 id="modal-title" class="text-3xl md:text-5xl font-bold uppercase mb-4">Title</h3>
                 
                 <!-- Hiển thị Tech và Role -->
-                <div class="flex flex-col md:flex-row md:items-center gap-4 mb-6 pb-6 border-b border-[rgba(0,0,0,0.1)] dark:border-white/10">
+                <div class="flex flex-col md:flex-row md:items-center gap-4 mb-6 pb-6 border-b border-[rgba(0,0,0,0.1)] dark:border-white/10 shrink-0">
                     <div class="flex-1">
                         <span class="block text-[10px] uppercase tracking-widest text-[#605e58] dark:text-gray-500 font-bold mb-1">Technologies</span>
                         <p id="modal-tech" class="text-[#312b2a] dark:text-gray-300 font-medium text-sm">Tech Stack</p>
@@ -383,27 +382,31 @@
                     </div>
                 </div>
 
-                <!-- BỔ SUNG: VÙNG HIỂN THỊ MODULES (Chỉ hiện khi có data) -->
-                <div id="modal-modules-container" class="bg-white/50 dark:bg-white/5 p-5 rounded-xl border border-[rgba(0,0,0,0.05)] dark:border-white/10 relative overflow-hidden group mb-6 hidden">
-                    <div class="absolute top-0 left-0 w-1 h-full bg-purple-500"></div>
-                    <h4 class="font-bold uppercase text-xs tracking-widest text-purple-600 dark:text-purple-500 mb-2">Core Modules Included</h4>
-                    <div id="modal-modules" class="text-[#312b2a] dark:text-gray-300 text-sm md:text-base leading-relaxed"></div>
+                <!-- HEADING P.I.S.I & TABS -->
+                <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6 shrink-0 mt-2">
+                    <h4 class="text-2xl font-bold uppercase tracking-wider text-[#312b2a] dark:text-white">P.I.S.I Framework</h4>
+                    
+                    <!-- TOGGLE VIEW -->
+                    <div class="flex bg-black/5 dark:bg-white/5 p-1 rounded-full border border-[rgba(0,0,0,0.05)] dark:border-white/10 shrink-0">
+                        <button id="btn-view-mindmap" class="px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full transition-all interactive">Mindmap</button>
+                        <button id="btn-view-list" class="px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full transition-all interactive">List</button>
+                    </div>
                 </div>
                 
                 <!-- ================= 2 CHẾ ĐỘ VIEW (MINDMAP vs LIST) ================= -->
                 
-                <!-- VIEW 1: ECHARTS PISI MINDMAP (Fix lỗi hidden md:block thành hidden để JS kiểm soát hoàn toàn) -->
-                <div id="pisi-mindmap-view" class="flex-grow w-full min-h-[450px] relative bg-white/50 dark:bg-black/20 rounded-xl border border-[rgba(0,0,0,0.05)] dark:border-white/10 overflow-hidden hidden">
+                <!-- VIEW 1: ECHARTS PISI MINDMAP -->
+                <div id="pisi-mindmap-view" class="w-full min-h-[450px] relative bg-white/50 dark:bg-black/20 rounded-xl border border-[rgba(0,0,0,0.05)] dark:border-white/10 overflow-hidden hidden shrink-0 mb-6">
                     <div class="absolute top-4 left-4 text-[10px] text-gray-500 uppercase tracking-widest z-10 flex items-center gap-2">
                         <svg class="w-3 h-3 animate-pulse text-[#e9450a]" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle></svg>
-                        Hover nodes to explore P.I.S.I Framework
+                        Hover nodes to explore
                     </div>
                     <div id="mindmap-container" class="w-full h-full absolute inset-0"></div>
                 </div>
 
-                <!-- VIEW 2: LIST VIEW TRUYỀN THỐNG (Mặc định cho SP) -->
-                <div id="pisi-list-view" class="space-y-6 flex-grow hidden">
-                    <!-- TIN NHẮN CHỈ HIỆN TRÊN MOBILE (NHẮC SANG PC ĐỂ XEM MINDMAP) -->
+                <!-- VIEW 2: LIST VIEW TRUYỀN THỐNG -->
+                <div id="pisi-list-view" class="space-y-6 shrink-0 mb-6 hidden">
+                    <!-- TIN NHẮN CHỈ HIỆN TRÊN MOBILE -->
                     <div class="md:hidden flex items-center gap-3 p-4 bg-[#e9450a]/10 dark:bg-[#e9450a]/20 border border-[#e9450a]/20 rounded-xl text-[#e9450a] dark:text-[#ff7b47] text-xs font-medium leading-relaxed">
                         <svg class="w-8 h-8 shrink-0 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                         <span>Psst! For the ultimate interactive P.I.S.I Mindmap experience, switch to a PC/Desktop! 🖥️✨</span>
@@ -435,7 +438,14 @@
                     </div>
                 </div>
 
-                <div id="modal-link-container" class="mt-8 pt-6 border-t border-[rgba(0,0,0,0.1)] dark:border-white/10">
+                <!-- BỔ SUNG: VÙNG HIỂN THỊ MODULES NẰM DƯỚI PISI -->
+                <div id="modal-modules-container" class="bg-white/50 dark:bg-white/5 p-5 rounded-xl border border-[rgba(0,0,0,0.05)] dark:border-white/10 relative overflow-hidden group mb-6 hidden shrink-0">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-purple-500"></div>
+                    <h4 class="font-bold uppercase text-xs tracking-widest text-purple-600 dark:text-purple-500 mb-3">Core Modules Included</h4>
+                    <div id="modal-modules" class="text-[#312b2a] dark:text-gray-300 text-sm md:text-base leading-relaxed"></div>
+                </div>
+
+                <div id="modal-link-container" class="mt-auto pt-6 border-t border-[rgba(0,0,0,0.1)] dark:border-white/10 shrink-0">
                     <a id="modal-link" href="#" target="_blank" rel="noreferrer" class="px-8 py-4 bg-[#e9450a] text-white rounded-full hover:bg-[#ba3708] transition-colors font-bold uppercase text-sm inline-flex items-center justify-center interactive shadow-md">
                         Visit Live Site <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
                     </a>
@@ -554,7 +564,7 @@
             const loaderCounter = document.getElementById('loader-counter');
             const preloader = document.getElementById('preloader');
             
-            document.body.style.overflow = 'hidden'; 
+            document.body.classList.add('lock-scroll');
 
             setTimeout(() => loaderText.classList.remove('translate-y-full'), 100);
 
@@ -566,7 +576,7 @@
                     clearInterval(updateLoader);
                     setTimeout(() => {
                         preloader.classList.add('loader-hide');
-                        document.body.style.overflow = ''; 
+                        document.body.classList.remove('lock-scroll');
                         setTimeout(initReveal, 300); 
                     }, 800); 
                 }
@@ -608,7 +618,6 @@
                     document.documentElement.classList.add('dark');
                     localStorage.setItem('color-theme', 'dark');
                 }
-                // Update chart colors if it exists
                 if (pisiChart && currentProjectData) renderPisiMindmap(currentProjectData);
             });
 
@@ -642,19 +651,14 @@
             // View Switcher Function
             function setView(type) {
                 if (type === 'mindmap') {
-                    // Update buttons
                     btnMindmap.className = "px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full bg-white dark:bg-[#312b2a] text-[#e9450a] shadow transition-all interactive";
                     btnList.className = "px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full text-gray-500 hover:text-[#312b2a] dark:hover:text-white transition-all interactive";
-                    // Toggle visibility
                     viewMindmap.classList.remove('hidden');
                     viewList.classList.add('hidden');
-                    // Resize Echart because it might be distorted if container was hidden
                     if (pisiChart) setTimeout(() => pisiChart.resize(), 50);
                 } else {
-                    // Update buttons
                     btnList.className = "px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full bg-white dark:bg-[#312b2a] text-[#e9450a] shadow transition-all interactive";
                     btnMindmap.className = "px-4 py-1.5 text-xs font-bold uppercase tracking-wider rounded-full text-gray-500 hover:text-[#312b2a] dark:hover:text-white transition-all interactive";
-                    // Toggle visibility
                     viewList.classList.remove('hidden');
                     viewMindmap.classList.add('hidden');
                 }
@@ -663,13 +667,10 @@
             btnMindmap.addEventListener('click', () => setView('mindmap'));
             btnList.addEventListener('click', () => setView('list'));
 
-            // Auto-switch based on window resize
             window.addEventListener('resize', () => {
                 if (window.innerWidth < 768) {
-                    // Force List view on Mobile
                     if (viewList.classList.contains('hidden')) setView('list');
                 } else {
-                    // Make sure Echart resizes smoothly if we are on Mindmap view
                     if (pisiChart && !viewMindmap.classList.contains('hidden')) pisiChart.resize();
                 }
             });
@@ -691,20 +692,19 @@
                 }
                 currentProjectData = data;
 
-                // Fill standard data
+                // Cập nhật chi tiết
                 document.getElementById('modal-img').src = data.img;
                 document.getElementById('modal-tag').innerText = data.tag;
                 document.getElementById('modal-title').innerText = data.title;
                 document.getElementById('modal-tech').innerText = data.tech || 'Development';
                 document.getElementById('modal-role').innerText = data.role || 'Developer';
                 
-                // Fill List View data
                 document.getElementById('modal-problem').innerText = data.problem;
                 document.getElementById('modal-insight').innerText = data.insight;
                 document.getElementById('modal-solution').innerText = data.solution;
                 document.getElementById('modal-impact').innerText = data.impact;
                 
-                // Hiển thị Modules nếu là Toolkit
+                // Xử lý Modules
                 const modulesContainer = document.getElementById('modal-modules-container');
                 if (data.modules) {
                     document.getElementById('modal-modules').innerHTML = data.modules;
@@ -713,31 +713,33 @@
                     modulesContainer.classList.add('hidden');
                 }
 
+                // Xử lý Link dự án
                 const linkContainer = document.getElementById('modal-link-container');
                 if(data.link && data.link !== '#') {
                     document.getElementById('modal-link').href = data.link;
-                    linkContainer.style.display = 'block';
+                    linkContainer.classList.remove('hidden');
                 } else {
-                    linkContainer.style.display = 'none';
+                    linkContainer.classList.add('hidden');
                 }
 
-                // Determine which view to show initially based on screen size
+                // Chọn view mặc định tùy theo thiết bị
                 if (window.innerWidth >= 768) {
-                    setView('mindmap'); // Default to Mindmap on PC
+                    setView('mindmap');
                 } else {
-                    setView('list'); // Force List on Mobile
+                    setView('list');
                 }
 
-                // Show modal
+                // Mở Modal và khóa thanh cuộn ngoài
                 modal.classList.remove('hidden');
+                document.documentElement.classList.add('lock-scroll');
+                document.body.classList.add('lock-scroll');
                 
                 setTimeout(() => {
                     modal.classList.remove('opacity-0');
                     modalContent.classList.remove('scale-95');
                     modalContent.classList.add('scale-100');
-                    document.body.style.overflow = 'hidden';
                     
-                    // Render Mindmap ECharts
+                    // Render ECharts
                     renderPisiMindmap(data);
                 }, 50);
             };
@@ -745,18 +747,15 @@
             function renderPisiMindmap(data) {
                 const chartDom = document.getElementById('mindmap-container');
                 
-                // Khởi tạo nếu chưa có
                 if (!pisiChart) {
                     pisiChart = echarts.init(chartDom);
                 }
 
-                // Check xem theme hiện tại là dark hay light để đổi màu chữ cho dễ đọc
                 const isDarkTheme = document.documentElement.classList.contains('dark');
                 const textColor = isDarkTheme ? '#fff' : '#1c1c1c';
                 const hubColor = isDarkTheme ? '#1a1a1a' : '#fff';
                 const nodeBgColor = isDarkTheme ? '#262626' : '#f3f4f6';
 
-                // Tách title thành nhiều dòng nếu quá dài
                 const formattedTitle = data.title.split(' ').join('\n');
 
                 const chartData = {
@@ -781,16 +780,15 @@
                 const option = {
                     tooltip: {
                         trigger: 'item',
-                        confine: true, /* FIX CHỐNG TRÀN TOOLTIP */
+                        confine: true,
                         backgroundColor: isDarkTheme ? 'rgba(20, 20, 20, 0.95)' : 'rgba(255, 255, 255, 0.95)',
                         borderColor: isDarkTheme ? '#333' : '#e5e5e5',
                         padding: 16,
                         borderRadius: 8,
                         formatter: function (info) {
-                            if (!info.data.value) return ''; // Bỏ qua tooltip của node Tâm (Hub)
+                            if (!info.data.value) return ''; 
                             const titleColor = info.data.itemStyle.borderColor;
                             const descColor = isDarkTheme ? '#e5e5e5' : '#312b2a';
-                            /* GIỚI HẠN WIDTH THEO YÊU CẦU: min(80vw, 350px) - vừa khớp với mobile lẫn màn hình to */
                             return `<div style="max-width: min(80vw, 350px); white-space: normal; word-wrap: break-word; font-family: 'Space Grotesk', sans-serif;">
                                         <div style="color: ${titleColor}; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; font-size: 13px;">${info.data.name}</div>
                                         <div style="color: ${descColor}; font-size: 13px; line-height: 1.5;">${info.data.value}</div>
@@ -811,7 +809,7 @@
                 };
 
                 pisiChart.setOption(option);
-                pisiChart.resize(); // Bắt buộc resize lại để tránh chart bị co rút trong modal
+                pisiChart.resize(); 
             }
 
             document.getElementById('close-modal').addEventListener('click', closeModal);
@@ -826,7 +824,9 @@
                 
                 setTimeout(() => {
                     modal.classList.add('hidden');
-                    document.body.style.overflow = '';
+                    // Mở khóa thanh cuộn ngoài
+                    document.documentElement.classList.remove('lock-scroll');
+                    document.body.classList.remove('lock-scroll');
                     if(pisiChart) pisiChart.clear(); 
                 }, 300); 
             }
