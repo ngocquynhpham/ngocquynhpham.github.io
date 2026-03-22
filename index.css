@@ -204,6 +204,11 @@ main {
   right: 20%;
 }
 
+.button.first > .button-label {
+  background-color: var(--primaryBg);
+  color: var(--primaryFg);
+}
+
 .button.sec {
   bottom: 13%;
   right: 11%;
@@ -272,8 +277,14 @@ main {
     align-items: center;
   }
   .button.third {
-  bottom: 5%;
-}
+    bottom: 5%;
+  }
+
+  .button.first {
+    top: 10%;
+    right: 8%;
+  }
+
   nav > :not(.sitename, .material-icons) {
     display: none;
   }
