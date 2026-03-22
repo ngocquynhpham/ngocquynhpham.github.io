@@ -5,70 +5,52 @@
   /** @type {{ title: string, desc: string, href: string, cat: string }[]} */
   const PROJECTS = [
     {
+      title: "Wiki Economics",
+      desc: "Wiki Economics: a collection of economic concepts and theories explained in a simple and easy-to-understand way.",
+      href: "https://wiki.esg-tech.io.vn/",
+      cat: "economic",
+    },
+    {
       title: "QR",
       desc: "A small utility page for generating or displaying QR-related content in the browser. Handy for quick tests when wiring up links, Wi‑Fi payloads, or sharing URLs from static hosting.",
       href: "../qr/index.html",
       cat: "tools",
     },
     {
-      title: "Greenspace — Home",
+      title: "Transform Lab",
+      desc: "Multi-format transformer: HTML, Markdown, JSON, LaTeX, SCSS, SVG, and more.",
+      href: "../transform-lab.html",
+      cat: "tools",
+    },
+    {
+      title: "Happy.Stu wedding",
+      desc: "Happy.Stu gallery landing: chapters on philosophy and aesthetics, filterable templates, contact form. Quiet-luxury typography and max-width layout.",
+      href: "../wedding/index.html",
+      cat: "landing",
+    },
+    {
+      title: "Current portfolio",
+      desc: "My current portfolio, built with React.js and Tailwind CSS. It showcases my projects and skills in a clean and modern design.",
+      href: "https://ngocquynhpham.com/",
+      cat: "portfolio",
+    },
+    {
+      title: "My portfolio v0",
+      desc: "My portfolio v0 - It showcases my projects and skills in a clean and modern design.",
+      href: "https://v0.ngocquynhpham.com/",
+      cat: "portfolio",
+    },
+    {
+      title: "Greenspace",
       desc: "E-commerce style landing: hero, featured products, and navigation patterns typical of a storefront. Part of a larger Greenspace demo used to practice component structure and layout flow.",
       href: "../greenspace/demo-page/index.html",
-      cat: "greenspace",
+      cat: "ecommerce",
     },
     {
-      title: "Greenspace — Auth",
-      desc: "Login and authentication UI for the Greenspace demo: form layout, validation states, and entry into the shopping experience. Focuses on clarity and a consistent brand shell.",
-      href: "../greenspace/demo-page/auth/login.html",
-      cat: "greenspace",
-    },
-    {
-      title: "Greenspace — Blog",
-      desc: "Blog listing page with cards or rows for articles, excerpts, and navigation into detail views. Good for practicing list/grid patterns and content-heavy responsive layouts.",
-      href: "../greenspace/demo-page/blog/blog.html",
-      cat: "greenspace",
-    },
-    {
-      title: "Greenspace — Blog detail",
-      desc: "Single article layout: title, meta, body typography, and related navigation. Used to refine reading width, spacing, and how media fits inside a content column.",
-      href: "../greenspace/demo-page/blog/blog-detail.html",
-      cat: "greenspace",
-    },
-    {
-      title: "Greenspace — Cart",
-      desc: "Shopping cart view: line items, quantities, and checkout affordances. Exercises stateful UI at a static level and how cart content reads on smaller screens.",
-      href: "../greenspace/demo-page/cart/cart.html",
-      cat: "greenspace",
-    },
-    {
-      title: "Greenspace — Payment",
-      desc: "Checkout and payment step: summary, form fields, and confirmation affordances. Intended to mirror a realistic payment flow without a live backend.",
-      href: "../greenspace/demo-page/payment/payment.html",
-      cat: "greenspace",
-    },
-    {
-      title: "Greenspace — Products",
-      desc: "Product listing with filters or grid layout depending on the build. Practice for card grids, badges, and navigating into product detail from a catalog.",
-      href: "../greenspace/demo-page/product/product-list.html",
-      cat: "greenspace",
-    },
-    {
-      title: "Greenspace — Product detail",
-      desc: "Single product page: gallery or hero image, price, description, and add-to-cart cues. Focuses on PDP structure and tying the listing flow to a detailed view.",
-      href: "../greenspace/demo-page/product/product-detail.html",
-      cat: "greenspace",
-    },
-    {
-      title: "Greenspace — User",
-      desc: "Account or profile area: identity, preferences, or order history placeholders. Supports the narrative of a logged-in shopper inside the Greenspace prototype.",
-      href: "../greenspace/demo-page/user/user.html",
-      cat: "greenspace",
-    },
-    {
-      title: "Greenspace — Presentation",
-      desc: "Slide-style or presentation view for summarizing the Greenspace project. Useful for walkthroughs, demos, or condensing the flow into a linear narrative.",
-      href: "../greenspace/presentation.html",
-      cat: "greenspace",
+      title: "Poster Analysis",
+      desc: "Poster-style page: bold composition, large type, and print-like constraints in the browser. Good for experimenting with display fonts and contrast.",
+      href: "../poster/index.html",
+      cat: "research",
     },
     {
       title: "Basketball (Scrimba)",
@@ -113,9 +95,9 @@
       cat: "landing",
     },
     {
-      title: "LMS demo",
+      title: "LMS",
       desc: "Learning-management style demo: courses, modules, or lesson placeholders in a static shell. Explores education UI patterns without a real LMS backend.",
-      href: "../lms-demo.html",
+      href: "../lms.html",
       cat: "apps",
     },
     {
@@ -124,12 +106,7 @@
       href: "../qkcal.html",
       cat: "landing",
     },
-    {
-      title: "Transform Lab",
-      desc: "Multi-format transformer: HTML, Markdown, JSON, LaTeX, SCSS, SVG, and more.",
-      href: "../transform-lab.html",
-      cat: "tools",
-    },
+  
     {
       title: "Indexing database",
       desc: "Educational demo around database indexing concepts: how lookups might behave with or without an index, explained through static visuals or copy.",
@@ -146,18 +123,12 @@
       title: "Warranty",
       desc: "Warranty module UI: terms, registration, or status presentation. Practices form-heavy content and trust-oriented layout in a contained component.",
       href: "../modules/warranty/index.html",
-      cat: "ui",
+      cat: "landing",
     },
     {
       title: "Inert",
       desc: "Demonstration of the inert attribute: trapping focus, disabling subtrees, and modal-like behavior with modern HTML. Important for accessibility experiments.",
       href: "../modules/inert/inert.html",
-      cat: "ui",
-    },
-    {
-      title: "IDP",
-      desc: "Identity-provider patterns: sign-in flows, account choosers, or federated login mockups. Static exploration of how auth screens are structured and labeled.",
-      href: "../modules/idp/idp.html",
       cat: "ui",
     },
     {
@@ -214,72 +185,38 @@
       href: "../google/gemini-certified-educator.html",
       cat: "research",
     },
+    
     {
-      title: "Happy.Stu wedding",
-      desc: "Happy.Stu gallery landing: chapters on philosophy and aesthetics, filterable templates, contact form. Quiet-luxury typography and max-width layout.",
-      href: "../wedding/index.html",
-      cat: "landing",
+      title: "Portfolio 01",
+      desc: "Portfolio 01",
+      href: "../portfolio-01.html",
+      cat: "portfolio",
     },
     {
-      title: "Poster",
-      desc: "Poster-style page: bold composition, large type, and print-like constraints in the browser. Good for experimenting with display fonts and contrast.",
-      href: "../poster/index.html",
-      cat: "other",
-    },
-    {
-      title: "Poster v2",
-      desc: "Alternate poster layout: different grid or color treatment from the first version. Useful for A/B comparisons of the same content in two visual systems.",
-      href: "../poster/index2.html",
-      cat: "other",
-    },
-    {
-      title: "Ethan",
+      title: "Portfolio 02",
       desc: "Personal or themed one-off page named Ethan—custom layout and content as a small sandbox. Kept as a snapshot of a particular design direction.",
-      href: "../ethan.html",
-      cat: "other",
+      href: "../portfolio-02.html",
+      cat: "portfolio",
     },
     {
-      title: "Joke",
-      desc: "Lightweight humor page: delivery of a punchline or rotating jokes with minimal chrome. Fun exercise for timing, reveal interactions, or randomization.",
-      href: "../joke.html",
-      cat: "other",
+      title: "Portfolio 03",
+      desc: "Portfolio 03",
+      href: "../portfolio-03.html",
+      cat: "portfolio",
     },
     {
-      title: "Index 0",
-      desc: "Alternate home or index layout variant (0): different section order or hero treatment. Part of a series exploring portfolio shell iterations.",
-      href: "../index0.html",
-      cat: "other",
+      title: "Portfolio 04",
+      desc: "Portfolio 04",
+      href: "../portfolio-04.html",
+      cat: "portfolio",
     },
     {
-      title: "Index 01",
-      desc: "Alternate home layout variant (01): spacing, nav, or content blocks compared to other index experiments. Useful for side-by-side review of structure.",
-      href: "../index01.html",
-      cat: "other",
+      title: "Portfolio 05",
+      desc: "Portfolio 05",
+      href: "../portfolio-05.html",
+      cat: "portfolio",
     },
-    {
-      title: "Index 2",
-      desc: "Index layout variant 2: may emphasize projects, bio, or contact differently. Keeps exploration of landing-page patterns in one static site.",
-      href: "../index2.html",
-      cat: "other",
-    },
-    {
-      title: "Index 3",
-      desc: "Index layout variant 3: further iteration on navigation and above-the-fold messaging. Helps compare which hierarchy reads fastest for visitors.",
-      href: "../index3.html",
-      cat: "other",
-    },
-    {
-      title: "Index 4",
-      desc: "Index layout variant 4: experiments with darker or denser presentation. Part of the same family of portfolio front-door mockups.",
-      href: "../index4.html",
-      cat: "other",
-    },
-    {
-      title: "Index 5",
-      desc: "Index layout variant 5: often the latest or most experimental shell in the series. Captures direction before changes are merged into the main home page.",
-      href: "../index5.html",
-      cat: "other",
-    },
+    
   ];
 
   const TABS = [
@@ -288,12 +225,10 @@
     { id: "apps", label: "Apps" },
     { id: "landing", label: "Landing pages" },
     { id: "portfolio", label: "Portfolio" },
+    { id: "ecommerce", label: "Ecommerce" },
     { id: "economic", label: "Economic" },
-    { id: "environmental", label: "Environmental" },
     { id: "ui", label: "UI" },
-    { id: "greenspace", label: "Greenspace" },
     { id: "research", label: "Research & Learning materials" },
-    { id: "other", label: "Other" },
   ];
 
   const VALID_TAB_IDS = new Set(TABS.map((t) => t.id));
