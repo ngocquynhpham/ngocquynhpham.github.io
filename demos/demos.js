@@ -215,10 +215,10 @@
       cat: "research",
     },
     {
-      title: "Wedding",
-      desc: "Wedding site prototype: invitation tone, schedule, RSVP placeholders, and photo sections. Emphasis on elegant typography and mobile-first guests.",
+      title: "Happy.Stu wedding",
+      desc: "Happy.Stu gallery landing: chapters on philosophy and aesthetics, filterable templates, contact form. Quiet-luxury typography and max-width layout.",
       href: "../wedding/index.html",
-      cat: "wedding",
+      cat: "landing",
     },
     {
       title: "Poster",
@@ -288,7 +288,6 @@
     { id: "apps", label: "Apps" },
     { id: "landing", label: "Landing pages" },
     { id: "portfolio", label: "Portfolio" },
-    { id: "wedding", label: "Wedding" },
     { id: "economic", label: "Economic" },
     { id: "environmental", label: "Environmental" },
     { id: "ui", label: "UI" },
