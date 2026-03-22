@@ -1,747 +1,402 @@
 <!DOCTYPE html>
-<html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lệ Trâm & Văn Vọng - Wedding Invitation</title>
-    
-    <!-- SEO Meta Tags -->
-    <meta
-      name="description"
-      content="Trân trọng kính mời bạn tham dự lễ vu quy của Lệ Trâm & Văn Vọng - Chủ Nhật, 21/12/2025 tại Trung tâm tiệc cưới Xuân Lập"
-    />
-    <meta
-      name="keywords"
-      content="wedding, invitation, Lệ Trâm, Văn Vọng, lễ cưới, thiệp mời, #TramVong2025"
-    />
-    <meta name="author" content="Ngoc Quynh Pham" />
-    <link rel="canonical" href="https://github.com/ngocquynhpham" />
-    <meta name="robots" content="index, follow" />
-
-    <!-- Open Graph Meta Tags -->
-    <meta
-      property="og:title"
-      content="Lệ Trâm & Văn Vọng - Wedding Invitation"
-    />
-    <meta
-      property="og:description"
-      content="Trân trọng kính mời bạn tham dự lễ vu quy của chúng tôi - 21/12/2025"
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://letram.happy.id.vn/imgs/bg.png" />
-    <meta property="og:url" content="https://letram.happy.id.vn" />
-
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="Lệ Trâm & Văn Vọng - Wedding Invitation"
-    />
-    <meta
-      name="twitter:description"
-      content="Trân trọng kính mời bạn tham dự lễ vu quy của chúng tôi - 21/12/2025"
-    />
-    <meta name="twitter:image" content="https://letram.happy.id.vn/imgs/bg.png" />
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RTV852XHK9"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-RTV852XHK9');
-    </script>
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="./wedding.png" />
-
-    <!-- Tailwind CSS -->
+<html lang="vi" id="top" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QStudio — The Art of Digital Intimacy</title>
+    <meta name="description" content="Không chỉ một website đám cưới — một bản thảo cho chương mới của hai người. Tối giản, chân thực, để lưu giữ.">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" href="./wedding.png" />    
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <!-- Tailwind Configuration -->
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              garamond: ['"Cormorant Garamond"', "serif"],
-              serif: ['"Playfair Display"', "serif"],
-              sans: ['"Montserrat"', "sans-serif"],
-              script: ['"Great Vibes"', "cursive"],
-              dancing: ['"Dancing Script"', "cursive"],
-            },
-            colors: {
-              wedding: {
-                beige: "#FDFBF7",
-                gold: "#C5A059",
-                dark: "#2C2C2C",
-                rose: "#F4EBE8",
-              },
-            },
-          },
-        },
-      };
-    </script>
-
-    <!-- Custom CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
     <style>
-      html {
-        scroll-behavior: smooth;
-        scroll-padding-top: 100px;
-      }
-      body {
-        background-color: #fdfbf7;
-        color: #2c2c2c;
-      }
-
-      /* Animations */
-      .fade-in-up {
-        animation: fadeInUp 1s ease-out forwards;
-      }
-
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
+        html {
+            font-size: 16px;
         }
-        to {
-          opacity: 1;
-          transform: translateY(0);
+        body { 
+            font-family: 'Be Vietnam Pro', 'Segoe UI', system-ui, sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
-      }
-
-      .delay-200 {
-        animation-delay: 200ms;
-      }
-      .delay-500 {
-        animation-delay: 500ms;
-      }
-
-      .animate-on-scroll {
-        opacity: 0; /* Initially hidden */
-      }
-      #hero-banner {
-        background-image: url("./imgs/bg.png");
-        background-position: top center;
-      }
-      @media (max-width: 420px) {
-        #hero-banner {
-          background-image: url("./imgs/img_5.jpg");
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
         }
-      }
+        .reveal {
+            opacity: 0;
+            transform: translateY(1rem);
+            transition: opacity 0.85s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .reveal.reveal-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+        .theme-card img { transition: transform 1.2s cubic-bezier(0.2, 1, 0.3, 1); }
+        .theme-card:hover img { transform: scale(1.05); }
+        .btn-minimal {
+            position: relative;
+        }
+        .skip-link {
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            z-index: 100;
+            padding: 0.5rem 1rem;
+            background: #fff;
+            font-size: 13px;
+            text-transform: uppercase;
+            box-shadow: 0 1px 8px rgba(0, 0, 0, 0.08);
+        }
+        .skip-link:focus,
+        .skip-link:focus-visible {
+            left: 1rem;
+            top: 1rem;
+            outline: none;
+            box-shadow: 0 0 0 2px #121212, 0 0 0 5px #fff, 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .btn-minimal::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: currentColor;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s ease;
+        }
+        .btn-minimal:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        :where(a:not(.skip-link), button):focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 2px #121212, 0 0 0 5px #fff;
+        }
+        :where(input:not([type="hidden"]), textarea):focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 2px #121212, 0 0 0 5px #fff;
+        }
+        #filters, #gallery, #lien-he,
+        #chapter-triet-ly, #chapter-khong-gian, #chapter-tham-my {
+            scroll-margin-top: 6.5rem;
+        }
+        @media (min-width: 768px) {
+            #filters, #gallery, #lien-he,
+            #chapter-triet-ly, #chapter-khong-gian, #chapter-tham-my {
+                scroll-margin-top: 7rem;
+            }
+        }
     </style>
-    <script type="importmap">
-      {
-        "imports": {
-          "react": "https://esm.sh/react@^19.2.3",
-          "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
-          "react/": "https://esm.sh/react@^19.2.3/"
-        }
-      }
-    </script>
-  </head>
-  <body
-    class="min-h-screen font-sans selection:bg-wedding-gold selection:text-white overflow-x-hidden"
-  >
-    <!-- Navigation -->
-    <nav
-      id="navbar"
-      class="fixed w-full z-50 transition-all duration-300 bg-transparent py-6"
-    >
-      <div class="container mx-auto px-6 flex justify-center items-center">
-        <div class="flex flex-col">
-          <h1
-            class="font-serif text-2xl font-bold tracking-wide text-wedding-dark"
-          >
-            Happy Wedding
-          </h1>
-          <p
-            class="text-xs tracking-[0.2em] text-gray-500 mt-1 uppercase text-center"
-          >
-            Chủ Nhật: 21/12/2025
-          </p>
+</head>
+<body class="bg-white text-[#121212] text-[13px] sm:text-[14px]">
+
+    <a href="#main" class="skip-link">Bỏ qua đến nội dung</a>
+
+    <!-- Navigation — không dùng href="#" (trình duyệt nhảy lên đầu trang, cảm giác “click loạn”) -->
+    <nav class="fixed w-full z-50 bg-white/50 backdrop-blur-sm" aria-label="Điều hướng chính">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-8 min-h-[5rem] md:h-24 py-3 md:py-0 flex flex-wrap md:flex-nowrap justify-between items-center gap-y-3 gap-x-4">
+            <a href="#top" class="text-xl sm:text-2xl font-medium shrink-0 hover:opacity-80 transition-opacity">QSTUDIO</a>
+            <div class="flex flex-wrap justify-end gap-x-3 gap-y-2 sm:gap-x-5 md:gap-x-8 lg:gap-x-10 text-[12px] sm:text-[13px] uppercase font-light max-w-full">
+                <a href="#chapter-triet-ly" class="btn-minimal py-1.5">Triết lý</a>
+                <a href="#chapter-khong-gian" class="btn-minimal py-1.5">Không gian</a>
+                <a href="#chapter-tham-my" class="btn-minimal py-1.5">Phong cách</a>
+                <a href="#lien-he" class="btn-minimal py-1.5">Liên hệ</a>
+            </div>
         </div>
-      </div>
     </nav>
 
-    <!-- Main Content -->
-    <main>
-      <!-- Hero Section -->
-      <section
-        class="relative w-full h-screen min-h-[700px] flex items-center justify-center pt-32 pb-10 px-4 md:px-8"
-      >
-        <div
-          class="container mx-auto h-full relative rounded-3xl md:rounded-[40px] overflow-hidden shadow-2xl"
-        >
-          <!-- Background Image -->
-          <div
-            id="hero-banner"
-            class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 hover:scale-105"
-          >
-            <div class="absolute inset-0 bg-black/20 md:bg-black/20"></div>
-            <div
-              class="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent"
-            ></div>
-          </div>
-
-          <!-- Text Overlay -->
-          <div
-            class="absolute inset-0 flex flex-col items-center justify-end text-white text-center p-6"
-          >
-            <p
-              class="text-xs md:text-sm tracking-[0.3em] uppercase mb-4 opacity-0 fade-in-up"
-            >
-              Save The Date
-            </p>
-
-            <div class="relative mb-6 opacity-0 fade-in-up delay-200">
-              <h1
-                class="font-script text-3xl md:text-4xl lg:text-5xl leading-tight"
-              >
-                Lệ Trâm
-                <i
-                  data-lucide="heart"
-                  class="w-6 h-6 inline-block text-[#FADDE1] fill-current mx-2"
-                ></i>
-                Văn Vọng
-              </h1>
-              <div class="w-24 h-0.5 bg-white/70 mx-auto mt-6"></div>
-            </div>
-
-            <p
-              class="text-base md:text-xl font-light tracking-wide opacity-0 fade-in-up delay-500"
-            >
-              Chủ Nhật • 21 / 12 / 2025
-            </p>
-            <div id="countdown" class="mt-8 opacity-0 fade-in-up delay-500">
-              <div class="flex gap-2 justify-center text-center">
-                <div
-                  class="bg-white/20 backdrop-blur-sm rounded-lg px-3 md:px-4 py-3 min-w-[60px]"
-                >
-                  <div
-                    id="days"
-                    class="text-3xl md:text-4xl font-bold tabular-nums"
-                  >
-                    00
-                  </div>
-                  <div class="text-xs uppercase tracking-wider mt-1">Ngày</div>
+    <!-- Hero — The Art of Digital Intimacy -->
+    <header class="pt-44 sm:pt-48 pb-24 sm:pb-32 px-4 sm:px-8 min-h-[70vh] flex flex-col justify-center">
+        <div class="max-w-[1440px] mx-auto w-full">
+            <div class="max-w-3xl reveal">
+                <p class="text-[13px] uppercase text-gray-400 mb-8">The Art of Digital Intimacy · QStudio</p>
+                <p class="text-gray-500 text-[15px] sm:text-[16px] font-light mb-10 max-w-2xl border-l border-gray-200 pl-6 sm:pl-8">
+                    Đừng gọi đó là “một website”. Hãy gọi đó là <span class="text-[#121212] font-normal">bản thảo của một chương mới</span> — nơi hai người dừng lại, sắp xếp lại ký ức, rồi mời người thân bước vào cùng nhịp thở.
+                </p>
+                <h1 class="text-4xl sm:text-5xl md:text-[3.5rem] lg:text-[4rem] mb-10 italic text-[#121212]">
+                    Một đường link,<br class="hidden sm:block"> kể trọn một đời.
+                </h1>
+                <div class="space-y-6 text-gray-600 text-[15px] sm:text-[16px] font-light max-w-2xl">
+                    <p>
+                        Có những giá trị không nằm ở sự phô trương, mà ở sự thấu hiểu. Wedding planning có thể là một mớ hỗn độn, nhưng website của hai bạn thì không. QStudio biến những thông tin khô khan thành một <span class="font-medium text-[#121212]">‘di sản số’</span> đậm chất cá nhân. Một không gian nơi mọi thứ đều nằm đúng chỗ của nó, rõ ràng và mượt mà, để bạn thảnh thơi kể câu chuyện tình yêu theo cách nghệ thuật nhất.
+                    </p>
+                    <p class="text-gray-500 text-[14px] sm:text-[15px]">
+                        Phía dưới là những chương nhỏ: triết lý chúng tôi tin, cách chúng tôi dựng <em class="font-medium text-[#121212] not-italic">không gian kể chuyện riêng tư</em>, rồi phân khúc thẩm mỹ để bạn chọn — editorial, monochrome, typographic, artsy — và một từ nữa mà chúng tôi rất trân trọng: <strong class="font-medium text-[#121212]">legacy</strong>, di sản kỹ thuật số mở ra sau đám cưới, vẫn đọc lại được nhiều năm sau.
+                    </p>
                 </div>
-                <div
-                  class="bg-white/20 backdrop-blur-sm rounded-lg px-3 md:px-4 py-3 min-w-[60px]"
-                >
-                  <div
-                    id="hours"
-                    class="text-3xl md:text-4xl font-bold tabular-nums"
-                  >
-                    00
-                  </div>
-                  <div class="text-xs uppercase tracking-wider mt-1">Giờ</div>
+                <p class="mt-14 sm:mt-16">
+                    <a href="#chapter-triet-ly" class="text-[13px] uppercase font-medium border-b border-black pb-2 inline-block btn-minimal">Đọc từng chương</a>
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Chapter I — Triết lý -->
+    <section id="chapter-triet-ly" class="px-4 sm:px-8 py-24 sm:py-32 border-t border-gray-100 bg-white">
+        <div class="max-w-[1440px] mx-auto max-w-2xl reveal">
+            <p class="text-[12px] uppercase text-gray-400 mb-6">Chương I</p>
+            <h2 class="text-3xl sm:text-4xl md:text-[2.75rem] italic mb-12 text-[#121212]">Triết lý · Sự tối giản là chắt lọc, không phải thiếu</h2>
+            <div class="space-y-8 text-gray-600 text-[15px] sm:text-[16px] font-light">
+                <p>
+                    Tối giản ở đây không có nghĩa là trống. Nghĩa là dám bỏ đi những thứ không thuộc về hai người — để chỗ cho điều chân thực nhất: một câu, một bức ảnh, một nhạc nền, một địa chỉ. Mỗi pixel là quyết định; mỗi dòng chữ là giọng nói.
+                </p>
+                <p>
+                    Chúng tôi làm việc với cảm giác của người kể chuyện, không phải người chèo khách. Không có lời hứa rỗng, không có “gói dịch vụ” được xếp sẵn như thực đơn. Chỉ có cuộc trò chuyện: hai người muốn khách mời <em class="font-medium not-italic text-[#121212]">cảm thấy điều gì</em> khi mở link lần đầu — và lần thứ mười, nhiều năm sau.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter II — Không gian kể chuyện riêng tư -->
+    <section id="chapter-khong-gian" class="px-4 sm:px-8 py-24 sm:py-32 bg-[#FAFAFA]">
+        <div class="max-w-[1440px] mx-auto max-w-2xl reveal">
+            <p class="text-[12px] uppercase text-gray-400 mb-6">Chương II</p>
+            <h2 class="text-3xl sm:text-4xl md:text-[2.75rem] italic mb-12 text-[#121212]">Không gian kể chuyện riêng tư</h2>
+            <div class="space-y-8 text-gray-600 text-[15px] sm:text-[16px] font-light">
+                <p>
+                    Một website đám cưới, với chúng tôi, là <strong class="font-medium text-[#121212]">một phòng nhỏ chỉ mời đúng người được mời</strong>: có timeline tình yêu nếu hai người muốn; có lời nhắn cho bố mẹ; có dress code và bản đồ mà không chen lấn trong tin nhắn. Không gian đó phải đủ yên để người đọc thở chậm lại — giữa nhịp hối hả của ngày cưới.
+                </p>
+                <p>
+                    Bạn có thể tưởng tượng nó như một tập sách mỏng: bìa là ấn tượng đầu tiên, các trang giữa là chi tiết, và dòng kết là lời cảm ơn. Chúng tôi chỉ giúp bạn chọn giấy, căn lề, và chữ — để khi gửi link, người nhận hiểu: đây không phải thông báo hành chính; đây là lời mời vào một phần đời riêng.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter III — Phân khúc thẩm mỹ + Filter -->
+    <section id="chapter-tham-my" class="px-4 sm:px-8 pt-24 sm:pt-32 pb-12 sm:pb-16 border-t border-gray-100">
+        <div class="max-w-[1440px] mx-auto max-w-3xl mb-20 sm:mb-24 reveal">
+            <p class="text-[12px] uppercase text-gray-400 mb-6">Chương III</p>
+            <h2 class="text-3xl sm:text-4xl md:text-[2.75rem] italic mb-10 text-[#121212]">Phân khúc thẩm mỹ</h2>
+            <div class="space-y-6 text-gray-600 text-[15px] sm:text-[16px] font-light">
+                <p>
+                    Ngôn ngữ thị giác của giới sáng tạo cũng là ngôn ngữ của những cặp đôi có gu: <strong class="font-normal text-[#121212]">Editorial</strong> — như một spread tạp chí; <strong class="font-normal text-[#121212]">Monochrome</strong> — để ánh sáng và khoảng trống nói thay màu; <strong class="font-normal text-[#121212]">Typographic</strong> — khi chữ là hình; <strong class="font-normal text-[#121212]">Artsy</strong> — nhịp tự do hơn, gần triển lãm. Và phía sau tất cả là <strong class="font-normal text-[#121212]">legacy</strong>: thứ còn lại trên màn hình khi tiệc đã qua — vẫn đẹp, vẫn đọc, vẫn là của hai người.
+                </p>
+                <p class="text-gray-500 text-[14px] sm:text-[15px]">
+                    Dưới đây là bộ mẫu — chọn một hướng làm điểm xuất phát; chúng tôi có thể điều chỉnh cùng bạn cho khớp concept tiệc, ánh sáng ảnh, và câu chuyện riêng.
+                </p>
+                <p class="mt-12">
+                    <a href="#gallery" class="text-[13px] uppercase font-medium border-b border-black pb-2 inline-block btn-minimal">Xem bộ sưu tập</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter — lọc thật theo data-category từng mẫu -->
+    <section id="filters" class="px-4 sm:px-8 mb-16 sm:mb-20" aria-label="Lọc mẫu">
+        <div class="max-w-[1440px] mx-auto flex flex-wrap gap-4 sm:gap-8 border-b border-gray-100 pb-8 text-[13px] uppercase" role="tablist" aria-label="Phong cách mẫu">
+            <button type="button" role="tab" aria-selected="true" data-filter-btn data-filter="all" class="cursor-pointer text-black font-medium border-b border-black pb-1 -mb-px transition-colors">Tất cả mẫu</button>
+            <button type="button" role="tab" aria-selected="false" data-filter-btn data-filter="editorial" class="cursor-pointer text-gray-400 hover:text-black pb-1 border-b border-transparent transition-colors">Editorial</button>
+            <button type="button" role="tab" aria-selected="false" data-filter-btn data-filter="monochrome" class="cursor-pointer text-gray-400 hover:text-black pb-1 border-b border-transparent transition-colors">Monochrome</button>
+            <button type="button" role="tab" aria-selected="false" data-filter-btn data-filter="typographic" class="cursor-pointer text-gray-400 hover:text-black pb-1 border-b border-transparent transition-colors">Typographic</button>
+            <button type="button" role="tab" aria-selected="false" data-filter-btn data-filter="modern-artsy" class="cursor-pointer text-gray-400 hover:text-black pb-1 border-b border-transparent transition-colors">Modern Artsy</button>
+        </div>
+    </section>
+
+    <!-- Gallery Grid -->
+    <main id="main" class="px-4 sm:px-8 pb-32 sm:pb-40" tabindex="-1">
+        <div id="gallery" class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 sm:gap-x-12 gap-y-20 sm:gap-y-28 lg:gap-y-32">
+            
+            <!-- Item 1 — Editorial -->
+            <div class="group theme-card reveal" data-category="editorial">
+                <a href="#gallery" class="relative block aspect-[3/4] overflow-hidden bg-[#F9F9F9] mb-6 focus-visible:z-10" aria-label="Xem chi tiết — The Muse">
+                    <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=800&auto=format&fit=crop" alt="" class="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0" loading="lazy" decoding="async">
+                    <div class="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-500 bg-white/10 backdrop-blur-[2px]">
+                        <span class="px-8 py-3 bg-white text-[13px] uppercase shadow-sm">Xem chi tiết</span>
+                    </div>
+                </a>
+                <div class="space-y-2">
+                    <h3 class="text-2xl font-light">The Muse</h3>
+                    <p class="text-[13px] uppercase text-gray-400">Editorial — 2026 Edition</p>
                 </div>
-                <div
-                  class="bg-white/20 backdrop-blur-sm rounded-lg px-3 md:px-4 py-3 min-w-[60px]"
-                >
-                  <div
-                    id="minutes"
-                    class="text-3xl md:text-4xl font-bold tabular-nums"
-                  >
-                    00
-                  </div>
-                  <div class="text-xs uppercase tracking-wider mt-1">Phút</div>
+            </div>
+
+            <!-- Item 2 — Monochrome -->
+            <div class="group theme-card pt-12 reveal" data-category="monochrome">
+                <a href="#gallery" class="relative block aspect-[3/4] overflow-hidden bg-[#F9F9F9] mb-6 focus-visible:z-10" aria-label="Xem chi tiết — Pure White">
+                    <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=800&auto=format&fit=crop" alt="" class="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0" loading="lazy" decoding="async">
+                    <div class="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-500 bg-white/10 backdrop-blur-[2px]">
+                        <span class="px-8 py-3 bg-white text-[13px] uppercase shadow-sm">Xem chi tiết</span>
+                    </div>
+                </a>
+                <div class="space-y-2">
+                    <h3 class="text-2xl font-light">Pure White</h3>
+                    <p class="text-[13px] uppercase text-gray-400">Minimalist — Bản cơ bản</p>
                 </div>
-                <div
-                  class="bg-white/20 backdrop-blur-sm rounded-lg px-3 md:px-4 py-3 min-w-[60px]"
-                >
-                  <div
-                    id="seconds"
-                    class="text-3xl md:text-4xl font-bold tabular-nums"
-                  >
-                    00
-                  </div>
-                  <div class="text-xs uppercase tracking-wider mt-1">Giây</div>
+            </div>
+
+            <!-- Item 3 — Typographic -->
+            <div class="group theme-card reveal" data-category="typographic">
+                <a href="#gallery" class="relative block aspect-[3/4] overflow-hidden bg-[#F9F9F9] mb-6 focus-visible:z-10" aria-label="Xem chi tiết — Visual Poetry">
+                    <img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=800&auto=format&fit=crop" alt="" class="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0" loading="lazy" decoding="async">
+                    <div class="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-500 bg-white/10 backdrop-blur-[2px]">
+                        <span class="px-8 py-3 bg-white text-[13px] uppercase shadow-sm">Xem chi tiết</span>
+                    </div>
+                </a>
+                <div class="space-y-2">
+                    <h3 class="text-2xl font-light">Visual Poetry</h3>
+                    <p class="text-[13px] uppercase text-gray-400">Typographic — Premium</p>
                 </div>
-              </div>
             </div>
 
-            <script>
-              const weddingDate = new Date("2025-12-21T17:30:00").getTime();
-              const countdownElement = document.getElementById("countdown");
-
-              function updateCountdown() {
-                const now = new Date().getTime();
-                const distance = weddingDate - now;
-
-                if (distance <= 0) {
-                  if (countdownElement) {
-                    countdownElement.style.display = "none";
-                  }
-                  clearInterval(countdownInterval);
-                  return;
-                }
-
-                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                const hours = Math.floor(
-                  (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-                );
-                const minutes = Math.floor(
-                  (distance % (1000 * 60 * 60)) / (1000 * 60)
-                );
-                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-                document.getElementById("days").textContent = days
-                  .toString()
-                  .padStart(2, "0");
-                document.getElementById("hours").textContent = hours
-                  .toString()
-                  .padStart(2, "0");
-                document.getElementById("minutes").textContent = minutes
-                  .toString()
-                  .padStart(2, "0");
-                document.getElementById("seconds").textContent = seconds
-                  .toString()
-                  .padStart(2, "0");
-              }
-
-              // Kiểm tra ngay khi load trang
-              updateCountdown();
-              const countdownInterval = setInterval(updateCountdown, 1000);
-            </script>
-          </div>
-        </div>
-      </section>
-
-      <!-- Event Info Section -->
-      <section id="info" class="py-20 md:py-28 bg-wedding-beige">
-        <div class="container mx-auto px-6">
-          <div class="text-center mb-16">
-            <div class="max-w-3xl mx-auto text-center animate-on-scroll">
-              <!-- Heart Icon -->
-              <div
-                class="w-16 h-16 bg-wedding-rose rounded-full flex items-center justify-center mx-auto mb-6"
-              >
-                <i
-                  data-lucide="heart"
-                  class="w-8 h-8 text-wedding-gold fill-current"
-                ></i>
-              </div>
-
-              <!-- Title -->
-              <h2
-                class="font-garamond font-bold text-xl md:text-5xl text-wedding-dark mb-8"
-              >
-                Lời Ngỏ
-              </h2>
-
-              <!-- Quote -->
-              <p
-                class="text-gray-600 font-light text-lg md:text-xl leading-relaxed italic"
-              >
-                "Tình yêu là hành trình dài rộng của những cảm xúc chân thành.
-                Chúng mình rất hạnh phúc khi được chia sẻ niềm vui ngày trọng
-                đại này cùng bạn. Sự hiện diện của bạn là món quà quý giá nhất,
-                góp phần làm nên những khoảnh khắc đáng nhớ trong ngày vui của
-                chúng mình."
-              </p>
-              <div class="w-24 h-px bg-wedding-gold mx-auto my-8"></div>
-            </div>
-            <h2
-              class="font-garamond font-bold text-4xl md:text-5xl text-wedding-dark my-8 text-center"
-            >
-              Thông Tin Lễ Cưới
-            </h2>
-          </div>
-          <div
-            class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto"
-          >
-            <!-- Time Card -->
-            <div
-              class="bg-white p-10 rounded-2xl md:rounded-3xl shadow-sm hover:shadow-xl transition-shadow duration-300 text-center border border-gray-100 group"
-            >
-              <div
-                class="w-16 h-16 bg-wedding-rose rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-wedding-gold group-hover:text-white transition-colors duration-300"
-              >
-                <i
-                  data-lucide="calendar"
-                  class="w-7 h-7 text-wedding-gold group-hover:text-white"
-                ></i>
-              </div>
-              <h3 class="font-serif text-2xl mb-2 text-gray-800">Thời Gian</h3>
-              <div class="w-12 h-px bg-wedding-gold mx-auto my-4"></div>
-              <p class="text-gray-600 font-medium mb-2">
-                Chủ Nhật, 21 Tháng 12, 2025
-              </p>
-              <p class="text-4xl font-serif font-bold text-wedding-dark mt-4">
-                17h30
-              </p>
+            <!-- Item 4 — Modern Artsy -->
+            <div class="group theme-card reveal" data-category="modern-artsy">
+                <a href="#gallery" class="relative block aspect-[3/4] overflow-hidden bg-[#F9F9F9] mb-6 focus-visible:z-10" aria-label="Xem chi tiết — Lumière">
+                    <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=800&auto=format&fit=crop" alt="" class="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0" loading="lazy" decoding="async">
+                    <div class="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-500 bg-white/10 backdrop-blur-[2px]">
+                        <span class="px-8 py-3 bg-white text-[13px] uppercase shadow-sm">Xem chi tiết</span>
+                    </div>
+                </a>
+                <div class="space-y-2">
+                    <h3 class="text-2xl font-light">Lumière</h3>
+                    <p class="text-[13px] uppercase text-gray-400">Modern Artsy — 2026 Edition</p>
+                </div>
             </div>
 
-            <!-- Location Card -->
-            <div
-              class="bg-white p-8 rounded-2xl md:rounded-3xl shadow-sm hover:shadow-xl transition-shadow duration-300 text-center border border-gray-100 group"
-            >
-              <div
-                class="w-16 h-16 bg-wedding-rose rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-wedding-gold group-hover:text-white transition-colors duration-300"
-              >
-                <i
-                  data-lucide="map-pin"
-                  class="w-7 h-7 text-wedding-gold group-hover:text-white"
-                ></i>
-              </div>
-              <h3 class="font-serif text-2xl mb-2 text-gray-800">Tiệc Cưới</h3>
-              <div class="w-12 h-px bg-wedding-gold mx-auto my-4"></div>
-              <h4 class="font-bold text-base md:text-xl text-gray-800 mb-2 uppercase">
-                Trung tâm tiệc cưới<br> Xuân Lập
-              </h4>
-              <p class="text-gray-500 text-sm mb-6 leading-relaxed">
-                KCN Nam Tân Uyên Mở Rộng,<br />
-                Phường Tân Uyên, TP.HCM
-              </p>
-              <a
-                href="https://www.google.com/maps/place/Nh%C3%A0+h%C3%A0ng+Xu%C3%A2n+l%E1%BA%ADp/@11.0910451,106.7777316,19.2z/data=!4m6!3m5!1s0x3174c5d860899edb:0xdb7898cdeb0b6283!8m2!3d11.0912237!4d106.778307!16s%2Fg%2F11fnswh580?coh=277534&entry=tts&g_ep=EgoyMDI1MTIwOS4wIPu8ASoKLDEwMDc5MjA3MUgBUAM%3D&skid=c36d9e82-bd5b-4052-8c87-aff77143565d"
-                target="_blank"
-                rel="noreferrer"
-                class="inline-flex items-center gap-2 bg-wedding-rose text-wedding-dark px-6 py-2 rounded-full text-xs font-bold tracking-widest hover:bg-wedding-gold hover:text-white transition-colors"
-              >
-                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
-                XEM BẢN ĐỒ
-              </a>
+            <!-- Form liên hệ — luôn hiển thị, không thuộc bộ lọc -->
+            <div id="lien-he" class="group theme-card lg:col-span-2 bg-[#F9F9F9] p-8 sm:p-12 lg:p-20 rounded-sm reveal" data-contact-form>
+                <div class="max-w-xl mx-auto lg:mx-0">
+                    <p class="text-[12px] uppercase text-gray-400 mb-4">Lời mở</p>
+                    <h2 class="text-3xl sm:text-4xl mb-6 italic">Một chương chưa được viết tên</h2>
+                    <p class="text-[13px] sm:text-[15px] font-light text-gray-600 mb-4">
+                        Nếu bộ mẫu vẫn chưa đủ gần với điều hai người muốn giữ — chúng tôi nhận thiết kế riêng: moodboard, màu tiệc, nhịp chữ, nhạc, và cả những chi tiết kỹ thuật số nhỏ mà sau này bạn vẫn muốn mở lại.
+                    </p>
+                    <p class="text-[13px] font-light text-gray-500 mb-10">
+                        Để lại họ tên và email — chúng tôi sẽ phản hồi sớm nhất có thể.
+                    </p>
+                    <form id="contact-form" class="space-y-5" action="https://formsubmit.co/quynhpham241.cv@gmail.com" method="POST">
+                        <input type="hidden" name="_subject" id="contact-subject" value="">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_next" id="contact-next" value="">
+                        <input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
+                        <div>
+                            <label for="contact-name" class="block text-[13px] uppercase text-gray-500 mb-2">Họ và tên <span class="text-red-600">*</span></label>
+                            <input type="text" name="ten_khach_hang" id="contact-name" required maxlength="120" autocomplete="name" placeholder="Ví dụ: Nguyễn Văn A" class="w-full px-4 py-3 bg-white border border-gray-200 text-[13px] sm:text-[14px] font-light text-[#121212] placeholder:text-gray-400 focus:outline-none focus:border-black transition-colors">
+                        </div>
+                        <div>
+                            <label for="contact-email" class="block text-[13px] uppercase text-gray-500 mb-2">Email liên hệ <span class="text-red-600">*</span></label>
+                            <input type="email" name="email" id="contact-email" required autocomplete="email" placeholder="ban@email.com" class="w-full px-4 py-3 bg-white border border-gray-200 text-[13px] sm:text-[14px] font-light text-[#121212] placeholder:text-gray-400 focus:outline-none focus:border-black transition-colors">
+                        </div>
+                        <div>
+                            <label for="contact-message" class="block text-[13px] uppercase text-gray-500 mb-2">Tin nhắn <span class="text-gray-400 font-normal normal-case">(tuỳ chọn)</span></label>
+                            <textarea name="message" id="contact-message" rows="4" maxlength="2000" placeholder="Ngày dự kiến, phong cách (ví dụ rustic, đen trắng), link tham khảo…" class="w-full px-4 py-3 bg-white border border-gray-200 text-[13px] sm:text-[14px] font-light text-[#121212] placeholder:text-gray-400 focus:outline-none focus:border-black transition-colors resize-y min-h-[100px]"></textarea>
+                        </div>
+                        <button type="submit" class="w-full sm:w-auto px-10 py-3 bg-[#121212] text-white text-[13px] uppercase font-medium hover:bg-black/90 transition-colors">Gửi yêu cầu tư vấn</button>
+                    </form>
+                </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      <!-- Gallery Section -->
-      <section id="gallery" class="py-16 bg-white">
-        <div class="container mx-auto px-4 md:px-6">
-          <div class="text-center mb-16 animate-on-scroll">
-        <p
-          class="text-wedding-gold text-xs font-bold tracking-[0.3em] uppercase mb-3"
-        >
-          Khoảnh Khắc
-        </p>
-        <h2 class="font-garamond text-4xl md:text-5xl text-wedding-dark">
-          Tình yêu
-        </h2>
-          </div>
-
-          <!-- Bento Grid Layout -->
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[300px] md:auto-rows-[400px]">
-        <!-- Large Image - spans 2 columns and 2 rows -->
-        <div class="col-span-2 row-span-2 animate-on-scroll">
-          <div
-            class="overflow-hidden rounded-2xl md:rounded-2xl md:rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 h-full"
-          >
-            <img
-          src="./imgs/img_1.jpg"
-          alt="Lệ Trâm & Văn Vọng Wedding 1"
-          class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-            />
-          </div>
         </div>
-
-        <!-- Small Image 1 (img_2) -->
-        <div class="col-span-1 row-span-1 animate-on-scroll delay-200">
-          <div
-            class="overflow-hidden rounded-2xl md:rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 h-full"
-          >
-            <img
-          src="./imgs/img_2.jpg"
-          alt="Lệ Trâm & Văn Vọng Wedding 2"
-          class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-            />
-          </div>
-        </div>
-
-        <!-- Small Image 2 (img_3) - right next to img_2 -->
-        <div class="col-span-1 row-span-1 animate-on-scroll delay-200">
-          <div
-            class="overflow-hidden rounded-2xl md:rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 h-full"
-          >
-            <img
-          src="./imgs/img_3.jpg"
-          alt="Lệ Trâm & Văn Vọng Wedding 3"
-          class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-            />
-          </div>
-        </div>
-        <!-- img_4 -->
-        <div class="col-span-1 row-span-1 animate-on-scroll delay-500">
-          <div
-            class="overflow-hidden rounded-2xl md:rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 h-full"
-          >
-            <img
-          src="./imgs/img_4.jpg"
-          alt="Lệ Trâm & Văn Vọng Wedding 4"
-          class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-            />
-          </div>
-        </div>
-
-        <!-- Medium Image -->
-        <div class="col-span-1 row-span-1 animate-on-scroll delay-500">
-          <div
-            class="overflow-hidden rounded-2xl md:rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 h-full"
-          >
-            <img
-          src="./imgs/img_7.jpg"
-          alt="Lệ Trâm & Văn Vọng Wedding 7"
-          class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-            />
-          </div>
-        </div>
-        <div class="col-span-1 row-span-1 animate-on-scroll delay-500">
-          <div
-            class="overflow-hidden rounded-2xl md:rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 h-full"
-          >
-            <img
-          src="./imgs/img_5.jpg"
-          alt="Lệ Trâm & Văn Vọng Wedding 7"
-          class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-            />
-          </div>
-        </div>
-
-        <!-- Last Image -->
-        <div class="col-span-1 row-span-1 animate-on-scroll">
-          <div
-            class="overflow-hidden rounded-2xl md:rounded-3xl shadow-md hover:shadow-xl transition-all duration-500 h-full"
-          >
-            <img
-          src="./imgs/img_8.jpg"
-          alt="Lệ Trâm & Văn Vọng Wedding 8"
-          class="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-            />
-          </div>
-        </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Quote Section -->
-      <section class="py-16 px-6 bg-wedding-beige">
-        <div class="container mx-auto">
-          <div
-            class="bg-wedding-rose rounded-2xl md:rounded-3xl p-8 md:p-20 text-center relative overflow-hidden"
-          >
-            <div
-              class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"
-            ></div>
-
-            <div class="relative z-10 max-w-3xl mx-auto">
-              <h3 class="font-serif text-3xl md:text-5xl text-[#D4A373] mb-4">
-                Tình Yêu
-              </h3>
-              <p
-                class="text-gray-600 font-light italic text-base md:text-xl leading-loose"
-              >
-                "Tình yêu không phải là tìm thấy một người hoàn hảo, mà là nhìn
-                thấy một người không hoàn hảo một cách hoàn hảo."
-              </p>
-              <div class="mt-8 text-wedding-gold text-2xl">❦</div>
-            </div>
-          </div>
-        </div>
-      </section>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white py-12 border-t border-gray-100">
-      <div class="container mx-auto text-center px-4">
-        <h2 class="font-serif text-3xl font-bold text-wedding-dark mb-3">
-          Lệ Trâm <span class="text-wedding-gold italic mx-5">&</span> Văn Vọng
-        </h2>
-        <p class="text-xs tracking-[0.2em] text-gray-400 uppercase mb-8">
-          #TramVong2025
-        </p>
-
-        <div
-          class="text-gray-400 text-xs font-light flex flex-col items-center justify-center gap-2"
-        >
-          <div class="flex items-center gap-1">
-            <span>Made by</span>
-            <i
-              data-lucide="heart"
-              class="w-3 h-3 text-red-400 fill-current"
-            ></i>
-            <a
-              href="https://github.com/ngocquynhpham"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-wedding-gold hover:text-wedding-dark transition-colors font-medium"
-              >Q</a
-            >
-          </div>
+    <footer class="pt-28 sm:pt-24 pb-12 px-4 sm:px-8 border-t border-gray-100">
+        <div class="max-w-[1440px] mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-14 md:gap-12 pb-20">
+                <div class="space-y-8 max-w-md">
+                    <div class="text-xl font-medium uppercase">QStudio</div>
+                    <p class="text-[12px] uppercase text-gray-400">The Art of Digital Intimacy</p>
+                    <p class="text-[14px] sm:text-[15px] text-gray-500 font-light">
+                        Tối giản là chắt lọc. Mỗi dự án là một bản thảo — để hai người tự hào gửi đi, và để thời gian sau vẫn đọc lại được.
+                    </p>
+                </div>
+                <div class="grid grid-cols-2 gap-8 sm:gap-16 md:gap-24 w-full md:w-auto">
+                    <div class="space-y-4">
+                        <p class="text-[13px] uppercase font-bold">Kết nối</p>
+                        <ul class="text-[13px] uppercase text-gray-500 space-y-2">
+                            <li><a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="hover:text-black transition">Instagram</a></li>
+                            <li><a href="https://www.pinterest.com/" target="_blank" rel="noopener noreferrer" class="hover:text-black transition">Pinterest</a></li>
+                            <li><a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" class="hover:text-black transition">Facebook</a></li>
+                        </ul>
+                    </div>
+                    <div class="space-y-4">
+                        <p class="text-[13px] uppercase font-bold">Thông tin</p>
+                        <p class="text-[13px] uppercase text-gray-500">
+                            <a href="#lien-he" class="hover:text-black transition">Liên hệ &amp; tư vấn</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-gray-100 text-center">
+                <p class="text-[13px] uppercase text-gray-400">
+                    &copy; <span id="footer-year"></span> QSTUDIO · EST. 2024
+                </p>
+            </div>
         </div>
-      </div>
     </footer>
 
-    <!-- Audio Element -->
-    <audio
-      id="weddingMusic"
-      src="./mp3/wedding-song.mp3"
-      controls
-      class="hidden"
-    ></audio>
-
-    <!-- Floating Music Button -->
-    <div class="fixed bottom-6 right-6 z-40">
-      <button
-        id="musicToggle"
-        class="bg-white p-3 rounded-full shadow-lg text-wedding-gold hover:bg-wedding-gold hover:text-white transition-all duration-300 relative group"
-        aria-label="Toggle music"
-      >
-        <i data-lucide="music" class="w-6 h-6 music-icon"></i>
-        <i data-lucide="volume-x" class="w-6 h-6 mute-icon hidden"></i>
-        <span
-          class="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full animate-pulse music-playing"
-        ></span>
-      </button>
-    </div>
-
     <script>
-      // Music Control
-      const audio = document.getElementById("weddingMusic");
-      const musicToggle = document.getElementById("musicToggle");
-      const musicIcon = musicToggle.querySelector(".music-icon");
-      const muteIcon = musicToggle.querySelector(".mute-icon");
-      const playingIndicator = musicToggle.querySelector(".music-playing");
+        (function () {
+            var y = document.getElementById('footer-year');
+            if (y) y.textContent = String(new Date().getFullYear());
 
-      let isPlaying = false;
+            var form = document.getElementById('contact-form');
+            var subject = document.getElementById('contact-subject');
+            var next = document.getElementById('contact-next');
+            if (next) next.value = window.location.href.split('#')[0];
 
-      // Attempt autoplay on page load
-      window.addEventListener("load", () => {
-        audio.volume = 0.5; // Set volume to 50%
-        audio.loop = true; // Loop the music
-
-        // Try to play immediately
-        const playPromise = audio.play();
-
-        if (playPromise !== undefined) {
-          playPromise
-            .then(() => {
-              isPlaying = true;
-              updateMusicButton();
-            })
-            .catch(() => {
-              // Autoplay blocked, wait for any user interaction
-              isPlaying = false;
-              updateMusicButton();
-
-              const startMusic = () => {
-                audio.play().then(() => {
-                  isPlaying = true;
-                  updateMusicButton();
+            if (form && subject) {
+                form.addEventListener('submit', function () {
+                    var name = (document.getElementById('contact-name') && document.getElementById('contact-name').value.trim()) || '';
+                    subject.value = '[Qstudio - wedding] - ' + (name || 'Khách hàng');
                 });
-                document.removeEventListener("click", startMusic);
-                document.removeEventListener("touchstart", startMusic);
-                document.removeEventListener("scroll", startMusic);
-              };
-
-              document.addEventListener("click", startMusic, { once: true });
-              document.addEventListener("touchstart", startMusic, {
-                once: true,
-              });
-              document.addEventListener("scroll", startMusic, { once: true });
-            });
-        }
-      });
-
-      // Toggle music on button click
-      musicToggle.addEventListener("click", () => {
-        if (isPlaying) {
-          audio.pause();
-          isPlaying = false;
-        } else {
-          audio.play();
-          isPlaying = true;
-        }
-        updateMusicButton();
-      });
-
-      // Update button appearance
-      function updateMusicButton() {
-        if (isPlaying) {
-          musicIcon.classList.remove("hidden");
-          muteIcon.classList.add("hidden");
-          playingIndicator.classList.remove("hidden");
-          musicToggle.classList.add("animate-bounce");
-        } else {
-          musicIcon.classList.add("hidden");
-          muteIcon.classList.remove("hidden");
-          playingIndicator.classList.add("hidden");
-          musicToggle.classList.remove("animate-bounce");
-        }
-        lucide.createIcons();
-      }
-    </script>
-
-    <!-- Application Logic -->
-    <script>
-      // Initialize Lucide Icons
-      lucide.createIcons();
-
-      // Scroll Effect for Navbar
-      window.addEventListener("scroll", () => {
-        if (window.scrollY > 50) {
-          navbar.classList.add(
-            "bg-white/90",
-            "backdrop-blur-md",
-            "shadow-sm",
-            "py-3"
-          );
-          navbar.classList.remove("bg-transparent", "py-6");
-        } else {
-          navbar.classList.remove(
-            "bg-white/90",
-            "backdrop-blur-md",
-            "shadow-sm",
-            "py-3"
-          );
-          navbar.classList.add("bg-transparent", "py-6");
-        }
-      });
-
-      // Intersection Observer for Animations
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.remove("opacity-0");
-              entry.target.classList.add("fade-in-up");
-              observer.unobserve(entry.target);
             }
-          });
-        },
-        {
-          threshold: 0.1,
-          rootMargin: "50px",
-        }
-      );
 
-      // Observe all elements with 'animate-on-scroll'
-      document.querySelectorAll(".animate-on-scroll").forEach((el) => {
-        observer.observe(el);
-      });
+            function setFilterTabActive(activeBtn) {
+                var tabs = document.querySelectorAll('[data-filter-btn]');
+                tabs.forEach(function (b) {
+                    b.setAttribute('aria-selected', 'false');
+                    b.classList.remove('text-black', 'font-medium', 'border-black');
+                    b.classList.add('text-gray-400', 'border-transparent');
+                });
+                activeBtn.setAttribute('aria-selected', 'true');
+                activeBtn.classList.remove('text-gray-400', 'border-transparent');
+                activeBtn.classList.add('text-black', 'font-medium', 'border-black');
+            }
+
+            function applyGalleryFilter(filter) {
+                var cards = document.querySelectorAll('#gallery [data-category]');
+                cards.forEach(function (card) {
+                    var cat = card.getAttribute('data-category');
+                    var show = filter === 'all' || filter === cat;
+                    card.classList.toggle('hidden', !show);
+                    if (!show) card.setAttribute('aria-hidden', 'true');
+                    else card.removeAttribute('aria-hidden');
+                });
+            }
+
+            document.querySelectorAll('[data-filter-btn]').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    setFilterTabActive(btn);
+                    applyGalleryFilter(btn.getAttribute('data-filter') || 'all');
+                });
+            });
+
+            if ('IntersectionObserver' in window) {
+                var reveals = document.querySelectorAll('.reveal');
+                var io = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (en) {
+                        if (en.isIntersecting) {
+                            en.target.classList.add('reveal-visible');
+                            io.unobserve(en.target);
+                        }
+                    });
+                }, { threshold: 0.1, rootMargin: '0px 0px -24px 0px' });
+                reveals.forEach(function (el) { io.observe(el); });
+            } else {
+                document.querySelectorAll('.reveal').forEach(function (el) {
+                    el.classList.add('reveal-visible');
+                });
+            }
+        })();
     </script>
-  </body>
+
+</body>
 </html>
