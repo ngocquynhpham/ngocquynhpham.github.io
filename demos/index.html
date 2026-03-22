@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Learning demos | Ngoc Quynh Pham</title>
+    <meta
+      name="description"
+      content="A learning lab of static demos on GitHub Pages — where I practice new front-end skills, ship small tools, and keep experiments in one place."
+    />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://ngocquynhpham.github.io/demos/index.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ngocquynhpham.github.io/demos/index.html" />
+    <meta property="og:title" content="Learning demos | Ngoc Quynh Pham" />
+    <meta
+      property="og:description"
+      content="A learning lab of static demos on GitHub Pages — where I practice new front-end skills, ship small tools, and keep experiments in one place."
+    />
+    <meta property="og:image" content="https://ngocquynhpham.github.io/logo.ico" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Learning demos | Ngoc Quynh Pham" />
+    <meta
+      name="twitter:description"
+      content="A learning lab of static demos on GitHub Pages — front-end experiments and small tools in one place."
+    />
+    <link rel="icon" href="../logo.ico" />
+    <meta name="theme-color" content="#121212" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="demos.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="back-link" href="../index.html">← Home</a>
+      <h1>Learning demos and experiments</h1>
+      <p class="lead">
+        This page is my practice ground: static demos where I learn new skills, try ideas, and ship small UI and tooling experiments hosted on GitHub Pages. Filter by category, search, or browse page by page — project links open in a new tab.
+      </p>
+    </header>
+
+    <div class="controls">
+      <div class="search-wrap">
+        <label for="search" class="visually-hidden">Search demos</label>
+        <input
+          type="search"
+          id="search"
+          name="search"
+          placeholder="Search by name, description, or path…"
+          autocomplete="off"
+        />
+      </div>
+      <div class="tabs" id="tabs" role="tablist" aria-label="Category"></div>
+    </div>
+
+    <p id="meta" class="meta-bar" aria-live="polite"></p>
+
+    <div id="grid" class="grid-cards"></div>
+
+    <nav class="pagination" id="pagination" aria-label="Pagination"></nav>
+
+    <footer class="site-footer">Static demos · ngocquynhpham.github.io</footer>
+
+    <style>
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    </style>
+    <script src="demos.js" defer></script>
+  </body>
+</html>
