@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Tuyển Dụng - New Sky</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; color: #334155; }
+        .tab-btn.active { border-bottom: 3px solid #2563eb; color: #2563eb; font-weight: 600; background-color: #eff6ff; }
+        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .fade-in { animation: fadeIn 0.4s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Custom Checkbox Toggle */
+        .toggle-checkbox:checked { right: 0; border-color: #10b981; }
+        .toggle-checkbox:checked + .toggle-label { background-color: #10b981; }
+        .toggle-checkbox { right: 0; z-index: 1; border-color: #e2e8f0; transition: all 0.3s; }
+        .toggle-label { width: 3rem; height: 1.5rem; background-color: #cbd5e1; border-radius: 9999px; transition: all 0.3s; cursor: pointer; }
+    </style>
+</head>
+<body class="pb-20">
+
+    <!-- Navbar -->
+    <nav class="bg-blue-800 text-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <i class="fas fa-graduation-cap text-3xl text-yellow-400"></i>
+                <span class="font-bold text-xl tracking-wider">NEW SKY HR PORTAL</span>
+            </div>
+            <div class="text-sm font-medium bg-blue-700 px-4 py-2 rounded-full">
+                Vị trí: Nhân viên Tư vấn ghi danh
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+        <!-- Section 1 & 2: Intro & JD Analysis -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 fade-in">
+            <!-- 1. Giới thiệu -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h2 class="text-lg font-bold text-slate-800 mb-3 flex items-center"><i class="fas fa-building text-blue-600 mr-2"></i> 1. Về Trung Tâm New Sky</h2>
+                <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                    Trung tâm ngoại ngữ New Sky với môi trường làm việc năng động, thân thiện. Vị trí "Nhân viên Tư vấn ghi danh" đóng vai trò là bộ mặt của trung tâm, yêu cầu tương tác trực tiếp, giải quyết vấn đề và chốt sales hiệu quả với học viên/phụ huynh.
+                </p>
+                <div class="flex items-center space-x-2 text-sm text-blue-700 bg-blue-50 px-3 py-2 rounded-md">
+                    <i class="fas fa-clock"></i>
+                    <span>Thời gian: Xoay ca, yêu cầu làm việc T7, CN (Luân phiên).</span>
+                </div>
+            </div>
+
+            <!-- 2. Phân tích JD -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h2 class="text-lg font-bold text-slate-800 mb-3 flex items-center"><i class="fas fa-balance-scale text-emerald-600 mr-2"></i> 2. Phân tích JD & Trọng số</h2>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm font-semibold text-slate-700"><i class="fas fa-comments text-amber-500 mr-1"></i> Kỹ năng mềm (Sales, CSKH)</span>
+                        <span class="px-2 py-1 bg-amber-100 text-amber-800 text-xs font-bold rounded">40%</span>
+                    </div>
+                    <div class="w-full bg-slate-100 rounded-full h-2"><div class="bg-amber-500 h-2 rounded-full" style="width: 40%"></div></div>
+
+                    <div class="flex justify-between items-center pt-1">
+                        <span class="text-sm font-semibold text-slate-700"><i class="fas fa-briefcase text-blue-500 mr-1"></i> Kinh nghiệm thực chiến</span>
+                        <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-bold rounded">30%</span>
+                    </div>
+                    <div class="w-full bg-slate-100 rounded-full h-2"><div class="bg-blue-500 h-2 rounded-full" style="width: 30%"></div></div>
+
+                    <div class="flex justify-between items-center pt-1">
+                        <span class="text-sm font-semibold text-slate-700"><i class="fas fa-graduation-cap text-emerald-500 mr-1"></i> Trình độ & Nền tảng</span>
+                        <span class="px-2 py-1 bg-emerald-100 text-emerald-800 text-xs font-bold rounded">30%</span>
+                    </div>
+                    <div class="w-full bg-slate-100 rounded-full h-2"><div class="bg-emerald-500 h-2 rounded-full" style="width: 30%"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Candidates Dashboard -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden fade-in">
+            <div class="bg-slate-50 border-b border-slate-200 px-6 py-4 flex justify-between items-center">
+                <h2 class="text-lg font-bold text-slate-800"><i class="fas fa-users text-blue-600 mr-2"></i> 3. Đánh Giá Hồ Sơ Ứng Viên</h2>
+                <div class="text-sm font-medium text-slate-600 bg-white px-3 py-1 border border-slate-200 rounded-md">
+                    Tổng số: <span class="text-blue-600 font-bold">5</span> hồ sơ
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex overflow-x-auto border-b border-slate-200" id="tabs-container">
+                <!-- Generated by JS -->
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-0">
+                <!-- Left: Chart -->
+                <div class="lg:col-span-5 p-6 border-r border-slate-100 flex flex-col items-center bg-slate-50/50">
+                    <h3 class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4">Biểu đồ Năng lực (Mapping JD)</h3>
+                    <div class="w-full relative" style="height: 280px;">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                    
+                    <!-- HR Decision Box -->
+                    <div class="mt-6 w-full bg-white border border-blue-100 rounded-lg p-4 shadow-sm">
+                        <h4 class="font-bold text-slate-800 mb-4 border-b pb-2 text-sm">QUYẾT ĐỊNH CỦA HR</h4>
+                        
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-sm font-medium text-slate-700">Trạng thái Phù hợp:</span>
+                            <div class="relative inline-block w-12 mr-2 align-middle select-none transition duration-200 ease-in">
+                                <input type="checkbox" name="toggle" id="fit-toggle" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer" onchange="updateCandidateData()"/>
+                                <label for="fit-toggle" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-slate-700">Chấm điểm (1-10):</span>
+                            <select id="rating-select" class="bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-24 p-2 cursor-pointer" onchange="updateCandidateData()">
+                                <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+                                <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+                                <option value="7">7</option><option value="8">8</option><option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Details -->
+                <div class="lg:col-span-7 p-6">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h2 id="cand-name" class="text-2xl font-bold text-slate-800 uppercase">Họ Tên</h2>
+                            <p id="cand-edu" class="text-blue-600 font-medium text-sm mt-1"></p>
+                        </div>
+                        <span id="cand-badge" class="px-3 py-1 rounded-full text-xs font-bold border"></span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+                            <p class="text-xs text-slate-400 font-bold uppercase mb-1">Kinh nghiệm</p>
+                            <p id="cand-exp" class="text-sm font-medium text-slate-800"></p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+                            <p class="text-xs text-slate-400 font-bold uppercase mb-1">Kỹ năng mềm</p>
+                            <p id="cand-soft" class="text-sm font-medium text-slate-800"></p>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <h3 class="text-sm font-bold text-slate-800 mb-2 border-l-4 border-amber-500 pl-2">Đánh giá chuyên sâu (Đối soát JD)</h3>
+                        <div class="bg-amber-50/50 rounded-lg p-4 border border-amber-100">
+                            <div class="mb-3">
+                                <strong class="text-emerald-700 text-sm"><i class="fas fa-check-circle mr-1"></i> Điểm phù hợp JD:</strong>
+                                <ul id="cand-pros" class="list-disc list-inside text-sm text-slate-700 mt-1 space-y-1"></ul>
+                            </div>
+                            <div>
+                                <strong class="text-red-600 text-sm"><i class="fas fa-exclamation-triangle mr-1"></i> Rủi ro / Cần làm rõ:</strong>
+                                <ul id="cand-cons" class="list-disc list-inside text-sm text-slate-700 mt-1 space-y-1"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Action & Email Automation -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 fade-in">
+            <h2 class="text-lg font-bold text-slate-800 mb-2"><i class="fas fa-envelope-open-text text-blue-600 mr-2"></i> 4. Quản Lý Hành Động & Gửi Mail</h2>
+            <p class="text-sm text-slate-500 mb-6">Bảng điều khiển dưới đây tự động cập nhật dựa trên việc gắn cờ "Phù hợp" ở bước 3.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="action-grid">
+                <!-- Action cards generated by JS -->
+            </div>
+
+            <!-- Bulk Reject Section -->
+            <div class="mt-8 pt-6 border-t border-slate-200">
+                <h3 class="text-sm font-bold text-slate-800 mb-3"><i class="fas fa-layer-group text-slate-500 mr-2"></i> Gửi Mail Từ Chối Hàng Loạt (Dành cho ứng viên Không phù hợp)</h3>
+                <div class="flex items-center space-x-4">
+                    <input type="text" id="bulk-email-list" class="flex-1 bg-slate-50 border border-slate-300 text-slate-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" placeholder="Các email sẽ tự động điền vào đây..." readonly>
+                    <button onclick="previewBulkReject()" class="bg-slate-800 hover:bg-slate-700 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center transition">
+                        <i class="fas fa-paper-plane mr-2"></i> Xem trước & Gửi
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal Xem Trước Email -->
+    <div id="email-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="bg-slate-100 border-b border-slate-200 px-6 py-4 flex justify-between items-center">
+                <h3 class="font-bold text-slate-800" id="modal-title">Xem trước Email</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-red-500 transition">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto flex-1">
+                <div class="mb-4">
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Gửi đến (To):</label>
+                    <input type="text" id="modal-to" class="w-full bg-slate-50 border border-slate-200 rounded p-2 text-sm" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Chủ đề (Subject):</label>
+                    <input type="text" id="modal-subject" class="w-full font-medium bg-slate-50 border border-slate-200 rounded p-2 text-sm" readonly>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Nội dung (Body):</label>
+                    <div id="modal-body" class="w-full bg-white border border-slate-200 rounded p-4 text-sm text-slate-700 whitespace-pre-line font-serif leading-relaxed h-64 overflow-y-auto">
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 border-t border-slate-200 px-6 py-4 flex justify-end space-x-3">
+                <button onclick="closeModal()" class="px-4 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-300 rounded-lg hover:bg-slate-50">Hủy</button>
+                <button onclick="sendEmailAction()" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-lg hover:bg-blue-700 flex items-center">
+                    <i class="fas fa-paper-plane mr-2"></i> Xác nhận Gửi
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Data Initialization (Based on previous analysis)
+        let candidates = [
+            {
+                id: 0,
+                name: "NGUYỄN THỊ NGỌC MAI",
+                email: "maiiiiii@gmail.com",
+                edu: "Cử nhân Ngôn Ngữ Anh - ĐH Sài Gòn",
+                exp: "4 năm (Sales, Trợ giảng EdTech, Bán hàng)",
+                soft: "CSKH, Làm việc nhóm, Giải quyết vấn đề",
+                scores: [90, 95, 95, 90, 95], // [Kinh nghiệm(30%), Kỹ năng(40%), Học vấn(30%), Giao tiếp, Thái độ]
+                pros: [
+                    "Kinh nghiệm tại Geniebook (EdTech) sát 100% với JD.",
+                    "Kỹ năng cứng vượt trội (TOEIC 935, MOS Excel 978) giúp làm hồ sơ nhanh chóng.",
+                    "Kỹ năng bán hàng đã được chứng minh qua 2.5 năm làm Kinh doanh."
+                ],
+                cons: [
+                    "Cần thương lượng kỹ về lương vì profile cao.",
+                    "Hỏi rõ khả năng làm cuối tuần (Chưa ghi trong CV)."
+                ],
+                isFit: true,
+                rating: 9
+            },
+            {
+                id: 1,
+                name: "LÊ NGỌC TUYÊN",
+                email: "tuyenxxxxx@gmail.com",
+                edu: "Cử nhân Quản lý giáo dục - ĐH Sài Gòn",
+                exp: "3.5 năm (Bán hàng, Học vụ Trung tâm, Sale online)",
+                soft: "Tư duy logic, Thuyết trình, Giao tiếp",
+                scores: [85, 80, 90, 85, 85],
+                pros: [
+                    "Từng làm Học vụ TT Ngoại ngữ -> Thuộc quy trình lớp học, thu phí.",
+                    "Kinh nghiệm chốt sale online đạt KPI.",
+                    "Chuyên ngành học chuẩn xác với môi trường giáo dục."
+                ],
+                cons: [
+                    "Tiếng Anh chỉ ở mức cơ bản (Có thể gặp khó nếu tư vấn chương trình IELTS cao cấp)."
+                ],
+                isFit: true,
+                rating: 8
+            },
+            {
+                id: 2,
+                name: "LÊ NGUYỄN XUÂN AN",
+                email: "an00000@gmail.com",
+                edu: "CĐ Sư Phạm Anh - CĐSP Nha Trang",
+                exp: "2 năm (Tư vấn tài chính FE Credit)",
+                soft: "Thuyết phục, Đàm phán, Chịu áp lực",
+                scores: [75, 85, 75, 80, 90],
+                pros: [
+                    "Khả năng chốt sales và chịu áp lực KPI xuất sắc.",
+                    "Nền tảng Tiếng Anh chuyên ngành Sư phạm."
+                ],
+                cons: [
+                    "Chưa có kinh nghiệm môi trường giáo dục.",
+                    "Cần xem xét sự mềm mỏng trong CSKH (khác với tài chính)."
+                ],
+                isFit: true,
+                rating: 7
+            },
+            {
+                id: 3,
+                name: "NGUYỄN NGỌC MẪN",
+                email: "ngocmanxxx@gmail.com",
+                edu: "Cử nhân Quản lý giáo dục - ĐH KHXH&NV",
+                exp: "5 năm (Ngân hàng, Trường học, Tâm lý)",
+                soft: "Xử lý chứng từ, Tư vấn tâm lý",
+                scores: [80, 65, 85, 75, 80],
+                pros: [
+                    "Tuyệt đối chính xác trong việc làm hợp đồng, thu phí (Kinh nghiệm Bank).",
+                    "Hiểu tâm lý học sinh."
+                ],
+                cons: [
+                    "Thiếu kỹ năng săn khách hàng (Sales active). Thiên về Back-office hơn Front-office."
+                ],
+                isFit: false,
+                rating: 5
+            },
+            {
+                id: 4,
+                name: "NGUYỄN THỊ PHƯƠNG THẢO",
+                email: "thaoxxxx@gmail.com",
+                edu: "Cao đẳng Logistics",
+                exp: "Chưa có kinh nghiệm văn phòng (Phục vụ, Giao hàng)",
+                soft: "Cần cù, Siêng năng",
+                scores: [30, 40, 50, 60, 65],
+                pros: [
+                    "Sẵn sàng học hỏi, chịu khó."
+                ],
+                cons: [
+                    "Không đáp ứng được tiêu chí kinh nghiệm của JD.",
+                    "Trái ngành hoàn toàn."
+                ],
+                isFit: false,
+                rating: 3
+            }
+        ];
+
+        let currentIndex = 0;
+        let myRadarChart = null;
+
+        // 2. Initialization
+        function init() {
+            renderTabs();
+            selectCandidate(0);
+            renderActionGrid();
+        }
+
+        // 3. Render Tabs
+        function renderTabs() {
+            const container = document.getElementById('tabs-container');
+            container.innerHTML = '';
+            candidates.forEach((cand, index) => {
+                const btn = document.createElement('button');
+                btn.className = `tab-btn px-5 py-3 text-sm font-medium hover:text-blue-600 transition whitespace-nowrap focus:outline-none ${index === currentIndex ? 'active' : 'text-slate-500'}`;
+                btn.innerHTML = cand.name;
+                btn.onclick = () => selectCandidate(index);
+                container.appendChild(btn);
+            });
+        }
+
+        // 4. Select Candidate Logic
+        function selectCandidate(index) {
+            currentIndex = index;
+            const cand = candidates[index];
+            renderTabs(); // update active state
+
+            // Update Text Info
+            document.getElementById('cand-name').textContent = cand.name;
+            document.getElementById('cand-edu').textContent = cand.edu;
+            document.getElementById('cand-exp').textContent = cand.exp;
+            document.getElementById('cand-soft').textContent = cand.soft;
+            
+            // Render Pros/Cons
+            document.getElementById('cand-pros').innerHTML = cand.pros.map(p => `<li>${p}</li>`).join('');
+            document.getElementById('cand-cons').innerHTML = cand.cons.map(c => `<li>${c}</li>`).join('');
+
+            // Update Badge & Controls
+            document.getElementById('fit-toggle').checked = cand.isFit;
+            document.getElementById('rating-select').value = cand.rating;
+            updateBadgeUI(cand);
+
+            // Draw Chart
+            drawChart(cand);
+        }
+
+        function updateBadgeUI(cand) {
+            const badge = document.getElementById('cand-badge');
+            if (cand.isFit) {
+                badge.className = "px-3 py-1 rounded-full text-xs font-bold border border-emerald-200 bg-emerald-100 text-emerald-700";
+                badge.innerHTML = `<i class="fas fa-check mr-1"></i> Phù hợp (${cand.rating}/10)`;
+            } else {
+                badge.className = "px-3 py-1 rounded-full text-xs font-bold border border-red-200 bg-red-100 text-red-700";
+                badge.innerHTML = `<i class="fas fa-times mr-1"></i> Không phù hợp (${cand.rating}/10)`;
+            }
+        }
+
+        // 5. Update Data from HR Controls
+        function updateCandidateData() {
+            const isFit = document.getElementById('fit-toggle').checked;
+            const rating = parseInt(document.getElementById('rating-select').value);
+            
+            candidates[currentIndex].isFit = isFit;
+            candidates[currentIndex].rating = rating;
+            
+            updateBadgeUI(candidates[currentIndex]);
+            renderActionGrid(); // Sync section 4
+        }
+
+        // 6. Chart Logic
+        function drawChart(cand) {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            if (myRadarChart) myRadarChart.destroy();
+
+            // Colors based on fit
+            const color = cand.isFit ? '59, 130, 246' : '156, 163, 175'; // Blue if fit, Gray if not
+
+            myRadarChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Kinh nghiệm', 'Kỹ năng Sales', 'Học vấn', 'Giao tiếp', 'Thái độ'],
+                    datasets: [{
+                        label: 'Đánh giá',
+                        data: cand.scores,
+                        backgroundColor: `rgba(${color}, 0.2)`,
+                        borderColor: `rgba(${color}, 0.8)`,
+                        pointBackgroundColor: `rgba(${color}, 1)`,
+                        borderWidth: 2,
+                        pointRadius: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { r: { min: 0, max: 100, ticks: { stepSize: 20, display: false } } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        // 7. Action Grid Rendering (Section 4)
+        function renderActionGrid() {
+            const grid = document.getElementById('action-grid');
+            grid.innerHTML = '';
+            
+            let bulkEmails = [];
+
+            // Sort: Fit first, then by rating
+            const sortedCands = [...candidates].sort((a, b) => {
+                if(a.isFit === b.isFit) return b.rating - a.rating;
+                return a.isFit ? -1 : 1;
+            });
+
+            sortedCands.forEach(cand => {
+                if(!cand.isFit) bulkEmails.push(cand.email);
+
+                const card = document.createElement('div');
+                card.className = `p-4 rounded-xl border ${cand.isFit ? 'border-emerald-200 bg-emerald-50/30' : 'border-slate-200 bg-slate-50/50'} relative overflow-hidden`;
+                
+                // Color strip
+                const strip = document.createElement('div');
+                strip.className = `absolute left-0 top-0 bottom-0 w-1 ${cand.isFit ? 'bg-emerald-400' : 'bg-slate-300'}`;
+                card.appendChild(strip);
+
+                card.innerHTML += `
+                    <div class="ml-2 flex flex-col h-full justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-bold text-slate-800 text-sm w-3/4 truncate">${cand.name}</h4>
+                                <span class="bg-white text-xs font-bold px-2 py-0.5 rounded border shadow-sm ${cand.isFit ? 'text-emerald-600' : 'text-slate-500'}">Điểm: ${cand.rating}</span>
+                            </div>
+                            <p class="text-xs text-slate-500 truncate mb-4">${cand.email}</p>
+                        </div>
+                        
+                        <button onclick="previewEmail(${cand.id})" class="w-full text-sm font-medium py-2 px-4 rounded-lg transition-colors border ${
+                            cand.isFit 
+                            ? 'bg-emerald-600 text-white hover:bg-emerald-700 border-emerald-600' 
+                            : 'bg-white text-slate-700 hover:bg-slate-100 border-slate-300'
+                        }">
+                            ${cand.isFit ? '<i class="fas fa-calendar-check mr-2"></i>Mời Phỏng Vấn' : '<i class="fas fa-envelope-open mr-2"></i>Thư Từ Chối'}
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            // Update Bulk Input
+            document.getElementById('bulk-email-list').value = bulkEmails.join(', ');
+        }
+
+        // 8. Email Templating System
+        function getInviteTemplate(name) {
+            return `Chào bạn ${name},
+
+Cảm ơn bạn đã quan tâm và ứng tuyển vào vị trí Nhân viên Tư vấn ghi danh ngoài giờ tại Trung tâm ngoại ngữ New Sky.
+
+Qua quá trình xem xét hồ sơ, chúng tôi đánh giá cao kinh nghiệm và kỹ năng của bạn, đặc biệt phù hợp với những tiêu chí mà trung tâm đang tìm kiếm. New Sky trân trọng mời bạn tham dự buổi phỏng vấn để trao đổi chi tiết hơn về định hướng công việc.
+
+Thông tin buổi phỏng vấn:
+- Hình thức: Phỏng vấn trực tiếp
+- Địa điểm: Văn phòng TT Ngoại ngữ New Sky (Sẽ trao đổi chọn chi nhánh gần bạn nhất)
+- Khung giờ dự kiến: 09:30 AM Thứ Ba hoặc 14:00 PM Thứ Tư tuần này.
+
+Vui lòng phản hồi lại email này để xác nhận khung giờ phù hợp với bạn nhé.
+
+Trân trọng,
+Phòng Nhân Sự - New Sky.`;
+        }
+
+        function getRejectTemplate(name) {
+            return `Chào bạn ${name},
+
+Đội ngũ Tuyển dụng Trung tâm ngoại ngữ New Sky chân thành cảm ơn bạn đã quan tâm và gửi hồ sơ ứng tuyển vị trí Nhân viên Tư vấn ghi danh.
+
+Chúng tôi đã đọc kỹ hồ sơ và ghi nhận sự cố gắng cũng như tinh thần học hỏi của bạn. Tuy nhiên, ở thời điểm hiện tại, vị trí này đang ưu tiên các ứng viên có kinh nghiệm thực chiến tương đương để đảm bảo đáp ứng ngay tiến độ công việc. Do đó, chúng tôi rất tiếc chưa thể đồng hành cùng bạn trong đợt tuyển dụng này.
+
+Hồ sơ của bạn đã được lưu vào hệ thống dữ liệu ứng viên tiềm năng. Chúng tôi sẽ chủ động liên hệ nếu có vị trí khác phù hợp hơn (như Admin/Thu ngân fresher).
+
+Chúc bạn nhiều sức khỏe và sớm tìm được cơ hội nghề nghiệp ưng ý!
+
+Trân trọng,
+Phòng Nhân Sự - New Sky.`;
+        }
+
+        function previewEmail(id) {
+            const cand = candidates.find(c => c.id === id);
+            const subject = cand.isFit 
+                ? `[New Sky] Thư mời Phỏng vấn vị trí Tư vấn ghi danh - ${cand.name}`
+                : `[New Sky] Phản hồi kết quả ứng tuyển - ${cand.name}`;
+            const body = cand.isFit ? getInviteTemplate(cand.name) : getRejectTemplate(cand.name);
+            
+            openModal(cand.email, subject, body);
+        }
+
+        function previewBulkReject() {
+            const emails = document.getElementById('bulk-email-list').value;
+            if(!emails) {
+                alert("Không có ứng viên nào bị gắn cờ 'Không phù hợp' để gửi.");
+                return;
+            }
+            
+            const subject = `[New Sky] Phản hồi kết quả ứng tuyển vị trí Tư vấn ghi danh`;
+            const body = getRejectTemplate("Ứng viên"); // Generic name for bulk
+            openModal(emails, subject, body);
+        }
+
+        // 9. Modal Control
+        function openModal(to, subject, body) {
+            document.getElementById('modal-to').value = to;
+            document.getElementById('modal-subject').value = subject;
+            document.getElementById('modal-body').textContent = body;
+            document.getElementById('email-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('email-modal').classList.add('hidden');
+        }
+
+        function sendEmailAction() {
+            const btn = document.querySelector('#email-modal button.bg-blue-600');
+            const originalHtml = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Đang gửi...';
+            btn.disabled = true;
+
+            // Simulate API Call
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-check mr-2"></i> Đã gửi thành công!';
+                btn.classList.replace('bg-blue-600', 'bg-emerald-600');
+                
+                setTimeout(() => {
+                    closeModal();
+                    // Reset button state for next time
+                    btn.innerHTML = originalHtml;
+                    btn.classList.replace('bg-emerald-600', 'bg-blue-600');
+                    btn.disabled = false;
+                }, 1000);
+            }, 800);
+        }
+
+        // Run on load
+        window.onload = init;
+    </script>
+</body>
+</html>
