@@ -71,6 +71,26 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
 
+        #about-modal .modal-enter {
+            opacity: 0;
+            transform: scale(0.95) translateY(10px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #about-modal .modal-enter-active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+        #about-modal .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        #about-modal .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        #about-modal .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+
         select.tf-select {
             background-color: #1e293b;
             color: #e2e8f0;
@@ -122,10 +142,10 @@
             <button type="button" id="btn-format" onclick="formatAll()" class="px-3 py-1.5 text-xs md:text-sm font-bold text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 rounded-lg transition-colors" title="Beautify input (nếu hỗ trợ) + chạy convert + beautify output (nếu hỗ trợ)">
                 Format
             </button>
-            <button type="button" onclick="openAbout()" class="px-3 py-1.5 text-xs md:text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
+            <button type="button" onclick="openAbout()" class="px-3 py-1.5 text-xs md:text-sm font-bold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded-lg transition-colors">
                 About
             </button>
-            <button type="button" onclick="handleClear()" class="px-3 py-1.5 text-xs md:text-sm font-medium text-slate-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors flex items-center gap-1.5">
+            <button type="button" onclick="handleClear()" class="px-3 py-1.5 text-xs md:text-sm font-bold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded-lg transition-colors flex items-center gap-1.5">
                 <span class="hidden sm:inline">Clear</span>
             </button>
             <button type="button" onclick="copyOutput()" id="btn-copy" class="px-3 py-1.5 text-xs md:text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow-sm transition-all flex items-center gap-1.5">
@@ -188,20 +208,120 @@
         </div>
     </footer>
 
-    <div id="about-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="about-title" onclick="closeAbout()">
-        <div class="bg-white rounded-xl shadow-xl max-w-lg w-full max-h-[85vh] overflow-y-auto border border-slate-200" onclick="event.stopPropagation()">
-            <div class="flex justify-between items-start gap-4 p-5 border-b border-slate-100">
-                <h2 id="about-title" class="text-lg font-bold text-slate-900">About Transform Lab</h2>
-                <button type="button" class="text-slate-400 hover:text-slate-700 text-2xl leading-none p-1 rounded hover:bg-slate-100" onclick="closeAbout()" aria-label="Close">&times;</button>
+    <div id="about-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm transition-opacity duration-300 opacity-0" role="dialog" aria-modal="true" aria-labelledby="about-title">
+        <div id="about-modal-box" class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col modal-enter relative z-[101]" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100 shrink-0">
+                <div class="flex items-center gap-3 min-w-0">
+                    <div class="bg-indigo-100 p-2 rounded-lg text-indigo-600 shrink-0">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    </div>
+                    <h2 id="about-title" class="text-xl font-bold text-slate-800 truncate">Câu chuyện của Transform Lab</h2>
+                </div>
+                <button type="button" class="text-slate-400 hover:text-slate-600 hover:bg-slate-100 p-2 rounded-full transition-colors shrink-0" onclick="closeAbout()" aria-label="Đóng">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
             </div>
-            <div class="p-5 text-sm text-slate-600 space-y-3 leading-relaxed">
-                <p><strong class="text-slate-800">Transform Lab</strong> là công cụ chuyển đổi định dạng chạy hoàn toàn trên trình duyệt, một phần hệ sinh thái <strong>StudyX</strong>.</p>
-                <p>Bạn chọn <em>loại đầu vào</em> (HTML, Markdown, JSON, plain text, LaTeX/toán, SCSS, SVG) và <em>đầu ra</em> phù hợp — các kết hợp không hợp lệ sẽ bị ẩn để tránh nhầm lẫn.</p>
-                <p>Đối với công thức toán, nội dung được render bằng <strong>KaTeX</strong>; SCSS biên dịch sang CSS nhờ <strong>sass.js</strong>; Markdown và HTML dùng các thư viện phổ biến (marked, Turndown, js-beautify).</p>
-                <p class="text-xs text-slate-500">Mã nguồn tĩnh, không server: phù hợp demo portfolio và thử nhanh. Nội dung HTML dán vào Rich preview có thể thực thi script nếu bạn tự dán mã không tin cậy — hãy cẩn thận như với mọi công cụ preview.</p>
+
+            <div class="px-6 py-6 overflow-y-auto custom-scrollbar text-slate-600 leading-relaxed text-sm md:text-base min-h-0">
+                <p class="mb-4">Mọi thứ bắt đầu từ một sự "bất tiện" lặp đi lặp lại.</p>
+
+                <p class="mb-6">
+                    Khi đang cặm cụi soạn thảo hàng tá nội dung, công thức và mã nguồn cho cuốn bách khoa toàn thư <a href="https://wiki.esg-tech.io.vn/" target="_blank" rel="noopener noreferrer" class="font-semibold text-indigo-600 hover:text-indigo-800 underline decoration-indigo-300 underline-offset-4 transition-colors">EconWiki</a> do chính mình biên soạn, mình nhận ra bản thân đang tốn quá nhiều thời gian chỉ để... chuyển đổi qua lại giữa các định dạng. Mở một tab để render Toán (LaTeX), mở một tab khác để biến HTML thành Markdown, rồi lại phải tìm một công cụ khác để biên dịch SCSS.
+                </p>
+
+                <p class="mb-8">
+                    Thay vì tiếp tục vật lộn với những quy trình đứt đoạn đó, mình quyết định tự tạo ra một "phòng thí nghiệm" cho riêng mình. Và <strong class="text-slate-800 font-bold">Transform Lab</strong> ra đời.
+                </p>
+
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <span class="text-yellow-500" aria-hidden="true">💡</span> Trợ lý thầm lặng cho luồng công việc của bạn
+                </h3>
+
+                <ul class="space-y-4 mb-8">
+                    <li class="flex items-start gap-3">
+                        <div class="mt-1 bg-green-100 text-green-600 p-1 rounded-md shrink-0"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg></div>
+                        <div><strong class="text-slate-800">Sự an tâm tuyệt đối (Zero-backend):</strong> Mình hiểu cảm giác e ngại khi phải dán những đoạn code nội bộ hay dữ liệu chưa công bố lên một server xa lạ. Vì vậy, mọi phép biến đổi ở đây đều diễn ra 100% cục bộ trên trình duyệt của bạn. Nhanh chóng và hoàn toàn riêng tư.</div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <div class="mt-1 bg-blue-100 text-blue-600 p-1 rounded-md shrink-0"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div>
+                        <div><strong class="text-slate-800">Không để bạn chọn sai (Smart UX):</strong> Giống như một người cộng sự hiểu ý, khi bạn đưa vào một đoạn LaTeX, hệ thống tự biết bạn muốn kết xuất công thức Toán học. Các lựa chọn đầu ra không hợp lý sẽ tự động "tàng hình" để tránh làm bạn rối mắt.</div>
+                    </li>
+                    <li class="flex items-start gap-3">
+                        <div class="mt-1 bg-purple-100 text-purple-600 p-1 rounded-md shrink-0"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path></svg></div>
+                        <div><strong class="text-slate-800">Tất cả trong một màn hình:</strong> Giao diện chia đôi trực quan, đếm ký tự theo thời gian thực và dọn dẹp cấu trúc (Format) chỉ với một cú click.</div>
+                    </li>
+                </ul>
+
+                <h3 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <span class="text-slate-500" aria-hidden="true">⚙️</span> Động cơ bên dưới nắp capo
+                </h3>
+
+                <p class="mb-4">
+                    Từ một công cụ giải quyết nhu cầu cá nhân, Transform Lab hiện đã có thể xử lý linh hoạt <strong>7 định dạng</strong> cốt lõi:
+                </p>
+
+                <div class="flex flex-wrap gap-2.5 mb-6">
+                    <span class="px-3 py-1.5 bg-orange-50 text-orange-700 border border-orange-200 rounded-md text-xs font-bold font-mono shadow-sm">HTML</span>
+                    <span class="px-3 py-1.5 bg-blue-50 text-blue-700 border border-blue-200 rounded-md text-xs font-bold font-mono shadow-sm">Markdown</span>
+                    <span class="px-3 py-1.5 bg-yellow-50 text-yellow-700 border border-yellow-200 rounded-md text-xs font-bold font-mono shadow-sm">JSON</span>
+                    <span class="px-3 py-1.5 bg-slate-100 text-slate-700 border border-slate-200 rounded-md text-xs font-bold font-mono shadow-sm">Plain text</span>
+                    <span class="px-3 py-1.5 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-md text-xs font-bold font-mono shadow-sm">LaTeX</span>
+                    <span class="px-3 py-1.5 bg-pink-50 text-pink-700 border border-pink-200 rounded-md text-xs font-bold font-mono shadow-sm">SCSS</span>
+                    <span class="px-3 py-1.5 bg-purple-50 text-purple-700 border border-purple-200 rounded-md text-xs font-bold font-mono shadow-sm">SVG</span>
+                </div>
+
+                <p class="mb-4">
+                    Để chạy mượt mà 100% trên trình duyệt (không cần server), hệ thống được "độ" bằng các bộ máy (engines) tiêu chuẩn công nghiệp:
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-2">
+                    <div class="flex items-center gap-3 p-3 bg-white border border-slate-200 hover:border-indigo-300 hover:shadow-md transition-all duration-200 rounded-xl cursor-default group">
+                        <div class="bg-indigo-50 text-indigo-600 p-2.5 rounded-lg group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-800 text-sm font-mono">KaTeX</div>
+                            <div class="text-xs text-slate-500 mt-0.5">Render Toán (LaTeX) siêu tốc</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 bg-white border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all duration-200 rounded-xl cursor-default group">
+                        <div class="bg-blue-50 text-blue-600 p-2.5 rounded-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-800 text-sm font-mono">marked &amp; Turndown</div>
+                            <div class="text-xs text-slate-500 mt-0.5">Chuyển đổi 2 chiều MD ↔ HTML</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 bg-white border border-slate-200 hover:border-pink-300 hover:shadow-md transition-all duration-200 rounded-xl cursor-default group">
+                        <div class="bg-pink-50 text-pink-600 p-2.5 rounded-lg group-hover:bg-pink-600 group-hover:text-white transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"></path></svg>
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-800 text-sm font-mono">sass.js</div>
+                            <div class="text-xs text-slate-500 mt-0.5">Biên dịch SCSS sang CSS client</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 p-3 bg-white border border-slate-200 hover:border-emerald-300 hover:shadow-md transition-all duration-200 rounded-xl cursor-default group">
+                        <div class="bg-emerald-50 text-emerald-600 p-2.5 rounded-lg group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                        </div>
+                        <div>
+                            <div class="font-bold text-slate-800 text-sm font-mono">js-beautify</div>
+                            <div class="text-xs text-slate-500 mt-0.5">Dọn dẹp, thụt lề &amp; làm đẹp Code</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="p-4 border-t border-slate-100 flex justify-end">
-                <button type="button" class="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700" onclick="closeAbout()">Đóng</button>
+
+            <div class="bg-slate-50 px-6 py-4 rounded-b-2xl border-t border-slate-100 shrink-0">
+                <p class="text-sm text-slate-500 italic text-center">
+                    Được thiết kế và xây dựng bởi <strong class="text-slate-700 font-semibold">Ngoc Quynh Pham</strong><br>
+                    <span class="text-xs opacity-80">— Biến sự phức tạp thành trải nghiệm tinh gọn mỗi ngày. —</span>
+                </p>
             </div>
         </div>
     </div>
@@ -875,16 +995,34 @@ $space: 1rem;
     });
 
     const aboutModal = document.getElementById('about-modal');
+    const aboutModalBox = document.getElementById('about-modal-box');
     window.openAbout = function () {
+        if (!aboutModal) return;
         aboutModal.classList.remove('hidden');
         document.body.classList.add('overflow-hidden');
+        setTimeout(function () {
+            aboutModal.classList.remove('opacity-0');
+            if (aboutModalBox) aboutModalBox.classList.add('modal-enter-active');
+        }, 10);
     };
     window.closeAbout = function () {
-        aboutModal.classList.add('hidden');
-        document.body.classList.remove('overflow-hidden');
+        if (!aboutModal) return;
+        aboutModal.classList.add('opacity-0');
+        if (aboutModalBox) aboutModalBox.classList.remove('modal-enter-active');
+        setTimeout(function () {
+            aboutModal.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }, 300);
     };
+    if (aboutModal) {
+        aboutModal.addEventListener('click', function (e) {
+            if (e.target === aboutModal) window.closeAbout();
+        });
+    }
     document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') window.closeAbout();
+        if (e.key === 'Escape' && aboutModal && !aboutModal.classList.contains('hidden')) {
+            window.closeAbout();
+        }
     });
 
     window.addEventListener('load', () => {
