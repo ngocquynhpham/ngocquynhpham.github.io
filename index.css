@@ -1,6 +1,5 @@
-@import url("https://fonts.googleapis.com/css?family=Manrope:700|Manrope:400");
-
 :root {
+  --accentFg: hsl(155, 100%, 85%);
   --text: hsl(0, 0%, 99%);
   --textDim: hsl(0, 0%, 60%);
   --background: hsl(0, 0%, 7%);
@@ -18,7 +17,7 @@
 }
 
 body {
-  font-family: "Manrope";
+  font-family: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
   font-weight: 400;
   background-color: var(--background);
   color: var(--text);
@@ -26,7 +25,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
 }
 
@@ -52,8 +52,9 @@ nav {
 
 .grid {
   position: absolute;
+  inset: 0;
+  width: 100%;
   height: 100%;
-  weight: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -78,6 +79,16 @@ nav {
   position: absolute;
 }
 
+main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
 .title {
   font-size: 8rem;
   font-weight: 700;
@@ -91,24 +102,35 @@ nav {
   z-index: 1000;
 }
 
-.title > p {
+.title-heading {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title-line,
+.title-name {
   margin: 0;
   line-height: 10rem;
   width: auto;
   text-align: center;
 }
 
-.title > p:nth-child(2) {
+.title-name {
   color: var(--primary);
 }
 
-.decription {
+.description {
   font-size: 1rem;
   font-weight: 700;
   z-index: 1000;
   letter-spacing: 1px;
 }
-.decription .job {
+.description .job {
   color: var(--primary);
 }
 
@@ -131,7 +153,7 @@ nav {
   z-index: 9999;
 }
 
-button {
+.button-label {
   height: 50px;
   width: 160px;
   clip-path: path(
@@ -142,7 +164,7 @@ button {
   background-color: var(--primaryBg);
   box-shadow: 0px -3px 15px 0px var(--primaryHi) inset;
   color: var(--primaryFg);
-  font-family: "Manrope";
+  font-family: inherit;
   font-size: 1rem;
   display: flex;
   flex-direction: column;
@@ -150,7 +172,12 @@ button {
   align-items: center;
   position: absolute;
   transform: translateY(0px);
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
 }
 
 .span {
@@ -168,7 +195,7 @@ button {
   opacity: 60%;
 }
 
-.button:hover > button {
+.button:hover > .button-label {
   transform: translateY(5px);
 }
 
@@ -182,7 +209,7 @@ button {
   right: 11%;
 }
 
-.button.sec > button {
+.button.sec > .button-label {
   background-color: var(--secondary);
   box-shadow: 0px -3px 15px 0px var(--accentHi) inset;
   color: var(--accentFg);
@@ -197,7 +224,7 @@ button {
   left: 10%;
 }
 
-.button.third > button {
+.button.third > .button-label {
   background-color: var(--secondaryBg);
   box-shadow: 0px -3px 15px 0px var(--secondary) inset;
   color: var(--secondaryFg);
@@ -226,23 +253,23 @@ button {
 @media screen and (max-width: 1000px) {
   .title {
     font-size: 4rem;
-    line-height: ;
+    line-height: 1;
   }
 
-  .title > p {
+  .title-line,
+  .title-name {
     line-height: 5rem;
     letter-spacing: -0.3rem;
   }
-  .decription {
+  .description {
     padding: 12px;
     text-align: center;
   }
-  .decription > p {
-    display:flex;
+  .description > p {
+    display: flex;
     flex-direction: column;
-  justify-content: center;
-  align-items: center;
-    
+    justify-content: center;
+    align-items: center;
   }
   .button.third {
   bottom: 5%;
