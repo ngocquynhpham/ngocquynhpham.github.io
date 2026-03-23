@@ -5,6 +5,12 @@
   /** @type {{ title: string, desc: string, href: string, cat: string }[]} */
   const PROJECTS = [
     {
+      title: "GreenSpace case study",
+      desc: "GreenSpace case study: a case study for the GreenSpace project.",
+      href: "../greenspace/index.html",
+      cat: "research",
+    },
+    {
       title: "Wiki Economics",
       desc: "Wiki Economics: a collection of economic concepts and theories explained in a simple and easy-to-understand way.",
       href: "https://wiki.esg-tech.io.vn/",
@@ -215,6 +221,12 @@
       desc: "Portfolio 05",
       href: "../portfolio-05.html",
       cat: "portfolio",
+    },
+    {
+      title: "GreenSpace landing page",
+      desc: "GreenSpace landing page: a landing page for the GreenSpace project.",
+      href: "../greenspace/index.html",
+      cat: "landing",
     },
     
   ];
