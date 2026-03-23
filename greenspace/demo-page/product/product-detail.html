@@ -3,24 +3,23 @@
 <html class="light" lang="vi"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>PlantShop - Monstera Deliciosa</title>
+<title>GreenSpace - Monstera Deliciosa</title>
 <link href="../../../logo.ico" rel="icon"/>
-<meta content="Chi tiết sản phẩm Monstera Deliciosa — PlantShop GreenSpace, gallery và mô tả demo (prototype)." name="description"/>
+<meta content="Chi tiết sản phẩm Monstera Deliciosa — GreenSpace, gallery và mô tả demo (prototype)." name="description"/>
 <meta content="index, follow" name="robots"/>
 <link href="https://ngocquynhpham.github.io/greenspace/demo-page/product/product-detail.html" rel="canonical"/>
 <meta content="website" property="og:type"/>
 <meta content="https://ngocquynhpham.github.io/greenspace/demo-page/product/product-detail.html" property="og:url"/>
-<meta content="PlantShop - Monstera Deliciosa" property="og:title"/>
-<meta content="Chi tiết sản phẩm Monstera Deliciosa — PlantShop GreenSpace, gallery và mô tả demo (prototype)." property="og:description"/>
+<meta content="GreenSpace - Monstera Deliciosa" property="og:title"/>
+<meta content="Chi tiết sản phẩm Monstera Deliciosa — GreenSpace, gallery và mô tả demo (prototype)." property="og:description"/>
 <meta content="https://ngocquynhpham.github.io/logo.ico" property="og:image"/>
 <meta content="summary_large_image" name="twitter:card"/>
-<meta content="PlantShop - Monstera Deliciosa" name="twitter:title"/>
-<meta content="Chi tiết sản phẩm Monstera Deliciosa — PlantShop GreenSpace, gallery và mô tả demo (prototype)." name="twitter:description"/>
+<meta content="GreenSpace - Monstera Deliciosa" name="twitter:title"/>
+<meta content="Chi tiết sản phẩm Monstera Deliciosa — GreenSpace, gallery và mô tả demo (prototype)." name="twitter:description"/>
 <!-- Fonts & Icons -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -70,21 +69,21 @@
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-text-main antialiased selection:bg-primary selection:text-white">
+<div id="site-header" data-base-path=".."></div>
 <!-- Top Navigation Bar -->
 <div class="relative flex w-full flex-col bg-background-light dark:bg-background-dark border-b border-[#e7f3ed]">
-<header class="flex items-center justify-between whitespace-nowrap px-6 py-4 lg:px-10">
 <div class="flex items-center gap-8">
 <div class="flex items-center gap-4 text-text-main cursor-pointer">
 <div class="size-8 text-primary">
 <span class="material-symbols-outlined !text-[32px] fill-1">potted_plant</span>
 </div>
-<h2 class="text-text-main text-xl font-bold leading-tight tracking-[-0.015em]">PlantShop</h2>
+<h2 class="text-text-main text-xl font-bold leading-tight tracking-[-0.015em]">GreenSpace</h2>
 </div>
 <div class="hidden lg:flex items-center gap-9">
-<a class="text-text-main text-sm font-medium hover:text-primary transition-colors" href="#">Trang chủ</a>
-<a class="text-text-main text-sm font-medium hover:text-primary transition-colors" href="#">Cây trong nhà</a>
-<a class="text-text-main text-sm font-medium hover:text-primary transition-colors" href="#">Cây ngoài trời</a>
-<a class="text-text-main text-sm font-medium hover:text-primary transition-colors" href="#">Phụ kiện</a>
+<a class="text-text-main text-sm font-medium hover:text-primary transition-colors" href="../index.html">Trang chủ</a>
+<a class="text-text-main text-sm font-medium hover:text-primary transition-colors" href="./product-list.html">Cây trong nhà</a>
+<a class="text-text-main text-sm font-medium hover:text-primary transition-colors" href="./product-list.html">Cây ngoài trời</a>
+<a class="text-text-main text-sm font-medium hover:text-primary transition-colors" href="./product-list.html">Phụ kiện</a>
 </div>
 </div>
 <div class="flex flex-1 justify-end gap-4 lg:gap-8">
@@ -105,7 +104,6 @@
 </button>
 </div>
 </div>
-</header>
 </div>
 <!-- Main Content Layout -->
 <div class="layout-container flex grow flex-col min-h-screen">
@@ -113,9 +111,9 @@
 <div class="layout-content-container flex flex-col max-w-[1200px] flex-1">
 <!-- Breadcrumbs -->
 <nav class="flex flex-wrap gap-2 px-2 py-4 mb-4">
-<a class="text-text-muted hover:text-primary text-sm font-medium transition-colors" href="#">Trang chủ</a>
+<a class="text-text-muted hover:text-primary text-sm font-medium transition-colors" href="../index.html">Trang chủ</a>
 <span class="text-text-muted text-sm font-medium">/</span>
-<a class="text-text-muted hover:text-primary text-sm font-medium transition-colors" href="#">Cây trong nhà</a>
+<a class="text-text-muted hover:text-primary text-sm font-medium transition-colors" href="./product-list.html">Cây trong nhà</a>
 <span class="text-text-muted text-sm font-medium">/</span>
 <span class="text-text-main text-sm font-medium">Monstera Deliciosa</span>
 </nav>
@@ -362,7 +360,7 @@
 <div class="mb-20">
 <div class="flex items-center justify-between mb-6">
 <h3 class="text-2xl font-bold text-text-main">Có thể bạn cũng thích</h3>
-<a class="text-primary text-sm font-bold hover:underline" href="#">Xem tất cả</a>
+<a class="text-primary text-sm font-bold hover:underline" href="./product-list.html">Xem tất cả</a>
 </div>
 <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
 <!-- Product Card 1 -->
@@ -370,9 +368,9 @@
 <div class="relative w-full aspect-[4/5] bg-gray-100 rounded-xl overflow-hidden">
 <div class="w-full h-full bg-center bg-cover transition-transform duration-500 group-hover:scale-110" data-alt="Fiddle Leaf Fig plant in a basket" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDo7VTwnKzepAS80BIaTnpeI0e3ttLOkvntEI0PKl_3JJMaK1dBLAMj4NY1zkKkqkZ1Ct1Yqob-OrGU-wNL9CYyFZJHKEWTRdI_pxyBuOJO5-cFUC3bB1NCkWJjyXA6OpgYTZopm9Z2sBX_acqOH5SBBgT2JjGFpGkpPxM-ekHcHK2BVp3k25eJumzjRuJiWDA3Bm3pGMHExQQdvzcPrsvbhxosyLdmWq-PnFywG3NH-43ZqqCx3viozPNc2VCE4vlZgL0gtwL4RZE");'>
 </div>
-<button class="absolute bottom-3 right-3 h-8 w-8 bg-white rounded-full flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 hover:bg-primary hover:text-white">
+<a class="absolute bottom-3 right-3 h-8 w-8 bg-white rounded-full flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 hover:bg-primary hover:text-white" href="../cart/cart.html" aria-label="Thêm vào giỏ">
 <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
-</button>
+</a>
 </div>
 <div>
 <h4 class="text-text-main font-bold truncate">Bàng Singapore</h4>
@@ -384,9 +382,9 @@
 <div class="relative w-full aspect-[4/5] bg-gray-100 rounded-xl overflow-hidden">
 <div class="w-full h-full bg-center bg-cover transition-transform duration-500 group-hover:scale-110" data-alt="Snake plant in a modern concrete pot" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBpxiPHOGy-tgIQPH6D75Rkywr3CMsLxsjglyLD1Fvp5yrvk3HgRII7E6_TCW6ysB2GaKIS1Rm6ygY9HTcJkuNE9bOl0iiXUbUj1JiQ_JB3InvZwFaRiC2b_7CsgjU_qo4DPVVJn-WEjG1eZULw85LD8MQz8aIMhO44rZLwhts3GhbARMYTwLmxL2xsYCgglyewavvFg7s56Ion_74aRBz9JklTk429emyHJ-TbXzwcISLmOrx9Z9CIClS05QxOXaPtXcttwmMKwBA");'>
 </div>
-<button class="absolute bottom-3 right-3 h-8 w-8 bg-white rounded-full flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 hover:bg-primary hover:text-white">
+<a class="absolute bottom-3 right-3 h-8 w-8 bg-white rounded-full flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 hover:bg-primary hover:text-white" href="../cart/cart.html" aria-label="Thêm vào giỏ">
 <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
-</button>
+</a>
 </div>
 <div>
 <h4 class="text-text-main font-bold truncate">Lưỡi Hổ</h4>
@@ -398,9 +396,9 @@
 <div class="relative w-full aspect-[4/5] bg-gray-100 rounded-xl overflow-hidden">
 <div class="w-full h-full bg-center bg-cover transition-transform duration-500 group-hover:scale-110" data-alt="Rubber plant with dark shiny leaves" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBRgJyLeXY8GFn1VElE4FwK0UbtUem4vY8fXz5FqMi0XGZa2PMoapcEYrT7PxKYnGiihy1ScJC4_Ql5pKB9ZjQ-NF5Rkbvk3cym903tyZrUohAItxgAedYH8ufal0cO18dbUC9HV8dF9lZPD6bCJdhiu9sYxI1BGn4JSdzS8vOzXWtWUbyecyIM5WYVnolYVyjI1mqmdKUnPSwPHuc5cv-J-1GYlyEzBWhqLfUR9-NQkJGZnulmNpKbzxmAPvqkUQqhctn3xVQghuU");'>
 </div>
-<button class="absolute bottom-3 right-3 h-8 w-8 bg-white rounded-full flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 hover:bg-primary hover:text-white">
+<a class="absolute bottom-3 right-3 h-8 w-8 bg-white rounded-full flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 hover:bg-primary hover:text-white" href="../cart/cart.html" aria-label="Thêm vào giỏ">
 <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
-</button>
+</a>
 </div>
 <div>
 <h4 class="text-text-main font-bold truncate">Đa Búp Đỏ</h4>
@@ -412,9 +410,9 @@
 <div class="relative w-full aspect-[4/5] bg-gray-100 rounded-xl overflow-hidden">
 <div class="w-full h-full bg-center bg-cover transition-transform duration-500 group-hover:scale-110" data-alt="Small succulent in a ceramic pot" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDtFtCXMpO7sd9e777GJqo0GbIZPc72nNn0GO4hxvU6fNFm33iH2mTpGmAPD7hz5TQWdV73zqQ3cRHC9cjRnEZO_T6kh0cu9LaBIfCoLP8JCyRubsCqdho1iB9ZFJMZlY9f7kB4NeJF5WRr4o24C2qp27UWEZm5qSphRUg99oForvizULi2iis7azYPYQg35GEsBCfaJVUAoq0UfSOV8U9YwnR_F1MvpWkHfY9m7XOmDdLB0d0Os2RtdE1W4I2NbcCQ-5AoWtp1rCk");'>
 </div>
-<button class="absolute bottom-3 right-3 h-8 w-8 bg-white rounded-full flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 hover:bg-primary hover:text-white">
+<a class="absolute bottom-3 right-3 h-8 w-8 bg-white rounded-full flex items-center justify-center shadow-sm opacity-0 group-hover:opacity-100 transition-all translate-y-2 group-hover:translate-y-0 hover:bg-primary hover:text-white" href="../cart/cart.html" aria-label="Thêm vào giỏ">
 <span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
-</button>
+</a>
 </div>
 <div>
 <h4 class="text-text-main font-bold truncate">Sen Đá Kim Cương</h4>
@@ -425,34 +423,7 @@
 </div>
 </div>
 </div>
-<!-- Footer Simple -->
-<footer class="bg-white border-t border-[#e7f3ed] py-12 px-10">
-<div class="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between gap-10">
-<div class="flex flex-col gap-4">
-<div class="flex items-center gap-2 text-text-main">
-<span class="material-symbols-outlined text-[24px] text-primary">potted_plant</span>
-<span class="font-bold text-lg">PlantShop</span>
-</div>
-<p class="text-text-muted text-sm max-w-xs">Mang thiên nhiên vào không gian sống của bạn với những loại cây tuyển chọn chất lượng nhất.</p>
-</div>
-<div class="flex gap-16">
-<div class="flex flex-col gap-3">
-<h5 class="font-bold text-text-main">Sản phẩm</h5>
-<a class="text-text-muted text-sm hover:text-primary" href="#">Cây trong nhà</a>
-<a class="text-text-muted text-sm hover:text-primary" href="#">Cây văn phòng</a>
-<a class="text-text-muted text-sm hover:text-primary" href="#">Chậu cây</a>
-</div>
-<div class="flex flex-col gap-3">
-<h5 class="font-bold text-text-main">Hỗ trợ</h5>
-<a class="text-text-muted text-sm hover:text-primary" href="#">Chính sách đổi trả</a>
-<a class="text-text-muted text-sm hover:text-primary" href="#">Vận chuyển</a>
-<a class="text-text-muted text-sm hover:text-primary" href="#">Liên hệ</a>
-</div>
-</div>
-</div>
-<div class="max-w-[1200px] mx-auto mt-10 pt-6 border-t border-[#f1f1f1] text-center text-text-muted text-xs">
-                © 2024 PlantShop. All rights reserved.
-            </div>
-</footer>
+<div id="site-footer" data-base-path=".."></div>
+<script src="../../shared/layout.js"></script>
 </div>
 </body></html>

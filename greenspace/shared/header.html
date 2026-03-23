@@ -1,0 +1,89 @@
+<div class="hidden lg:block bg-[#1f3a2e] text-white text-xs sm:text-sm py-2 text-center font-medium tracking-wide">
+    🌿 Miễn phí vận chuyển cho đơn hàng từ 500k - Giao hỏa tốc 2h
+  </div>
+<header
+  class="sticky top-0 z-50 w-full bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm border-b border-[#e7f3ed] dark:border-[#1a2e24]">
+  <div class="max-w-[1200px] mx-auto px-4 sm:px-10 py-3">
+    <div class="flex items-center justify-between gap-4">
+      <div class="flex items-center gap-8">
+        <a class="flex items-center gap-4 text-[#0d1b14] dark:text-white" href="{{BASE}}/index.html">
+          <div class="size-8 text-primary">
+            <svg fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <path clip-rule="evenodd"
+                d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z"
+                fill-rule="evenodd"></path>
+            </svg>
+          </div>
+          <h2 class="text-xl font-bold leading-tight tracking-tight">GreenSpace</h2>
+        </a>
+        <nav class="hidden lg:flex items-center gap-8">
+          <a class="text-sm font-medium hover:text-primary transition-colors" href="{{BASE}}/index.html">Trang chủ</a>
+          <div class="relative group">
+            <button class="flex items-center gap-1 text-sm font-medium hover:text-primary transition-colors">
+              Sản phẩm <span class="material-symbols-outlined text-sm">keyboard_arrow_down</span>
+            </button>
+            <div
+              class="absolute top-full left-0 mt-1 w-48 bg-white dark:bg-[#1a2e24] shadow-lg rounded-lg py-2 hidden group-hover:block border border-gray-100 dark:border-gray-800">
+              <a class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-primary"
+                href="{{BASE}}/product/product-list.html">Cây trong nhà</a>
+              <a class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-primary"
+                href="{{BASE}}/product/product-list.html">Cây văn phòng</a>
+              <a class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-primary"
+                href="{{BASE}}/product/product-list.html">Sen đá &amp; Xương rồng</a>
+              <a class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-primary"
+                href="{{BASE}}/product/product-list.html">Chậu &amp; Phụ kiện</a>
+            </div>
+          </div>
+          <div class="relative group">
+            <button class="flex items-center gap-1 text-sm font-medium hover:text-primary transition-colors">
+              Kiến thức <span class="material-symbols-outlined text-sm">keyboard_arrow_down</span>
+            </button>
+            <div
+              class="absolute top-full left-0 mt-1 w-48 bg-white dark:bg-[#1a2e24] shadow-lg rounded-lg py-2 hidden group-hover:block border border-gray-100 dark:border-gray-800">
+              <a class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-primary"
+                href="{{BASE}}/blog/blog.html">Nhật ký làm vườn</a>
+              <a class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-primary"
+                href="{{BASE}}/blog/blog.html">Hướng dẫn chăm sóc</a>
+            </div>
+          </div>
+          <a class="text-sm font-medium hover:text-primary transition-colors" href="{{BASE}}/../index.html">Về chúng tôi</a>
+        </nav>
+      </div>
+      <div class="flex flex-1 justify-end gap-4 sm:gap-8 items-center">
+        <label class="hidden md:flex flex-col min-w-40 h-10 max-w-64 w-full">
+          <div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-[#e7f3ed] dark:bg-[#1a2e24]">
+            <div class="text-[#4c9a73] flex items-center justify-center pl-4 rounded-l-lg">
+              <span class="material-symbols-outlined text-[20px]">search</span>
+            </div>
+            <input
+              class="flex w-full min-w-0 flex-1 bg-transparent border-none focus:ring-0 text-[#0d1b14] dark:text-white placeholder:text-[#4c9a73] px-3 text-sm"
+              placeholder="Tìm kiếm cây..." />
+          </div>
+        </label>
+        <div class="flex gap-2">
+          <a href="{{BASE}}/cart/cart.html" aria-label="Giỏ hàng"
+            class="flex items-center justify-center rounded-lg size-10 bg-[#e7f3ed] dark:bg-[#1a2e24] hover:bg-primary/20 dark:hover:bg-primary/20 transition-colors text-[#0d1b14] dark:text-white">
+            <span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+          </a>
+          <a href="{{BASE}}/auth/login.html" aria-label="Đăng nhập"
+            class="flex items-center justify-center rounded-lg size-10 bg-[#e7f3ed] dark:bg-[#1a2e24] hover:bg-primary/20 dark:hover:bg-primary/20 transition-colors text-[#0d1b14] dark:text-white">
+            <span class="material-symbols-outlined text-[20px]">person</span>
+          </a>
+          <button data-menu-toggle="true"
+            class="lg:hidden flex items-center justify-center rounded-lg size-10 bg-[#e7f3ed] dark:bg-[#1a2e24] text-[#0d1b14] dark:text-white">
+            <span class="material-symbols-outlined text-[20px]">menu</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <nav data-mobile-menu="true" class="hidden lg:hidden pt-3 pb-1 border-t border-[#e7f3ed] dark:border-[#1a2e24] mt-3">
+      <div class="flex flex-col gap-2 text-sm">
+        <a class="px-3 py-2 rounded-lg hover:bg-[#e7f3ed] dark:hover:bg-[#1a2e24]" href="{{BASE}}/index.html">Trang chủ</a>
+        <a class="px-3 py-2 rounded-lg hover:bg-[#e7f3ed] dark:hover:bg-[#1a2e24]" href="{{BASE}}/product/product-list.html">Sản phẩm</a>
+        <a class="px-3 py-2 rounded-lg hover:bg-[#e7f3ed] dark:hover:bg-[#1a2e24]" href="{{BASE}}/blog/blog.html">Kiến thức</a>
+        <a class="px-3 py-2 rounded-lg hover:bg-[#e7f3ed] dark:hover:bg-[#1a2e24]" href="{{BASE}}/cart/cart.html">Giỏ hàng</a>
+        <a class="px-3 py-2 rounded-lg hover:bg-[#e7f3ed] dark:hover:bg-[#1a2e24]" href="{{BASE}}/auth/login.html">Đăng nhập</a>
+      </div>
+    </nav>
+  </div>
+  </header>
