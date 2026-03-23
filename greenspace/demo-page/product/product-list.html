@@ -1,12 +1,17 @@
 <!DOCTYPE html>
-<html class="light" lang="vi"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Danh sách sản phẩm cây cảnh - GreenSpace</title>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
+<html class="light" lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Danh sách sản phẩm cây cảnh - GreenSpace</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -28,10 +33,11 @@
             },
         }
     </script>
-<style>
+    <style>
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
         }
+
         input[type=range]::-webkit-slider-thumb {
             pointer-events: all;
             width: 16px;
@@ -41,408 +47,553 @@
         }
     </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-[#0d1b14] dark:text-[#e0e7e4] transition-colors duration-300 antialiased overflow-x-hidden flex flex-col min-h-screen">
-<div class="bg-[#102219] dark:bg-[#0a1610] text-white text-xs sm:text-sm py-2.5 text-center font-medium tracking-wide">
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-[#0d1b14] dark:text-[#e0e7e4] transition-colors duration-300 antialiased overflow-x-hidden flex flex-col min-h-screen">
+    <div
+        class="bg-[#102219] dark:bg-[#0a1610] text-white text-xs sm:text-sm py-2.5 text-center font-medium tracking-wide">
         🌿 Miễn phí vận chuyển cho đơn hàng từ 500k - Giao hỏa tốc 2h
     </div>
-<header class="sticky top-0 z-50 w-full bg-[#f8fcfa]/95 dark:bg-[#102219]/95 backdrop-blur-md border-b border-[#e7f3ed] dark:border-[#1f3a2e]">
-<div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
-<div class="flex items-center justify-between h-20">
-<div class="flex items-center gap-3 shrink-0">
-<a class="flex items-center gap-2 group" href="#">
-<div class="size-9 text-primary group-hover:scale-110 transition-transform duration-300">
-<svg class="h-full w-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
-</svg>
-</div>
-<h1 class="text-2xl font-black tracking-tighter text-[#0d1b14] dark:text-white">GreenSpace</h1>
-</a>
-</div>
-<nav class="hidden lg:flex items-center gap-1">
-<a class="px-4 py-2 text-sm font-semibold rounded-full hover:bg-accent-light dark:hover:bg-accent-dark transition-colors" href="#">Trang chủ</a>
-<div class="relative group">
-<button class="flex items-center gap-1 px-4 py-2 text-sm font-semibold text-primary rounded-full bg-accent-light/50 dark:bg-accent-dark/50 hover:bg-accent-light dark:hover:bg-accent-dark transition-colors">
+    <header
+        class="sticky top-0 z-50 w-full bg-[#f8fcfa]/95 dark:bg-[#102219]/95 backdrop-blur-md border-b border-[#e7f3ed] dark:border-[#1f3a2e]">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-3 shrink-0">
+                    <a class="flex items-center gap-2 group" href="#">
+                        <div class="size-9 text-primary group-hover:scale-110 transition-transform duration-300">
+                            <svg class="h-full w-full" fill="none" viewBox="0 0 48 48"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path clip-rule="evenodd"
+                                    d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z"
+                                    fill="currentColor" fill-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <h1 class="text-2xl font-black tracking-tighter text-[#0d1b14] dark:text-white">GreenSpace</h1>
+                    </a>
+                </div>
+                <nav class="hidden lg:flex items-center gap-1">
+                    <a class="px-4 py-2 text-sm font-semibold rounded-full hover:bg-accent-light dark:hover:bg-accent-dark transition-colors"
+                        href="#">Trang chủ</a>
+                    <div class="relative group">
+                        <button
+                            class="flex items-center gap-1 px-4 py-2 text-sm font-semibold text-primary rounded-full bg-accent-light/50 dark:bg-accent-dark/50 hover:bg-accent-light dark:hover:bg-accent-dark transition-colors">
                             Sản phẩm
                             <span class="material-symbols-outlined text-[18px]">expand_more</span>
-</button>
-<div class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-white dark:bg-[#162b21] rounded-xl shadow-xl border border-[#e7f3ed] dark:border-[#1f3a2e] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top p-2 z-50">
-<a class="block px-4 py-2.5 text-sm font-medium hover:bg-accent-light dark:hover:bg-accent-dark rounded-lg" href="#">Cây trong nhà</a>
-<a class="block px-4 py-2.5 text-sm font-medium hover:bg-accent-light dark:hover:bg-accent-dark rounded-lg" href="#">Cây ngoài trời</a>
-<a class="block px-4 py-2.5 text-sm font-medium hover:bg-accent-light dark:hover:bg-accent-dark rounded-lg" href="#">Sen đá &amp; Xương rồng</a>
-<a class="block px-4 py-2.5 text-sm font-medium hover:bg-accent-light dark:hover:bg-accent-dark rounded-lg" href="#">Chậu &amp; Phụ kiện</a>
-</div>
-</div>
-<div class="relative group">
-<button class="flex items-center gap-1 px-4 py-2 text-sm font-semibold rounded-full hover:bg-accent-light dark:hover:bg-accent-dark transition-colors">
+                        </button>
+                        <div
+                            class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-white dark:bg-[#162b21] rounded-xl shadow-xl border border-[#e7f3ed] dark:border-[#1f3a2e] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top p-2 z-50">
+                            <a class="block px-4 py-2.5 text-sm font-medium hover:bg-accent-light dark:hover:bg-accent-dark rounded-lg"
+                                href="#">Cây trong nhà</a>
+                            <a class="block px-4 py-2.5 text-sm font-medium hover:bg-accent-light dark:hover:bg-accent-dark rounded-lg"
+                                href="#">Cây ngoài trời</a>
+                            <a class="block px-4 py-2.5 text-sm font-medium hover:bg-accent-light dark:hover:bg-accent-dark rounded-lg"
+                                href="#">Sen đá &amp; Xương rồng</a>
+                            <a class="block px-4 py-2.5 text-sm font-medium hover:bg-accent-light dark:hover:bg-accent-dark rounded-lg"
+                                href="#">Chậu &amp; Phụ kiện</a>
+                        </div>
+                    </div>
+                    <div class="relative group">
+                        <button
+                            class="flex items-center gap-1 px-4 py-2 text-sm font-semibold rounded-full hover:bg-accent-light dark:hover:bg-accent-dark transition-colors">
                             Kiến thức
                             <span class="material-symbols-outlined text-[18px]">expand_more</span>
-</button>
-<div class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-white dark:bg-[#162b21] rounded-xl shadow-xl border border-[#e7f3ed] dark:border-[#1f3a2e] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top p-2 z-50">
-<a class="block px-4 py-2.5 text-sm font-medium hover:bg-accent-light dark:hover:bg-accent-dark rounded-lg" href="#">Hướng dẫn chăm sóc</a>
-<a class="block px-4 py-2.5 text-sm font-medium hover:bg-accent-light dark:hover:bg-accent-dark rounded-lg" href="#">Blog Cây xanh</a>
-<a class="block px-4 py-2.5 text-sm font-medium hover:bg-accent-light dark:hover:bg-accent-dark rounded-lg" href="#">Video hướng dẫn</a>
-</div>
-</div>
-<a class="px-4 py-2 text-sm font-semibold rounded-full hover:bg-accent-light dark:hover:bg-accent-dark transition-colors" href="#">Về chúng tôi</a>
-<a class="px-4 py-2 text-sm font-semibold rounded-full hover:bg-accent-light dark:hover:bg-accent-dark transition-colors" href="#">Liên hệ</a>
-</nav>
-<div class="flex items-center gap-2">
-<button aria-label="Tìm kiếm" class="flex items-center justify-center size-10 rounded-full hover:bg-accent-light dark:hover:bg-accent-dark text-[#0d1b14] dark:text-white transition-colors">
-<span class="material-symbols-outlined">search</span>
-</button>
-<button aria-label="Tài khoản" class="flex items-center justify-center size-10 rounded-full hover:bg-accent-light dark:hover:bg-accent-dark text-[#0d1b14] dark:text-white transition-colors">
-<span class="material-symbols-outlined">person</span>
-</button>
-<div class="relative">
-<button aria-label="Giỏ hàng" class="flex items-center justify-center size-10 rounded-full hover:bg-accent-light dark:hover:bg-accent-dark text-[#0d1b14] dark:text-white transition-colors">
-<span class="material-symbols-outlined">shopping_cart</span>
-</button>
-<span class="absolute top-0 right-0 size-4 bg-primary text-[#0d1b14] text-[10px] font-bold flex items-center justify-center rounded-full ring-2 ring-white dark:ring-[#102219]">2</span>
-</div>
-<div class="lg:hidden ml-2">
-<button class="flex items-center justify-center size-10 rounded-lg bg-accent-light dark:bg-accent-dark text-[#0d1b14] dark:text-white">
-<span class="material-symbols-outlined">menu</span>
-</button>
-</div>
-</div>
-</div>
-</div>
-</header>
-<main class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
-<div class="mb-10">
-<h2 class="text-3xl md:text-4xl font-black tracking-tight text-[#0d1b14] dark:text-white mb-3">
+                        </button>
+                        <div
+                            class="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-56 bg-white dark:bg-[#162b21] rounded-xl shadow-xl border border-[#e7f3ed] dark:border-[#1f3a2e] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 transform origin-top p-2 z-50">
+                            <a class="block px-4 py-2.5 text-sm font-medium hover:bg-accent-light dark:hover:bg-accent-dark rounded-lg"
+                                href="#">Hướng dẫn chăm sóc</a>
+                            <a class="block px-4 py-2.5 text-sm font-medium hover:bg-accent-light dark:hover:bg-accent-dark rounded-lg"
+                                href="#">Blog Cây xanh</a>
+                            <a class="block px-4 py-2.5 text-sm font-medium hover:bg-accent-light dark:hover:bg-accent-dark rounded-lg"
+                                href="#">Video hướng dẫn</a>
+                        </div>
+                    </div>
+                    <a class="px-4 py-2 text-sm font-semibold rounded-full hover:bg-accent-light dark:hover:bg-accent-dark transition-colors"
+                        href="#">Về chúng tôi</a>
+                    <a class="px-4 py-2 text-sm font-semibold rounded-full hover:bg-accent-light dark:hover:bg-accent-dark transition-colors"
+                        href="#">Liên hệ</a>
+                </nav>
+                <div class="flex items-center gap-2">
+                    <button aria-label="Tìm kiếm"
+                        class="flex items-center justify-center size-10 rounded-full hover:bg-accent-light dark:hover:bg-accent-dark text-[#0d1b14] dark:text-white transition-colors">
+                        <span class="material-symbols-outlined">search</span>
+                    </button>
+                    <button aria-label="Tài khoản"
+                        class="flex items-center justify-center size-10 rounded-full hover:bg-accent-light dark:hover:bg-accent-dark text-[#0d1b14] dark:text-white transition-colors">
+                        <span class="material-symbols-outlined">person</span>
+                    </button>
+                    <div class="relative">
+                        <button aria-label="Giỏ hàng"
+                            class="flex items-center justify-center size-10 rounded-full hover:bg-accent-light dark:hover:bg-accent-dark text-[#0d1b14] dark:text-white transition-colors">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                        </button>
+                        <span
+                            class="absolute top-0 right-0 size-4 bg-primary text-[#0d1b14] text-[10px] font-bold flex items-center justify-center rounded-full ring-2 ring-white dark:ring-[#102219]">2</span>
+                    </div>
+                    <div class="lg:hidden ml-2">
+                        <button
+                            class="flex items-center justify-center size-10 rounded-lg bg-accent-light dark:bg-accent-dark text-[#0d1b14] dark:text-white">
+                            <span class="material-symbols-outlined">menu</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        <div class="mb-10">
+            <h2 class="text-3xl md:text-4xl font-black tracking-tight text-[#0d1b14] dark:text-white mb-3">
                 Khám phá Khu Vườn Của Bạn
             </h2>
-<p class="text-[#4c9a73] dark:text-[#6eb894] text-lg font-medium max-w-2xl">
-                Tìm kiếm những người bạn xanh mới cho không gian sống của bạn. Từ cây để bàn nhỏ xinh đến những chậu cây lớn thanh lọc không khí.
+            <p class="text-[#4c9a73] dark:text-[#6eb894] text-lg font-medium max-w-2xl">
+                Tìm kiếm những người bạn xanh mới cho không gian sống của bạn. Từ cây để bàn nhỏ xinh đến những chậu cây
+                lớn thanh lọc không khí.
             </p>
-</div>
-<div class="flex flex-col lg:flex-row gap-10">
-<aside class="w-full lg:w-72 shrink-0 space-y-8">
-<div class="block lg:hidden">
-<div class="relative">
-<span class="absolute inset-y-0 left-0 flex items-center pl-3 text-[#4c9a73]">
-<span class="material-symbols-outlined">search</span>
-</span>
-<input class="w-full h-12 pl-10 pr-4 rounded-lg bg-accent-light dark:bg-accent-dark border-none text-sm focus:ring-2 focus:ring-primary placeholder:text-[#4c9a73] dark:text-white" placeholder="Tìm kiếm..." type="text"/>
-</div>
-</div>
-<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl shadow-sm border border-[#e7f3ed] dark:border-[#1f3a2e]">
-<div class="flex items-center justify-between mb-4">
-<h3 class="font-bold text-lg">Danh mục</h3>
-<span class="material-symbols-outlined text-[#4c9a73]">category</span>
-</div>
-<div class="space-y-3">
-<label class="flex items-center gap-3 cursor-pointer group">
-<input checked="" class="size-5 rounded border-gray-300 text-primary focus:ring-primary bg-white dark:bg-[#102219] dark:border-[#1f3a2e]" type="checkbox"/>
-<span class="text-sm font-medium group-hover:text-primary transition-colors">Tất cả</span>
-</label>
-<label class="flex items-center gap-3 cursor-pointer group">
-<input class="size-5 rounded border-gray-300 text-primary focus:ring-primary bg-white dark:bg-[#102219] dark:border-[#1f3a2e]" type="checkbox"/>
-<span class="text-sm font-medium group-hover:text-primary transition-colors">Cây trong nhà</span>
-</label>
-<label class="flex items-center gap-3 cursor-pointer group">
-<input class="size-5 rounded border-gray-300 text-primary focus:ring-primary bg-white dark:bg-[#102219] dark:border-[#1f3a2e]" type="checkbox"/>
-<span class="text-sm font-medium group-hover:text-primary transition-colors">Cây ngoài trời</span>
-</label>
-<label class="flex items-center gap-3 cursor-pointer group">
-<input class="size-5 rounded border-gray-300 text-primary focus:ring-primary bg-white dark:bg-[#102219] dark:border-[#1f3a2e]" type="checkbox"/>
-<span class="text-sm font-medium group-hover:text-primary transition-colors">Sen đá &amp; Xương rồng</span>
-</label>
-<label class="flex items-center gap-3 cursor-pointer group">
-<input class="size-5 rounded border-gray-300 text-primary focus:ring-primary bg-white dark:bg-[#102219] dark:border-[#1f3a2e]" type="checkbox"/>
-<span class="text-sm font-medium group-hover:text-primary transition-colors">Cây thủy sinh</span>
-</label>
-</div>
-</div>
-<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl shadow-sm border border-[#e7f3ed] dark:border-[#1f3a2e]">
-<div class="flex items-center justify-between mb-6">
-<h3 class="font-bold text-lg">Khoảng giá</h3>
-<span class="material-symbols-outlined text-[#4c9a73]">payments</span>
-</div>
-<div class="relative h-2 bg-[#cfe7db] dark:bg-[#1f3a2e] rounded-full mb-6">
-<div class="absolute left-[20%] right-[30%] top-0 bottom-0 bg-primary rounded-full"></div>
-<div class="absolute left-[20%] top-1/2 -translate-y-1/2 size-4 bg-white border-2 border-primary rounded-full cursor-pointer shadow-md hover:scale-110 transition-transform"></div>
-<div class="absolute right-[30%] top-1/2 -translate-y-1/2 size-4 bg-white border-2 border-primary rounded-full cursor-pointer shadow-md hover:scale-110 transition-transform"></div>
-</div>
-<div class="flex items-center justify-between text-sm font-medium text-[#4c9a73]">
-<span>100k ₫</span>
-<span>5.000k ₫</span>
-</div>
-</div>
-<div class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl shadow-sm border border-[#e7f3ed] dark:border-[#1f3a2e]">
-<div class="flex items-center justify-between mb-4">
-<h3 class="font-bold text-lg">Kích thước</h3>
-<span class="material-symbols-outlined text-[#4c9a73]">straighten</span>
-</div>
-<div class="flex flex-wrap gap-2">
-<button class="px-4 py-2 rounded-lg bg-accent-light dark:bg-accent-dark hover:bg-primary hover:text-[#0d1b14] dark:hover:bg-primary dark:hover:text-[#0d1b14] text-sm font-semibold transition-colors border border-transparent hover:border-primary/50">Nhỏ</button>
-<button class="px-4 py-2 rounded-lg bg-primary text-[#0d1b14] text-sm font-bold shadow-sm ring-2 ring-primary ring-offset-2 ring-offset-white dark:ring-offset-[#102219]">Vừa</button>
-<button class="px-4 py-2 rounded-lg bg-accent-light dark:bg-accent-dark hover:bg-primary hover:text-[#0d1b14] dark:hover:bg-primary dark:hover:text-[#0d1b14] text-sm font-semibold transition-colors border border-transparent hover:border-primary/50">Lớn</button>
-</div>
-</div>
-</aside>
-<div class="flex-1">
-<div class="bg-surface-light dark:bg-surface-dark p-4 rounded-xl shadow-sm border border-[#e7f3ed] dark:border-[#1f3a2e] mb-6 flex flex-col md:flex-row gap-4 items-center justify-between">
-<div class="w-full md:max-w-lg relative group">
-<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-<span class="material-symbols-outlined text-[#4c9a73]">search</span>
-</div>
-<input class="block w-full p-3 pl-10 text-sm text-[#0d1b14] dark:text-white bg-accent-light dark:bg-accent-dark rounded-lg border-transparent focus:ring-2 focus:ring-primary focus:border-transparent placeholder-[#4c9a73] transition-all" placeholder="Tìm kiếm cây, chậu, phụ kiện..." type="text"/>
-</div>
-<div class="flex items-center gap-2 w-full md:w-auto">
-<span class="text-sm text-[#4c9a73] whitespace-nowrap hidden md:inline">Sắp xếp:</span>
-<div class="relative w-full md:w-48">
-<select class="w-full p-2.5 text-sm font-medium text-[#0d1b14] dark:text-white bg-accent-light dark:bg-accent-dark rounded-lg border-transparent focus:ring-2 focus:ring-primary cursor-pointer appearance-none">
-<option>Phổ biến nhất</option>
-<option>Mới nhất</option>
-<option>Giá: Thấp đến Cao</option>
-<option>Giá: Cao đến Thấp</option>
-</select>
-<div class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none text-[#4c9a73]">
-<span class="material-symbols-outlined">expand_more</span>
-</div>
-</div>
-</div>
-</div>
-<div class="flex flex-wrap gap-2 mb-6">
-<div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-sm font-medium text-[#0d1b14] dark:text-white group cursor-pointer hover:bg-primary/20 transition-colors">
-<span>Trong nhà</span>
-<span class="material-symbols-outlined text-base hover:text-red-500">close</span>
-</div>
-<div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-sm font-medium text-[#0d1b14] dark:text-white group cursor-pointer hover:bg-primary/20 transition-colors">
-<span>Kích thước: Vừa</span>
-<span class="material-symbols-outlined text-base hover:text-red-500">close</span>
-</div>
-<button class="text-sm text-[#4c9a73] hover:text-primary font-medium ml-2 underline decoration-dashed underline-offset-4">Xóa tất cả</button>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
-<div class="group bg-surface-light dark:bg-surface-dark rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-[#e7f3ed] dark:border-[#1f3a2e] flex flex-col h-full">
-<div class="relative aspect-square overflow-hidden bg-gray-100">
-<img class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500" data-alt="Cây Bàng Singapore xanh tươi trong chậu trắng" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZudTNj8xr4MF004eu3BKFwfB-XH36xXfwJvE17E1eyh-hD1mgRJ_MknG7Fcfdpv9CsC_Exr5uqhOqjr7V6egW_eVvoKkua5gMm32EdyORnsd7RQqNj4I5HBXup9fmEbDmIPA08h5ALJPmbxK8WmGV10UXETXJ48Nxt7HHT4mKiNXqcWIwV9nBS0IoNYUYfEkLsZvM7HS3OFwNrprzqnO99pl0N1eIJDEyVRPZEoqa6GMbvAaVWQoMtfAQCpM9-FR3QbvREXBGgKI"/>
-<div class="absolute top-3 left-3 bg-[#13ec80] text-[#0d1b14] text-xs font-bold px-2 py-1 rounded">Mới</div>
-<button class="absolute top-3 right-3 p-2 bg-white/80 dark:bg-black/50 backdrop-blur-sm rounded-full text-[#0d1b14] dark:text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-primary hover:text-black">
-<span class="material-symbols-outlined text-[20px]">favorite</span>
-</button>
-</div>
-<div class="p-5 flex flex-col flex-1">
-<div class="flex items-center gap-1 mb-2">
-<span class="material-symbols-outlined text-yellow-400 text-[16px] fill-current" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="text-xs font-medium text-[#4c9a73]">4.8 (120)</span>
-</div>
-<h3 class="text-lg font-bold text-[#0d1b14] dark:text-white mb-1 group-hover:text-primary transition-colors cursor-pointer line-clamp-1">Cây Bàng Singapore</h3>
-<p class="text-sm text-[#4c9a73] line-clamp-2 mb-4 flex-1">Loại cây nội thất phổ biến với lá to bản, giúp lọc không khí cực tốt.</p>
-<div class="flex items-center justify-between mt-auto">
-<div class="flex flex-col">
-<span class="text-xs text-[#4c9a73] line-through">350.000 ₫</span>
-<span class="text-lg font-black text-primary">280.000 ₫</span>
-</div>
-<button class="flex items-center justify-center size-10 rounded-lg bg-accent-light dark:bg-accent-dark text-[#0d1b14] dark:text-white hover:bg-primary hover:text-black transition-colors">
-<span class="material-symbols-outlined">shopping_bag</span>
-</button>
-</div>
-</div>
-</div>
-<div class="group bg-surface-light dark:bg-surface-dark rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-[#e7f3ed] dark:border-[#1f3a2e] flex flex-col h-full">
-<div class="relative aspect-square overflow-hidden bg-gray-100">
-<img class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500" data-alt="Cây Lưỡi Hổ viền vàng trong chậu gốm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9aZnvrUjEk5hvniFIxJKhRDnqSbcyg_VIytRg-KxeEMGpow2qTfyj5QhjbyNxJQNKxxvmAavmGqTcN1w_v8mnVXD9RvGYZTbXi8r3aAZ9lwBKmOqGNZl1MsPZDUu1aAL-Vx32qxlsQ-j7f8E_R6jjuWCV_ev-0YCNYyGftaP6_4HJ_Ip52apr9fFQmkkkDQvgRYCbhR1KgXmK3Yq-Ifu4wqWiot9Dzg2U2n9o57yDGlowgqmh43N852WjiHFXpKJTg-9ChABz86M"/>
-<div class="absolute top-3 left-3 bg-orange-400 text-white text-xs font-bold px-2 py-1 rounded">-15%</div>
-<button class="absolute top-3 right-3 p-2 bg-white/80 dark:bg-black/50 backdrop-blur-sm rounded-full text-[#0d1b14] dark:text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-primary hover:text-black">
-<span class="material-symbols-outlined text-[20px]">favorite</span>
-</button>
-</div>
-<div class="p-5 flex flex-col flex-1">
-<div class="flex items-center gap-1 mb-2">
-<span class="material-symbols-outlined text-yellow-400 text-[16px] fill-current" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="text-xs font-medium text-[#4c9a73]">4.9 (85)</span>
-</div>
-<h3 class="text-lg font-bold text-[#0d1b14] dark:text-white mb-1 group-hover:text-primary transition-colors cursor-pointer line-clamp-1">Cây Lưỡi Hổ</h3>
-<p class="text-sm text-[#4c9a73] line-clamp-2 mb-4 flex-1">Biểu tượng của sự may mắn, rất dễ chăm sóc và chịu hạn tốt.</p>
-<div class="flex items-center justify-between mt-auto">
-<span class="text-lg font-black text-primary">150.000 ₫</span>
-<button class="flex items-center justify-center size-10 rounded-lg bg-accent-light dark:bg-accent-dark text-[#0d1b14] dark:text-white hover:bg-primary hover:text-black transition-colors">
-<span class="material-symbols-outlined">shopping_bag</span>
-</button>
-</div>
-</div>
-</div>
-<div class="group bg-surface-light dark:bg-surface-dark rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-[#e7f3ed] dark:border-[#1f3a2e] flex flex-col h-full">
-<div class="relative aspect-square overflow-hidden bg-gray-100">
-<img class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500" data-alt="Cây Monstera lá xẻ nghệ thuật" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBf-XlAgPXT__RsnduWl4PVCZxD9AQvPA0S61_fOA-jyI8K7XtkdtdEnR_fGZamNSg9DxnDkS-ATBf1uT-myZRJFEPk8b4gDSOMAeE1MNOYGCcL3tPysyDzdtyw-mJyyaSnzOotXtCFRqk6YurKUgr9ynLx3Yo1uIQOlUnt-XS2rvjG6MimOgUXCwgV5vHsa74C7dxHBNDUWU1MJBEdjdfcvrQcM5RsLhHxXlleEDtfBttw45rCu4u8crD66bZQccJd20l2deZlGRo"/>
-<button class="absolute top-3 right-3 p-2 bg-white/80 dark:bg-black/50 backdrop-blur-sm rounded-full text-[#0d1b14] dark:text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-primary hover:text-black">
-<span class="material-symbols-outlined text-[20px]">favorite</span>
-</button>
-</div>
-<div class="p-5 flex flex-col flex-1">
-<div class="flex items-center gap-1 mb-2">
-<span class="material-symbols-outlined text-yellow-400 text-[16px] fill-current" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="text-xs font-medium text-[#4c9a73]">5.0 (200+)</span>
-</div>
-<h3 class="text-lg font-bold text-[#0d1b14] dark:text-white mb-1 group-hover:text-primary transition-colors cursor-pointer line-clamp-1">Monstera Trầu Bà Nam Mỹ</h3>
-<p class="text-sm text-[#4c9a73] line-clamp-2 mb-4 flex-1">Vẻ đẹp nhiệt đới ấn tượng cho mọi không gian hiện đại.</p>
-<div class="flex items-center justify-between mt-auto">
-<span class="text-lg font-black text-primary">450.000 ₫</span>
-<button class="flex items-center justify-center size-10 rounded-lg bg-accent-light dark:bg-accent-dark text-[#0d1b14] dark:text-white hover:bg-primary hover:text-black transition-colors">
-<span class="material-symbols-outlined">shopping_bag</span>
-</button>
-</div>
-</div>
-</div>
-<div class="group bg-surface-light dark:bg-surface-dark rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-[#e7f3ed] dark:border-[#1f3a2e] flex flex-col h-full">
-<div class="relative aspect-square overflow-hidden bg-gray-100">
-<img class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500" data-alt="Bộ sưu tập sen đá mini nhiều màu sắc" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcD9cNxaBt1-O4jJwXo1sODwjTB6worj0RIAcowMu4ls77u9VDNimFFMisigHD3ocW4d68Oeo4gkAsQB3g8dh8pxEjvsUlV1wOi9l-cWtzRT_iKU0CUzB-9jWUH9j-fHEqe81X5jH2GHKlvUKYJrpGkgOmd9AbiSYsPWD2TgAw7omqJ3Scxk-FC2ZwgV4nagOyazZlpDH0I7Aiu1Ey0SsA-C2jjlaw05Q5O2t1J1HakWZOh0Jqq7qBBwAWqQkqEnZKyPFudEajE6U"/>
-<button class="absolute top-3 right-3 p-2 bg-white/80 dark:bg-black/50 backdrop-blur-sm rounded-full text-[#0d1b14] dark:text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-primary hover:text-black">
-<span class="material-symbols-outlined text-[20px]">favorite</span>
-</button>
-</div>
-<div class="p-5 flex flex-col flex-1">
-<div class="flex items-center gap-1 mb-2">
-<span class="material-symbols-outlined text-yellow-400 text-[16px] fill-current" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="text-xs font-medium text-[#4c9a73]">4.5 (45)</span>
-</div>
-<h3 class="text-lg font-bold text-[#0d1b14] dark:text-white mb-1 group-hover:text-primary transition-colors cursor-pointer line-clamp-1">Combo 3 Sen Đá Mini</h3>
-<p class="text-sm text-[#4c9a73] line-clamp-2 mb-4 flex-1">Món quà nhỏ xinh và ý nghĩa dành tặng bạn bè.</p>
-<div class="flex items-center justify-between mt-auto">
-<span class="text-lg font-black text-primary">99.000 ₫</span>
-<button class="flex items-center justify-center size-10 rounded-lg bg-accent-light dark:bg-accent-dark text-[#0d1b14] dark:text-white hover:bg-primary hover:text-black transition-colors">
-<span class="material-symbols-outlined">shopping_bag</span>
-</button>
-</div>
-</div>
-</div>
-<div class="group bg-surface-light dark:bg-surface-dark rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-[#e7f3ed] dark:border-[#1f3a2e] flex flex-col h-full">
-<div class="relative aspect-square overflow-hidden bg-gray-100">
-<img class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500" data-alt="Cây Kim Tiền lá xanh bóng" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAuabWL07VsztIsU9AWcjFGazB-fVITbnt12TfA7QDpzohDShcV3o4ma5g6CEOEDtSwXs7jZnCSu474aNrTk9BEKx3ZRJk2ykc2sSn81oDdlVLUUkbzWCe7NsNQK-ERRz5tOPHaQ3M5WQX8Z3KlFgUBOPKnmGdHwqsjy66Ajc6OOf3PsmuxAiCWKTgbJrEMgOVgCj5IFqfqj6WhLvKnEgD3A8kONeilthxDEHx__OjM8thLNQCH6LbP3uwe4e-Fb-hJMjNLlcyo_GY"/>
-<button class="absolute top-3 right-3 p-2 bg-white/80 dark:bg-black/50 backdrop-blur-sm rounded-full text-[#0d1b14] dark:text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-primary hover:text-black">
-<span class="material-symbols-outlined text-[20px]">favorite</span>
-</button>
-</div>
-<div class="p-5 flex flex-col flex-1">
-<div class="flex items-center gap-1 mb-2">
-<span class="material-symbols-outlined text-yellow-400 text-[16px] fill-current" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="text-xs font-medium text-[#4c9a73]">4.7 (98)</span>
-</div>
-<h3 class="text-lg font-bold text-[#0d1b14] dark:text-white mb-1 group-hover:text-primary transition-colors cursor-pointer line-clamp-1">Cây Kim Tiền</h3>
-<p class="text-sm text-[#4c9a73] line-clamp-2 mb-4 flex-1">Mang lại tài lộc, phú quý cho gia chủ.</p>
-<div class="flex items-center justify-between mt-auto">
-<span class="text-lg font-black text-primary">180.000 ₫</span>
-<button class="flex items-center justify-center size-10 rounded-lg bg-accent-light dark:bg-accent-dark text-[#0d1b14] dark:text-white hover:bg-primary hover:text-black transition-colors">
-<span class="material-symbols-outlined">shopping_bag</span>
-</button>
-</div>
-</div>
-</div>
-<div class="group bg-surface-light dark:bg-surface-dark rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-[#e7f3ed] dark:border-[#1f3a2e] flex flex-col h-full">
-<div class="relative aspect-square overflow-hidden bg-gray-100">
-<img class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500" data-alt="Cây dây nhện treo trong chậu" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRKU11hPTWJljnvRN175MnA8Ox575VWNEdgrqS32gn8fzkKEIl2OwsCS7eG7CO2iWzohYbnfU1rKnmyY7ceNSyu1hYX1PLwfrYV4AprlEJ7Iu10vIKfFFGGrZPGtQvCitaYkoM1-uypzFAP5gqyo8JR5vDK2siFluwAldvFqt-xojxcW6AQIswlGOCPgG3YJtVan_Z8chKZXvpeSiCLLwOyD42P_Nz7JangYq4mFBbovZ-1KdooZjP1GSqh-3Lbwj3Y4FVtdgm1E8"/>
-<button class="absolute top-3 right-3 p-2 bg-white/80 dark:bg-black/50 backdrop-blur-sm rounded-full text-[#0d1b14] dark:text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-primary hover:text-black">
-<span class="material-symbols-outlined text-[20px]">favorite</span>
-</button>
-</div>
-<div class="p-5 flex flex-col flex-1">
-<div class="flex items-center gap-1 mb-2">
-<span class="material-symbols-outlined text-yellow-400 text-[16px] fill-current" style="font-variation-settings: 'FILL' 1;">star</span>
-<span class="text-xs font-medium text-[#4c9a73]">4.6 (56)</span>
-</div>
-<h3 class="text-lg font-bold text-[#0d1b14] dark:text-white mb-1 group-hover:text-primary transition-colors cursor-pointer line-clamp-1">Cây Dây Nhện (Cỏ Lan Chi)</h3>
-<p class="text-sm text-[#4c9a73] line-clamp-2 mb-4 flex-1">Lọc không khí tuyệt vời, thích hợp treo ban công.</p>
-<div class="flex items-center justify-between mt-auto">
-<span class="text-lg font-black text-primary">85.000 ₫</span>
-<button class="flex items-center justify-center size-10 rounded-lg bg-accent-light dark:bg-accent-dark text-[#0d1b14] dark:text-white hover:bg-primary hover:text-black transition-colors">
-<span class="material-symbols-outlined">shopping_bag</span>
-</button>
-</div>
-</div>
-</div>
-</div>
-<div class="mt-12 flex justify-center">
-<div class="flex items-center gap-2">
-<button class="flex items-center justify-center size-10 rounded-lg bg-white dark:bg-[#162b21] border border-[#e7f3ed] dark:border-[#1f3a2e] text-[#0d1b14] dark:text-white hover:border-primary transition-colors disabled:opacity-50">
-<span class="material-symbols-outlined">chevron_left</span>
-</button>
-<button class="flex items-center justify-center size-10 rounded-lg bg-primary text-[#0d1b14] font-bold">1</button>
-<button class="flex items-center justify-center size-10 rounded-lg bg-white dark:bg-[#162b21] border border-[#e7f3ed] dark:border-[#1f3a2e] text-[#0d1b14] dark:text-white hover:border-primary transition-colors font-medium">2</button>
-<button class="flex items-center justify-center size-10 rounded-lg bg-white dark:bg-[#162b21] border border-[#e7f3ed] dark:border-[#1f3a2e] text-[#0d1b14] dark:text-white hover:border-primary transition-colors font-medium">3</button>
-<span class="text-[#4c9a73]">...</span>
-<button class="flex items-center justify-center size-10 rounded-lg bg-white dark:bg-[#162b21] border border-[#e7f3ed] dark:border-[#1f3a2e] text-[#0d1b14] dark:text-white hover:border-primary transition-colors">
-<span class="material-symbols-outlined">chevron_right</span>
-</button>
-</div>
-</div>
-</div>
-</div>
-</main>
-<footer class="bg-[#f2f9f5] dark:bg-[#162b21] border-t border-[#e7f3ed] dark:border-[#1f3a2e] pt-16 pb-8">
-<div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-<div class="space-y-6">
-<div class="flex items-center gap-3">
-<div class="size-10 text-primary">
-<svg class="h-full w-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
-</svg>
-</div>
-<h2 class="text-2xl font-black tracking-tight text-[#0d1b14] dark:text-white">GreenSpace</h2>
-</div>
-<p class="text-[#4c9a73] text-sm leading-relaxed">
-                        Mang thiên nhiên vào không gian sống của bạn. GreenSpace cung cấp các loại cây cảnh chất lượng cao, giúp thanh lọc không khí và tạo cảm hứng làm việc mỗi ngày.
+        </div>
+        <div class="flex flex-col lg:flex-row gap-10">
+            <aside class="w-full lg:w-72 shrink-0 space-y-8">
+                <div class="block lg:hidden">
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-[#4c9a73]">
+                            <span class="material-symbols-outlined">search</span>
+                        </span>
+                        <input
+                            class="w-full h-12 pl-10 pr-4 rounded-lg bg-accent-light dark:bg-accent-dark border-none text-sm focus:ring-2 focus:ring-primary placeholder:text-[#4c9a73] dark:text-white"
+                            placeholder="Tìm kiếm..." type="text" />
+                    </div>
+                </div>
+                <div
+                    class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl shadow-sm border border-[#e7f3ed] dark:border-[#1f3a2e]">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-lg">Danh mục</h3>
+                        <span class="material-symbols-outlined text-[#4c9a73]">category</span>
+                    </div>
+                    <div class="space-y-3">
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input checked=""
+                                class="size-5 rounded border-gray-300 text-primary focus:ring-primary bg-white dark:bg-[#102219] dark:border-[#1f3a2e]"
+                                type="checkbox" />
+                            <span class="text-sm font-medium group-hover:text-primary transition-colors">Tất cả</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input
+                                class="size-5 rounded border-gray-300 text-primary focus:ring-primary bg-white dark:bg-[#102219] dark:border-[#1f3a2e]"
+                                type="checkbox" />
+                            <span class="text-sm font-medium group-hover:text-primary transition-colors">Cây trong
+                                nhà</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input
+                                class="size-5 rounded border-gray-300 text-primary focus:ring-primary bg-white dark:bg-[#102219] dark:border-[#1f3a2e]"
+                                type="checkbox" />
+                            <span class="text-sm font-medium group-hover:text-primary transition-colors">Cây ngoài
+                                trời</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input
+                                class="size-5 rounded border-gray-300 text-primary focus:ring-primary bg-white dark:bg-[#102219] dark:border-[#1f3a2e]"
+                                type="checkbox" />
+                            <span class="text-sm font-medium group-hover:text-primary transition-colors">Sen đá &amp;
+                                Xương rồng</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input
+                                class="size-5 rounded border-gray-300 text-primary focus:ring-primary bg-white dark:bg-[#102219] dark:border-[#1f3a2e]"
+                                type="checkbox" />
+                            <span class="text-sm font-medium group-hover:text-primary transition-colors">Cây thủy
+                                sinh</span>
+                        </label>
+                    </div>
+                </div>
+                <div
+                    class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl shadow-sm border border-[#e7f3ed] dark:border-[#1f3a2e]">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="font-bold text-lg">Khoảng giá</h3>
+                        <span class="material-symbols-outlined text-[#4c9a73]">payments</span>
+                    </div>
+                    <div class="relative h-2 bg-[#cfe7db] dark:bg-[#1f3a2e] rounded-full mb-6">
+                        <div class="absolute left-[20%] right-[30%] top-0 bottom-0 bg-primary rounded-full"></div>
+                        <div
+                            class="absolute left-[20%] top-1/2 -translate-y-1/2 size-4 bg-white border-2 border-primary rounded-full cursor-pointer shadow-md hover:scale-110 transition-transform">
+                        </div>
+                        <div
+                            class="absolute right-[30%] top-1/2 -translate-y-1/2 size-4 bg-white border-2 border-primary rounded-full cursor-pointer shadow-md hover:scale-110 transition-transform">
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between text-sm font-medium text-[#4c9a73]">
+                        <span>100k ₫</span>
+                        <span>5.000k ₫</span>
+                    </div>
+                </div>
+                <div
+                    class="bg-surface-light dark:bg-surface-dark p-6 rounded-2xl shadow-sm border border-[#e7f3ed] dark:border-[#1f3a2e]">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold text-lg">Kích thước</h3>
+                        <span class="material-symbols-outlined text-[#4c9a73]">straighten</span>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button
+                            class="px-4 py-2 rounded-lg bg-accent-light dark:bg-accent-dark hover:bg-primary hover:text-[#0d1b14] dark:hover:bg-primary dark:hover:text-[#0d1b14] text-sm font-semibold transition-colors border border-transparent hover:border-primary/50">Nhỏ</button>
+                        <button
+                            class="px-4 py-2 rounded-lg bg-primary text-[#0d1b14] text-sm font-bold shadow-sm ring-2 ring-primary ring-offset-2 ring-offset-white dark:ring-offset-[#102219]">Vừa</button>
+                        <button
+                            class="px-4 py-2 rounded-lg bg-accent-light dark:bg-accent-dark hover:bg-primary hover:text-[#0d1b14] dark:hover:bg-primary dark:hover:text-[#0d1b14] text-sm font-semibold transition-colors border border-transparent hover:border-primary/50">Lớn</button>
+                    </div>
+                </div>
+            </aside>
+            <div class="flex-1">
+                <div
+                    class="bg-surface-light dark:bg-surface-dark p-4 rounded-xl shadow-sm border border-[#e7f3ed] dark:border-[#1f3a2e] mb-6 flex flex-col md:flex-row gap-4 items-center justify-between">
+                    <div class="w-full md:max-w-lg relative group">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                            <span class="material-symbols-outlined text-[#4c9a73]">search</span>
+                        </div>
+                        <input
+                            class="block w-full p-3 pl-10 text-sm text-[#0d1b14] dark:text-white bg-accent-light dark:bg-accent-dark rounded-lg border-transparent focus:ring-2 focus:ring-primary focus:border-transparent placeholder-[#4c9a73] transition-all"
+                            placeholder="Tìm kiếm cây, chậu, phụ kiện..." type="text" />
+                    </div>
+                    <div class="flex items-center gap-2 w-full md:w-auto">
+                        <span class="text-sm text-[#4c9a73] whitespace-nowrap hidden md:inline">Sắp xếp:</span>
+                        <div class="relative w-full md:w-48">
+                            <select
+                                class="w-full p-2.5 text-sm font-medium text-[#0d1b14] dark:text-white bg-accent-light dark:bg-accent-dark rounded-lg border-transparent focus:ring-2 focus:ring-primary cursor-pointer appearance-none">
+                                <option>Phổ biến nhất</option>
+                                <option>Mới nhất</option>
+                                <option>Giá: Thấp đến Cao</option>
+                                <option>Giá: Cao đến Thấp</option>
+                            </select>
+                            <div
+                                class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none text-[#4c9a73]">
+                                <span class="material-symbols-outlined">expand_more</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <div
+                        class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-sm font-medium text-[#0d1b14] dark:text-white group cursor-pointer hover:bg-primary/20 transition-colors">
+                        <span>Trong nhà</span>
+                        <span class="material-symbols-outlined text-base hover:text-red-500">close</span>
+                    </div>
+                    <div
+                        class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20 text-sm font-medium text-[#0d1b14] dark:text-white group cursor-pointer hover:bg-primary/20 transition-colors">
+                        <span>Kích thước: Vừa</span>
+                        <span class="material-symbols-outlined text-base hover:text-red-500">close</span>
+                    </div>
+                    <button
+                        class="text-sm text-[#4c9a73] hover:text-primary font-medium ml-2 underline decoration-dashed underline-offset-4">Xóa
+                        tất cả</button>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
+                    <div
+                        class="group bg-surface-light dark:bg-surface-dark rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-[#e7f3ed] dark:border-[#1f3a2e] flex flex-col h-full">
+                        <div class="relative aspect-square overflow-hidden bg-gray-100">
+                            <img class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+                                data-alt="Cây Bàng Singapore xanh tươi trong chậu trắng"
+                                src="../../assets/products/cay-bang-singapore-lon-chau-men-ly-1.jpg" />
+                            <div
+                                class="absolute top-3 left-3 bg-[#13ec80] text-[#0d1b14] text-xs font-bold px-2 py-1 rounded">
+                                Mới</div>
+                            <button
+                                class="absolute top-3 right-3 p-2 bg-white/80 dark:bg-black/50 backdrop-blur-sm rounded-full text-[#0d1b14] dark:text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-primary hover:text-black">
+                                <span class="material-symbols-outlined text-[20px]">favorite</span>
+                            </button>
+                        </div>
+                        <div class="p-5 flex flex-col flex-1">
+                            <div class="flex items-center gap-1 mb-2">
+                                <span class="material-symbols-outlined text-yellow-400 text-[16px] fill-current"
+                                    style="font-variation-settings: 'FILL' 1;">star</span>
+                                <span class="text-xs font-medium text-[#4c9a73]">4.8 (120)</span>
+                            </div>
+                            <h3
+                                class="text-lg font-bold text-[#0d1b14] dark:text-white mb-1 group-hover:text-primary transition-colors cursor-pointer line-clamp-1">
+                                Cây Bàng Singapore</h3>
+                            <p class="text-sm text-[#4c9a73] line-clamp-2 mb-4 flex-1">Loại cây nội thất phổ biến với lá
+                                to bản, giúp lọc không khí cực tốt.</p>
+                            <div class="flex items-center justify-between mt-auto">
+                                <div class="flex flex-col">
+                                    <span class="text-xs text-[#4c9a73] line-through">350.000 ₫</span>
+                                    <span class="text-lg font-black text-primary">280.000 ₫</span>
+                                </div>
+                                <button
+                                    class="flex items-center justify-center size-10 rounded-lg bg-accent-light dark:bg-accent-dark text-[#0d1b14] dark:text-white hover:bg-primary hover:text-black transition-colors">
+                                    <span class="material-symbols-outlined">shopping_bag</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="group bg-surface-light dark:bg-surface-dark rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-[#e7f3ed] dark:border-[#1f3a2e] flex flex-col h-full">
+                        <div class="relative aspect-square overflow-hidden bg-gray-100">
+                            <img class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+                                data-alt="Cây Lưỡi Hổ viền vàng trong chậu gốm"
+                                src="../../assets/products/cay-luoi-ho.png" />
+                            <div
+                                class="absolute top-3 left-3 bg-orange-400 text-white text-xs font-bold px-2 py-1 rounded">
+                                -15%</div>
+                            <button
+                                class="absolute top-3 right-3 p-2 bg-white/80 dark:bg-black/50 backdrop-blur-sm rounded-full text-[#0d1b14] dark:text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-primary hover:text-black">
+                                <span class="material-symbols-outlined text-[20px]">favorite</span>
+                            </button>
+                        </div>
+                        <div class="p-5 flex flex-col flex-1">
+                            <div class="flex items-center gap-1 mb-2">
+                                <span class="material-symbols-outlined text-yellow-400 text-[16px] fill-current"
+                                    style="font-variation-settings: 'FILL' 1;">star</span>
+                                <span class="text-xs font-medium text-[#4c9a73]">4.9 (85)</span>
+                            </div>
+                            <h3
+                                class="text-lg font-bold text-[#0d1b14] dark:text-white mb-1 group-hover:text-primary transition-colors cursor-pointer line-clamp-1">
+                                Cây Lưỡi Hổ</h3>
+                            <p class="text-sm text-[#4c9a73] line-clamp-2 mb-4 flex-1">Biểu tượng của sự may mắn, rất dễ
+                                chăm sóc và chịu hạn tốt.</p>
+                            <div class="flex items-center justify-between mt-auto">
+                                <span class="text-lg font-black text-primary">150.000 ₫</span>
+                                <button
+                                    class="flex items-center justify-center size-10 rounded-lg bg-accent-light dark:bg-accent-dark text-[#0d1b14] dark:text-white hover:bg-primary hover:text-black transition-colors">
+                                    <span class="material-symbols-outlined">shopping_bag</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="group bg-surface-light dark:bg-surface-dark rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-[#e7f3ed] dark:border-[#1f3a2e] flex flex-col h-full">
+                        <div class="relative aspect-square overflow-hidden bg-gray-100">
+                            <img class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+                                data-alt="Cây Monstera lá xẻ nghệ thuật"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBf-XlAgPXT__RsnduWl4PVCZxD9AQvPA0S61_fOA-jyI8K7XtkdtdEnR_fGZamNSg9DxnDkS-ATBf1uT-myZRJFEPk8b4gDSOMAeE1MNOYGCcL3tPysyDzdtyw-mJyyaSnzOotXtCFRqk6YurKUgr9ynLx3Yo1uIQOlUnt-XS2rvjG6MimOgUXCwgV5vHsa74C7dxHBNDUWU1MJBEdjdfcvrQcM5RsLhHxXlleEDtfBttw45rCu4u8crD66bZQccJd20l2deZlGRo" />
+                            <button
+                                class="absolute top-3 right-3 p-2 bg-white/80 dark:bg-black/50 backdrop-blur-sm rounded-full text-[#0d1b14] dark:text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-primary hover:text-black">
+                                <span class="material-symbols-outlined text-[20px]">favorite</span>
+                            </button>
+                        </div>
+                        <div class="p-5 flex flex-col flex-1">
+                            <div class="flex items-center gap-1 mb-2">
+                                <span class="material-symbols-outlined text-yellow-400 text-[16px] fill-current"
+                                    style="font-variation-settings: 'FILL' 1;">star</span>
+                                <span class="text-xs font-medium text-[#4c9a73]">5.0 (200+)</span>
+                            </div>
+                            <h3
+                                class="text-lg font-bold text-[#0d1b14] dark:text-white mb-1 group-hover:text-primary transition-colors cursor-pointer line-clamp-1">
+                                Monstera Trầu Bà Nam Mỹ</h3>
+                            <p class="text-sm text-[#4c9a73] line-clamp-2 mb-4 flex-1">Vẻ đẹp nhiệt đới ấn tượng cho mọi
+                                không gian hiện đại.</p>
+                            <div class="flex items-center justify-between mt-auto">
+                                <span class="text-lg font-black text-primary">450.000 ₫</span>
+                                <button
+                                    class="flex items-center justify-center size-10 rounded-lg bg-accent-light dark:bg-accent-dark text-[#0d1b14] dark:text-white hover:bg-primary hover:text-black transition-colors">
+                                    <span class="material-symbols-outlined">shopping_bag</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="group bg-surface-light dark:bg-surface-dark rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-[#e7f3ed] dark:border-[#1f3a2e] flex flex-col h-full">
+                        <div class="relative aspect-square overflow-hidden bg-gray-100">
+                            <img class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+                                data-alt="Bộ sưu tập sen đá mini nhiều màu sắc"
+                                src="../../assets/products/Combo-sen-da-mini.jpg" />
+                            <button
+                                class="absolute top-3 right-3 p-2 bg-white/80 dark:bg-black/50 backdrop-blur-sm rounded-full text-[#0d1b14] dark:text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-primary hover:text-black">
+                                <span class="material-symbols-outlined text-[20px]">favorite</span>
+                            </button>
+                        </div>
+                        <div class="p-5 flex flex-col flex-1">
+                            <div class="flex items-center gap-1 mb-2">
+                                <span class="material-symbols-outlined text-yellow-400 text-[16px] fill-current"
+                                    style="font-variation-settings: 'FILL' 1;">star</span>
+                                <span class="text-xs font-medium text-[#4c9a73]">4.5 (45)</span>
+                            </div>
+                            <h3
+                                class="text-lg font-bold text-[#0d1b14] dark:text-white mb-1 group-hover:text-primary transition-colors cursor-pointer line-clamp-1">
+                                Combo Cây Sen Đá Mini</h3>
+                            <p class="text-sm text-[#4c9a73] line-clamp-2 mb-4 flex-1">Món quà nhỏ xinh và ý nghĩa dành
+                                tặng bạn bè.</p>
+                            <div class="flex items-center justify-between mt-auto">
+                                <span class="text-lg font-black text-primary">99.000 ₫</span>
+                                <button
+                                    class="flex items-center justify-center size-10 rounded-lg bg-accent-light dark:bg-accent-dark text-[#0d1b14] dark:text-white hover:bg-primary hover:text-black transition-colors">
+                                    <span class="material-symbols-outlined">shopping_bag</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="group bg-surface-light dark:bg-surface-dark rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-[#e7f3ed] dark:border-[#1f3a2e] flex flex-col h-full">
+                        <div class="relative aspect-square overflow-hidden bg-gray-100">
+                            <img class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+                                data-alt="Cây Kim Tiền lá xanh bóng"
+                                src="../../assets/products/cay-kim-tien.jpg" />
+                            <button
+                                class="absolute top-3 right-3 p-2 bg-white/80 dark:bg-black/50 backdrop-blur-sm rounded-full text-[#0d1b14] dark:text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-primary hover:text-black">
+                                <span class="material-symbols-outlined text-[20px]">favorite</span>
+                            </button>
+                        </div>
+                        <div class="p-5 flex flex-col flex-1">
+                            <div class="flex items-center gap-1 mb-2">
+                                <span class="material-symbols-outlined text-yellow-400 text-[16px] fill-current"
+                                    style="font-variation-settings: 'FILL' 1;">star</span>
+                                <span class="text-xs font-medium text-[#4c9a73]">4.7 (98)</span>
+                            </div>
+                            <h3
+                                class="text-lg font-bold text-[#0d1b14] dark:text-white mb-1 group-hover:text-primary transition-colors cursor-pointer line-clamp-1">
+                                Cây Kim Tiền</h3>
+                            <p class="text-sm text-[#4c9a73] line-clamp-2 mb-4 flex-1">Mang lại tài lộc, phú quý cho gia
+                                chủ.</p>
+                            <div class="flex items-center justify-between mt-auto">
+                                <span class="text-lg font-black text-primary">180.000 ₫</span>
+                                <button
+                                    class="flex items-center justify-center size-10 rounded-lg bg-accent-light dark:bg-accent-dark text-[#0d1b14] dark:text-white hover:bg-primary hover:text-black transition-colors">
+                                    <span class="material-symbols-outlined">shopping_bag</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="group bg-surface-light dark:bg-surface-dark rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-[#e7f3ed] dark:border-[#1f3a2e] flex flex-col h-full">
+                        <div class="relative aspect-square overflow-hidden bg-gray-100">
+                            <img class="object-cover w-full h-full group-hover:scale-110 transition-transform duration-500"
+                                data-alt="Cây dây nhện treo trong chậu"
+                                src="../../assets/products/lan-chi.jpeg" />
+                            <button
+                                class="absolute top-3 right-3 p-2 bg-white/80 dark:bg-black/50 backdrop-blur-sm rounded-full text-[#0d1b14] dark:text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-primary hover:text-black">
+                                <span class="material-symbols-outlined text-[20px]">favorite</span>
+                            </button>
+                        </div>
+                        <div class="p-5 flex flex-col flex-1">
+                            <div class="flex items-center gap-1 mb-2">
+                                <span class="material-symbols-outlined text-yellow-400 text-[16px] fill-current"
+                                    style="font-variation-settings: 'FILL' 1;">star</span>
+                                <span class="text-xs font-medium text-[#4c9a73]">4.6 (56)</span>
+                            </div>
+                            <h3
+                                class="text-lg font-bold text-[#0d1b14] dark:text-white mb-1 group-hover:text-primary transition-colors cursor-pointer line-clamp-1">
+                                Cây Dây Nhện (Cỏ Lan Chi)</h3>
+                            <p class="text-sm text-[#4c9a73] line-clamp-2 mb-4 flex-1">Lọc không khí tuyệt vời, thích
+                                hợp treo ban công.</p>
+                            <div class="flex items-center justify-between mt-auto">
+                                <span class="text-lg font-black text-primary">85.000 ₫</span>
+                                <button
+                                    class="flex items-center justify-center size-10 rounded-lg bg-accent-light dark:bg-accent-dark text-[#0d1b14] dark:text-white hover:bg-primary hover:text-black transition-colors">
+                                    <span class="material-symbols-outlined">shopping_bag</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-12 flex justify-center">
+                    <div class="flex items-center gap-2">
+                        <button
+                            class="flex items-center justify-center size-10 rounded-lg bg-white dark:bg-[#162b21] border border-[#e7f3ed] dark:border-[#1f3a2e] text-[#0d1b14] dark:text-white hover:border-primary transition-colors disabled:opacity-50">
+                            <span class="material-symbols-outlined">chevron_left</span>
+                        </button>
+                        <button
+                            class="flex items-center justify-center size-10 rounded-lg bg-primary text-[#0d1b14] font-bold">1</button>
+                        <button
+                            class="flex items-center justify-center size-10 rounded-lg bg-white dark:bg-[#162b21] border border-[#e7f3ed] dark:border-[#1f3a2e] text-[#0d1b14] dark:text-white hover:border-primary transition-colors font-medium">2</button>
+                        <button
+                            class="flex items-center justify-center size-10 rounded-lg bg-white dark:bg-[#162b21] border border-[#e7f3ed] dark:border-[#1f3a2e] text-[#0d1b14] dark:text-white hover:border-primary transition-colors font-medium">3</button>
+                        <span class="text-[#4c9a73]">...</span>
+                        <button
+                            class="flex items-center justify-center size-10 rounded-lg bg-white dark:bg-[#162b21] border border-[#e7f3ed] dark:border-[#1f3a2e] text-[#0d1b14] dark:text-white hover:border-primary transition-colors">
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="bg-[#f2f9f5] dark:bg-[#162b21] border-t border-[#e7f3ed] dark:border-[#1f3a2e] pt-16 pb-8">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <div class="space-y-6">
+                    <div class="flex items-center gap-3">
+                        <div class="size-10 text-primary">
+                            <svg class="h-full w-full" fill="none" viewBox="0 0 48 48"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path clip-rule="evenodd"
+                                    d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z"
+                                    fill="currentColor" fill-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <h2 class="text-2xl font-black tracking-tight text-[#0d1b14] dark:text-white">GreenSpace</h2>
+                    </div>
+                    <p class="text-[#4c9a73] text-sm leading-relaxed">
+                        Mang thiên nhiên vào không gian sống của bạn. GreenSpace cung cấp các loại cây cảnh chất lượng
+                        cao, giúp thanh lọc không khí và tạo cảm hứng làm việc mỗi ngày.
                     </p>
-</div>
-<div>
-<h3 class="font-bold text-lg mb-6 text-[#0d1b14] dark:text-white">Khám phá</h3>
-<ul class="space-y-4">
-<li><a class="text-[#4c9a73] hover:text-primary transition-colors text-sm font-medium" href="#">Về chúng tôi</a></li>
-<li><a class="text-[#4c9a73] hover:text-primary transition-colors text-sm font-medium" href="#">Sản phẩm mới</a></li>
-<li><a class="text-[#4c9a73] hover:text-primary transition-colors text-sm font-medium" href="#">Góc kiến thức</a></li>
-<li><a class="text-[#4c9a73] hover:text-primary transition-colors text-sm font-medium" href="#">Liên hệ hỗ trợ</a></li>
-</ul>
-</div>
-<div>
-<h3 class="font-bold text-lg mb-6 text-[#0d1b14] dark:text-white">Chính sách</h3>
-<ul class="space-y-4">
-<li><a class="text-[#4c9a73] hover:text-primary transition-colors text-sm font-medium" href="#">Chính sách vận chuyển</a></li>
-<li><a class="text-[#4c9a73] hover:text-primary transition-colors text-sm font-medium" href="#">Chính sách đổi trả</a></li>
-<li><a class="text-[#4c9a73] hover:text-primary transition-colors text-sm font-medium" href="#">Bảo mật thông tin</a></li>
-<li><a class="text-[#4c9a73] hover:text-primary transition-colors text-sm font-medium" href="#">Điều khoản dịch vụ</a></li>
-</ul>
-</div>
-<div>
-<h3 class="font-bold text-lg mb-6 text-[#0d1b14] dark:text-white">Liên hệ</h3>
-<ul class="space-y-4 mb-8">
-<li class="flex items-start gap-3 text-sm text-[#4c9a73]">
-<span class="material-symbols-outlined text-[20px] shrink-0">location_on</span>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-6 text-[#0d1b14] dark:text-white">Khám phá</h3>
+                    <ul class="space-y-4">
+                        <li><a class="text-[#4c9a73] hover:text-primary transition-colors text-sm font-medium"
+                                href="#">Về chúng tôi</a></li>
+                        <li><a class="text-[#4c9a73] hover:text-primary transition-colors text-sm font-medium"
+                                href="#">Sản phẩm mới</a></li>
+                        <li><a class="text-[#4c9a73] hover:text-primary transition-colors text-sm font-medium"
+                                href="#">Góc kiến thức</a></li>
+                        <li><a class="text-[#4c9a73] hover:text-primary transition-colors text-sm font-medium"
+                                href="#">Liên hệ hỗ trợ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-6 text-[#0d1b14] dark:text-white">Chính sách</h3>
+                    <ul class="space-y-4">
+                        <li><a class="text-[#4c9a73] hover:text-primary transition-colors text-sm font-medium"
+                                href="#">Chính sách vận chuyển</a></li>
+                        <li><a class="text-[#4c9a73] hover:text-primary transition-colors text-sm font-medium"
+                                href="#">Chính sách đổi trả</a></li>
+                        <li><a class="text-[#4c9a73] hover:text-primary transition-colors text-sm font-medium"
+                                href="#">Bảo mật thông tin</a></li>
+                        <li><a class="text-[#4c9a73] hover:text-primary transition-colors text-sm font-medium"
+                                href="#">Điều khoản dịch vụ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-6 text-[#0d1b14] dark:text-white">Liên hệ</h3>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start gap-3 text-sm text-[#4c9a73]">
+                            <span class="material-symbols-outlined text-[20px] shrink-0">location_on</span>
                             123 Đường Cây Xanh, Quận 1, TP.HCM
                         </li>
-<li class="flex items-center gap-3 text-sm text-[#4c9a73]">
-<span class="material-symbols-outlined text-[20px] shrink-0">phone</span>
+                        <li class="flex items-center gap-3 text-sm text-[#4c9a73]">
+                            <span class="material-symbols-outlined text-[20px] shrink-0">phone</span>
                             1900 123 456
                         </li>
-<li class="flex items-center gap-3 text-sm text-[#4c9a73]">
-<span class="material-symbols-outlined text-[20px] shrink-0">mail</span>
+                        <li class="flex items-center gap-3 text-sm text-[#4c9a73]">
+                            <span class="material-symbols-outlined text-[20px] shrink-0">mail</span>
                             hello@greenspace.vn
                         </li>
-</ul>
-<div class="flex gap-4">
-<a class="size-10 rounded-full bg-white dark:bg-[#0a1610] flex items-center justify-center text-[#4c9a73] hover:bg-primary hover:text-[#0d1b14] transition-all shadow-sm" href="#">
-<span class="text-xs font-bold">FB</span>
-</a>
-<a class="size-10 rounded-full bg-white dark:bg-[#0a1610] flex items-center justify-center text-[#4c9a73] hover:bg-primary hover:text-[#0d1b14] transition-all shadow-sm" href="#">
-<span class="text-xs font-bold">IG</span>
-</a>
-<a class="size-10 rounded-full bg-white dark:bg-[#0a1610] flex items-center justify-center text-[#4c9a73] hover:bg-primary hover:text-[#0d1b14] transition-all shadow-sm" href="#">
-<span class="text-xs font-bold">YT</span>
-</a>
-</div>
-</div>
-</div>
-<div class="border-t border-[#e7f3ed] dark:border-[#1f3a2e] pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-<p class="text-sm text-[#4c9a73]">© 2023 GreenSpace. All rights reserved.</p>
-<div class="flex items-center gap-6">
-<img alt="Mastercard" class="h-6 opacity-60 grayscale hover:grayscale-0 transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAz6U9pn7-u1lGgGfj-NMO_ZcToN5jt-jcbWjO7kEPm5ZqDHEjNsp65l9GdOmosGL1WEp8hCpmwgbxy7S0ZwsKR96Ms6SBhzMhUWGrOu8zxnWHDSGZh5hlaeTfmjpiJhBECvyOJbpv3kmqFhO0qoV2KWkgCZ2fjK4A-vgVdS9QwBH3gv6BC0Dw5tr5sT55RFoEAQf1ZjVcZvFJkrlldxPZkYBZc-Uo3fjkPjptICF2JIuwsQ4TznB-OHyeVqmCFPJy6BsgD5hnK-yk"/>
-<img alt="Visa" class="h-4 opacity-60 grayscale hover:grayscale-0 transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApL8G4lB-NuvxMm75pkWuWjqXlUQ7JdWHDv7y0taMEvhOAuJ2OswFnKHUEu_kfrHwGk8u3QaeQhhq8cFK4tQoBahJ3UR-anjs2Fh8e7FBPoOL8U8pfIpZrZMXkXuOfngB54zxgmzxq6bHpwinPZOft81re_K1Pyg1s3voDyDmvA9v_FkMCwREoynh-Bm3eSQrbjNBNmqpnxhbIN-sOISI2jWKD4gNanWsXu_Lw6BvUMTmLdVzZlzLPwr1XcknNexZQQW18eiZgT3Y"/>
-</div>
-</div>
-</div>
-</footer>
+                    </ul>
+                    <div class="flex gap-4">
+                        <a class="size-10 rounded-full bg-white dark:bg-[#0a1610] flex items-center justify-center text-[#4c9a73] hover:bg-primary hover:text-[#0d1b14] transition-all shadow-sm"
+                            href="#">
+                            <span class="text-xs font-bold">FB</span>
+                        </a>
+                        <a class="size-10 rounded-full bg-white dark:bg-[#0a1610] flex items-center justify-center text-[#4c9a73] hover:bg-primary hover:text-[#0d1b14] transition-all shadow-sm"
+                            href="#">
+                            <span class="text-xs font-bold">IG</span>
+                        </a>
+                        <a class="size-10 rounded-full bg-white dark:bg-[#0a1610] flex items-center justify-center text-[#4c9a73] hover:bg-primary hover:text-[#0d1b14] transition-all shadow-sm"
+                            href="#">
+                            <span class="text-xs font-bold">YT</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="border-t border-[#e7f3ed] dark:border-[#1f3a2e] pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-sm text-[#4c9a73]">© 2023 GreenSpace. All rights reserved.</p>
+                <div class="flex items-center gap-6">
+                    <img alt="Mastercard" class="h-6 opacity-60 grayscale hover:grayscale-0 transition-all"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAz6U9pn7-u1lGgGfj-NMO_ZcToN5jt-jcbWjO7kEPm5ZqDHEjNsp65l9GdOmosGL1WEp8hCpmwgbxy7S0ZwsKR96Ms6SBhzMhUWGrOu8zxnWHDSGZh5hlaeTfmjpiJhBECvyOJbpv3kmqFhO0qoV2KWkgCZ2fjK4A-vgVdS9QwBH3gv6BC0Dw5tr5sT55RFoEAQf1ZjVcZvFJkrlldxPZkYBZc-Uo3fjkPjptICF2JIuwsQ4TznB-OHyeVqmCFPJy6BsgD5hnK-yk" />
+                    <img alt="Visa" class="h-4 opacity-60 grayscale hover:grayscale-0 transition-all"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuApL8G4lB-NuvxMm75pkWuWjqXlUQ7JdWHDv7y0taMEvhOAuJ2OswFnKHUEu_kfrHwGk8u3QaeQhhq8cFK4tQoBahJ3UR-anjs2Fh8e7FBPoOL8U8pfIpZrZMXkXuOfngB54zxgmzxq6bHpwinPZOft81re_K1Pyg1s3voDyDmvA9v_FkMCwREoynh-Bm3eSQrbjNBNmqpnxhbIN-sOISI2jWKD4gNanWsXu_Lw6BvUMTmLdVzZlzLPwr1XcknNexZQQW18eiZgT3Y" />
+                </div>
+            </div>
+        </div>
+    </footer>
 
-</body></html>
+</body>
+
+</html>
