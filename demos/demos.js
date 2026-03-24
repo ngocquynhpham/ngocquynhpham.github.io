@@ -346,10 +346,7 @@
         "</h2>" +
         "<p class=\"card-desc\">" +
         escapeHtml(p.desc) +
-        "</p>" +
-        '<span class="card-url">' +
-        escapeHtml(p.href) +
-        "</span>";
+        "</p>";
       gridEl.appendChild(a);
     }
   }
