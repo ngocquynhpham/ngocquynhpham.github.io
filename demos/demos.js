@@ -31,7 +31,7 @@
     {
       title: "Happy.Stu wedding",
       desc: "Happy.Stu gallery landing: chapters on philosophy and aesthetics, filterable templates, contact form. Quiet-luxury typography and max-width layout.",
-      href: "../projects/wedding/index.html",
+      href: "https://happy.id.vn/",
       cat: "landing",
     },
     {
@@ -110,7 +110,7 @@
       title: "Qkcal",
       desc: "Calculator-oriented mini app for quick numeric work in the browser. Reinforces form controls, display formatting, and keyboard-friendly interaction.",
       href: "../projects/apps/qkcal.html",
-      cat: "landing",
+      cat: "apps",
     },
   
     {
@@ -129,7 +129,7 @@
       title: "Warranty",
       desc: "Warranty module UI: terms, registration, or status presentation. Practices form-heavy content and trust-oriented layout in a contained component.",
       href: "../projects/modules/warranty/index.html",
-      cat: "landing",
+      cat: "ui",
     },
     {
       title: "Inert",
@@ -222,13 +222,6 @@
       href: "../projects/portfolio-versions/portfolio-05.html",
       cat: "portfolio",
     },
-    {
-      title: "GreenSpace landing page",
-      desc: "GreenSpace landing page: a landing page for the GreenSpace project.",
-      href: "../projects/greenspace/index.html",
-      cat: "landing",
-    },
-    
   ];
 
   const TABS = [
