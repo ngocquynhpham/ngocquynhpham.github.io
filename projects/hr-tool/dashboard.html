@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chiến dịch tuyển dụng — HR TOOL</title>
+    <link rel="icon" href="./favicon.png" />
+    <meta
+      name="description"
+      content="Dashboard chiến dịch tuyển dụng — HR Tool: theo dõi pipeline, ứng viên và tiến độ (demo GitHub Pages)."
+    />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://ngocquynhpham.github.io/projects/hr-tool/dashboard.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ngocquynhpham.github.io/projects/hr-tool/dashboard.html" />
+    <meta property="og:title" content="Chiến dịch tuyển dụng — HR TOOL" />
+    <meta
+      property="og:description"
+      content="Dashboard chiến dịch tuyển dụng — HR Tool: theo dõi pipeline, ứng viên và tiến độ (demo GitHub Pages)."
+    />
+    <meta property="og:image" content="https://ngocquynhpham.github.io/logo.ico" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Chiến dịch tuyển dụng — HR TOOL" />
+    <meta
+      name="twitter:description"
+      content="Dashboard chiến dịch tuyển dụng — HR Tool: theo dõi pipeline, ứng viên và tiến độ (demo GitHub Pages)."
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; color: #334155; }
+    </style>
+</head>
+<body class="min-h-screen pb-12">
+    <nav class="bg-blue-800 text-white shadow-md">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap justify-between items-center gap-3">
+            <a href="dashboard.html" class="flex items-center gap-3 hover:opacity-90 transition">
+                <i class="fas fa-graduation-cap text-2xl text-yellow-400"></i>
+                <div>
+                    <span class="font-bold text-lg">HR TOOL</span>
+                    <p class="text-xs text-blue-200">Chiến dịch tuyển dụng</p>
+                </div>
+            </a>
+            <div class="flex items-center gap-3 text-sm">
+                <span id="user-hint" class="text-blue-200 hidden sm:inline"></span>
+                <button type="button" id="btn-logout" class="bg-blue-700 hover:bg-blue-600 px-3 py-1.5 rounded-lg transition">
+                    <i class="fas fa-sign-out-alt mr-1"></i> Đăng xuất
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+            <div>
+                <h1 class="text-xl font-bold text-slate-800">Dashboard</h1>
+                <p class="text-sm text-slate-500 mt-0.5">Tổng quan chiến dịch &amp; ứng viên (số liệu cập nhật khi bạn gửi email từ màn phân tích).</p>
+            </div>
+            <button type="button" id="btn-open-campaign-modal" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-sm transition shrink-0">
+                <i class="fas fa-plus"></i>
+                Thêm chiến dịch
+            </button>
+        </div>
+
+        <div id="stats-grid" class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6">
+            <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Chiến dịch</p>
+                <p id="stat-campaigns" class="text-2xl font-bold text-slate-800 mt-1">0</p>
+            </div>
+            <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Vị trí</p>
+                <p id="stat-positions" class="text-2xl font-bold text-indigo-700 mt-1">0</p>
+                <p class="text-[11px] text-slate-400 mt-0.5">Khác nhau</p>
+            </div>
+            <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Ứng viên</p>
+                <p id="stat-applicants" class="text-2xl font-bold text-blue-700 mt-1">0</p>
+                <p class="text-[11px] text-slate-400 mt-0.5">Đã phân tích (lũy kế)</p>
+            </div>
+            <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Phù hợp</p>
+                <p id="stat-fit" class="text-2xl font-bold text-emerald-600 mt-1">0</p>
+            </div>
+            <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm col-span-2 md:col-span-1">
+                <p class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Không phù hợp</p>
+                <p id="stat-not-fit" class="text-2xl font-bold text-rose-600 mt-1">0</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="dashboard-summary-banner" class="hidden max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 my-8">
+        <div class="relative rounded-xl border border-emerald-200 bg-emerald-50 pl-4 pr-10 py-3 text-sm text-emerald-900 shadow-sm">
+            <button type="button" id="dashboard-summary-close" class="absolute top-2 right-2 p-1.5 rounded-lg text-emerald-700 hover:bg-emerald-100/80 transition" title="Đóng" aria-label="Đóng">
+                <i class="fas fa-times"></i>
+            </button>
+            <p class="font-semibold text-emerald-800 mb-2 pr-2"><i class="fas fa-check-circle mr-2"></i>Đã gửi email (demo). Tổng quan phiên vừa rồi:</p>
+            <ul id="dashboard-summary-list" class="list-disc list-inside space-y-1 text-emerald-900/90"></ul>
+        </div>
+    </div>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-100 flex flex-wrap justify-between items-center gap-3">
+                <h2 class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fas fa-bullhorn text-blue-600"></i>
+                    Chiến dịch đã lưu
+                </h2>
+                <span id="count-badge" class="text-xs font-bold bg-slate-100 text-slate-600 px-2 py-1 rounded-full">0</span>
+            </div>
+            <ul id="campaign-list" class="divide-y divide-slate-100 min-h-[160px]">
+                <!-- JS -->
+            </ul>
+            <div id="empty-state" class="hidden px-6 py-14 text-center border-t border-slate-50">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-slate-100 text-slate-400 mb-4">
+                    <i class="fas fa-folder-open text-3xl"></i>
+                </div>
+                <p class="text-slate-700 font-medium">Chưa có chiến dịch nào</p>
+                <p class="text-sm text-slate-500 mt-2 max-w-sm mx-auto">Tạo chiến dịch để tải JD/CV và phân tích ứng viên. Bấm nút &quot;Thêm chiến dịch&quot; phía trên.</p>
+                <button type="button" class="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm btn-open-campaign-modal-alt">
+                    <i class="fas fa-plus"></i>
+                    Thêm chiến dịch đầu tiên
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup: tạo / sửa chiến dịch -->
+    <div id="campaign-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4" aria-modal="true" role="dialog">
+        <div class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" id="campaign-modal-backdrop"></div>
+        <div class="relative bg-white rounded-2xl shadow-2xl border border-slate-200 w-full max-w-md max-h-[90vh] overflow-y-auto">
+            <div class="sticky top-0 bg-white border-b border-slate-100 px-6 py-4 flex justify-between items-center rounded-t-2xl">
+                <h2 id="form-campaign-title" class="text-lg font-bold text-slate-800 flex items-center gap-2">
+                    <i class="fas fa-plus-circle text-emerald-600"></i>
+                    Tạo chiến dịch mới
+                </h2>
+                <button type="button" id="btn-close-campaign-modal" class="text-slate-400 hover:text-slate-700 p-1 rounded-lg hover:bg-slate-100" aria-label="Đóng">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <p class="text-sm text-slate-500 mb-4">Sau khi lưu, bạn được chuyển sang màn hình tải JD/CV và phân tích.</p>
+                <form id="form-campaign" class="space-y-4">
+                    <input type="hidden" name="editingId" id="editing-id" value="">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-1">Tên chiến dịch <span class="text-red-500">*</span></label>
+                        <input name="campaignName" id="field-campaign-name" required maxlength="120"
+                            class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
+                            placeholder="VD: Tuyển TVTS Q2/2025">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-1">Tên công ty <span class="text-red-500">*</span></label>
+                        <input name="company" id="field-company" required maxlength="120"
+                            class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
+                            placeholder="VD: Công ty ABC">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-1">Email gửi thư cho ứng viên <span class="text-slate-400 font-normal">(hiển thị / Reply-To)</span></label>
+                        <input type="email" name="replyEmail" id="field-reply-email" maxlength="120"
+                            class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
+                            placeholder="tuyendung@congty.com">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-700 mb-1">Vị trí tuyển <span class="text-red-500">*</span></label>
+                        <input name="position" id="field-position" required maxlength="120"
+                            class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500"
+                            placeholder="VD: Nhân viên Tư vấn ghi danh">
+                    </div>
+                    <div class="flex flex-col gap-2 pt-2">
+                        <button type="submit"
+                            class="w-full py-2.5 rounded-lg bg-blue-700 hover:bg-blue-800 text-white font-semibold text-sm transition flex items-center justify-center gap-2">
+                            <i class="fas fa-arrow-right"></i>
+                            <span id="form-submit-label">Vào phân tích</span>
+                        </button>
+                        <button type="button" id="btn-cancel-edit" class="hidden w-full py-2 rounded-lg border border-slate-300 text-slate-700 text-sm hover:bg-slate-50">
+                            Hủy sửa
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const LOGIN_KEY = 'hr_logged_in';
+        const STORAGE_CAMPAIGNS = 'hr_campaigns';
+        const SESSION_CAMPAIGN = 'hr_campaign';
+        let summaryBannerHideTimer = null;
+
+        function hideDashboardSummaryBanner() {
+            if (summaryBannerHideTimer != null) {
+                clearTimeout(summaryBannerHideTimer);
+                summaryBannerHideTimer = null;
+            }
+            const ban = document.getElementById('dashboard-summary-banner');
+            if (ban) ban.classList.add('hidden');
+        }
+
+        function requireLogin() {
+            if (sessionStorage.getItem(LOGIN_KEY) !== '1') {
+                window.location.replace('login.html');
+                return false;
+            }
+            return true;
+        }
+
+        function loadCampaigns() {
+            try {
+                const raw = localStorage.getItem(STORAGE_CAMPAIGNS);
+                return raw ? JSON.parse(raw) : [];
+            } catch {
+                return [];
+            }
+        }
+
+        function saveCampaigns(list) {
+            localStorage.setItem(STORAGE_CAMPAIGNS, JSON.stringify(list));
+        }
+
+        function computeAggregateStats() {
+            const list = loadCampaigns();
+            const campaigns = list.length;
+            const posSet = new Set(list.map(function (c) { return c.position; }).filter(Boolean));
+            let applicants = 0;
+            let fit = 0;
+            let notFit = 0;
+            list.forEach(function (c) {
+                if (c.stats) {
+                    applicants += c.stats.applicants || 0;
+                    fit += c.stats.fit || 0;
+                    notFit += c.stats.notFit || 0;
+                }
+            });
+            return { campaigns: campaigns, positions: posSet.size, applicants: applicants, fit: fit, notFit: notFit };
+        }
+
+        function renderStats() {
+            const s = computeAggregateStats();
+            document.getElementById('stat-campaigns').textContent = String(s.campaigns);
+            document.getElementById('stat-positions').textContent = String(s.positions);
+            document.getElementById('stat-applicants').textContent = String(s.applicants);
+            document.getElementById('stat-fit').textContent = String(s.fit);
+            document.getElementById('stat-not-fit').textContent = String(s.notFit);
+        }
+
+        function openCampaignModal() {
+            document.getElementById('campaign-modal').classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeCampaignModal() {
+            document.getElementById('campaign-modal').classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        function renderList() {
+            const list = loadCampaigns();
+            const ul = document.getElementById('campaign-list');
+            const empty = document.getElementById('empty-state');
+            document.getElementById('count-badge').textContent = String(list.length);
+            renderStats();
+
+            if (!list.length) {
+                ul.innerHTML = '';
+                empty.classList.remove('hidden');
+                return;
+            }
+            empty.classList.add('hidden');
+            ul.innerHTML = list.map(function (c) {
+                const date = c.updatedAt ? new Date(c.updatedAt).toLocaleString('vi-VN') : '';
+                const reply = c.replyEmail || c.brand || '';
+                const st = c.stats;
+                const statsLine = st && (st.applicants != null)
+                    ? '<p class="text-xs text-slate-500 mt-1">Ứng viên (lần gửi gần nhất): ' + (st.applicants) + ' · Phù hợp: ' + (st.fit != null ? st.fit : '—') + ' · Không phù hợp: ' + (st.notFit != null ? st.notFit : '—') + '</p>'
+                    : '<p class="text-xs text-slate-400 mt-1 italic">Chưa có số liệu phân tích — mở phân tích và gửi email để cập nhật.</p>';
+                return (
+                    '<li class="px-6 py-4 hover:bg-slate-50/80 transition flex flex-col gap-3">' +
+                    '<div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">' +
+                    '<div class="min-w-0 flex-1">' +
+                    '<p class="font-semibold text-slate-800">' + escapeHtml(c.campaignName) + '</p>' +
+                    '<p class="text-sm text-slate-600">' + escapeHtml(c.company) + ' · ' + escapeHtml(c.position) + '</p>' +
+                    (reply ? '<p class="text-xs text-slate-500 mt-0.5 truncate" title="' + escapeHtml(reply) + '">Email gửi thư: ' + escapeHtml(reply) + '</p>' : '') +
+                    statsLine +
+                    (date ? '<p class="text-xs text-slate-400 mt-1">' + date + '</p>' : '') +
+                    '</div>' +
+                    '<div class="flex flex-wrap gap-2 shrink-0">' +
+                    '<button type="button" class="edit-campaign px-3 py-2 rounded-lg border border-slate-300 text-slate-700 text-sm hover:bg-slate-50" data-id="' + escapeHtml(c.id) + '">' +
+                    '<i class="fas fa-pen mr-1"></i>Sửa' +
+                    '</button>' +
+                    '<button type="button" class="delete-campaign px-3 py-2 rounded-lg border border-red-200 text-red-700 text-sm hover:bg-red-50" data-id="' + escapeHtml(c.id) + '">' +
+                    '<i class="fas fa-trash-alt mr-1"></i>Xóa' +
+                    '</button>' +
+                    '<button type="button" class="open-campaign px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium" data-id="' + escapeHtml(c.id) + '">' +
+                    '<i class="fas fa-external-link-alt mr-2"></i>Mở phân tích' +
+                    '</button>' +
+                    '</div></div></li>'
+                );
+            }).join('');
+
+            ul.querySelectorAll('.open-campaign').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    const id = btn.getAttribute('data-id');
+                    const c = loadCampaigns().find(function (x) { return x.id === id; });
+                    if (c) goToMain(c);
+                });
+            });
+            ul.querySelectorAll('.edit-campaign').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    const id = btn.getAttribute('data-id');
+                    const c = loadCampaigns().find(function (x) { return x.id === id; });
+                    if (c) startEditCampaign(c);
+                });
+            });
+            ul.querySelectorAll('.delete-campaign').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    const id = btn.getAttribute('data-id');
+                    if (!confirm('Xóa chiến dịch này? Thao tác không hoàn tác.')) return;
+                    const next = loadCampaigns().filter(function (x) { return x.id !== id; });
+                    saveCampaigns(next);
+                    renderList();
+                    if (document.getElementById('editing-id').value === id) cancelEditCampaign();
+                });
+            });
+        }
+
+        function cancelEditCampaign() {
+            document.getElementById('editing-id').value = '';
+            document.getElementById('form-campaign').reset();
+            document.getElementById('form-campaign-title').innerHTML = '<i class="fas fa-plus-circle text-emerald-600"></i> Tạo chiến dịch mới';
+            document.getElementById('form-submit-label').textContent = 'Vào phân tích';
+            document.getElementById('btn-cancel-edit').classList.add('hidden');
+            closeCampaignModal();
+        }
+
+        function startEditCampaign(c) {
+            document.getElementById('editing-id').value = c.id;
+            document.getElementById('field-campaign-name').value = c.campaignName || '';
+            document.getElementById('field-company').value = c.company || '';
+            document.getElementById('field-position').value = c.position || '';
+            document.getElementById('field-reply-email').value = c.replyEmail || c.brand || '';
+            document.getElementById('form-campaign-title').innerHTML = '<i class="fas fa-edit text-amber-600"></i> Sửa chiến dịch';
+            document.getElementById('form-submit-label').textContent = 'Lưu & mở phân tích';
+            document.getElementById('btn-cancel-edit').classList.remove('hidden');
+            openCampaignModal();
+        }
+
+        function escapeHtml(s) {
+            const d = document.createElement('div');
+            d.textContent = s;
+            return d.innerHTML;
+        }
+
+        function goToMain(campaign) {
+            sessionStorage.setItem(SESSION_CAMPAIGN, JSON.stringify(campaign));
+            window.location.href = 'main.html';
+        }
+
+        document.getElementById('form-campaign').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const fd = new FormData(e.target);
+            const editingId = String(fd.get('editingId') || '').trim();
+            const campaign = {
+                campaignName: String(fd.get('campaignName') || '').trim(),
+                company: String(fd.get('company') || '').trim(),
+                replyEmail: String(fd.get('replyEmail') || '').trim(),
+                position: String(fd.get('position') || '').trim(),
+                updatedAt: Date.now()
+            };
+            const list = loadCampaigns();
+            if (editingId) {
+                const idx = list.findIndex(function (x) { return x.id === editingId; });
+                if (idx >= 0) {
+                    campaign.id = editingId;
+                    list[idx] = Object.assign({}, list[idx], campaign);
+                    saveCampaigns(list);
+                    renderList();
+                    cancelEditCampaign();
+                    goToMain(list[idx]);
+                }
+                return;
+            }
+            campaign.id = (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : 'c_' + Date.now();
+            list.unshift(campaign);
+            saveCampaigns(list);
+            renderList();
+            cancelEditCampaign();
+            goToMain(campaign);
+        });
+
+        document.getElementById('btn-cancel-edit').addEventListener('click', cancelEditCampaign);
+
+        document.getElementById('btn-logout').addEventListener('click', function () {
+            sessionStorage.removeItem(LOGIN_KEY);
+            sessionStorage.removeItem('hr_user_email');
+            sessionStorage.removeItem(SESSION_CAMPAIGN);
+            window.location.href = 'login.html';
+        });
+
+        function showDashboardSummary() {
+            try {
+                const raw = sessionStorage.getItem('hr_dashboard_summary');
+                if (!raw) return;
+                sessionStorage.removeItem('hr_dashboard_summary');
+                const s = JSON.parse(raw);
+                const ul = document.getElementById('dashboard-summary-list');
+                const ban = document.getElementById('dashboard-summary-banner');
+                if (!ul || !ban) return;
+                const items = [
+                    'Tổng chiến dịch đã lưu: ' + (s.totalCampaigns != null ? s.totalCampaigns : '—'),
+                    'Số vị trí (khác nhau): ' + (s.totalPositions != null ? s.totalPositions : '—'),
+                    'Ứng viên trong phiên vừa phân tích: ' + (s.sessionApplicants != null ? s.sessionApplicants : '—'),
+                    'Phù hợp: ' + (s.sessionFit != null ? s.sessionFit : '—') + ' · Không phù hợp: ' + (s.sessionNotFit != null ? s.sessionNotFit : '—')
+                ];
+                if (s.campaignName) items.unshift('Chiến dịch: ' + s.campaignName);
+                ul.innerHTML = items.map(function (line) { return '<li>' + escapeHtml(line) + '</li>'; }).join('');
+                ban.classList.remove('hidden');
+                if (summaryBannerHideTimer != null) clearTimeout(summaryBannerHideTimer);
+                summaryBannerHideTimer = window.setTimeout(function () {
+                    summaryBannerHideTimer = null;
+                    hideDashboardSummaryBanner();
+                }, 5000);
+            } catch (err) { /* ignore */ }
+        }
+
+        document.getElementById('dashboard-summary-close').addEventListener('click', hideDashboardSummaryBanner);
+
+        document.getElementById('btn-open-campaign-modal').addEventListener('click', function () {
+            document.getElementById('editing-id').value = '';
+            document.getElementById('form-campaign').reset();
+            document.getElementById('form-campaign-title').innerHTML = '<i class="fas fa-plus-circle text-emerald-600"></i> Tạo chiến dịch mới';
+            document.getElementById('form-submit-label').textContent = 'Vào phân tích';
+            document.getElementById('btn-cancel-edit').classList.add('hidden');
+            openCampaignModal();
+        });
+
+        document.querySelectorAll('.btn-open-campaign-modal-alt').forEach(function (el) {
+            el.addEventListener('click', function () {
+                document.getElementById('btn-open-campaign-modal').click();
+            });
+        });
+
+        function tryCloseCampaignModal() {
+            if (document.getElementById('editing-id').value) {
+                if (confirm('Đóng form? Thay đổi chưa lưu sẽ mất.')) cancelEditCampaign();
+            } else {
+                closeCampaignModal();
+            }
+        }
+
+        document.getElementById('btn-close-campaign-modal').addEventListener('click', tryCloseCampaignModal);
+
+        document.getElementById('campaign-modal-backdrop').addEventListener('click', tryCloseCampaignModal);
+
+        if (!requireLogin()) {}
+        else {
+            const em = sessionStorage.getItem('hr_user_email');
+            if (em) document.getElementById('user-hint').textContent = em;
+            renderList();
+            showDashboardSummary();
+        }
+    </script>
+</body>
+</html>

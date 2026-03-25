@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR TOOL — Phân tích JD &amp; CV</title>
+    <link rel="icon" href="./favicon.png" />
+    <meta
+      name="description"
+      content="HR Tool — phân tích JD & CV, upload tài liệu và trực quan hóa kết quả (demo front-end trên GitHub Pages)."
+    />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://ngocquynhpham.github.io/projects/hr-tool/main.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ngocquynhpham.github.io/projects/hr-tool/main.html" />
+    <meta property="og:title" content="HR TOOL — Phân tích JD & CV" />
+    <meta
+      property="og:description"
+      content="HR Tool — phân tích JD & CV, upload tài liệu và trực quan hóa kết quả (demo front-end trên GitHub Pages)."
+    />
+    <meta property="og:image" content="https://ngocquynhpham.github.io/logo.ico" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="HR TOOL — Phân tích JD & CV" />
+    <meta
+      name="twitter:description"
+      content="HR Tool — phân tích JD & CV, upload tài liệu và trực quan hóa kết quả (demo front-end trên GitHub Pages)."
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; color: #334155; }
+        .tab-btn.active { border-bottom: 3px solid #2563eb; color: #2563eb; font-weight: 600; background-color: #eff6ff; }
+        .glass-panel { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .fade-in { animation: fadeIn 0.4s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .drop-zone { border: 2px dashed #cbd5e1; transition: border-color 0.2s, background 0.2s; }
+        .drop-zone.dragover { border-color: #2563eb; background: #eff6ff; }
+        /* Công tắc Phù hợp: đồng bộ trạng thái (bổ sung cho Tailwind peer) */
+        #fit-toggle:checked + label { background-color: #10b981 !important; }
+        #fit-toggle:checked + label > span { transform: translateX(1.25rem); }
+        #fit-toggle:focus-visible + label { outline: 2px solid #3b82f6; outline-offset: 2px; }
+    </style>
+</head>
+<body class="pb-20">
+
+    <!-- Navbar -->
+    <nav class="bg-blue-800 text-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap justify-between items-center gap-3">
+            <a href="dashboard.html" class="flex items-center space-x-3 hover:opacity-90 transition" title="Về Dashboard">
+                <i class="fas fa-graduation-cap text-3xl text-yellow-400"></i>
+                <div>
+                    <span class="font-bold text-xl tracking-wider block">HR TOOL</span>
+                    <span id="nav-campaign-label" class="text-xs text-blue-200 font-normal"></span>
+                </div>
+            </a>
+            <div class="flex flex-wrap items-center gap-2">
+                <a href="dashboard.html" class="text-sm font-medium bg-blue-700 hover:bg-blue-600 px-3 py-2 rounded-lg transition">
+                    <i class="fas fa-bullhorn mr-1"></i> Chiến dịch
+                </a>
+                <div id="nav-position-pill" class="text-sm font-medium bg-blue-700 px-4 py-2 rounded-full max-w-[min(100%,20rem)] truncate" title="">
+                    Vị trí: —
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+        <!-- Upload JD & CV (client-side only; không gửi lên cloud) -->
+        <div id="section-upload" class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 fade-in">
+            <h2 class="text-lg font-bold text-slate-800 mb-2 flex items-center flex-wrap gap-2">
+                <i class="fas fa-cloud-upload-alt text-blue-600"></i>
+                Tải JD &amp; CV (demo)
+            </h2>
+            <p class="text-sm text-slate-500 mb-4">
+                Chọn file <strong>.pdf</strong>, <strong>.docx</strong> hoặc <strong>.txt</strong>. Nội dung được đọc trong trình duyệt (không upload server). Giới hạn: <strong>1 file JD</strong>, tối đa <strong>5 CV</strong>.
+            </p>
+            <p class="text-xs text-amber-800 bg-amber-50 border border-amber-100 rounded-lg px-3 py-2 mb-4">
+                <i class="fas fa-info-circle mr-1"></i>
+                <strong>Phân tích tự động</strong> chạy trong trình duyệt (mô phỏng AI — tóm tắt JD, trọng số, đối chiếu từng CV). Khi tích hợp API thật, chỉ cần thay lớp sinh nội dung này.
+            </p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Mô tả công việc (JD)</label>
+                    <input type="file" id="jd-input" accept=".pdf,.docx,.txt" class="hidden">
+                    <div id="jd-drop" class="drop-zone rounded-lg p-6 text-center cursor-pointer bg-slate-50 hover:bg-slate-100/80">
+                        <i class="fas fa-file-contract text-3xl text-slate-400 mb-2"></i>
+                        <p class="text-sm text-slate-600" id="jd-hint">Kéo thả hoặc bấm để chọn 1 file JD</p>
+                        <p id="jd-file-name" class="text-xs text-blue-600 font-medium mt-2 min-h-[1.25rem]"></p>
+                    </div>
+                    <p id="jd-status" class="text-xs text-slate-500 mt-2"></p>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">Hồ sơ ứng viên (CV)</label>
+                    <input type="file" id="cv-input" accept=".pdf,.docx,.txt" multiple class="hidden">
+                    <div id="cv-drop" class="drop-zone rounded-lg p-6 text-center cursor-pointer bg-slate-50 hover:bg-slate-100/80">
+                        <i class="fas fa-id-card text-3xl text-slate-400 mb-2"></i>
+                        <p class="text-sm text-slate-600" id="cv-hint">Kéo thả hoặc bấm để chọn tối đa 5 file CV</p>
+                        <div id="cv-chips" class="flex flex-wrap gap-2 justify-center mt-3 min-h-[2rem]"></div>
+                    </div>
+                    <p id="cv-status" class="text-xs text-slate-500 mt-2"></p>
+                </div>
+            </div>
+
+            <div class="mt-4 flex flex-wrap items-center gap-3">
+                <button type="button" id="btn-clear-uploads" class="text-sm text-red-600 hover:text-red-700 border border-red-200 rounded-lg px-3 py-2 hover:bg-red-50">
+                    <i class="fas fa-trash-alt mr-1"></i> Xóa file đã chọn (phiên này)
+                </button>
+                <button type="button" id="btn-analyze" class="text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg px-4 py-2.5 shadow-sm transition inline-flex items-center gap-2">
+                    <i class="fas fa-magic"></i>
+                    Phân tích hồ sơ
+                </button>
+                <span class="text-xs text-slate-400">Cần <strong>1 JD</strong> và <strong>ít nhất 1 CV</strong>. Bấm <strong>Phân tích hồ sơ</strong> để sinh các khối 1–3 bên dưới.</span>
+            </div>
+
+            <div id="preview-panel" class="hidden mt-6 border-t border-slate-200 pt-6">
+                <p class="text-sm text-slate-600 mb-4">
+                    <i class="fas fa-clipboard text-blue-500 mr-1"></i>
+                    Bạn có thể <strong>dán trực tiếp</strong> JD vào ô bên trái hoặc chỉnh sửa sau khi tải file. Bên phải là nội dung CV đã đọc (chỉ xem / tự cập nhật khi đổi file).
+                </p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 items-stretch">
+                    <div class="flex flex-col min-h-[14rem]">
+                        <label class="text-xs font-bold text-slate-500 uppercase mb-1.5">JD — tải file hoặc dán / chỉnh tay</label>
+                        <textarea id="jd-text-preview" rows="14" class="flex-1 w-full min-h-[14rem] text-sm border border-slate-200 rounded-lg p-3 bg-slate-50 font-mono text-slate-800 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Chưa có JD — tải file .pdf / .docx / .txt hoặc dán nội dung vào đây…"></textarea>
+                    </div>
+                    <div class="flex flex-col min-h-[14rem]">
+                        <label class="text-xs font-bold text-slate-500 uppercase mb-1.5">CV đã tải (xem trước)</label>
+                        <div id="cv-text-preview" class="flex-1 w-full min-h-[14rem] max-h-[28rem] overflow-y-auto text-sm border border-slate-200 rounded-lg p-3 bg-slate-50 text-slate-600"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gợi ý trước khi phân tích (mục 1–3 ẩn cho đến khi bấm Phân tích hồ sơ) -->
+        <div id="pre-analysis-hint" class="bg-white rounded-xl border-2 border-dashed border-slate-200 p-8 text-center text-slate-500 fade-in">
+            <i class="fas fa-wand-magic-sparkles text-3xl text-blue-300 mb-3 block"></i>
+            <p class="text-sm max-w-xl mx-auto">
+                Vui lòng bấm <strong class="text-emerald-700">Phân tích hồ sơ</strong>.
+            </p>
+        </div>
+
+        <div id="results-blocks" class="hidden space-y-8">
+        <!-- Section 1 & 2: Intro & JD Analysis -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 fade-in">
+            <!-- 1. Giới thiệu -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h2 class="text-lg font-bold text-slate-800 mb-3 flex items-center"><i class="fas fa-building text-blue-600 mr-2"></i> 1. Ngữ cảnh chiến dịch</h2>
+                <p class="text-xs text-slate-400 mb-2"><i class="fas fa-robot mr-1"></i> Tóm tắt tự động từ JD + thông tin chiến dịch (demo — thay bằng API AI khi tích hợp).</p>
+                <p id="intro-context" class="text-sm text-slate-600 leading-relaxed mb-4 whitespace-pre-wrap"></p>
+                <div id="intro-schedule" class="flex items-start space-x-2 text-sm text-blue-700 bg-blue-50 px-3 py-2 rounded-md hidden">
+                    <i class="fas fa-clock mt-0.5"></i>
+                    <span id="intro-schedule-text"></span>
+                </div>
+            </div>
+
+            <!-- 2. Phân tích JD -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+                <h2 class="text-lg font-bold text-slate-800 mb-3 flex items-center"><i class="fas fa-balance-scale text-emerald-600 mr-2"></i> 2. Phân tích JD &amp; Trọng số</h2>
+                <p class="text-xs text-slate-400 mb-3"><i class="fas fa-robot mr-1"></i> Trọng số suy ra từ nội dung JD (từ khóa / cấu trúc) — khác nhau theo từng chiến dịch.</p>
+                <div id="jd-weights-container" class="space-y-3">
+                    <!-- Sinh bởi JS sau phân tích -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Candidates Dashboard -->
+        <div id="section-candidates" class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden fade-in scroll-mt-24">
+            <div class="bg-slate-50 border-b border-slate-200 px-6 py-4 flex flex-wrap justify-between items-center gap-3">
+                <div>
+                    <h2 class="text-lg font-bold text-slate-800"><i class="fas fa-users text-blue-600 mr-2"></i> 3. Đánh Giá Hồ Sơ Ứng Viên</h2>
+                    <p class="text-xs text-slate-500 mt-1">Mỗi file CV một tab — đối chiếu chuyên sâu với JD. Bước 4 (gửi mail) mở bằng nút bên dưới.</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <div class="text-sm font-medium text-slate-600 bg-white px-3 py-1 border border-slate-200 rounded-md">
+                        Tổng số: <span id="cv-count-badge" class="text-blue-600 font-bold">0</span> hồ sơ
+                    </div>
+                    <button type="button" id="btn-go-step4" class="text-sm font-semibold text-white bg-blue-700 hover:bg-blue-800 rounded-lg px-4 py-2 shadow-sm transition inline-flex items-center gap-2">
+                        <i class="fas fa-envelope"></i>
+                        Đi đến bước cuối / gửi mail
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="flex overflow-x-auto border-b border-slate-200" id="tabs-container">
+                <!-- Generated by JS -->
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-0">
+                <!-- Left: Chart -->
+                <div class="lg:col-span-5 p-6 border-r border-slate-100 flex flex-col items-center bg-slate-50/50">
+                    <h3 class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4">Biểu đồ Năng lực (Mapping JD)</h3>
+                    <div class="w-full relative" style="height: 280px;">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                    
+                    <!-- HR Decision Box -->
+                    <div class="mt-6 w-full bg-white border border-blue-100 rounded-lg p-4 shadow-sm">
+                        <h4 class="font-bold text-slate-800 mb-4 border-b pb-2 text-sm">QUYẾT ĐỊNH CỦA HR</h4>
+                        
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-sm font-medium text-slate-700">Trạng thái Phù hợp:</span>
+                            <div class="flex items-center gap-2">
+                                <span id="fit-toggle-hint-off" class="text-xs text-slate-400">Không</span>
+                                <input type="checkbox" id="fit-toggle" class="peer sr-only" onchange="updateCandidateData()">
+                                <label for="fit-toggle" class="relative block h-6 w-11 cursor-pointer rounded-full bg-slate-300 transition-colors peer-checked:bg-emerald-500 peer-focus-visible:ring-2 peer-focus-visible:ring-blue-400 peer-focus-visible:ring-offset-2 peer-checked:[&>span]:translate-x-[1.25rem]">
+                                    <span class="pointer-events-none absolute left-0.5 top-0.5 block h-5 w-5 rounded-full bg-white shadow transition-transform duration-200"></span>
+                                </label>
+                                <span id="fit-toggle-hint-on" class="text-xs font-medium text-emerald-600">Phù hợp</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm font-medium text-slate-700">Chấm điểm (1-10):</span>
+                            <select id="rating-select" class="bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-24 p-2 cursor-pointer" onchange="updateCandidateData()">
+                                <option value="1">1</option><option value="2">2</option><option value="3">3</option>
+                                <option value="4">4</option><option value="5">5</option><option value="6">6</option>
+                                <option value="7">7</option><option value="8">8</option><option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Details -->
+                <div class="lg:col-span-7 p-6">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h2 id="cand-name" class="text-2xl font-bold text-slate-800 uppercase">Họ Tên</h2>
+                            <p id="cand-edu" class="text-blue-600 font-medium text-sm mt-1"></p>
+                        </div>
+                        <span id="cand-badge" class="px-3 py-1 rounded-full text-xs font-bold border"></span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+                            <p class="text-xs text-slate-400 font-bold uppercase mb-1">Kinh nghiệm</p>
+                            <p id="cand-exp" class="text-sm font-medium text-slate-800"></p>
+                        </div>
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+                            <p class="text-xs text-slate-400 font-bold uppercase mb-1">Kỹ năng mềm</p>
+                            <p id="cand-soft" class="text-sm font-medium text-slate-800"></p>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <h3 class="text-sm font-bold text-slate-800 mb-2 border-l-4 border-amber-500 pl-2">Đánh giá chuyên sâu (Đối soát JD)</h3>
+                        <div class="bg-amber-50/50 rounded-lg p-4 border border-amber-100">
+                            <div class="mb-3">
+                                <strong class="text-emerald-700 text-sm"><i class="fas fa-check-circle mr-1"></i> Điểm phù hợp JD:</strong>
+                                <ul id="cand-pros" class="list-disc list-inside text-sm text-slate-700 mt-1 space-y-1"></ul>
+                            </div>
+                            <div>
+                                <strong class="text-red-600 text-sm"><i class="fas fa-exclamation-triangle mr-1"></i> Rủi ro / Cần làm rõ:</strong>
+                                <ul id="cand-cons" class="list-disc list-inside text-sm text-slate-700 mt-1 space-y-1"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div><!-- /#results-blocks -->
+
+        <!-- Section 4: chỉ hiện sau khi bấm "Đi đến bước cuối / gửi mail" ở bước 3 -->
+        <div id="section-email" class="hidden bg-white rounded-xl shadow-sm border border-slate-200 p-6 fade-in scroll-mt-24">
+            <h2 class="text-lg font-bold text-slate-800 mb-2"><i class="fas fa-envelope-open-text text-blue-600 mr-2"></i> 4. Quản Lý Hành Động &amp; Gửi Mail</h2>
+            <p class="text-sm text-slate-500 mb-6">Dữ liệu theo ứng viên đã phân tích (JD + CV). Cập nhật khi bạn đổi gắn cờ &quot;Phù hợp&quot; ở bước 3.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="action-grid">
+                <!-- Action cards generated by JS -->
+            </div>
+
+            <!-- Bulk Reject Section -->
+            <div class="mt-8 pt-6 border-t border-slate-200">
+                <h3 class="text-sm font-bold text-slate-800 mb-3"><i class="fas fa-layer-group text-slate-500 mr-2"></i> Gửi Mail Từ Chối Hàng Loạt (Dành cho ứng viên Không phù hợp)</h3>
+                <div class="flex items-center space-x-4">
+                    <input type="text" id="bulk-email-list" class="flex-1 bg-slate-50 border border-slate-300 text-slate-700 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5" placeholder="Các email sẽ tự động điền vào đây..." readonly>
+                    <button onclick="previewBulkReject()" class="bg-slate-800 hover:bg-slate-700 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center transition">
+                        <i class="fas fa-paper-plane mr-2"></i> Xem trước & Gửi
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal Xem Trước Email -->
+    <div id="email-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="bg-slate-100 border-b border-slate-200 px-6 py-4 flex justify-between items-center">
+                <h3 class="font-bold text-slate-800" id="modal-title">Xem trước Email</h3>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-red-500 transition">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto flex-1">
+                <div class="mb-4">
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Gửi đến (To):</label>
+                    <input type="text" id="modal-to" class="w-full bg-slate-50 border border-slate-200 rounded p-2 text-sm" readonly>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Chủ đề (Subject) — có thể sửa:</label>
+                    <input type="text" id="modal-subject" class="w-full font-medium bg-white border border-slate-200 rounded p-2 text-sm focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Nội dung (Body) — có thể sửa trực tiếp:</label>
+                    <textarea id="modal-body" rows="14" class="w-full bg-white border border-slate-200 rounded p-4 text-sm text-slate-700 leading-relaxed font-sans resize-y min-h-[12rem] focus:ring-2 focus:ring-blue-500"></textarea>
+                </div>
+            </div>
+
+            <div id="email-modal-footer-default" class="bg-slate-50 border-t border-slate-200 px-6 py-4 flex flex-wrap justify-end gap-3">
+                <button type="button" onclick="closeModal()" class="px-4 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-300 rounded-lg hover:bg-slate-50">Hủy</button>
+                <button type="button" id="btn-modal-send" onclick="sendEmailAction()" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-lg hover:bg-blue-700 flex items-center">
+                    <i class="fas fa-paper-plane mr-2"></i> Xác nhận Gửi
+                </button>
+            </div>
+            <div id="email-modal-footer-sent" class="hidden bg-slate-50 border-t border-slate-200 px-6 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <p class="text-sm text-emerald-700 font-medium"><i class="fas fa-check-circle mr-1"></i> Đã gửi email (demo).</p>
+                <div class="flex flex-wrap gap-2 justify-end">
+                    <button type="button" onclick="closeModal()" class="px-4 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-300 rounded-lg hover:bg-slate-50">Đóng</button>
+                    <button type="button" onclick="goToDashboardFromEmail()" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 inline-flex items-center gap-2">
+                        <i class="fas fa-th-large"></i> Về Dashboard
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SESSION_CAMPAIGN = 'hr_campaign';
+        /** @type {{ id?: string, campaignName?: string, company?: string, brand?: string, replyEmail?: string, position?: string } | null} */
+        let hrCampaign = null;
+
+        function loadCampaignOrRedirect() {
+            try {
+                const raw = sessionStorage.getItem(SESSION_CAMPAIGN);
+                if (!raw) {
+                    window.location.replace('dashboard.html');
+                    return null;
+                }
+                hrCampaign = JSON.parse(raw);
+                return hrCampaign;
+            } catch (e) {
+                window.location.replace('dashboard.html');
+                return null;
+            }
+        }
+
+        function applyCampaignToNavbar() {
+            if (!hrCampaign) return;
+            const pos = hrCampaign.position || '—';
+            const company = hrCampaign.company || '';
+            const pill = document.getElementById('nav-position-pill');
+            pill.textContent = 'Vị trí: ' + pos;
+            pill.setAttribute('title', pos);
+            const label = document.getElementById('nav-campaign-label');
+            const parts = [hrCampaign.campaignName, company].filter(Boolean);
+            label.textContent = parts.join(' · ');
+        }
+
+        // --- Upload: trích text trong trình duyệt (PDF / DOCX / TXT) ---
+        const MAX_CV = 5;
+        const STORAGE_JD = 'ats_demo_jd_text';
+        const STORAGE_JD_NAME = 'ats_demo_jd_name';
+        const STORAGE_CV = 'ats_demo_cv_meta';
+
+        if (typeof pdfjsLib !== 'undefined') {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+
+        let jdExtractedText = '';
+        let jdFileName = '';
+        /** @type {{ name: string, text: string }[]} */
+        let cvItems = [];
+
+        function extOf(name) {
+            const i = name.lastIndexOf('.');
+            return i >= 0 ? name.slice(i + 1).toLowerCase() : '';
+        }
+
+        async function extractTextFromFile(file) {
+            const ext = extOf(file.name);
+            if (ext === 'txt') {
+                return new Promise((resolve, reject) => {
+                    const r = new FileReader();
+                    r.onload = () => resolve(String(r.result || ''));
+                    r.onerror = () => reject(r.error);
+                    r.readAsText(file, 'UTF-8');
+                });
+            }
+            if (ext === 'pdf') {
+                const buf = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+                let full = '';
+                for (let p = 1; p <= pdf.numPages; p++) {
+                    const page = await pdf.getPage(p);
+                    const content = await page.getTextContent();
+                    const strings = content.items.map(it => ('str' in it ? it.str : ''));
+                    full += strings.join(' ') + '\n';
+                }
+                return full.trim();
+            }
+            if (ext === 'docx') {
+                const buf = await file.arrayBuffer();
+                const result = await mammoth.extractRawText({ arrayBuffer: buf });
+                return (result.value || '').trim();
+            }
+            if (ext === 'doc') {
+                throw new Error('Định dạng .doc (Word cũ) chưa hỗ trợ trong demo. Vui lòng lưu thành .docx hoặc .pdf.');
+            }
+            throw new Error('Định dạng không hỗ trợ: ' + ext);
+        }
+
+        function persistUploadSession() {
+            try {
+                sessionStorage.setItem(STORAGE_JD, jdExtractedText);
+                sessionStorage.setItem(STORAGE_JD_NAME, jdFileName);
+                sessionStorage.setItem(STORAGE_CV, JSON.stringify(cvItems.map(c => ({ name: c.name, text: c.text }))));
+            } catch (e) {
+                console.warn('sessionStorage đầy hoặc tắt:', e);
+            }
+        }
+
+        function updatePreviewVisibility() {
+            const ta = document.getElementById('jd-text-preview');
+            const jdVal = (ta && ta.value) ? ta.value.trim() : '';
+            const hasJd = jdVal.length > 0 || (typeof jdExtractedText === 'string' && jdExtractedText.trim().length > 0);
+            const hasCv = cvItems.length > 0;
+            const panel = document.getElementById('preview-panel');
+            if (!panel) return;
+            if (hasJd || hasCv) panel.classList.remove('hidden');
+            else panel.classList.add('hidden');
+        }
+
+        function loadUploadSession() {
+            try {
+                const jt = sessionStorage.getItem(STORAGE_JD);
+                const jn = sessionStorage.getItem(STORAGE_JD_NAME);
+                const cm = sessionStorage.getItem(STORAGE_CV);
+                if (jt) {
+                    jdExtractedText = jt;
+                    jdFileName = jn || '';
+                    document.getElementById('jd-text-preview').value = jdExtractedText;
+                    document.getElementById('jd-file-name').textContent = jdFileName ? 'Đã chọn: ' + jdFileName : '';
+                    document.getElementById('jd-status').textContent = jdFileName ? 'Đã khôi phục từ phiên (session).' : '';
+                }
+                if (cm) {
+                    cvItems = JSON.parse(cm);
+                    renderCvChips();
+                    renderCvPreview();
+                    document.getElementById('cv-status').textContent = cvItems.length ? cvItems.length + ' CV trong session.' : '';
+                }
+                updatePreviewVisibility();
+            } catch (e) { /* ignore */ }
+        }
+
+        function renderCvChips() {
+            const el = document.getElementById('cv-chips');
+            el.innerHTML = cvItems.map(c => 
+                '<span class="inline-flex items-center bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs px-2 py-1 rounded"><i class="fas fa-file-alt mr-1"></i>' + 
+                escapeHtml(c.name) + '</span>'
+            ).join('');
+        }
+
+        function renderCvPreview() {
+            const el = document.getElementById('cv-text-preview');
+            if (!cvItems.length) {
+                el.textContent = 'Chưa có CV…';
+                return;
+            }
+            el.innerHTML = cvItems.map(c => {
+                const preview = (c.text || '').slice(0, 400).replace(/\s+/g, ' ');
+                return '<p class="mb-2 border-b border-slate-100 pb-2 last:border-0"><strong class="text-slate-700">' + escapeHtml(c.name) + '</strong><br><span class="text-xs">' + escapeHtml(preview) + (c.text.length > 400 ? '…' : '') + '</span></p>';
+            }).join('');
+        }
+
+        function escapeHtml(s) {
+            const d = document.createElement('div');
+            d.textContent = s;
+            return d.innerHTML;
+        }
+
+        async function handleJdFile(file) {
+            if (!file) return;
+            document.getElementById('jd-status').textContent = 'Đang đọc file…';
+            try {
+                jdExtractedText = await extractTextFromFile(file);
+                jdFileName = file.name;
+                document.getElementById('jd-text-preview').value = jdExtractedText;
+                document.getElementById('jd-file-name').textContent = 'Đã chọn: ' + file.name;
+                document.getElementById('jd-status').textContent = 'Đã trích ' + jdExtractedText.length + ' ký tự.';
+                persistUploadSession();
+                updatePreviewVisibility();
+            } catch (e) {
+                jdExtractedText = '';
+                jdFileName = '';
+                document.getElementById('jd-status').textContent = 'Lỗi: ' + (e.message || e);
+                document.getElementById('jd-file-name').textContent = '';
+            }
+        }
+
+        async function handleCvFiles(fileList) {
+            const files = Array.from(fileList || []).slice(0, MAX_CV);
+            if (!files.length) return;
+            document.getElementById('cv-status').textContent = 'Đang đọc ' + files.length + ' file…';
+            cvItems = [];
+            for (const f of files) {
+                try {
+                    const text = await extractTextFromFile(f);
+                    cvItems.push({ name: f.name, text });
+                } catch (e) {
+                    cvItems.push({ name: f.name, text: '[Lỗi đọc: ' + (e.message || e) + ']' });
+                }
+            }
+            renderCvChips();
+            renderCvPreview();
+            document.getElementById('cv-status').textContent = 'Đã tải ' + cvItems.length + '/' + MAX_CV + ' CV.';
+            persistUploadSession();
+            updatePreviewVisibility();
+        }
+
+        function setupDropZone(dropEl, inputEl, onPick) {
+            dropEl.addEventListener('click', () => inputEl.click());
+            dropEl.addEventListener('dragover', (e) => { e.preventDefault(); dropEl.classList.add('dragover'); });
+            dropEl.addEventListener('dragleave', () => dropEl.classList.remove('dragover'));
+            dropEl.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropEl.classList.remove('dragover');
+                onPick(e.dataTransfer.files);
+            });
+        }
+
+        function initUploadUI() {
+            const jdInput = document.getElementById('jd-input');
+            const cvInput = document.getElementById('cv-input');
+            const jdDrop = document.getElementById('jd-drop');
+            const cvDrop = document.getElementById('cv-drop');
+
+            jdInput.addEventListener('change', () => {
+                const f = jdInput.files && jdInput.files[0];
+                if (f) handleJdFile(f);
+                jdInput.value = '';
+            });
+            cvInput.addEventListener('change', () => {
+                if (cvInput.files && cvInput.files.length) handleCvFiles(cvInput.files);
+                cvInput.value = '';
+            });
+
+            setupDropZone(jdDrop, jdInput, (files) => {
+                if (files && files[0]) handleJdFile(files[0]);
+            });
+            setupDropZone(cvDrop, cvInput, (files) => {
+                if (files && files.length) handleCvFiles(files);
+            });
+
+            document.getElementById('btn-clear-uploads').addEventListener('click', () => {
+                jdExtractedText = '';
+                jdFileName = '';
+                cvItems = [];
+                document.getElementById('jd-text-preview').value = '';
+                document.getElementById('jd-file-name').textContent = '';
+                document.getElementById('jd-status').textContent = '';
+                document.getElementById('cv-status').textContent = '';
+                document.getElementById('cv-chips').innerHTML = '';
+                document.getElementById('cv-text-preview').innerHTML = '';
+                try {
+                    sessionStorage.removeItem(STORAGE_JD);
+                    sessionStorage.removeItem(STORAGE_JD_NAME);
+                    sessionStorage.removeItem(STORAGE_CV);
+                } catch (e) { /* ignore */ }
+                if (typeof resetAnalysisUi === 'function') resetAnalysisUi();
+                updatePreviewVisibility();
+            });
+
+            document.getElementById('jd-text-preview').addEventListener('input', () => {
+                jdExtractedText = document.getElementById('jd-text-preview').value;
+                persistUploadSession();
+                updatePreviewVisibility();
+            });
+
+            loadUploadSession();
+        }
+
+        // 1. Ứng viên & phân tích (sinh sau khi bấm "Phân tích hồ sơ", 1 tab = 1 CV)
+        /** @type {{ id: number, name: string, email: string, edu: string, exp: string, soft: string, scores: number[], pros: string[], cons: string[], isFit: boolean, rating: number }[]} */
+        let candidates = [];
+        let radarLabels = ['Kinh nghiệm', 'Kỹ năng / chuyên môn', 'Học vấn', 'Giao tiếp', 'Thái độ / văn hóa'];
+        let analysisDone = false;
+        let step4Visible = false;
+
+        let currentIndex = 0;
+        let myRadarChart = null;
+
+        function strHash(s) {
+            let h = 0;
+            for (let i = 0; i < s.length; i++) h = Math.imul(31, h) + s.charCodeAt(i) | 0;
+            return Math.abs(h);
+        }
+
+        function tokenize(text) {
+            const m = (text || '').toLowerCase().match(/[\p{L}\p{N}]+/gu);
+            return m ? [...new Set(m)].filter(w => w.length > 3) : [];
+        }
+
+        function extractEmailFromCv(text) {
+            const m = (text || '').match(/\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b/);
+            return m ? m[0] : null;
+        }
+
+        function extractNameFromCv(text, filename) {
+            const lines = (text || '').split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+            for (const line of lines.slice(0, 12)) {
+                if (line.length < 3 || line.length > 90) continue;
+                if (/@/.test(line)) continue;
+                if (/^(cv|resume|curriculum|phone|điện thoại|zalo|linkedin)/i.test(line)) continue;
+                const cleaned = line.replace(/^[-–•\d.\s]+/, '').replace(/\s+/g, ' ').trim();
+                if (cleaned.length >= 3 && !/^\d+$/.test(cleaned)) {
+                    return cleaned.length > 60 ? cleaned.slice(0, 60).toUpperCase() : cleaned.toUpperCase();
+                }
+            }
+            const base = (filename || 'ung_vien').replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ').trim();
+            return base ? base.toUpperCase() : 'ỨNG VIÊN';
+        }
+
+        function inferEducationLine(text) {
+            const t = text || '';
+            const lines = t.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+            for (const line of lines) {
+                if (/(đại học|cao đẳng|cử nhân|thạc s|tiến s|học vấn|education|university|bachelor|master)/i.test(line) && line.length < 120)
+                    return line;
+            }
+            if (lines.length > 1) return lines[1].slice(0, 100);
+            return '— (trích từ CV)';
+        }
+
+        function inferExpSoftLines(text) {
+            const t = text || '';
+            const expLine = (() => {
+                const hit = t.split(/\r?\n/).find(l => /(kinh nghiệm|experience|làm việc|năm|years?|từng)/i.test(l) && l.length < 160);
+                return hit ? hit.slice(0, 140) : 'Tóm tắt từ CV (đối chiếu JD).';
+            })();
+            const softLine = (() => {
+                const hit = t.split(/\r?\n/).find(l => /(kỹ năng|skill|giao tiếp|thuyết trình|team)/i.test(l) && l.length < 160);
+                return hit ? hit.slice(0, 140) : 'Kỹ năng mềm & giao tiếp (trích từ CV).';
+            })();
+            return { expLine, softLine };
+        }
+
+        function inferJdWeights(jdText) {
+            const t = (jdText || '').toLowerCase();
+            const buckets = [
+                { icon: 'fa-comments', color: 'amber', label: 'Kỹ năng mềm & giao tiếp', weight: 0,
+                  patterns: [/giao tiếp/, /soft/, /cskh/, /thuyết trình/, /teamwork/, /đàm phán/, /communication/] },
+                { icon: 'fa-briefcase', color: 'blue', label: 'Kinh nghiệm thực chiến', weight: 0,
+                  patterns: [/kinh nghiệm/, /experience/, /năm/, /years/, /làm việc tại/, /từng làm/] },
+                { icon: 'fa-graduation-cap', color: 'emerald', label: 'Học vấn & bằng cấp', weight: 0,
+                  patterns: [/đại học/, /cử nhân/, /bằng/, /degree/, /học vấn/, /education/, /cao đẳng/] },
+                { icon: 'fa-laptop-code', color: 'violet', label: 'Công cụ & kỹ năng cứng', weight: 0,
+                  patterns: [/excel/, /word/, /crm/, /phần mềm/, /tiếng anh/, /ielts/, /toeic/, /tool/, /kỹ năng cứng/] },
+                { icon: 'fa-clock', color: 'slate', label: 'Lịch làm việc / ca', weight: 0,
+                  patterns: [/ca /, /ca\./, /shift/, /cuối tuần/, /weekend/, /linh hoạt/, /full.?time/, /part.?time/] }
+            ];
+            buckets.forEach(b => {
+                b.weight = b.patterns.reduce((acc, p) => acc + (p.test(t) ? 3 : 0), 0);
+            });
+            if (buckets.every(b => b.weight === 0)) {
+                buckets.forEach(b => { b.weight = 1; });
+            }
+            let sum = buckets.reduce((a, b) => a + b.weight, 0) || 1;
+            let pcts = buckets.map(b => Math.round((b.weight / sum) * 100));
+            let diff = 100 - pcts.reduce((a, b) => a + b, 0);
+            if (diff !== 0) pcts[pcts.length - 1] += diff;
+            return buckets.map((b, i) => ({ ...b, pct: pcts[i] }));
+        }
+
+        function renderJdWeights(buckets) {
+            const el = document.getElementById('jd-weights-container');
+            const colorMap = {
+                amber: { bar: 'bg-amber-500', badge: 'bg-amber-100 text-amber-800' },
+                blue: { bar: 'bg-blue-500', badge: 'bg-blue-100 text-blue-800' },
+                emerald: { bar: 'bg-emerald-500', badge: 'bg-emerald-100 text-emerald-800' },
+                violet: { bar: 'bg-violet-500', badge: 'bg-violet-100 text-violet-800' },
+                slate: { bar: 'bg-slate-500', badge: 'bg-slate-100 text-slate-800' }
+            };
+            el.innerHTML = buckets.map(b => {
+                const c = colorMap[b.color] || colorMap.slate;
+                return '<div class="flex justify-between items-center' + (b === buckets[0] ? '' : ' pt-1') + '">' +
+                    '<span class="text-sm font-semibold text-slate-700"><i class="fas ' + b.icon + ' text-slate-500 mr-1"></i> ' + escapeHtml(b.label) + '</span>' +
+                    '<span class="px-2 py-1 ' + c.badge + ' text-xs font-bold rounded">' + b.pct + '%</span></div>' +
+                    '<div class="w-full bg-slate-100 rounded-full h-2"><div class="' + c.bar + ' h-2 rounded-full" style="width:' + b.pct + '%"></div></div>';
+            }).join('');
+        }
+
+        function getEmailSubjectTag() {
+            const c = hrCampaign;
+            if (!c) return 'HR TOOL';
+            if (c.replyEmail) return (c.replyEmail.split('@')[0] || 'HR').slice(0, 48);
+            if (c.brand) return String(c.brand).slice(0, 48);
+            return c.company ? String(c.company).slice(0, 48) : 'HR TOOL';
+        }
+
+        function buildCampaignSummary(jdText, campaign) {
+            const company = (campaign && campaign.company) ? campaign.company : 'Doanh nghiệp';
+            const pos = (campaign && campaign.position) ? campaign.position : 'vị trí đang tuyển';
+            const reply = (campaign && campaign.replyEmail) ? campaign.replyEmail : ((campaign && campaign.brand) ? campaign.brand : '');
+            const replyLine = reply ? ('Email gửi thư cho ứng viên: ' + reply + '\n') : '';
+            const jd = (jdText || '').replace(/\s+/g, ' ').trim();
+            const excerpt = jd.length > 520 ? jd.slice(0, 520).trim() + '…' : jd;
+            return 'Chiến dịch tuyển dụng — HR TOOL\n' +
+                company + ' — vị trí: «' + pos + '».\n' +
+                replyLine +
+                '\nTóm tắt ngữ cảnh (tự động từ JD):\n' +
+                (excerpt || 'Chưa có nội dung JD để tóm tắt.');
+        }
+
+        function inferScheduleNote(jdText) {
+            const t = (jdText || '').toLowerCase();
+            if (/(ca |ca\.|shift|xoay ca|linh hoạt)/.test(t)) {
+                return 'JD có gợi ý về lịch/ca làm việc — xác nhận lại khi phỏng vấn.';
+            }
+            if (/(cuối tuần|thứ 7|chủ nhật|weekend)/.test(t)) {
+                return 'JD đề cập làm việc cuối tuần — cần làm rõ với ứng viên.';
+            }
+            return 'Không thấy mô tả lịch chi tiết trong JD — bổ sung khi trao đổi.';
+        }
+
+        function scoreOverlap(cv, jdTokens) {
+            const cvL = (cv || '').toLowerCase();
+            const list = jdTokens.slice(0, Math.min(50, jdTokens.length));
+            if (!list.length) return 40;
+            let hit = 0;
+            for (const w of list) {
+                if (cvL.includes(w)) hit++;
+            }
+            return Math.min(100, Math.round((hit / list.length) * 95) + 5);
+        }
+
+        function buildProsCons(cvText, jdText) {
+            const jdT = tokenize(jdText);
+            const cvT = new Set(tokenize(cvText));
+            const matched = jdT.filter(w => cvT.has(w)).slice(0, 6);
+            const missing = jdT.filter(w => !cvT.has(w)).slice(0, 5);
+            const pros = matched.length
+                ? matched.map(w => 'Trùng khớp từ khóa / ngữ cảnh với JD: «' + w + '».')
+                : ['Có một phần nội dung có thể đối chiếu với yêu cầu chung trong JD (cần AI sâu hơn để trích xuất cụ thể).'];
+            const cons = missing.length
+                ? missing.map(w => 'Trong CV chưa thấy rõ so với JD: «' + w + '» — cần hỏi thêm hoặc yêu cầu bổ sung.')
+                : ['Đối chiếu thêm các mục bắt buộc trong JD (khi tích hợp API AI).'];
+            return { pros, cons };
+        }
+
+        function buildScoresForCandidate(cvText, jdText, seed) {
+            const jdTokens = tokenize(jdText);
+            const s0 = scoreOverlap(cvText, jdTokens.filter(w => /(kinh|experience|năm|làm|work|job)/i.test(w) || w.length > 5)) || scoreOverlap(cvText, jdTokens);
+            const s1 = scoreOverlap(cvText, jdTokens.filter(w => /(kỹ|skill|bán|sale|tư vấn)/i.test(w))) || scoreOverlap(cvText, jdTokens) - 5;
+            const s2 = scoreOverlap(cvText, jdTokens.filter(w => /(học|đại|bằng|degree|education)/i.test(w))) || scoreOverlap(cvText, jdTokens) - 8;
+            const s3 = scoreOverlap(cvText, jdTokens.filter(w => /(giao|tiếng|communication|english)/i.test(w))) || scoreOverlap(cvText, jdTokens) - 3;
+            const s4 = Math.min(100, Math.max(0, scoreOverlap(cvText, jdTokens) + (seed % 9) - 4));
+            const raw = [s0, s1, s2, s3, s4].map((x, i) => Math.min(100, Math.max(15, x + (i * 3 + seed) % 5)));
+            return raw;
+        }
+
+        function buildCandidateFromCv(cv, jdText, index) {
+            const seed = strHash(cv.name + cv.text.slice(0, 200));
+            const name = extractNameFromCv(cv.text, cv.name);
+            const email = extractEmailFromCv(cv.text) || ('ung_vien_' + (index + 1) + '@cv.local');
+            const edu = inferEducationLine(cv.text);
+            const { expLine, softLine } = inferExpSoftLines(cv.text);
+            const scores = buildScoresForCandidate(cv.text, jdText, seed);
+            const { pros, cons } = buildProsCons(cv.text, jdText);
+            const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
+            const rating = Math.min(10, Math.max(1, Math.round(avg / 10)));
+            const isFit = avg >= 52;
+            return {
+                id: index,
+                name,
+                email,
+                edu,
+                exp: expLine,
+                soft: softLine,
+                scores,
+                pros,
+                cons,
+                isFit,
+                rating
+            };
+        }
+
+        function runAnalysis() {
+            const jd = (document.getElementById('jd-text-preview') && document.getElementById('jd-text-preview').value) || jdExtractedText || '';
+            if (!jd.trim()) {
+                alert('Vui lòng tải hoặc dán nội dung JD.');
+                return;
+            }
+            if (!cvItems.length) {
+                alert('Vui lòng tải ít nhất 1 file CV.');
+                return;
+            }
+            const jdForWeights = jd;
+            const buckets = inferJdWeights(jdForWeights);
+            renderJdWeights(buckets);
+
+            document.getElementById('intro-context').textContent = buildCampaignSummary(jd, hrCampaign);
+            const schedEl = document.getElementById('intro-schedule');
+            const schedText = document.getElementById('intro-schedule-text');
+            schedText.textContent = 'Gợi ý lịch / lưu ý: ' + inferScheduleNote(jd);
+            schedEl.classList.remove('hidden');
+
+            candidates = cvItems.map((cv, i) => buildCandidateFromCv(cv, jd, i));
+            document.getElementById('cv-count-badge').textContent = String(candidates.length);
+
+            analysisDone = true;
+            step4Visible = false;
+            document.getElementById('section-email').classList.add('hidden');
+            document.getElementById('pre-analysis-hint').classList.add('hidden');
+            document.getElementById('results-blocks').classList.remove('hidden');
+
+            currentIndex = 0;
+            renderTabs();
+            if (candidates.length) selectCandidate(0);
+        }
+
+        function resetAnalysisUi() {
+            analysisDone = false;
+            step4Visible = false;
+            candidates = [];
+            document.getElementById('pre-analysis-hint').classList.remove('hidden');
+            document.getElementById('results-blocks').classList.add('hidden');
+            document.getElementById('section-email').classList.add('hidden');
+            document.getElementById('cv-count-badge').textContent = '0';
+            document.getElementById('jd-weights-container').innerHTML = '';
+            document.getElementById('intro-context').textContent = '';
+            document.getElementById('intro-schedule').classList.add('hidden');
+            document.getElementById('tabs-container').innerHTML = '';
+            if (myRadarChart) {
+                myRadarChart.destroy();
+                myRadarChart = null;
+            }
+        }
+
+        function showStep4() {
+            if (!analysisDone || !candidates.length) {
+                alert('Hãy chạy phân tích hồ sơ (bước trên) trước.');
+                return;
+            }
+            step4Visible = true;
+            const sec = document.getElementById('section-email');
+            sec.classList.remove('hidden');
+            renderActionGrid();
+            sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // 2. Initialization
+        function init() {
+            if (!loadCampaignOrRedirect()) return;
+            applyCampaignToNavbar();
+            initUploadUI();
+            document.getElementById('btn-analyze').addEventListener('click', function () {
+                const btn = this;
+                const jd = (document.getElementById('jd-text-preview') && document.getElementById('jd-text-preview').value) || jdExtractedText || '';
+                if (!jd.trim() || !cvItems.length) {
+                    alert('Cần 1 JD và ít nhất 1 CV. Kiểm tra đã tải file và (nếu cần) nội dung trong ô xem trước JD.');
+                    return;
+                }
+                btn.disabled = true;
+                const old = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang phân tích…';
+                window.setTimeout(() => {
+                    runAnalysis();
+                    btn.disabled = false;
+                    btn.innerHTML = old;
+                    document.getElementById('results-blocks').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 400);
+            });
+            document.getElementById('btn-go-step4').addEventListener('click', showStep4);
+        }
+
+        // 3. Render Tabs
+        function renderTabs() {
+            const container = document.getElementById('tabs-container');
+            container.innerHTML = '';
+            if (!candidates.length) {
+                container.innerHTML = '<div class="px-5 py-4 text-sm text-slate-400 italic">Chưa có tab — chạy &quot;Phân tích hồ sơ&quot; sau khi tải JD + CV.</div>';
+                return;
+            }
+            candidates.forEach((cand, index) => {
+                const btn = document.createElement('button');
+                btn.className = `tab-btn px-5 py-3 text-sm font-medium hover:text-blue-600 transition whitespace-nowrap focus:outline-none ${index === currentIndex ? 'active' : 'text-slate-500'}`;
+                btn.innerHTML = cand.name;
+                btn.onclick = () => selectCandidate(index);
+                container.appendChild(btn);
+            });
+        }
+
+        // 4. Select Candidate Logic
+        function selectCandidate(index) {
+            if (!candidates.length || index < 0 || index >= candidates.length) return;
+            currentIndex = index;
+            const cand = candidates[index];
+            renderTabs(); // update active state
+
+            // Update Text Info
+            document.getElementById('cand-name').textContent = cand.name;
+            document.getElementById('cand-edu').textContent = cand.edu;
+            document.getElementById('cand-exp').textContent = cand.exp;
+            document.getElementById('cand-soft').textContent = cand.soft;
+            
+            // Render Pros/Cons
+            document.getElementById('cand-pros').innerHTML = cand.pros.map(p => `<li>${p}</li>`).join('');
+            document.getElementById('cand-cons').innerHTML = cand.cons.map(c => `<li>${c}</li>`).join('');
+
+            // Update Badge & Controls
+            document.getElementById('fit-toggle').checked = cand.isFit;
+            document.getElementById('rating-select').value = cand.rating;
+            updateBadgeUI(cand);
+
+            // Draw Chart
+            drawChart(cand);
+        }
+
+        function updateBadgeUI(cand) {
+            const badge = document.getElementById('cand-badge');
+            if (cand.isFit) {
+                badge.className = "px-3 py-1 rounded-full text-xs font-bold border border-emerald-200 bg-emerald-100 text-emerald-700";
+                badge.innerHTML = `<i class="fas fa-check mr-1"></i> Phù hợp (${cand.rating}/10)`;
+            } else {
+                badge.className = "px-3 py-1 rounded-full text-xs font-bold border border-red-200 bg-red-100 text-red-700";
+                badge.innerHTML = `<i class="fas fa-times mr-1"></i> Không phù hợp (${cand.rating}/10)`;
+            }
+        }
+
+        // 5. Update Data from HR Controls
+        function updateCandidateData() {
+            const isFit = document.getElementById('fit-toggle').checked;
+            const rating = parseInt(document.getElementById('rating-select').value);
+            
+            candidates[currentIndex].isFit = isFit;
+            candidates[currentIndex].rating = rating;
+            
+            updateBadgeUI(candidates[currentIndex]);
+            drawChart(candidates[currentIndex]);
+            renderActionGrid(); // Sync section 4
+        }
+
+        // 6. Chart Logic
+        function drawChart(cand) {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            if (myRadarChart) myRadarChart.destroy();
+
+            // Colors based on fit
+            const color = cand.isFit ? '59, 130, 246' : '156, 163, 175'; // Blue if fit, Gray if not
+
+            myRadarChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: radarLabels,
+                    datasets: [{
+                        label: 'Đánh giá',
+                        data: cand.scores,
+                        backgroundColor: `rgba(${color}, 0.2)`,
+                        borderColor: `rgba(${color}, 0.8)`,
+                        pointBackgroundColor: `rgba(${color}, 1)`,
+                        borderWidth: 2,
+                        pointRadius: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { r: { min: 0, max: 100, ticks: { stepSize: 20, display: false } } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        // 7. Action Grid Rendering (Section 4)
+        function renderActionGrid() {
+            const grid = document.getElementById('action-grid');
+            grid.innerHTML = '';
+            if (!candidates.length) {
+                grid.innerHTML = '<p class="text-sm text-slate-400 col-span-full py-4">Chưa có ứng viên — hoàn tất phân tích hồ sơ trước.</p>';
+                document.getElementById('bulk-email-list').value = '';
+                return;
+            }
+
+            let bulkEmails = [];
+
+            // Sort: Fit first, then by rating
+            const sortedCands = [...candidates].sort((a, b) => {
+                if(a.isFit === b.isFit) return b.rating - a.rating;
+                return a.isFit ? -1 : 1;
+            });
+
+            sortedCands.forEach(cand => {
+                if(!cand.isFit) bulkEmails.push(cand.email);
+
+                const card = document.createElement('div');
+                card.className = `p-4 rounded-xl border ${cand.isFit ? 'border-emerald-200 bg-emerald-50/30' : 'border-slate-200 bg-slate-50/50'} relative overflow-hidden`;
+                
+                // Color strip
+                const strip = document.createElement('div');
+                strip.className = `absolute left-0 top-0 bottom-0 w-1 ${cand.isFit ? 'bg-emerald-400' : 'bg-slate-300'}`;
+                card.appendChild(strip);
+
+                card.innerHTML += `
+                    <div class="ml-2 flex flex-col h-full justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-bold text-slate-800 text-sm w-3/4 truncate">${cand.name}</h4>
+                                <span class="bg-white text-xs font-bold px-2 py-0.5 rounded border shadow-sm ${cand.isFit ? 'text-emerald-600' : 'text-slate-500'}">Điểm: ${cand.rating}</span>
+                            </div>
+                            <p class="text-xs text-slate-500 truncate mb-4">${cand.email}</p>
+                        </div>
+                        
+                        <div class="flex flex-col gap-2">
+                        <button onclick="previewEmail(${cand.id})" class="w-full text-sm font-medium py-2 px-4 rounded-lg transition-colors border ${
+                            cand.isFit 
+                            ? 'bg-emerald-600 text-white hover:bg-emerald-700 border-emerald-600' 
+                            : 'bg-white text-slate-700 hover:bg-slate-100 border-slate-300'
+                        }">
+                            ${cand.isFit ? '<i class="fas fa-calendar-check mr-2"></i>Mời Phỏng Vấn' : '<i class="fas fa-envelope-open mr-2"></i>Thư Từ Chối'}
+                        </button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            // Update Bulk Input
+            document.getElementById('bulk-email-list').value = bulkEmails.join(', ');
+        }
+
+        // 8. Email Templating System
+        function getInviteTemplate(name) {
+            const company = (hrCampaign && hrCampaign.company) ? hrCampaign.company : 'Doanh nghiệp';
+            const position = (hrCampaign && hrCampaign.position) ? hrCampaign.position : 'Nhân viên Tư vấn ghi danh';
+            const reply = (hrCampaign && hrCampaign.replyEmail) ? hrCampaign.replyEmail : ((hrCampaign && hrCampaign.brand) ? hrCampaign.brand : '');
+            const replyLine = reply ? `\nLiên hệ / phản hồi: ${reply}` : '';
+            return `Chào bạn ${name},
+
+Cảm ơn bạn đã quan tâm và ứng tuyển vào vị trí ${position} tại ${company}.
+
+Qua quá trình xem xét hồ sơ, chúng tôi đánh giá cao kinh nghiệm và kỹ năng của bạn, đặc biệt phù hợp với những tiêu chí mà đơn vị đang tìm kiếm. Chúng tôi trân trọng mời bạn tham dự buổi phỏng vấn để trao đổi chi tiết hơn về định hướng công việc.
+
+Thông tin buổi phỏng vấn:
+- Hình thức: Phỏng vấn trực tiếp
+- Địa điểm: Văn phòng (sẽ trao đổi chi nhánh gần bạn nhất)
+- Khung giờ dự kiến: 09:30 Thứ Ba hoặc 14:00 Thứ Tư tuần này.
+
+Vui lòng phản hồi lại email này để xác nhận khung giờ phù hợp với bạn nhé.
+
+Trân trọng,
+Phòng Nhân Sự — ${company}${replyLine}`;
+        }
+
+        function getRejectTemplate(name) {
+            const company = (hrCampaign && hrCampaign.company) ? hrCampaign.company : 'Doanh nghiệp';
+            const position = (hrCampaign && hrCampaign.position) ? hrCampaign.position : 'Nhân viên Tư vấn ghi danh';
+            const reply = (hrCampaign && hrCampaign.replyEmail) ? hrCampaign.replyEmail : ((hrCampaign && hrCampaign.brand) ? hrCampaign.brand : '');
+            const replyLine = reply ? `\nLiên hệ / phản hồi: ${reply}` : '';
+            return `Chào bạn ${name},
+
+Đội ngũ Tuyển dụng ${company} chân thành cảm ơn bạn đã quan tâm và gửi hồ sơ ứng tuyển vị trí ${position}.
+
+Chúng tôi đã đọc kỹ hồ sơ và ghi nhận sự cố gắng cũng như tinh thần học hỏi của bạn. Tuy nhiên, ở thời điểm hiện tại, vị trí này đang ưu tiên các ứng viên có kinh nghiệm thực chiến tương đương để đảm bảo đáp ứng ngay tiến độ công việc. Do đó, chúng tôi rất tiếc chưa thể đồng hành cùng bạn trong đợt tuyển dụng này.
+
+Hồ sơ của bạn đã được lưu vào hệ thống dữ liệu ứng viên tiềm năng. Chúng tôi sẽ chủ động liên hệ nếu có vị trí khác phù hợp hơn.
+
+Chúc bạn nhiều sức khỏe và sớm tìm được cơ hội nghề nghiệp ưng ý!
+
+Trân trọng,
+Phòng Nhân Sự — ${company}${replyLine}`;
+        }
+
+        function previewEmail(id) {
+            const cand = candidates.find(c => c.id === id);
+            const shortTag = getEmailSubjectTag();
+            const posShort = (hrCampaign && hrCampaign.position) ? hrCampaign.position : 'Tư vấn ghi danh';
+            const subject = cand.isFit 
+                ? `[${shortTag}] Mời phỏng vấn — ${posShort} — ${cand.name}`
+                : `[${shortTag}] Phản hồi ứng tuyển — ${cand.name}`;
+            const body = cand.isFit ? getInviteTemplate(cand.name) : getRejectTemplate(cand.name);
+            
+            openModal(cand.email, subject, body);
+        }
+
+        function previewBulkReject() {
+            const emails = document.getElementById('bulk-email-list').value;
+            if(!emails) {
+                alert("Không có ứng viên nào bị gắn cờ 'Không phù hợp' để gửi.");
+                return;
+            }
+            
+            const shortTag = getEmailSubjectTag();
+            const posShort = (hrCampaign && hrCampaign.position) ? hrCampaign.position : 'Tư vấn ghi danh';
+            const subject = `[${shortTag}] Phản hồi kết quả ứng tuyển — ${posShort}`;
+            const body = getRejectTemplate("Ứng viên"); // Generic name for bulk
+            openModal(emails, subject, body);
+        }
+
+        // 9. Modal Control
+        function openModal(to, subject, body) {
+            resetEmailModalFooter();
+            document.getElementById('modal-to').value = to;
+            document.getElementById('modal-subject').value = subject;
+            document.getElementById('modal-body').value = body;
+            document.getElementById('email-modal').classList.remove('hidden');
+        }
+
+        function resetEmailModalFooter() {
+            const def = document.getElementById('email-modal-footer-default');
+            const sent = document.getElementById('email-modal-footer-sent');
+            const btn = document.getElementById('btn-modal-send');
+            if (def) def.classList.remove('hidden');
+            if (sent) sent.classList.add('hidden');
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i> Xác nhận Gửi';
+                btn.classList.remove('bg-emerald-600');
+                btn.classList.add('bg-blue-600');
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('email-modal').classList.add('hidden');
+            resetEmailModalFooter();
+        }
+
+        function persistCampaignStatsForDashboard() {
+            if (!hrCampaign || !hrCampaign.id || !candidates.length) return;
+            let list = [];
+            try {
+                list = JSON.parse(localStorage.getItem('hr_campaigns') || '[]');
+            } catch (e) {
+                return;
+            }
+            const idx = list.findIndex(function (x) { return x.id === hrCampaign.id; });
+            let fit = 0;
+            let notFit = 0;
+            candidates.forEach(function (c) {
+                if (c.isFit) fit++;
+                else notFit++;
+            });
+            const stats = { applicants: candidates.length, fit: fit, notFit: notFit, at: Date.now() };
+            if (idx >= 0) {
+                list[idx] = Object.assign({}, list[idx], { stats: stats, updatedAt: Date.now() });
+                try {
+                    localStorage.setItem('hr_campaigns', JSON.stringify(list));
+                } catch (e) { /* ignore */ }
+            }
+        }
+
+        function goToDashboardFromEmail() {
+            let campaigns = [];
+            try {
+                campaigns = JSON.parse(localStorage.getItem('hr_campaigns') || '[]');
+            } catch (e) {
+                campaigns = [];
+            }
+            const totalCampaigns = Array.isArray(campaigns) ? campaigns.length : 0;
+            const totalPositions = Array.isArray(campaigns)
+                ? new Set(campaigns.map(function (c) { return c.position; }).filter(Boolean)).size
+                : 0;
+            let sessionFit = 0;
+            let sessionNotFit = 0;
+            candidates.forEach(function (c) {
+                if (c.isFit) sessionFit++;
+                else sessionNotFit++;
+            });
+            persistCampaignStatsForDashboard();
+            try {
+                sessionStorage.setItem('hr_dashboard_summary', JSON.stringify({
+                    totalCampaigns: totalCampaigns,
+                    totalPositions: totalPositions,
+                    sessionApplicants: candidates.length,
+                    sessionFit: sessionFit,
+                    sessionNotFit: sessionNotFit,
+                    campaignName: (hrCampaign && hrCampaign.campaignName) ? hrCampaign.campaignName : ''
+                }));
+            } catch (e) { /* ignore */ }
+            window.location.href = 'dashboard.html';
+        }
+
+        function sendEmailAction() {
+            const finalSubject = document.getElementById('modal-subject').value;
+            const finalBody = document.getElementById('modal-body').value;
+            if (!finalSubject.trim() || !finalBody.trim()) {
+                alert('Vui lòng nhập đủ tiêu đề và nội dung email.');
+                return;
+            }
+            const btn = document.getElementById('btn-modal-send');
+            if (!btn) return;
+
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Đang gửi...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fas fa-check mr-2"></i> Đã gửi (demo)';
+                btn.classList.replace('bg-blue-600', 'bg-emerald-600');
+
+                let campaigns = [];
+                try {
+                    campaigns = JSON.parse(localStorage.getItem('hr_campaigns') || '[]');
+                } catch (e) {
+                    campaigns = [];
+                }
+                const totalCampaigns = Array.isArray(campaigns) ? campaigns.length : 0;
+                const totalPositions = Array.isArray(campaigns)
+                    ? new Set(campaigns.map(function (c) { return c.position; }).filter(Boolean)).size
+                    : 0;
+                let sessionFit = 0;
+                let sessionNotFit = 0;
+                candidates.forEach(function (c) {
+                    if (c.isFit) sessionFit++;
+                    else sessionNotFit++;
+                });
+
+                try {
+                    sessionStorage.setItem('hr_dashboard_summary', JSON.stringify({
+                        totalCampaigns: totalCampaigns,
+                        totalPositions: totalPositions,
+                        sessionApplicants: candidates.length,
+                        sessionFit: sessionFit,
+                        sessionNotFit: sessionNotFit,
+                        campaignName: (hrCampaign && hrCampaign.campaignName) ? hrCampaign.campaignName : ''
+                    }));
+                } catch (e) { /* ignore */ }
+
+                persistCampaignStatsForDashboard();
+
+                document.getElementById('email-modal-footer-default').classList.add('hidden');
+                document.getElementById('email-modal-footer-sent').classList.remove('hidden');
+            }, 800);
+        }
+
+        window.showStep4 = showStep4;
+        window.goToDashboardFromEmail = goToDashboardFromEmail;
+
+        // Run on load
+        window.onload = init;
+    </script>
+</body>
+</html>
