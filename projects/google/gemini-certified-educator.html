@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ôn Tập: Gemini Certified Educator</title>
+    <title>Ôn Tập: Gemini Certified Educator | Ngoc Quynh Pham</title>
     <link rel="icon" href="../../logo.ico" />
     <meta
       name="description"
-      content="Ôn tập chứng chỉ Gemini Certified Educator — câu hỏi trắc nghiệm, giao diện tối giản trên GitHub Pages."
+      content="Ôn tập chứng chỉ Gemini Certified Educator — flashcard, chứng chỉ Google."
     />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://ngocquynhpham.github.io/projects/google/gemini-certified-educator.html" />
@@ -16,150 +16,118 @@
     <meta property="og:title" content="Ôn Tập: Gemini Certified Educator" />
     <meta
       property="og:description"
-      content="Ôn tập chứng chỉ Gemini Certified Educator — câu hỏi trắc nghiệm, giao diện tối giản trên GitHub Pages."
+      content="Ôn tập chứng chỉ Gemini Certified Educator — flashcard, chứng chỉ Google."
     />
     <meta property="og:image" content="https://ngocquynhpham.github.io/logo.ico" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Ôn Tập: Gemini Certified Educator" />
     <meta
       name="twitter:description"
-      content="Ôn tập chứng chỉ Gemini Certified Educator — câu hỏi trắc nghiệm, giao diện tối giản trên GitHub Pages."
+      content="Ôn tập chứng chỉ Gemini Certified Educator — flashcard, chứng chỉ Google."
     />
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="./style/gemini-certified-educator.css">
-    
-  
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              "google-blue": "#4285F4",
-              "google-red": "#EA4335",
-              "google-yellow": "#FBBC05",
-              "google-green": "#34A853",
-              "gemini-purple": "#6200EE",
-            },
-          },
-        },
-      };
-    </script>
-  </head>
-  <body class="p-4 sm:p-8">
-    <!-- Header -->
-    <header class="text-center mb-8">
-      <h1
-        id="title-h1"
-        class="text-4xl font-extrabold text-google-blue mb-2 tracking-tight"
-      >
-        ÔN TẬP CẤP TỐC
-      </h1>
-      <h2
-        id="title-h2"
-        class="text-2xl font-semibold text-gray-700 border-b-2 border-google-yellow inline-block pb-1"
-      >
-        GEMINI CERTIFIED EDUCATOR
-      </h2>
+    <meta name="theme-color" content="#F4F1EA" />
 
-      <!-- Link to Exam -->
-      <div class="mt-4">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style/gemini-certified-educator.css" />
+  </head>
+  <body>
+    <div class="gce-page">
+      <nav class="gce-nav" aria-label="Trang">
+        <div class="gce-nav-start">
+          <a href="../../index.html" id="gce-home-link">← Trang chủ</a>
+          <span class="gce-sitename">Ngoc Quynh Pham</span>
+        </div>
+        <div class="gce-nav-end">
+          <a
+            class="gce-header-cert"
+            id="header-cert-link"
+            href="https://edu.google.accredible.com/69a83786-be90-4852-8bab-fef0b7d1049c#acc.mEjNp13Q"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg class="gce-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path d="M12 15l-2 5h4l-2-5z" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M8 20H6a2 2 0 01-2-2V8a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2h-2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M12 3v5M9 8h6" stroke-linecap="round" />
+            </svg>
+            <span id="header-cert-label">Chứng chỉ</span>
+          </a>
+          <div class="gce-lang gce-lang--header" role="group" aria-label="Ngôn ngữ">
+            <button type="button" id="lang-vi" class="is-active" data-lang="vi">VI</button>
+            <button type="button" id="lang-en" data-lang="en">EN</button>
+          </div>
+        </div>
+      </nav>
+
+      <header class="gce-masthead">
+        <div class="gce-rule gce-rule--thick" aria-hidden="true"></div>
+        <h1 class="gce-masthead-title" id="title-h1">
+          <span id="title-line1">ÔN TẬP CẤP TỐC</span>
+        </h1>
+        <p class="gce-masthead-deck" id="title-h2">GEMINI CERTIFIED EDUCATOR</p>
+        <div class="gce-rule gce-rule--thin" aria-hidden="true"></div>
+        <p class="gce-lead" id="gce-lead-text">
+          Bộ flashcard ôn tập Gemini Certified Educator — lật thẻ để xem đáp án. Mở chứng chỉ đã xác minh từ nút phía trên.
+        </p>
         <a
+          class="gce-btn"
           href="https://educertifications.google/registration/4?lang=en-US"
           target="_blank"
-          class="inline-flex items-center px-4 py-2 bg-google-red text-white text-sm font-medium rounded-lg shadow-md hover:bg-google-red/90 transition duration-150"
+          rel="noopener noreferrer"
         >
-          <svg
-            class="w-4 h-4 mr-2"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+          <svg class="gce-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              stroke-width="2"
+              stroke-width="1.5"
               d="M13 10V3L4 14h7v7l9-11h-7z"
-            ></path>
+            />
           </svg>
           <span id="exam-link-text">Vào link bài thi chính thức</span>
         </a>
-      </div>
-    </header>
+        <div class="gce-rule gce-rule--thick" aria-hidden="true"></div>
+      </header>
 
-    <!-- Controls (Search Bar and Language Tabs) -->
-    <div
-      class="max-w-7xl mx-auto mb-8 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4 px-4 sm:px-0"
-    >
-      <!-- Search Bar -->
-      <div class="relative flex-grow w-full sm:w-auto">
-        <input
-          type="text"
-          id="search-input"
-          oninput="filterQuestions()"
-          placeholder="Tìm kiếm câu hỏi theo nội dung hoặc chủ đề..."
-          class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-google-blue focus:border-google-blue"
-        />
-        <svg
-          class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-          ></path>
-        </svg>
-      </div>
+      <main class="gce-main" id="main-study">
+        <div class="gce-toolbar">
+          <div class="gce-search-wrap">
+            <svg class="gce-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.5"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+            <input
+              type="search"
+              id="search-input"
+              class="gce-search"
+              autocomplete="off"
+              placeholder="Tìm kiếm câu hỏi theo nội dung hoặc chủ đề..."
+            />
+          </div>
+        </div>
 
-      <!-- Language Tabs (Responsive adjustments via style block) -->
-      <div
-        class="flex border border-google-blue rounded-lg overflow-hidden flex-shrink-0 lang-tabs"
-      >
-        <button
-          id="lang-vi"
-          onclick="setLanguage('vi')"
-          class="px-4 py-2 text-sm font-semibold transition duration-150 flex-grow text-google-blue"
+        <ul id="questions-container" class="gce-grid"></ul>
+        <p id="placeholder" class="gce-placeholder" hidden>
+          Không tìm thấy câu hỏi nào phù hợp. Vui lòng thử từ khóa khác.
+        </p>
+      </main>
+
+      <footer class="gce-footer">
+        <div class="gce-rule gce-rule--thin gce-footer-rule" aria-hidden="true"></div>
+        <span id="footer-text"
+          >Chúc bạn thành công với kỳ thi Gemini Certified Educator!</span
         >
-          VI
-        </button>
-        <button
-          id="lang-en"
-          onclick="setLanguage('en')"
-          class="px-4 py-2 text-sm font-semibold transition duration-150 flex-grow text-google-blue"
-        >
-          EN
-        </button>
-      </div>
+      </footer>
     </div>
 
-    <!-- Questions Grid -->
-    <main
-      id="questions-container"
-      class="flex flex-wrap justify-center gap-6 max-w-7xl mx-auto"
-    >
-      <!-- Nội dung flashcard sẽ được chèn bởi JavaScript -->
-    </main>
-
-    <div
-      id="placeholder"
-      class="text-center mt-12 text-gray-500 text-xl hidden"
-    >
-      Không tìm thấy câu hỏi nào phù hợp. Vui lòng thử từ khóa khác.
-    </div>
-
-    <!-- Footer -->
-    <footer
-      class="text-center text-gray-500 text-sm mt-16 p-4 pb-0 border-t border-gray-200"
-    >
-      <span id="footer-text"
-        >Chúc bạn thành công với kỳ thi Gemini Certified Educator!</span
-      >
-    </footer>
     <script src="./data/gemini-certified-educator.js"></script>
   </body>
 </html>

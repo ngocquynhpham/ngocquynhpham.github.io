@@ -456,56 +456,80 @@ function flipCard(element) {
 
 function setLanguage(lang) {
   currentLanguage = lang;
-  document
-    .getElementById("lang-vi")
-    .classList.toggle("bg-google-blue", lang === "vi");
-  document
-    .getElementById("lang-en")
-    .classList.toggle("bg-google-blue", lang === "en");
-  document
-    .getElementById("lang-vi")
-    .classList.toggle("text-white", lang === "vi");
-  document
-    .getElementById("lang-en")
-    .classList.toggle("text-white", lang === "en");
+  document.documentElement.lang = lang === "vi" ? "vi" : "en";
+  const vi = document.getElementById("lang-vi");
+  const en = document.getElementById("lang-en");
+  if (vi && en) {
+    vi.classList.toggle("is-active", lang === "vi");
+    en.classList.toggle("is-active", lang === "en");
+  }
 
-  document
-    .getElementById("lang-vi")
-    .classList.toggle("bg-gray-100", lang === "en");
-  document
-    .getElementById("lang-en")
-    .classList.toggle("bg-gray-100", lang === "vi");
-  document
-    .getElementById("lang-vi")
-    .classList.toggle("text-google-blue", lang === "en");
-  document
-    .getElementById("lang-en")
-    .classList.toggle("text-google-blue", lang === "vi");
+  const search = document.getElementById("search-input");
+  if (search) {
+    search.placeholder =
+      lang === "vi"
+        ? "Tìm kiếm câu hỏi theo nội dung hoặc chủ đề..."
+        : "Search questions by content or topic...";
+  }
 
-  document.getElementById("search-input").placeholder =
-    lang === "vi"
-      ? "Tìm kiếm câu hỏi theo nội dung hoặc chủ đề..."
-      : "Search questions by content or topic...";
-  document.getElementById("title-h1").textContent =
-    lang === "vi" ? "ÔN TẬP CẤP TỐC" : "QUICK REVIEW";
-  document.getElementById("title-h2").textContent =
-    "GEMINI CERTIFIED EDUCATOR";
-  document.getElementById("footer-text").textContent =
-    lang === "vi"
-      ? "Chúc bạn thành công với kỳ thi Gemini Certified Educator!"
-      : "Good luck with the Gemini Certified Educator exam!";
-  document.getElementById("exam-link-text").textContent =
-    lang === "vi"
-      ? "Vào link bài thi chính thức"
-      : "Access Official Exam Link";
+  const line1 = document.getElementById("title-line1");
+  if (line1) {
+    line1.textContent = lang === "vi" ? "ÔN TẬP CẤP TỐC" : "QUICK REVIEW";
+  }
+  const sub = document.getElementById("title-h2");
+  if (sub) {
+    sub.textContent = "GEMINI CERTIFIED EDUCATOR";
+  }
+  const kicker = document.getElementById("kicker-text");
+  if (kicker) {
+    kicker.textContent = lang === "vi" ? "Ôn tập" : "Study";
+  }
+  const lead = document.getElementById("gce-lead-text");
+  if (lead) {
+    lead.textContent =
+      lang === "vi"
+        ? "Bộ flashcard ôn tập Gemini Certified Educator — lật thẻ để xem đáp án. Mở chứng chỉ đã xác minh từ nút phía trên."
+        : "Flashcard review for the Gemini Certified Educator exam — flip each card for the answer. Open your verified credential from the button above.";
+  }
+  const footer = document.getElementById("footer-text");
+  if (footer) {
+    footer.textContent =
+      lang === "vi"
+        ? "Chúc bạn thành công với kỳ thi Gemini Certified Educator!"
+        : "Good luck with the Gemini Certified Educator exam!";
+  }
+  const exam = document.getElementById("exam-link-text");
+  if (exam) {
+    exam.textContent =
+      lang === "vi"
+        ? "Vào link bài thi chính thức"
+        : "Access Official Exam Link";
+  }
+  const headerCertLabel = document.getElementById("header-cert-label");
+  if (headerCertLabel) {
+    headerCertLabel.textContent = lang === "vi" ? "Chứng chỉ" : "Certificate";
+  }
+  const headerCertLink = document.getElementById("header-cert-link");
+  if (headerCertLink) {
+    headerCertLink.setAttribute(
+      "aria-label",
+      lang === "vi"
+        ? "Mở chứng chỉ Gemini Certified Educator trên Accredible (tab mới)"
+        : "Open Gemini Certified Educator certificate on Accredible (new tab)"
+    );
+  }
+  const home = document.getElementById("gce-home-link");
+  if (home) {
+    home.textContent = lang === "vi" ? "← Trang chủ" : "← Home";
+  }
 
   renderQuestions(filteredQuestions);
 }
 
 function filterQuestions() {
-  const searchTerm = document
-    .getElementById("search-input")
-    .value.toLowerCase();
+  const searchTerm = (
+    document.getElementById("search-input")?.value || ""
+  ).toLowerCase();
   filteredQuestions = questions.filter((q) => {
     const searchFieldVi =
       q.question_vi.toLowerCase() + " " + q.topic.toLowerCase();
@@ -523,67 +547,83 @@ function filterQuestions() {
 function renderQuestions(data) {
   const container = document.getElementById("questions-container");
   const placeholder = document.getElementById("placeholder");
+  if (!container) return;
 
   if (data.length === 0) {
-    placeholder.classList.remove("hidden");
-    placeholder.textContent =
-      currentLanguage === "vi"
-        ? "Không tìm thấy câu hỏi nào phù hợp. Vui lòng thử từ khóa khác."
-        : "No matching questions found. Please try a different keyword.";
-  } else {
-    placeholder.classList.add("hidden");
+    if (placeholder) {
+      placeholder.hidden = false;
+      placeholder.textContent =
+        currentLanguage === "vi"
+          ? "Không tìm thấy câu hỏi nào phù hợp. Vui lòng thử từ khóa khác."
+          : "No matching questions found. Please try a different keyword.";
+    }
+  } else if (placeholder) {
+    placeholder.hidden = true;
   }
+
+  const qLabel = currentLanguage === "vi" ? "Câu" : "Q";
+  const hintFront =
+    currentLanguage === "vi"
+      ? "Click để xem đáp án"
+      : "Click to see answer";
+  const hintBack =
+    currentLanguage === "vi"
+      ? "Click để xem câu hỏi"
+      : "Click to see question";
 
   container.innerHTML = data
     .map(
       (q) => `
-          <div class="flip-card transition duration-300 transform hover:scale-[1.02] hover:cursor-pointer" onclick="flipCard(this)">
+          <li class="gce-card-item">
+            <div class="flip-card" onclick="flipCard(this)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();flipCard(this);}">
               <div class="flip-card-inner">
-                  <!-- Front: Question -->
                   <div class="flip-card-front">
-                      <span class="text-xs text-gray-500 bg-pink-100 px-3 py-1 rounded-full absolute top-4 left-4">${
+                      <span class="gce-topic">${
                         currentLanguage === "vi" ? q.topic : q.topic_en
                       }</span>
-                      <h3 class="text-sm font-bold text-gemini-purple absolute top-4 right-4">Câu ${
-                        q.id
-                      }</h3>
-                      <p class="text-gray-800 text-base font-semibold flex flex-col h-full justify-center">
-                          ${
-                            currentLanguage === "vi"
-                              ? q.question_vi
-                              : q.question_en
-                          }
-                      </p>
-                      <p class="text-xs text-gray-400 mt-auto">${
+                      <span class="gce-qnum">${qLabel} ${q.id}</span>
+                      <p class="gce-qtext">${
                         currentLanguage === "vi"
-                          ? "Click để xem đáp án"
-                          : "Click to see answer"
+                          ? q.question_vi
+                          : q.question_en
                       }</p>
+                      <p class="gce-hint">${hintFront}</p>
                   </div>
-                  
-                  <!-- Back: Answer -->
                   <div class="flip-card-back">
-                      <p class="text-base leading-relaxed text-center flex flex-col h-full justify-center">
-                          ${
-                            currentLanguage === "vi"
-                              ? q.answer_vi
-                              : q.answer_en
-                          }
-                      </p>
-                      <p class="text-xs mt-auto">${
+                      <p class="gce-answer">${
                         currentLanguage === "vi"
-                          ? "Click để xem câu hỏi"
-                          : "Click to see question"
+                          ? q.answer_vi
+                          : q.answer_en
                       }</p>
+                      <p class="gce-hint">${hintBack}</p>
                   </div>
               </div>
-          </div>
+            </div>
+          </li>
       `
     )
     .join("");
 }
 
-window.onload = () => {
-  renderQuestions(questions);
+function initGeminiPage() {
+  const search = document.getElementById("search-input");
+  if (search) {
+    search.addEventListener("input", filterQuestions);
+  }
+  document.getElementById("lang-vi")?.addEventListener("click", () =>
+    setLanguage("vi")
+  );
+  document.getElementById("lang-en")?.addEventListener("click", () =>
+    setLanguage("en")
+  );
+
+  filteredQuestions = [...questions];
+  renderQuestions(filteredQuestions);
   setLanguage("vi");
-};
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initGeminiPage);
+} else {
+  initGeminiPage();
+}
