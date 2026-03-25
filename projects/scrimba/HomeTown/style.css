@@ -228,3 +228,25 @@ body {
     transform: translate(-50%, 6px);
   }
 }
+
+.site-footer {
+  background-color: var(--dark-blue);
+  color: var(--light);
+  padding: 28px 20px 32px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.site-footer__text {
+  max-width: 720px;
+  margin: 0 auto;
+  color: var(--light);
+}
+.site-footer__link {
+  color: var(--aqua);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.site-footer__link:hover {
+  color: var(--white);
+}
