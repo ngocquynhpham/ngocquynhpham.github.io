@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenSpace — Cây xanh cho không gian làm việc</title>
+    <link rel="icon" href="../../logo.ico" />
+    <meta name="description" content="Case study GreenSpace theo storytelling Problem → Insight → Solution → Impact, từ ý tưởng Stitch đến wireframe và landing page." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://ngocquynhpham.github.io/projects/greenspace/index.html" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+        :root {
+            --primary: #4EA664;
+            --primary-hover: #3B9E5A;
+            --bg: #FFFFFF;
+            --text-primary: #2D3136;
+            --text-secondary: #8D939D;
+            --border: #EEEEEE;
+            --accent-yellow: #FABC2A;
+            --accent-red: #FF6B6B;
+        }
+
+        * { box-sizing: border-box; }
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            letter-spacing: 0.01em;
+        }
+
+        .soft-border { border: 1px solid var(--border); }
+        .section-accent-green { border-left: 4px solid var(--primary); background: #F6FBF7; }
+        .section-accent-yellow { border-left: 4px solid var(--accent-yellow); background: #FFFBEF; }
+        .section-accent-red { border-left: 4px solid var(--accent-red); background: #FFF5F5; }
+        .text-muted { color: var(--text-secondary); }
+        .text-regular { font-size: 14px; font-weight: 400; }
+        .text-meta { font-size: 12px; font-weight: 400; }
+        .nav-link {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: color 0.2s ease;
+        }
+        .nav-link:hover, .nav-link.active { color: var(--primary-hover); }
+        .primary-btn {
+            background: var(--primary);
+            color: #fff;
+            border: 1px solid var(--primary);
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .primary-btn:hover { background: var(--primary-hover); border-color: var(--primary-hover); }
+        .ghost-btn {
+            background: #fff;
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .ghost-btn:hover { border-color: #D8D8D8; }
+        .icon-stroke { stroke: currentColor; stroke-width: 1.5; fill: none; }
+        .product-img { background: #FAFAFA; border: 1px solid var(--border); }
+        .wire-box {
+            border: 1px dashed #b6bcc4;
+            background: repeating-linear-gradient(-45deg, #fafafa, #fafafa 8px, #f4f4f4 8px, #f4f4f4 16px);
+        }
+        .problem-chaos {
+            background: linear-gradient(180deg, #fff 0%, #f8f5f5 100%);
+        }
+        .problem-negative {
+            border-color: #e8d5d5;
+            background: #fff8f8;
+            color: #4b3c3c;
+        }
+        .problem-negative .text-muted {
+            color: #8f7d7d;
+        }
+        .problem-dashed {
+            border-style: dashed;
+            border-width: 1.5px;
+        }
+        .problem-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .problem-color-1 { background: #FFF1F1; border-color: #EFB8B8; }
+        .problem-color-1 .problem-icon { background: #FFDADB; color: #B54747; }
+        .problem-color-2 { background: #F2F7FF; border-color: #BDD6FB; }
+        .problem-color-2 .problem-icon { background: #DCEBFF; color: #2F78D1; }
+        .problem-color-3 { background: #FFF9EE; border-color: #F1D8A1; }
+        .problem-color-3 .problem-icon { background: #FFEAB8; color: #B7791F; }
+        .problem-top-card {
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            cursor: pointer;
+        }
+        .problem-top-card:hover {
+            animation: wiggle 0.45s ease-in-out 1;
+            box-shadow: 0 10px 22px rgba(75, 61, 61, 0.1);
+        }
+        .chaos-hover-card {
+            transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+            cursor: pointer;
+        }
+        .chaos-hover-card:hover {
+            animation: wiggle 0.45s ease-in-out 1;
+            transform: translateY(-3px) rotate(0deg);
+            box-shadow: 0 10px 22px rgba(75, 61, 61, 0.12);
+            filter: saturate(1.03);
+        }
+        @media (min-width: 768px) {
+            .problem-top-left { transform: translateY(8px) rotate(-0.6deg); }
+            .problem-top-right { transform: translateY(-8px) rotate(0.6deg); }
+            .problem-top-left:hover,
+            .problem-top-right:hover {
+                transform: translateY(-2px) rotate(0deg);
+            }
+        }
+        @keyframes wiggle {
+            0% { transform: translateX(0) rotate(0deg); }
+            25% { transform: translateX(-1.5px) rotate(-0.5deg); }
+            50% { transform: translateX(1.5px) rotate(0.5deg); }
+            75% { transform: translateX(-1px) rotate(-0.3deg); }
+            100% { transform: translateX(0) rotate(0deg); }
+        }
+        .chaos-grid {
+            display: grid;
+            gap: 14px;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        @media (min-width: 768px) {
+            .chaos-grid { grid-template-columns: 1.15fr 0.9fr 1.05fr; }
+            .chaos-item-1 { transform: rotate(-1.2deg) translateY(8px); }
+            .chaos-item-2 { transform: rotate(1.4deg) translateY(-6px); }
+            .chaos-item-3 { transform: rotate(-0.8deg) translateY(14px); }
+        }
+        .value-card {
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            background: #fff;
+        }
+        .value-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(46, 53, 62, 0.08);
+        }
+        .value-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        .value-blue .value-icon { background: #EAF4FF; color: #2F78D1; }
+        .value-blue { border-color: #D7E8FF; }
+        .value-green .value-icon { background: #EAF7EE; color: #3B9E5A; }
+        .value-green { border-color: #DCEFE2; }
+        .value-yellow .value-icon { background: #FFF7DE; color: #C68A00; }
+        .value-yellow { border-color: #F6E7B5; }
+        .goal-item {
+            border: 1px solid #DCEFE2;
+            border-radius: 12px;
+            padding: 14px;
+            background: #FFFFFF;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .goal-icon {
+            width: 26px;
+            height: 26px;
+            border-radius: 999px;
+            flex: 0 0 auto;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .goal-icon-ux { background: #3B9E5A; }
+        .goal-icon-ai { background: #2F78D1; }
+        .goal-icon-story { background: #C68A00; }
+        .project-context {
+            position: relative;
+            border-radius: 14px;
+            padding: 2px;
+            background: linear-gradient(120deg, #4EA664, #FABC2A, #4EA664);
+            background-size: 220% 220%;
+            animation: border-flow 4s linear infinite;
+        }
+        .project-context-inner {
+            border-radius: 13px;
+            background: #ffffff;
+            padding: 14px;
+        }
+        @keyframes border-flow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+        .research-paper {
+            border: 1px solid #dadada;
+            background: #fffdfa;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            cursor: pointer;
+        }
+        .research-paper::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: repeating-linear-gradient(
+                90deg,
+                #b5b5b5 0,
+                #b5b5b5 10px,
+                transparent 10px,
+                transparent 16px
+            );
+            opacity: 0.9;
+        }
+        .research-paper:hover {
+            animation: wiggle 0.45s ease-in-out 1;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(54, 54, 54, 0.12);
+        }
+        .research-kicker {
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #7b7b7b;
+            font-weight: 600;
+        }
+        .research-title {
+            font-family: Georgia, 'Times New Roman', serif;
+            font-size: 22px;
+            line-height: 1.25;
+            color: #2f2f2f;
+        }
+        .research-headline {
+            font-family: Georgia, 'Times New Roman', serif;
+        }
+        .research-meta {
+            border-top: 1px dashed #c9c9c9;
+            border-bottom: 1px dashed #c9c9c9;
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+        .insight-spotlight {
+            border: 1px solid #d9eddc;
+            background: linear-gradient(180deg, #f5fbf6 0%, #ffffff 100%);
+            border-radius: 16px;
+            padding: 24px;
+        }
+        .insight-card {
+            border: 1px solid #e3ece5;
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 18px;
+            transition: transform 0.22s ease, box-shadow 0.22s ease;
+        }
+        .insight-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px rgba(41, 71, 48, 0.09);
+        }
+        .insight-card-green {
+            background: #eef9f1;
+            border-color: #bfe4c9;
+        }
+        .insight-card-yellow {
+            background: #fff8e8;
+            border-color: #f1d796;
+        }
+        .insight-card-red {
+            background: #fff1f1;
+            border-color: #eeb9b9;
+        }
+        .insight-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            padding: 4px 8px;
+            border-radius: 999px;
+            margin-bottom: 8px;
+        }
+        .insight-chip-green { background: #d9f1df; color: #2f7e48; }
+        .insight-chip-yellow { background: #fbe8b9; color: #a36d00; }
+        .insight-chip-red { background: #f8d5d5; color: #a63f3f; }
+        .quote-block {
+            border-left: 4px solid #4EA664;
+            background: #f6fbf7;
+            padding: 16px 18px;
+            border-radius: 10px;
+            font-size: 21px;
+            line-height: 1.45;
+            color: #2f3c31;
+            font-weight: 600;
+        }
+        .quote-mark {
+            color: #4EA664;
+            font-size: 28px;
+            line-height: 1;
+            vertical-align: text-top;
+            margin-right: 4px;
+        }
+        .blog-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #cfe6d5;
+            background: #ffffff;
+            color: #3B9E5A;
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 999px;
+            padding: 8px 12px;
+            transition: all 0.2s ease;
+        }
+        .blog-pill:hover {
+            background: #f0f9f2;
+            border-color: #b2d8bc;
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <header class="sticky top-0 z-50 bg-white border-b border-[#EEEEEE]">
+        <div class="max-w-7xl mx-auto px-6 md:px-10 py-5 flex items-center justify-between gap-6">
+            <a href="#" class="text-[19px] font-bold tracking-[0.06em] text-[#3B9E5A]">GREENSPACE</a>
+            <nav class="hidden md:flex items-center gap-8">
+                <a class="nav-link active" href="#problem">Problem</a>
+                <a class="nav-link" href="#insight">Insight</a>
+                <a class="nav-link" href="#research">Research</a>
+                <a class="nav-link" href="#solution">Solution</a>
+                <a class="nav-link" href="#impact">Impact</a>
+                <a class="nav-link" href="#wireframe">Wireframe</a>
+            </nav>
+            <a href="./demo-page/index.html" target="_blank" rel="noopener noreferrer" class="primary-btn h-10 px-4 inline-flex items-center">Open Demo Page</a>
+        </div>
+    </header>
+    <main class="max-w-7xl mx-auto px-6 md:px-10 py-14 md:py-20 space-y-20 md:space-y-28">
+
+        <section id="problem" class="grid lg:grid-cols-[1.15fr_1fr] gap-12 items-center scroll-mt-24">
+            <div class="space-y-8">
+                <p class="text-meta uppercase tracking-[0.22em] text-muted">Case Study by Designer · Stitch to Prototype</p>
+                <h1 class="text-[36px] md:text-[52px] leading-tight font-semibold max-w-xl">
+                    Từ một ý tưởng trên Stitch đến landing page cây xanh cho dân văn phòng.
+                </h1>
+                <p class="text-regular text-muted max-w-lg leading-7">
+                    Tôi dùng <a class="text-[#3B9E5A] font-medium" href="https://stitch.withgoogle.com/" target="_blank" rel="noopener noreferrer">Stitch by Google</a> để luyện skill AI/UIUX, sau đó chuyển hóa thành hành trình kể chuyện theo framework Problem → Insight → Solution → Impact.
+                </p>
+                <div class="flex flex-wrap gap-3">
+                    <a href="#problem-story" class="primary-btn h-11 px-6 inline-flex items-center">Đọc câu chuyện</a>
+                    <a href="./demo-page/index.html" target="_blank" rel="noopener noreferrer" class="ghost-btn h-11 px-6 inline-flex items-center">Xem Demo Store</a>
+                </div>
+            </div>
+            <div class="soft-border section-accent-green p-8 md:p-10 bg-white">
+                <div class="flex items-center gap-2 mb-6">
+                    <span class="inline-flex items-center justify-center h-7 w-7 rounded-full bg-[#EAF7EE] text-[#3B9E5A] text-xs font-bold">🎯</span>
+                    <p class="text-[15px] font-semibold">Mục tiêu luyện tập</p>
+                </div>
+                <div class="grid grid-cols-1 gap-3 text-regular">
+                    <div class="goal-item">
+                        <span class="goal-icon goal-icon-ux">UX</span>
+                        <div>
+                            <p class="font-semibold mb-1">Tư duy UX có cấu trúc</p>
+                            <p class="text-muted">Biết đặt vấn đề đúng trước khi nói về giao diện.</p>
+                        </div>
+                    </div>
+                    <div class="goal-item">
+                        <span class="goal-icon goal-icon-ai">AI</span>
+                        <div>
+                            <p class="font-semibold mb-1">Dùng AI có định hướng</p>
+                            <p class="text-muted">Stitch hỗ trợ ideation nhanh, designer chốt trải nghiệm cuối.</p>
+                        </div>
+                    </div>
+                    <div class="goal-item">
+                        <span class="goal-icon goal-icon-story">ST</span>
+                        <div>
+                            <p class="font-semibold mb-1">Storytelling cho sản phẩm</p>
+                            <p class="text-muted">Biến một trang bán hàng thành một hành trình cảm xúc.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 project-context">
+                    <div class="project-context-inner">
+                    <p class="text-meta text-muted mb-1">Bối cảnh dự án</p>
+                    <p class="text-[16px] font-semibold">GreenSpace · E-commerce Plant Store</p>
+                    <p class="text-[14px] text-muted mt-1">Phạm vi: landing page case study + demo-page, wireframe flow, nội dung UX và thông điệp thương hiệu.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="problem-story" class="scroll-mt-24 problem-chaos soft-border p-6 md:p-8">
+            <div class="flex items-end justify-between gap-4 mb-8">
+                <div>
+                    <p class="text-meta uppercase tracking-[0.18em] text-muted mb-2">Chương 1 · Problem</p>
+                    <h2 class="text-[30px] font-semibold text-[#4B3D3D]">Góc làm việc của bạn đang "khát" một hơi thở tự nhiên?</h2>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-5">
+                <div class="soft-border problem-negative problem-dashed p-6 problem-top-card problem-top-left">
+                    <span class="problem-icon">💭</span>
+                    <p class="text-[16px] font-semibold mb-2">Nỗi đau thật sự</p>
+                    <p class="text-regular text-muted">Bạn không thiếu tay nghề trồng cây. Bạn chỉ đang sống trong một nhịp làm việc quá dày, nơi mọi thứ đều gấp rút đến mức một chiếc lá úa cũng khiến bạn thấy mình vừa bỏ lỡ thêm một điều quan trọng.</p>
+                </div>
+                <div class="soft-border problem-negative problem-dashed p-6 problem-top-card problem-top-right">
+                    <span class="problem-icon">🫥</span>
+                    <p class="text-[16px] font-semibold mb-2">Brown Thumb Moment</p>
+                    <p class="text-regular text-muted">Người dùng không chỉ sợ cây chết. Họ sợ cảm giác thất bại lặp lại mỗi sáng: mở laptop, nhìn chậu cây héo xuống, và tự hỏi liệu mình có đang quá bận để chăm nổi một mầm sống nhỏ bé.</p>
+                </div>
+            </div>
+            <div class="chaos-grid mt-5">
+                <div class="soft-border problem-negative problem-dashed problem-color-1 p-5 chaos-item-1 chaos-hover-card">
+                    <span class="problem-icon">⏳</span>
+                    <p class="font-medium mb-2">Nỗi sợ bị bỏ rơi</p>
+                    <p class="text-meta text-muted">"Tôi bận quá, lịch họp dày đặc từ sáng tới tối. Nếu tôi quên tưới một tuần, liệu cây có sống nổi hay lại âm thầm héo đi như mọi lần trước?"</p>
+                </div>
+                <div class="soft-border problem-negative problem-dashed problem-color-2 p-5 chaos-item-2 chaos-hover-card">
+                    <span class="problem-icon">🌤</span>
+                    <p class="font-medium mb-2">Sự thiếu kiến thức</p>
+                    <p class="text-meta text-muted">"Cây này cần nắng hay cần bóng râm? Tôi có cửa sổ, nhưng nắng chỉ rọi vào 20 phút buổi chiều. Vậy như thế là đủ hay chưa?"</p>
+                </div>
+                <div class="soft-border problem-negative problem-dashed problem-color-3 p-5 chaos-item-3 chaos-hover-card">
+                    <span class="problem-icon">📦</span>
+                    <p class="font-medium mb-2">Sự tẻ nhạt công nghiệp</p>
+                    <p class="text-meta text-muted">"Mua cây online về có giống hình không, hay lại là một sản phẩm đóng gói hàng loạt không có cá tính, không có hướng dẫn phù hợp đúng góc làm việc của tôi?"</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="insight" class="scroll-mt-24 insight-spotlight">
+            <div class="flex items-end justify-between gap-4 mb-8">
+                <div>
+                    <p class="text-meta uppercase tracking-[0.18em] text-muted mb-2">Chương 2 · The Insight</p>
+                    <h2 class="text-[30px] font-semibold">Khoảnh khắc "Aha!": Chúng ta không bán cây, chúng ta bán một cam kết</h2>
+                    <a href="./demo-page/blog/blog.html" target="_blank" rel="noopener noreferrer" class="blog-pill">
+                        <span aria-hidden="true">📘</span>
+                        <span>Plant Care Blog</span>
+                    </a>
+                </div>
+                
+            </div>
+            <div class="grid md:grid-cols-3 gap-4 md:gap-5">
+                <div class="insight-card insight-card-green space-y-2">
+                    <span class="insight-chip insight-chip-green">Tiêu chí 1</span>
+                    <p class="text-[16px] font-semibold">Chỉ số tin cậy</p>
+                    <p class="text-regular text-muted">Hiển thị mức độ "Dễ chăm sóc" ngay trên ảnh thẻ để giảm sự lưỡng lự ngay từ listing.</p>
+                </div>
+                <div class="insight-card insight-card-yellow space-y-2">
+                    <span class="insight-chip insight-chip-yellow">Tiêu chí 2</span>
+                    <p class="text-[16px] font-semibold">Tính cá nhân hóa</p>
+                    <p class="text-regular text-muted">Câu hỏi mở đầu: "Cửa sổ văn phòng bạn hướng nào?" để đề xuất cây theo ánh sáng thật.</p>
+                </div>
+                <div class="insight-card insight-card-red space-y-2">
+                    <span class="insight-chip insight-chip-red">Tiêu chí 3</span>
+                    <p class="text-[16px] font-semibold">Sự kết nối cảm xúc</p>
+                    <p class="text-regular text-muted">Tên cây có cá tính: "Cây Lưỡi Hổ - Người bảo vệ thầm lặng" để tạo liên kết cảm xúc.</p>
+                </div>
+            </div>
+            <div class="mt-6">
+                <p class="text-[14px] font-semibold text-[#4EA664] uppercase tracking-[0.12em] mb-3">Thông điệp cốt lõi</p>
+                <blockquote class="quote-block ">
+                    <span class="quote-mark">“</span>GreenSpace không bán cây, chúng tôi bảo trợ cho sự sống trong góc nhỏ của bạn.
+                </blockquote>
+            </div>
+        </section>
+
+        <section id="research" class="scroll-mt-24">
+            <div class="flex items-end justify-between gap-4 mb-8">
+                <div>
+                    <p class="text-meta uppercase tracking-[0.18em] text-muted mb-2">Deep Research · Plant Parent Vietnam</p>
+                    <h2 class="text-[30px] font-semibold research-headline">Tâm lý "Plant Parent" tại Việt Nam: insight cho chiến lược nội dung sản phẩm</h2>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-4">
+                <article class="research-paper p-5 space-y-3">
+                    <p class="research-kicker">Plant Parent Brief · 01</p>
+                    <p class="research-title">Nỗi sợ thất bại đến từ thiếu "fit ngữ cảnh"</p>
+                    <p class="text-meta text-muted research-meta"><strong>Insight ngắn:</strong> Người dùng mới trồng cây không thiếu thiện chí; họ thiếu hệ quy chiếu để biết căn hộ của mình có hợp loại cây đó hay không.</p>
+                    <p class="text-meta text-muted"><strong>Evidence:</strong> Theo <a class="text-[#3B9E5A] hover:underline" target="_blank" rel="noopener noreferrer" href="https://vnexpress.net/mat-tien-trieu-vi-om-mong-lam-vuon-tren-ban-cong-chung-cu-4657168.html">VnExpress (2023)</a>, kiến trúc sư chia sẻ khoảng <strong>50%</strong> khách hàng căn hộ muốn làm mảng xanh ban công, nhưng đơn vị cảnh quan ghi nhận tới <strong>90%</strong> gia chủ gặp khó khi tự thiết kế/chăm sóc; bài cũng mô tả trường hợp thay cây <strong>5 lần</strong> vẫn thất bại do sai điều kiện nắng - gió.</p>
+                    <p class="text-meta text-muted"><strong>Hàm ý nội dung sản phẩm:</strong> Trên hero cần câu hỏi định chuẩn bối cảnh trước khi gợi ý sản phẩm: "Cửa sổ hướng nào?", "Bạn vắng nhà mấy ngày/tuần?", "Bàn làm việc nhận nắng trực tiếp bao lâu?". Nội dung nên ưu tiên "cây này hợp góc bàn thiếu sáng" thay vì mô tả chung chung.</p>
+                </article>
+
+                <article class="research-paper p-5 space-y-3">
+                    <p class="research-kicker">Plant Parent Brief · 02</p>
+                    <p class="research-title">Người mới dễ mắc lỗi tưới vì tư duy theo lịch cứng</p>
+                    <p class="text-meta text-muted research-meta"><strong>Insight ngắn:</strong> "Tưới đều cho chắc" là phản xạ phổ biến của người mới, nhưng lại là nguyên nhân làm họ mất tự tin nhanh nhất khi cây xuống sức.</p>
+                    <p class="text-meta text-muted"><strong>Evidence:</strong> <a class="text-[#3B9E5A] hover:underline" target="_blank" rel="noopener noreferrer" href="https://www.rhs.org.uk/plants/types/houseplants/how-to-help-a-poorly-houseplant">RHS</a> nhấn mạnh lỗi phổ biến vào mùa lạnh là tưới quá tay và khuyến nghị kiểm tra độ ẩm trước khi tưới, không tưới theo lịch cứng. Bổ sung từ review Drexel trích dẫn các thí nghiệm VOC cho thấy muốn cây xử lý không khí ngang thông gió cần tới khoảng <strong>10-1,000 cây/m2</strong>, nghĩa là người dùng càng dễ "lạm dụng tưới" vì kỳ vọng sai về vai trò của cây.</p>
+                    <p class="text-meta text-muted"><strong>Hàm ý nội dung sản phẩm:</strong> Trang chi tiết sản phẩm nên có microcopy hành động kiểu checklist: "(1) Chạm đất 2-3cm, (2) khô mới tưới, (3) đổ nước đọng ở đĩa chậu". Giọng điệu cần chuyển từ "hãy tưới mỗi X ngày" sang "hãy quan sát tín hiệu của cây trước khi tưới".</p>
+                </article>
+
+                <article class="research-paper p-5 space-y-3">
+                    <p class="research-kicker">Plant Parent Brief · 03</p>
+                    <p class="research-title">Giá trị lớn nhất là wellbeing, không phải "lọc khí thần kỳ"</p>
+                    <p class="text-meta text-muted research-meta"><strong>Insight ngắn:</strong> Người dùng muốn cảm giác bình tĩnh và tập trung hơn trong giờ làm việc; họ không cần một lời hứa khoa học bị thổi phồng.</p>
+                    <p class="text-meta text-muted"><strong>Evidence:</strong> Meta-analysis <a class="text-[#3B9E5A] hover:underline" target="_blank" rel="noopener noreferrer" href="https://doi.org/10.3390/ijerph19127454">IJERPH 2022</a> tổng hợp <strong>42</strong> nghiên cứu (trong đó <strong>16</strong> vào meta-analysis) cho thấy cây trong nhà có liên hệ tích cực với chỉ số sinh lý và nhận thức, ví dụ DBP giảm trung bình <strong>-2.526</strong> và academic achievement tăng <strong>+0.534</strong>. Tuy nhiên review Drexel 2019 cho thấy claim lọc khí trong đời thực thường bị thổi phồng.</p>
+                    <p class="text-meta text-muted"><strong>Hàm ý nội dung sản phẩm:</strong> Định vị thông điệp nên là "calm - focus - routine" và "góc làm việc dễ thở hơn về tinh thần", tránh hứa "lọc sạch không khí". Ở thẻ sản phẩm, thay claim kỹ thuật bằng lợi ích cảm nhận có thể kiểm chứng sau 1-2 tuần sử dụng.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="solution" class="scroll-mt-24">
+            <div class="flex items-end justify-between gap-4 mb-8">
+                <div>
+                    <p class="text-meta uppercase tracking-[0.18em] text-muted mb-2">Chương 3 · The Solution</p>
+                    <h2 class="text-[30px] font-semibold">Match & Adopt: Bắt cặp chân ái, nhận nuôi không rủi ro</h2>
+                </div>
+            </div>
+
+            <div class="soft-border p-6 md:p-8 bg-[#F8FCF9] mb-6">
+                <p class="text-regular text-muted max-w-4xl leading-7">
+                    Giải pháp kết hợp hai cơ chế trong một hành trình: <strong class="text-[#2D3136]">Match</strong> để tìm cây hợp bối cảnh sống thật, và
+                    <strong class="text-[#2D3136]">Adopt</strong> để xóa áp lực "tay thối" bằng cam kết đồng hành trong 30 ngày đầu.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-5">
+                <article class="soft-border p-5 bg-white">
+                    <p class="text-meta uppercase tracking-[0.12em] text-[#3B9E5A] mb-2">Điểm chạm 1 · Khám phá</p>
+                    <p class="text-[18px] font-semibold mb-3">Mini Quiz bắt cặp</p>
+                    <p class="text-meta text-muted mb-3">Dạng one-question-per-screen để giảm quá tải và tăng cảm giác trò chuyện.</p>
+                    <ul class="text-meta text-muted space-y-2">
+                        <li>1) Góc bàn của bạn có nắng trực tiếp không?</li>
+                        <li>2) Bạn hay quên tưới nước không?</li>
+                        <li>3) Bạn thích cây kiên cường hay mềm mại?</li>
+                    </ul>
+                </article>
+
+                <article class="soft-border p-5 bg-white border-[#DCEFE2]">
+                    <p class="text-meta uppercase tracking-[0.12em] text-[#3B9E5A] mb-2">Điểm chạm 2 · Chốt đơn</p>
+                    <p class="text-[18px] font-semibold mb-3">Adoption + Zero-Risk</p>
+                    <p class="text-meta text-muted mb-3">Kết quả trả về "chậu cây chân ái" với CTA nhận nuôi thay vì mua thuần túy.</p>
+                    <div class="soft-border p-3 bg-[#F6FBF7] mb-3">
+                        <p class="text-[14px] font-semibold text-[#2D3136]">Nút chính: Nhận nuôi ngay</p>
+                    </div>
+                    <div class="inline-flex items-center rounded-full bg-[#EAF7EE] border border-[#CFE6D5] px-3 py-1 text-[12px] font-semibold text-[#3B9E5A]">
+                        Bảo hiểm Xanh 30 ngày
+                    </div>
+                    <p class="text-meta text-muted mt-2">Nếu cây héo trong 30 ngày đầu dù làm đúng hướng dẫn, GreenSpace đổi ngay một người bạn mới miễn phí.</p>
+                </article>
+
+                <article class="soft-border p-5 bg-white">
+                    <p class="text-meta uppercase tracking-[0.12em] text-[#3B9E5A] mb-2">Điểm chạm 3 · Đồng hành</p>
+                    <p class="text-[18px] font-semibold mb-3">Plant SOS</p>
+                    <p class="text-meta text-muted mb-3">Nút "Cấp cứu cây" luôn hiện diện trên mobile/account sau mua.</p>
+                    <div class="soft-border p-3 bg-[#FFFAF0]">
+                        <p class="text-[14px] font-semibold text-[#2D3136]">Cây đang mệt? Gửi ảnh cho GreenSpace</p>
+                        <p class="text-meta text-muted mt-1">Chuyên gia phản hồi nhanh theo triệu chứng vàng lá, rũ lá, hoặc úng rễ.</p>
+                    </div>
+                </article>
+            </div>
+
+            <div class="mt-6 grid md:grid-cols-2 gap-5">
+                <div class="soft-border p-5">
+                    <p class="text-[15px] font-semibold mb-2">Giá trị giải pháp</p>
+                    <p class="text-meta text-muted">Giải quyết đồng thời hai rào cản lớn nhất: "không biết chọn cây gì" và "sợ nuôi cây chết".</p>
+                </div>
+                <div class="soft-border p-5">
+                    <p class="text-[15px] font-semibold mb-2">KPI theo dõi</p>
+                    <p class="text-meta text-muted">Quiz completion rate, Adopt rate, Plant SOS usage 30 ngày, tỉ lệ mua lại sau 30-60 ngày.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="soft-border section-accent-yellow p-8 md:p-10">
+            <div class="grid md:grid-cols-2 gap-10">
+                <div>
+                    <p class="text-meta uppercase tracking-[0.18em] text-muted mb-2">Ngôn ngữ sản phẩm mới</p>
+                    <h3 class="text-[30px] font-semibold mb-4">Thông số khô khan trở thành lời nhắn của một người bạn</h3>
+                    <p class="text-regular text-muted leading-7">Thay vì: "Lượng nước 200ml/tuần" hay "Ánh sáng bán phần", trang chi tiết sẽ nói như một người bạn đồng hành để người dùng dễ hình dung và duy trì thói quen chăm cây.</p>
+                </div>
+                <div class="grid sm:grid-cols-3 gap-3">
+                    <div class="value-card value-blue">
+                        <span class="value-icon">W</span>
+                        <p class="text-[14px] font-semibold mb-2">01 · Nước</p>
+                        <p class="text-meta text-muted">"Mình thích uống một ngụm nước nhỏ vào mỗi sáng Thứ Hai để bắt đầu tuần mới cùng bạn."</p>
+                    </div>
+                    <div class="value-card value-green">
+                        <span class="value-icon">L</span>
+                        <p class="text-[14px] font-semibold mb-2">02 · Ánh sáng</p>
+                        <p class="text-meta text-muted">"Hãy đặt mình ở nơi có ánh nắng nhẹ, mình rất thích ngắm nhìn bình minh qua kẽ lá."</p>
+                    </div>
+                    <div class="value-card value-yellow">
+                        <span class="value-icon">F</span>
+                        <p class="text-[14px] font-semibold mb-2">03 · Lọc theo bối cảnh sống</p>
+                        <p class="text-meta text-muted">"Góc làm việc thiếu sáng", "Người hay đi công tác", "Người mới bắt đầu".</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="wireframe" class="scroll-mt-24">
+            <div class="flex items-end justify-between gap-4 mb-8">
+                <div>
+                    <p class="text-meta uppercase tracking-[0.18em] text-muted mb-2">Wireframe</p>
+                    <h2 class="text-[30px] font-semibold">Tư duy luồng trước khi làm visual</h2>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="soft-border p-5">
+                    <p class="text-[16px] font-semibold mb-2">Low Wireframe · Khung xương</p>
+                    <div class="wire-box rounded p-3 space-y-2">
+                        <div class="h-6 bg-white/80 border border-[#dfe3e8]"></div>
+                        <div class="h-14 bg-white/80 border border-[#dfe3e8]"></div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="h-10 bg-white/80 border border-[#dfe3e8]"></div>
+                            <div class="h-10 bg-white/80 border border-[#dfe3e8]"></div>
+                        </div>
+                    </div>
+                    <p class="text-meta text-muted mt-3">Phác bố cục lớn: Header → Hero → Khối thông tin.</p>
+                </div>
+                <div class="soft-border p-5">
+                    <p class="text-[16px] font-semibold mb-2">Mid Wireframe · Luồng nội dung</p>
+                    <div class="wire-box rounded p-3 space-y-2">
+                        <div class="h-6 w-2/3 bg-white/80 border border-[#dfe3e8]"></div>
+                        <div class="h-10 bg-white/80 border border-[#dfe3e8]"></div>
+                        <div class="h-10 bg-white/80 border border-[#dfe3e8]"></div>
+                        <div class="h-8 w-1/2 bg-white/80 border border-[#dfe3e8]"></div>
+                    </div>
+                    <p class="text-meta text-muted mt-3">Đặt thứ tự kể chuyện: Problem → Insight → Solution.</p>
+                </div>
+                <div class="soft-border p-5">
+                    <p class="text-[16px] font-semibold mb-2">High Wireframe · Chi tiết tương tác</p>
+                    <div class="wire-box rounded p-3 space-y-2">
+                        <div class="h-6 bg-white/80 border border-[#dfe3e8]"></div>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div class="h-8 bg-white/80 border border-[#dfe3e8]"></div>
+                            <div class="h-8 bg-white/80 border border-[#dfe3e8]"></div>
+                            <div class="h-8 bg-white/80 border border-[#dfe3e8]"></div>
+                        </div>
+                        <div class="h-9 w-2/3 bg-white/80 border border-[#dfe3e8]"></div>
+                    </div>
+                    <p class="text-meta text-muted mt-3">Mô tả trạng thái CTA, card, microcopy để dev dễ hình dung.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="impact" class="scroll-mt-24">
+            <div class="flex items-end justify-between gap-4 mb-8">
+                <div>
+                    <p class="text-meta uppercase tracking-[0.18em] text-muted mb-2">Chương 4 · The Impact</p>
+                    <h2 class="text-[30px] font-semibold">Những con số biết nói bằng cảm xúc</h2>
+                </div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-5">
+                <div class="soft-border p-6">
+                    <p class="text-[24px] font-semibold text-[#3B9E5A] mb-2">-35% tỉ lệ cây chết</p>
+                    <p class="text-regular text-muted">Thêm hàng ngàn mầm xanh đã trụ vững qua những kỳ nghỉ lễ dài.</p>
+                </div>
+                <div class="soft-border p-6">
+                    <p class="text-[24px] font-semibold text-[#3B9E5A] mb-2">+22% hiệu suất</p>
+                    <p class="text-regular text-muted">Tương đương với việc bạn có thêm 2 giờ làm việc tập trung và hạnh phúc mỗi ngày.</p>
+                </div>
+            </div>
+            <div class="mt-6 p-8 md:p-12 rounded-2xl border border-[#DCEFE2] bg-gradient-to-r from-[#EAF7EE] via-[#F6FBF7] to-[#FFFFFF]">
+                <p class="text-[28px] md:text-[38px] font-semibold leading-tight max-w-4xl text-[#2D3136]">
+                    Bắt đầu hành trình nuôi dưỡng sự bình yên của bạn ngay hôm nay.
+                </p>
+                <p class="text-regular text-[#6E7681] mt-3 max-w-2xl">Một cây đúng chỗ có thể thay đổi tâm trạng cả ngày làm việc. Hãy bắt đầu từ góc bàn của bạn.</p>
+                <div class="mt-6 flex flex-wrap gap-3">
+                    <a href="./demo-page/index.html" target="_blank" rel="noopener noreferrer" class="primary-btn h-11 px-7 inline-flex items-center">Khám phá GreenSpace</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <footer class="border-t border-[#EEEEEE]">
+        <div class="max-w-7xl mx-auto px-6 md:px-10 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+            <div>
+                <p class="text-[18px] font-bold tracking-[0.05em] text-[#3B9E5A]">GREENSPACE</p>
+                <p class="text-regular text-muted mt-1">Không chỉ bán cây, chúng tôi bảo trợ cho sự sống trong góc nhỏ của bạn.</p>
+            </div>
+            <div class="flex items-center gap-5 text-[14px] text-muted">
+                <a href="#problem" class="hover:text-[#3B9E5A]">Problem</a>
+                <a href="#insight" class="hover:text-[#3B9E5A]">Insight</a>
+                <a href="#solution" class="hover:text-[#3B9E5A]">Solution</a>
+                <a href="#impact" class="hover:text-[#3B9E5A]">Impact</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

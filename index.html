@@ -3,23 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ngoc Quynh Pham | Front-end Developer</title>
+    <title>Ngoc Quynh Pham | Frontend Playground & UI Archive</title>
     <meta
       name="description"
-      content="Front-end developer with 4+ years building user-friendly websites. Explore my portfolio and connect on LinkedIn."
+      content="Ngoc Quynh Pham’s front-end playground on GitHub Pages: UI experiments, demos, and an archive of interfaces—plus a link to the main portfolio site and LinkedIn."
     />
-    <meta name="robots" content="index, follow" />
+    <meta
+      name="keywords"
+      content="Ngoc Quynh Pham, front-end developer, frontend playground, UI archive, web experiments, HTML CSS JavaScript demos, GitHub Pages portfolio"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="author" content="Ngoc Quynh Pham" />
+    <meta name="application-name" content="Quynh — Playground &amp; Archive" />
     <link rel="canonical" href="https://ngocquynhpham.github.io/" />
 
     <link rel="icon" href="./logo.ico" />
     <meta name="theme-color" content="#121212" />
 
-    <!-- Fonts: preconnect + stylesheet (avoid @import in CSS — better LCP / render path) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;700&display=swap"
       rel="stylesheet"
     />
 
@@ -28,33 +32,71 @@
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="vi_VN" />
     <meta property="og:url" content="https://ngocquynhpham.github.io/" />
-    <meta property="og:title" content="Ngoc Quynh Pham | Front-end Developer" />
+    <meta
+      property="og:title"
+      content="Ngoc Quynh Pham | Frontend Playground & UI Archive"
+    />
     <meta
       property="og:description"
-      content="Front-end developer with 4+ years building user-friendly websites. Portfolio and contact."
+      content="Front-end playground and UI archive: experiments, demos, and interfaces built in the browser. By Ngoc Quynh Pham."
     />
     <meta
       property="og:image"
       content="https://ngocquynhpham.github.io/logo.ico"
     />
+    <meta
+      property="og:image:alt"
+      content="Ngoc Quynh Pham — site icon"
+    />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Ngoc Quynh Pham | Front-end Developer" />
+    <meta
+      name="twitter:title"
+      content="Ngoc Quynh Pham | Frontend Playground & UI Archive"
+    />
     <meta
       name="twitter:description"
-      content="Front-end developer with 4+ years building user-friendly websites. Portfolio and contact."
+      content="Front-end playground and UI archive: experiments, demos, and interfaces built in the browser."
     />
     <meta name="twitter:image" content="https://ngocquynhpham.github.io/logo.ico" />
+    <meta
+      name="twitter:image:alt"
+      content="Ngoc Quynh Pham — site icon"
+    />
 
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Ngoc Quynh Pham",
-        "url": "https://ngocquynhpham.github.io/",
-        "jobTitle": "Front-end Developer",
-        "sameAs": [
-          "https://ngocquynhpham.com/",
-          "https://www.linkedin.com/in/ngocquynhpham/"
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://ngocquynhpham.github.io/#website",
+            "url": "https://ngocquynhpham.github.io/",
+            "name": "Ngoc Quynh Pham — Frontend Playground & UI Archive",
+            "description": "Personal front-end playground and UI archive: experiments, demos, and interfaces on GitHub Pages.",
+            "inLanguage": "en",
+            "publisher": { "@id": "https://ngocquynhpham.github.io/#person" }
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://ngocquynhpham.github.io/#webpage",
+            "url": "https://ngocquynhpham.github.io/",
+            "name": "Ngoc Quynh Pham | Frontend Playground & UI Archive",
+            "description": "Landing page for the GitHub Pages playground: UI experiments, demos, archive, and links to the main website and LinkedIn.",
+            "isPartOf": { "@id": "https://ngocquynhpham.github.io/#website" },
+            "about": { "@id": "https://ngocquynhpham.github.io/#person" },
+            "inLanguage": "en"
+          },
+          {
+            "@type": "Person",
+            "@id": "https://ngocquynhpham.github.io/#person",
+            "name": "Ngoc Quynh Pham",
+            "url": "https://ngocquynhpham.github.io/",
+            "jobTitle": "Front-end Developer",
+            "sameAs": [
+              "https://ngocquynhpham.com/",
+              "https://www.linkedin.com/in/ngocquynhpham/"
+            ]
+          }
         ]
       }
     </script>
@@ -62,8 +104,9 @@
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <nav aria-label="Site">
-      <p class="sitename">Ngoc Quynh Pham</p>
+    <nav class="site-nav" aria-label="Site">
+      <a href="./" class="sitename">Ngoc Quynh Pham</a>
+      <span class="nav-tag" title="This site">playground · archive</span>
     </nav>
 
     <main id="main-content">
@@ -101,44 +144,63 @@
         <div class="blur"></div>
       </div>
 
-      <div class="title">
-        <h1 class="title-heading">
+      <section class="hero" aria-labelledby="hero-heading">
+        <p class="eyebrow">Frontend Playground &amp; UI Archive</p>
+        <h1 id="hero-heading" class="title-heading">
           <span class="title-line">Hi, I'm</span>
           <span class="title-name">Quynh</span>
         </h1>
-        <div class="description">
-          <p>
-            A Passionate <span class="job">&lt;Frontend Developer /&gt;</span> with over 4 years of
-            experience creating user-friendly websites.
-          </p>
+        <p class="description">
+          A front-end developer who treats this site like a
+          <span class="job">&lt;lab bench /&gt;</span>—sketches, demos, and
+          interfaces I want to remember.
+        </p>
+        <p class="kicker" lang="vi">
+          Hay nói chơi: đây là phòng thí nghiệm nhỏ của mình.
+        </p>
+        <p class="lab-meta" aria-hidden="true">
+          <span class="lab-prompt">~/lab</span>
+          <span class="lab-sep">·</span>
+          <span>experiments</span>
+          <span class="lab-sep">·</span>
+          <span>demos</span>
+          <span class="lab-sep">·</span>
+          <span>archive</span>
+        </p>
+
+        <div class="actions">
+          <a
+            href="./projects.html"
+            class="button first"
+            aria-label="Enter the playground — projects and demos on this site"
+          >
+            <span class="button-label">Enter the playground</span
+            ><span class="span" aria-hidden="true"></span>
+          </a>
+
+          <a
+            href="https://ngocquynhpham.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="button sec"
+            aria-label="Main website — ngocquynhpham.com (opens in a new tab)"
+          >
+            <span class="button-label">Main Website</span
+            ><span class="span" aria-hidden="true"></span>
+          </a>
+
+          <a
+            href="https://www.linkedin.com/in/ngocquynhpham/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="button third"
+            aria-label="LinkedIn — Ngoc Quynh Pham (opens in a new tab)"
+          >
+            <span class="button-label">Connect</span
+            ><span class="span" aria-hidden="true"></span>
+          </a>
         </div>
-      </div>
-
-      <a
-        href="./projects.html" 
-        class="button first"
-        aria-label="View all projects — demos"
-      >
-        <span class="button-label">Explore my projects</span><span class="span" aria-hidden="true"></span>
-      </a>
-
-      <a
-        href="https://ngocquynhpham.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="button sec"
-      >
-        <span class="button-label">Portfolio</span><span class="span" aria-hidden="true"></span>
-      </a>
-
-      <a
-        href="https://www.linkedin.com/in/ngocquynhpham/"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="button third"
-      >
-        <span class="button-label">Connect with me</span><span class="span" aria-hidden="true"></span>
-      </a>
+      </section>
 
       <svg
         class="top-right"
