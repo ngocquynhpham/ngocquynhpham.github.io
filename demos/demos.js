@@ -5,8 +5,8 @@
   /** @type {{ title: string, desc: string, href: string, cat: string }[]} */
   const PROJECTS = [
     {
-      title: "GreenSpace case study",
-      desc: "GreenSpace case study: a case study for the GreenSpace project.",
+      title: "FloraSync case study",
+      desc: "UX research and storytelling case study for desk plants and office wellbeing: Problem → Insight → Solution → Impact.",
       href: "../projects/greenspace/index.html",
       cat: "research",
     },
@@ -45,12 +45,6 @@
       desc: "My portfolio v0 - It showcases my projects and skills in a clean and modern design.",
       href: "https://v0.ngocquynhpham.com/",
       cat: "portfolio",
-    },
-    {
-      title: "Greenspace",
-      desc: "E-commerce style landing: hero, featured products, and navigation patterns typical of a storefront. Part of a larger Greenspace demo used to practice component structure and layout flow.",
-      href: "../projects/greenspace/demo-page/index.html",
-      cat: "ecommerce",
     },
     {
       title: "Poster Analysis",
