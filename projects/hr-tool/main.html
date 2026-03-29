@@ -51,7 +51,7 @@
     <!-- Navbar -->
     <nav class="bg-blue-800 text-white shadow-md sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap justify-between items-center gap-3">
-            <a href="dashboard.html" class="flex items-center space-x-3 hover:opacity-90 transition" title="Về Dashboard">
+            <a href="index.html" class="flex items-center space-x-3 hover:opacity-90 transition" title="Về Dashboard">
                 <i class="fas fa-graduation-cap text-3xl text-yellow-400"></i>
                 <div>
                     <span class="font-bold text-xl tracking-wider block">HR TOOL</span>
@@ -59,7 +59,10 @@
                 </div>
             </a>
             <div class="flex flex-wrap items-center gap-2">
-                <a href="dashboard.html" class="text-sm font-medium bg-blue-700 hover:bg-blue-600 px-3 py-2 rounded-lg transition">
+                <a href="about.html" class="text-sm font-medium text-blue-100 hover:text-white px-3 py-2 rounded-lg transition border border-blue-600/50 hover:bg-blue-700/50">
+                    <i class="fas fa-circle-info mr-1"></i> Giới thiệu
+                </a>
+                <a href="index.html" class="text-sm font-medium bg-blue-700 hover:bg-blue-600 px-3 py-2 rounded-lg transition">
                     <i class="fas fa-bullhorn mr-1"></i> Chiến dịch
                 </a>
                 <div id="nav-position-pill" class="text-sm font-medium bg-blue-700 px-4 py-2 rounded-full max-w-[min(100%,20rem)] truncate" title="">
@@ -334,6 +337,7 @@
     </div>
 
     <script>
+        const LOGIN_KEY = 'hr_logged_in';
         const SESSION_CAMPAIGN = 'hr_campaign';
         /** @type {{ id?: string, campaignName?: string, company?: string, brand?: string, replyEmail?: string, position?: string } | null} */
         let hrCampaign = null;
@@ -342,13 +346,13 @@
             try {
                 const raw = sessionStorage.getItem(SESSION_CAMPAIGN);
                 if (!raw) {
-                    window.location.replace('dashboard.html');
+                    window.location.replace('index.html');
                     return null;
                 }
                 hrCampaign = JSON.parse(raw);
                 return hrCampaign;
             } catch (e) {
-                window.location.replace('dashboard.html');
+                window.location.replace('index.html');
                 return null;
             }
         }
@@ -859,6 +863,10 @@
 
         // 2. Initialization
         function init() {
+            if (sessionStorage.getItem(LOGIN_KEY) !== '1') {
+                window.location.replace('login.html');
+                return;
+            }
             if (!loadCampaignOrRedirect()) return;
             applyCampaignToNavbar();
             initUploadUI();
@@ -1185,7 +1193,7 @@ Phòng Nhân Sự — ${company}${replyLine}`;
                     campaignName: (hrCampaign && hrCampaign.campaignName) ? hrCampaign.campaignName : ''
                 }));
             } catch (e) { /* ignore */ }
-            window.location.href = 'dashboard.html';
+            window.location.href = 'index.html';
         }
 
         function sendEmailAction() {
