@@ -79,7 +79,7 @@
     {
       title: "HR tool",
       desc: "Login screen for an HR-themed prototype: credentials layout, branding strip, and entry into the app shell. Part of a larger static HR dashboard exercise.",
-      href: "../projects/hr-tool/login.html",
+      href: "../projects/hr-tool/about.html",
       cat: "apps",
     },
     {
