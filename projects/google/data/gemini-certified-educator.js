@@ -507,7 +507,7 @@ function setLanguage(lang) {
   }
   const headerCertLabel = document.getElementById("header-cert-label");
   if (headerCertLabel) {
-    headerCertLabel.textContent = lang === "vi" ? "Chứng chỉ" : "Certificate";
+    headerCertLabel.textContent = lang === "vi" ? "Chứng chỉ của tôi" : "My Certificate";
   }
   const headerCertLink = document.getElementById("header-cert-link");
   if (headerCertLink) {
