@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Writing Task 1 Pro Lab</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .font-essay { font-family: 'Lora', serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .chart-container { position: relative; height: 350px; width: 100%; }
+        .view-hidden { display: none; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 px-4 h-16 flex items-center justify-between shadow-sm">
+        <div class="flex items-center gap-2 text-indigo-600 font-black text-xl tracking-tight cursor-pointer" onclick="showView('bank')">
+            <div class="bg-indigo-600 text-white p-1 rounded-lg"><i class="fas fa-chart-line"></i></div>
+            IELTS LAB <span class="text-slate-400 font-light">PRO</span>
+        </div>
+        <div class="hidden md:flex gap-4">
+            <button onclick="showView('bank')" class="nav-btn px-4 py-2 rounded-full text-sm font-bold transition text-slate-500 hover:bg-slate-100" id="btn-bank">
+                <i class="fas fa-database mr-2"></i> Ngân hàng đề
+            </button>
+            <button onclick="showView('create')" class="nav-btn px-4 py-2 rounded-full text-sm font-bold transition text-slate-500 hover:bg-slate-100" id="btn-create">
+                <i class="fas fa-plus mr-2"></i> Tạo đề mới
+            </button>
+        </div>
+        <button class="md:hidden p-2 text-slate-600" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars" id="menu-icon"></i>
+        </button>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-40 hidden pt-20 px-6 flex flex-col gap-4 animate-in slide-in-from-top duration-300">
+        <button onclick="showView('bank'); toggleMobileMenu()" class="w-full text-left py-4 text-xl font-bold border-b">Ngân hàng đề</button>
+        <button onclick="showView('create'); toggleMobileMenu()" class="w-full text-left py-4 text-xl font-bold border-b">Tạo đề mới</button>
+    </div>
+
+    <main class="max-w-7xl mx-auto p-4 md:p-8">
+
+        <!-- VIEW: BANK -->
+        <section id="view-bank" class="space-y-8 animate-in fade-in duration-500">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-black text-slate-800">Thư viện luyện tập</h2>
+                    <p class="text-slate-500">Chào mừng bạn trở lại, hôm nay luyện viết biểu đồ gì nào?</p>
+                </div>
+                <button onclick="showView('create')" class="bg-indigo-600 text-white px-6 py-3 rounded-2xl font-bold shadow-lg shadow-indigo-100 flex items-center justify-center gap-2 hover:bg-indigo-700 transition">
+                    <i class="fas fa-plus"></i> Tạo đề mới
+                </button>
+            </div>
+            <div id="questions-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Questions will be injected here -->
+            </div>
+        </section>
+
+        <!-- VIEW: CREATE -->
+        <section id="view-create" class="view-hidden max-w-5xl mx-auto animate-in fade-in duration-300">
+            <button onclick="showView('bank')" class="flex items-center gap-2 text-slate-500 font-bold mb-6 hover:text-indigo-600">
+                <i class="fas fa-arrow-left"></i> Quay lại thư viện
+            </button>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div class="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-slate-200">
+                        <h2 class="text-xl font-black mb-6 flex items-center gap-2 text-indigo-600">
+                            <i class="fas fa-edit"></i> Thiết kế đề mới
+                        </h2>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-black text-slate-400 uppercase mb-2">Tiêu đề đề bài</label>
+                                <textarea id="edit-title" class="w-full px-4 py-3 bg-slate-50 border-0 rounded-2xl focus:ring-2 focus:ring-indigo-100 outline-none transition min-h-[80px]" placeholder="The chart shows..."></textarea>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-black text-slate-400 uppercase mb-2">Dạng biểu đồ</label>
+                                <div class="grid grid-cols-4 gap-2">
+                                    <button onclick="setChartType('bar')" class="type-btn py-2 rounded-xl text-xs font-bold uppercase transition bg-indigo-600 text-white shadow-md" data-type="bar">Bar</button>
+                                    <button onclick="setChartType('line')" class="type-btn py-2 rounded-xl text-xs font-bold uppercase transition bg-slate-100 text-slate-500" data-type="line">Line</button>
+                                    <button onclick="setChartType('pie')" class="type-btn py-2 rounded-xl text-xs font-bold uppercase transition bg-slate-100 text-slate-500" data-type="pie">Pie</button>
+                                    <button onclick="setChartType('mix')" class="type-btn py-2 rounded-xl text-xs font-bold uppercase transition bg-slate-100 text-slate-500" data-type="mix">Mix</button>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between items-center pt-4">
+                                <label class="text-xs font-black text-slate-400 uppercase">Dữ liệu chi tiết</label>
+                                <div class="flex gap-2">
+                                    <button onclick="toggleImport()" class="text-indigo-600 text-xs font-bold flex items-center gap-1 hover:underline"><i class="fas fa-file-import"></i> Import</button>
+                                    <button onclick="addRow()" class="bg-indigo-50 text-indigo-600 p-1 rounded-lg w-8 h-8 flex items-center justify-center"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <div id="import-area" class="hidden bg-indigo-50 p-4 rounded-2xl">
+                                <p class="text-[10px] text-indigo-400 font-bold mb-2"><i class="fas fa-info-circle mr-1"></i> Định dạng: Tên, Giá trị 1, Giá trị 2 (mỗi dòng 1 hàng)</p>
+                                <textarea id="import-text" class="w-full p-3 text-xs bg-white border border-indigo-200 rounded-xl h-32 font-mono" placeholder="2020, 50, 10"></textarea>
+                                <button onclick="handleImport()" class="w-full mt-2 bg-indigo-600 text-white py-2 rounded-xl text-xs font-bold">Xử lý dữ liệu</button>
+                            </div>
+
+                            <div id="data-rows" class="space-y-2 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+                                <!-- Data rows go here -->
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Trục Y 1 (Cột)</label>
+                                    <input id="unit1" class="w-full px-3 py-2 text-xs border rounded-xl" value="Values" oninput="updatePreview()">
+                                </div>
+                                <div id="unit2-container" class="hidden">
+                                    <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Trục Y 2 (Đường)</label>
+                                    <input id="unit2" class="w-full px-3 py-2 text-xs border border-green-200 text-green-600 rounded-xl" value="Rate" oninput="updatePreview()">
+                                </div>
+                            </div>
+
+                            <button onclick="saveQuestion()" class="w-full mt-4 bg-indigo-600 text-white py-4 rounded-2xl font-bold shadow-lg shadow-indigo-100 flex items-center justify-center gap-2 hover:bg-indigo-700 transition">
+                                <i class="fas fa-save text-xl"></i> Lưu đề vào thư viện
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hidden lg:block">
+                    <div class="bg-white p-8 rounded-3xl border border-slate-200 sticky top-24">
+                        <span class="text-[10px] font-black text-indigo-400 uppercase tracking-widest block mb-4">Xem trước biểu đồ</span>
+                        <h3 id="preview-title-display" class="text-lg font-bold text-slate-800 mb-8 text-center">Tiêu đề đề bài</h3>
+                        <div class="chart-container">
+                            <canvas id="previewChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: PRACTICE -->
+        <section id="view-practice" class="view-hidden animate-in fade-in duration-500">
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+                <div class="flex items-center gap-4">
+                    <button onclick="showView('bank')" class="p-3 bg-white hover:bg-slate-100 rounded-2xl transition border border-slate-200 shadow-sm"><i class="fas fa-arrow-left text-indigo-600"></i></button>
+                    <div>
+                        <h2 class="text-xl md:text-2xl font-black text-slate-800">Phòng luyện viết</h2>
+                        <p class="text-xs text-slate-500 uppercase font-bold tracking-widest">Thời gian gợi ý: 20 phút</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-3">
+                    <div id="word-count-badge" class="px-5 py-2 rounded-2xl font-black text-sm flex items-center gap-2 border shadow-sm transition-all bg-amber-50 text-amber-600 border-amber-200">
+                        <i id="count-icon" class="fas fa-exclamation-circle"></i>
+                        <span id="word-count">0</span> Words
+                    </div>
+                    <button onclick="exportEssay()" class="bg-slate-900 text-white px-5 py-2.5 rounded-2xl font-bold text-sm flex items-center gap-2 hover:bg-indigo-600 transition shadow-lg">
+                        <i class="fas fa-download"></i> Export .txt
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                <div class="space-y-6">
+                    <div class="bg-white p-6 md:p-8 rounded-[2rem] border border-slate-200 shadow-sm">
+                        <h3 id="practice-title" class="text-sm md:text-base font-bold text-slate-700 leading-relaxed mb-8 bg-slate-50 p-4 rounded-2xl border-l-4 border-indigo-500 italic"></h3>
+                        <div class="chart-container h-[400px]">
+                            <canvas id="practiceChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-indigo-900 text-white p-6 rounded-[2rem] shadow-xl relative overflow-hidden group">
+                        <i class="fas fa-lightbulb absolute -right-4 -bottom-4 text-9xl opacity-10 group-hover:scale-110 transition-transform duration-700"></i>
+                        <h4 class="text-xs font-black uppercase tracking-widest text-indigo-300 mb-3 flex items-center gap-2">
+                            <i class="fas fa-info-circle text-amber-400"></i> Nhắc nhở quan trọng
+                        </h4>
+                        <ul class="text-xs space-y-2 text-indigo-100 font-medium list-disc list-inside">
+                            <li>Paraphrase đề bài ngay đoạn đầu tiên.</li>
+                            <li>Đoạn Overview mô tả xu hướng chung, không dùng số liệu.</li>
+                            <li>Nhóm thông tin tương đồng vào một đoạn Body.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="flex flex-col h-[500px] md:h-[650px]">
+                    <div class="bg-white rounded-[2rem] border border-slate-200 flex flex-col flex-1 shadow-sm overflow-hidden focus-within:ring-4 focus-within:ring-indigo-50 transition-all">
+                        <div class="p-4 border-b bg-slate-50 flex items-center justify-between">
+                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Essay Editor</span>
+                            <span id="target-msg" class="text-[10px] font-bold text-amber-500">Mục tiêu: 150+ từ</span>
+                        </div>
+                        <textarea id="essay-input" class="flex-1 p-6 md:p-8 text-base md:text-lg leading-relaxed focus:outline-none resize-none font-essay text-slate-700 bg-transparent" placeholder="The chart illustrates..."></textarea>
+                    </div>
+                    <div class="mt-4 grid grid-cols-2 gap-4">
+                        <button onclick="showView('bank')" class="py-3 px-6 bg-white border border-slate-200 rounded-2xl font-bold text-slate-500 hover:bg-slate-50 transition">Thoát</button>
+                        <button onclick="finishPractice()" class="py-3 px-6 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 shadow-lg shadow-indigo-100 transition">Hoàn thành</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Firebase Scripts -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // --- Config & Init ---
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'ielts-pro-html-v1';
+
+        // --- State Management ---
+        let currentView = 'bank';
+        let questions = [];
+        let creatorState = {
+            type: 'bar',
+            data: [{ name: 'A', value1: 10, value2: 5 }],
+            unit1: 'Values',
+            unit2: 'Rate'
+        };
+        let activeQuestion = null;
+        let previewChart = null;
+        let practiceChart = null;
+
+        // --- Auth & Data Listeners ---
+        const initAuth = async () => {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                await signInAnonymously(auth);
+            }
+        };
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const qCol = collection(db, 'artifacts', appId, 'public', 'data', 'questions');
+                onSnapshot(qCol, (snapshot) => {
+                    if (snapshot.empty) {
+                        seedDefaultData(qCol);
+                    } else {
+                        questions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                        renderQuestionBank();
+                    }
+                }, (error) => console.error("Firestore error:", error));
+            }
+        });
+
+        const seedDefaultData = async (qCol) => {
+            const defaults = [
+                {
+                    title: "The chart shows the number of students studying abroad in 2023.",
+                    type: "bar", unit1: "Students", unit2: "", createdAt: Date.now(),
+                    data: [{name: 'UK', value1: 450}, {name: 'USA', value1: 600}, {name: 'Australia', value1: 300}]
+                },
+                {
+                    title: "Average global temperature and CO2 emissions (2000-2020).",
+                    type: "mix", unit1: "Temp (°C)", unit2: "CO2 (ppm)", createdAt: Date.now(),
+                    data: [{name: '2000', value1: 14.2, value2: 370}, {name: '2010', value1: 14.5, value2: 390}, {name: '2020', value1: 14.9, value2: 410}]
+                }
+            ];
+            for (const d of defaults) await addDoc(qCol, d);
+        };
+
+        // --- UI Rendering Functions ---
+        window.showView = (viewName) => {
+            document.getElementById(`view-${currentView}`).classList.add('view-hidden');
+            document.getElementById(`view-${viewName}`).classList.remove('view-hidden');
+            
+            // Toggle active button style
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.replace('bg-indigo-600', 'text-slate-500'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.replace('text-white', 'hover:bg-slate-100'));
+            const activeBtn = document.getElementById(`btn-${viewName}`);
+            if(activeBtn) {
+                activeBtn.classList.add('bg-indigo-600', 'text-white');
+                activeBtn.classList.remove('text-slate-500', 'hover:bg-slate-100');
+            }
+
+            currentView = viewName;
+            if (viewName === 'create') updatePreview();
+        };
+
+        const renderQuestionBank = () => {
+            const grid = document.getElementById('questions-grid');
+            grid.innerHTML = questions.map(q => `
+                <div class="bg-white rounded-3xl border border-slate-200 overflow-hidden hover:shadow-xl transition-all group flex flex-col h-full">
+                    <div class="p-5 flex-1">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="bg-slate-100 text-slate-600 text-[10px] font-black uppercase px-2 py-1 rounded-md">${q.type}</span>
+                            <button onclick="deleteQuestion('${q.id}')" class="text-slate-300 hover:text-red-500 transition"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                        <h3 class="font-bold text-slate-800 line-clamp-2 mb-6 group-hover:text-indigo-600 transition h-12">${q.title}</h3>
+                        <div class="bg-slate-50 rounded-2xl p-4 h-32 flex items-center justify-center text-indigo-200 italic text-xs">
+                             <i class="fas fa-chart-area mr-2"></i> Click to practice
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0">
+                        <button onclick="startPractice('${q.id}')" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-2 group-hover:bg-indigo-600 transition">
+                            <i class="fas fa-pen-nib"></i> Luyện viết
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        };
+
+        window.deleteQuestion = async (id) => {
+            if (confirm("Xóa đề này khỏi thư viện?")) {
+                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'questions', id));
+            }
+        };
+
+        // --- Creator Logic ---
+        window.setChartType = (type) => {
+            creatorState.type = type;
+            document.getElementById('unit2-container').style.display = type === 'mix' ? 'block' : 'none';
+            document.querySelectorAll('.type-btn').forEach(b => {
+                const isActive = b.getAttribute('data-type') === type;
+                b.className = isActive ? "type-btn py-2 rounded-xl text-xs font-bold uppercase transition bg-indigo-600 text-white shadow-md" : "type-btn py-2 rounded-xl text-xs font-bold uppercase transition bg-slate-100 text-slate-500";
+            });
+            updatePreview();
+        };
+
+        window.addRow = () => {
+            creatorState.data.push({ name: `Mốc ${creatorState.data.length + 1}`, value1: 0, value2: 0 });
+            renderDataRows();
+            updatePreview();
+        };
+
+        const renderDataRows = () => {
+            const container = document.getElementById('data-rows');
+            container.innerHTML = creatorState.data.map((d, i) => `
+                <div class="flex gap-2 items-center bg-white border border-slate-100 p-2 rounded-xl">
+                    <input class="w-20 px-2 py-1 text-xs outline-none font-bold" value="${d.name}" oninput="updateDataRow(${i}, 'name', this.value)">
+                    <input type="number" class="flex-1 px-2 py-1 text-xs bg-slate-50 rounded" value="${d.value1}" oninput="updateDataRow(${i}, 'value1', this.value)">
+                    <input type="number" class="flex-1 px-2 py-1 text-xs bg-green-50 text-green-700 rounded ${creatorState.type !== 'mix' ? 'hidden' : ''}" value="${d.value2}" oninput="updateDataRow(${i}, 'value2', this.value)">
+                    <button onclick="removeDataRow(${i})" class="text-slate-300 hover:text-red-400"><i class="fas fa-trash-alt text-xs"></i></button>
+                </div>
+            `).join('');
+        };
+
+        window.updateDataRow = (idx, field, val) => {
+            creatorState.data[idx][field] = field === 'name' ? val : parseFloat(val) || 0;
+            updatePreview();
+        };
+
+        window.removeDataRow = (idx) => {
+            creatorState.data.splice(idx, 1);
+            renderDataRows();
+            updatePreview();
+        };
+
+        window.updatePreview = () => {
+            const title = document.getElementById('edit-title').value || "Tiêu đề biểu đồ";
+            document.getElementById('preview-title-display').innerText = title;
+            
+            const ctx = document.getElementById('previewChart').getContext('2d');
+            if (previewChart) previewChart.destroy();
+
+            previewChart = createChart(ctx, creatorState.type, creatorState.data, document.getElementById('unit1').value, document.getElementById('unit2').value);
+            renderDataRows();
+        };
+
+        const createChart = (ctx, type, data, u1, u2) => {
+            const labels = data.map(d => d.name);
+            const datasets = [];
+
+            if (type === 'pie') {
+                datasets.push({
+                    data: data.map(d => d.value1),
+                    backgroundColor: COLORS,
+                    borderWidth: 0
+                });
+            } else if (type === 'mix') {
+                datasets.push({
+                    type: 'bar', label: u1, data: data.map(d => d.value1), backgroundColor: '#6366f1', borderRadius: 4, yAxisID: 'y'
+                });
+                datasets.push({
+                    type: 'line', label: u2, data: data.map(d => d.value2), borderColor: '#10b981', backgroundColor: '#10b981', borderWidth: 3, pointRadius: 4, tension: 0.3, yAxisID: 'y1'
+                });
+            } else {
+                datasets.push({
+                    type: type, label: u1, data: data.map(d => d.value1), backgroundColor: '#6366f1', borderColor: '#6366f1', borderRadius: 4, borderWidth: 3, tension: 0.3
+                });
+            }
+
+            return new Chart(ctx, {
+                data: { labels, datasets },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 6, font: { size: 10 } } } },
+                    scales: type === 'pie' ? {} : {
+                        y: { position: 'left', title: { display: true, text: u1, font: { size: 10 } } },
+                        y1: type === 'mix' ? { position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: u2, font: { size: 10 } } } : { display: false }
+                    }
+                }
+            });
+        };
+
+        window.saveQuestion = async () => {
+            const title = document.getElementById('edit-title').value;
+            if (!title) return alert("Vui lòng nhập tiêu đề đề bài!");
+            
+            await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'questions'), {
+                title, type: creatorState.type, data: creatorState.data,
+                unit1: document.getElementById('unit1').value,
+                unit2: document.getElementById('unit2').value,
+                createdAt: Date.now()
+            });
+            showView('bank');
+        };
+
+        // --- Import Logic ---
+        window.toggleImport = () => {
+            const area = document.getElementById('import-area');
+            area.classList.toggle('hidden');
+        };
+
+        window.handleImport = () => {
+            const text = document.getElementById('import-text').value;
+            try {
+                const lines = text.trim().split('\n');
+                const newData = lines.map(line => {
+                    const parts = line.split(/[,;\t]/);
+                    return {
+                        name: parts[0]?.trim() || '...',
+                        value1: parseFloat(parts[1]) || 0,
+                        value2: parseFloat(parts[2]) || 0
+                    };
+                });
+                creatorState.data = newData;
+                renderDataRows();
+                updatePreview();
+                document.getElementById('import-area').classList.add('hidden');
+            } catch (e) { alert("Lỗi định dạng. Dùng: Tên, Số1, Số2"); }
+        };
+
+        // --- Practice Logic ---
+        window.startPractice = (qId) => {
+            activeQuestion = questions.find(q => q.id === qId);
+            document.getElementById('practice-title').innerText = activeQuestion.title;
+            document.getElementById('essay-input').value = "";
+            updateWordCount("");
+            
+            showView('practice');
+            
+            setTimeout(() => {
+                const ctx = document.getElementById('practiceChart').getContext('2d');
+                if (practiceChart) practiceChart.destroy();
+                practiceChart = createChart(ctx, activeQuestion.type, activeQuestion.data, activeQuestion.unit1, activeQuestion.unit2);
+            }, 100);
+        };
+
+        const updateWordCount = (val) => {
+            const count = val.trim() === "" ? 0 : val.trim().split(/\s+/).length;
+            document.getElementById('word-count').innerText = count;
+            const badge = document.getElementById('word-count-badge');
+            const icon = document.getElementById('count-icon');
+            const msg = document.getElementById('target-msg');
+
+            if (count >= 150) {
+                badge.className = "px-5 py-2 rounded-2xl font-black text-sm flex items-center gap-2 border shadow-sm transition-all bg-green-50 text-green-600 border-green-200";
+                icon.className = "fas fa-check-circle";
+                msg.innerText = "Đã đủ số từ!";
+                msg.className = "text-[10px] font-bold text-green-500";
+            } else {
+                badge.className = "px-5 py-2 rounded-2xl font-black text-sm flex items-center gap-2 border shadow-sm transition-all bg-amber-50 text-amber-600 border-amber-200";
+                icon.className = "fas fa-exclamation-circle";
+                msg.innerText = `Cần thêm ${150 - count} từ nữa`;
+                msg.className = "text-[10px] font-bold text-amber-500 animate-pulse";
+            }
+        };
+
+        document.getElementById('essay-input').addEventListener('input', (e) => {
+            updateWordCount(e.target.value);
+        });
+
+        window.exportEssay = () => {
+            const essay = document.getElementById('essay-input').value;
+            const count = document.getElementById('word-count').innerText;
+            const content = `TOPIC: ${activeQuestion.title}\n\nWORD COUNT: ${count}\n\nESSAY:\n${essay}`;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ielts-practice-${Date.now()}.txt`;
+            a.click();
+        };
+
+        window.finishPractice = () => {
+            const count = parseInt(document.getElementById('word-count').innerText);
+            if (count < 150) {
+                if (!confirm("Bài viết của bạn chưa đủ 150 từ. Bạn vẫn muốn kết thúc chứ?")) return;
+            }
+            alert("Chúc mừng bạn đã hoàn thành bài luyện tập!");
+            showView('bank');
+        };
+
+        // --- Layout Utils ---
+        window.toggleMobileMenu = () => {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            const isHidden = menu.classList.contains('hidden');
+            
+            menu.classList.toggle('hidden');
+            icon.className = isHidden ? "fas fa-times" : "fas fa-bars";
+        };
+
+        // Start app
+        initAuth();
+        showView('bank');
+
+    </script>
+</body>
+</html>
