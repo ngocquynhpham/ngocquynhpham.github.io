@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vụ xả súng Columbine (1999) — Visualizing Historical</title>
+  <meta name="description" content="Trực quan hoá sự kiện lịch sử: Vụ xả súng tại Trung học Columbine, 20/04/1999">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        }
+      }
+    }
+  </script>
+  <style>
+    html { font-size: 16px; }
+    body { font-family: 'Inter', system-ui, sans-serif; font-size: 14px; color: #334155; -webkit-font-smoothing: antialiased; }
+    .label-caps { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #94a3b8; }
+
+    .timeline-line { position: absolute; left: 23px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, #e2e8f0, #cbd5e1); }
+    .timeline-item { position: relative; padding-left: 56px; }
+    .timeline-dot {
+      position: absolute; left: 14px; top: 4px;
+      width: 20px; height: 20px; border-radius: 50%;
+      border: 3px solid #e2e8f0; background: #fff;
+      z-index: 1; transition: all 0.2s;
+    }
+    .timeline-dot.critical { border-color: #ef4444; background: #fef2f2; }
+    .timeline-dot.warning  { border-color: #f59e0b; background: #fffbeb; }
+    .timeline-dot.info     { border-color: #6366f1; background: #eef2ff; }
+    .timeline-dot.end      { border-color: #1e293b; background: #1e293b; }
+
+    .stat-card { transition: transform 0.15s, box-shadow 0.15s; }
+    .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px -5px rgba(0,0,0,0.1); }
+
+    .fade-in { animation: fadeIn 0.5s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+    .book-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 9999px;
+      background: linear-gradient(135deg, #eef2ff, #e0e7ff);
+      border: 1px solid #c7d2fe; color: #4338ca;
+      font-size: 12px; font-weight: 500;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+
+  <!-- Nav -->
+  <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200/80 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 sm:px-8 h-14 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="home.html" class="flex items-center gap-2 text-slate-800 hover:text-indigo-600 transition-colors">
+          <div class="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center">
+            <i class="fa-solid fa-landmark text-white text-xs"></i>
+          </div>
+          <span class="font-semibold text-sm">Visualizing Historical</span>
+        </a>
+        <span class="text-slate-300 hidden sm:inline">/</span>
+        <span class="text-slate-400 text-xs hidden sm:inline">Columbine 1999</span>
+      </div>
+      <a href="home.html" class="text-xs text-slate-400 hover:text-indigo-600 transition-colors flex items-center gap-1">
+        <i class="fa-solid fa-arrow-left text-[10px]"></i> Mục lục
+      </a>
+    </div>
+  </nav>
+
+  <main class="flex-1 max-w-5xl mx-auto px-4 sm:px-8 py-8 sm:py-12 w-full">
+
+    <!-- Hero -->
+    <header class="fade-in mb-10">
+      <p class="label-caps mb-3">Sự kiện lịch sử</p>
+      <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 leading-tight mb-3">
+        Vụ xả súng tại Trung học Columbine
+      </h1>
+      <div class="flex flex-wrap items-center gap-3 mb-5">
+        <span class="inline-flex items-center gap-1.5 text-sm text-slate-500">
+          <i class="fa-regular fa-calendar text-slate-400"></i> 20 tháng 4, 1999
+        </span>
+        <span class="inline-flex items-center gap-1.5 text-sm text-slate-500">
+          <i class="fa-solid fa-location-dot text-slate-400"></i> Littleton, Colorado, Hoa Kỳ
+        </span>
+      </div>
+      <div class="book-tag">
+        <i class="fa-solid fa-book-open text-indigo-400"></i>
+        Vượt lên trật tự — Jordan B. Peterson
+      </div>
+    </header>
+
+    <!-- Bối cảnh -->
+    <section class="fade-in mb-10" style="animation-delay: 0.1s">
+      <div class="flex items-center gap-2 mb-4">
+        <div class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
+          <i class="fa-solid fa-scroll text-slate-500 text-sm"></i>
+        </div>
+        <h2 class="text-lg font-semibold text-slate-900">Bối cảnh</h2>
+      </div>
+      <div class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 space-y-4 text-sm leading-relaxed text-slate-600">
+        <p>
+          <strong class="text-slate-800">Columbine High School</strong> là một trường trung học công lập tại Littleton,
+          quận Jefferson, bang Colorado — vùng ngoại ô yên bình phía tây nam Denver với khoảng <strong class="text-slate-800">1.945 học sinh</strong>.
+        </p>
+        <p>
+          Hai học sinh lớp 12 — <strong class="text-slate-800">Eric Harris</strong> (18 tuổi) và
+          <strong class="text-slate-800">Dylan Klebold</strong> (17 tuổi) — đã lên kế hoạch tấn công từ hơn một năm trước.
+          Kế hoạch ban đầu là một vụ <em>đánh bom quy mô lớn</em> nhắm vào nhà ăn (cafeteria) vào giờ cao điểm,
+          với bom propane tự chế có khả năng giết hàng trăm người. Khi bom không phát nổ, chúng chuyển sang phương án B: xả súng.
+        </p>
+        <p>
+          Thời điểm 1999, khái niệm "school shooting" chưa phổ biến trong nhận thức cộng đồng Mỹ.
+          Columbine trở thành <strong class="text-slate-800">bước ngoặt</strong> thay đổi cách nước Mỹ nhìn nhận bạo lực học đường,
+          an ninh trường học, và sức khoẻ tâm thần thanh thiếu niên.
+        </p>
+        <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-amber-800 text-xs">
+          <i class="fa-solid fa-book-open mr-1"></i>
+          <strong>Trong sách:</strong> Jordan Peterson nhắc đến Columbine khi phân tích về sự nguy hiểm của
+          oán hận (resentment) tích tụ, hận thù đối với sự tồn tại (Being), và hậu quả khi con người mất kết nối
+          với ý nghĩa và trách nhiệm — một minh hoạ cực đoan cho "What happens when someone decides that
+          everything would be better if it just didn't exist."
+        </div>
+      </div>
+    </section>
+
+    <!-- Số liệu đáng chú ý -->
+    <section class="fade-in mb-10" style="animation-delay: 0.15s">
+      <div class="flex items-center gap-2 mb-4">
+        <div class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
+          <i class="fa-solid fa-chart-bar text-slate-500 text-sm"></i>
+        </div>
+        <h2 class="text-lg font-semibold text-slate-900">Số liệu đáng chú ý</h2>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div class="stat-card bg-white rounded-2xl border border-slate-200 p-4 text-center">
+          <div class="text-3xl font-bold text-red-600 mb-1">13</div>
+          <div class="text-xs text-slate-500">Nạn nhân thiệt mạng</div>
+          <div class="text-[10px] text-slate-400 mt-1">12 học sinh + 1 giáo viên</div>
+        </div>
+        <div class="stat-card bg-white rounded-2xl border border-slate-200 p-4 text-center">
+          <div class="text-3xl font-bold text-amber-600 mb-1">24</div>
+          <div class="text-xs text-slate-500">Người bị thương</div>
+          <div class="text-[10px] text-slate-400 mt-1">21 do súng + 3 nguyên nhân khác</div>
+        </div>
+        <div class="stat-card bg-white rounded-2xl border border-slate-200 p-4 text-center">
+          <div class="text-3xl font-bold text-slate-800 mb-1">49<span class="text-lg">ph</span></div>
+          <div class="text-xs text-slate-500">Thời gian diễn ra</div>
+          <div class="text-[10px] text-slate-400 mt-1">11:19 → 12:08</div>
+        </div>
+        <div class="stat-card bg-white rounded-2xl border border-slate-200 p-4 text-center">
+          <div class="text-3xl font-bold text-indigo-600 mb-1">99</div>
+          <div class="text-xs text-slate-500">Thiết bị nổ tự chế</div>
+          <div class="text-[10px] text-slate-400 mt-1">Phần lớn không phát nổ</div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3">
+        <div class="stat-card bg-white rounded-2xl border border-slate-200 p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-gun text-slate-400 text-xs"></i>
+            <span class="text-xs font-medium text-slate-700">Vũ khí sử dụng</span>
+          </div>
+          <ul class="text-xs text-slate-500 space-y-1">
+            <li>• TEC-DC9 (bán tự động 9mm)</li>
+            <li>• Hi-Point 995 Carbine (9mm)</li>
+            <li>• Savage 67H (pump shotgun)</li>
+            <li>• Stevens 311D (double-barrel)</li>
+          </ul>
+        </div>
+        <div class="stat-card bg-white rounded-2xl border border-slate-200 p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-users text-slate-400 text-xs"></i>
+            <span class="text-xs font-medium text-slate-700">Thủ phạm</span>
+          </div>
+          <div class="text-xs text-slate-500 space-y-1">
+            <p><strong class="text-slate-700">Eric Harris</strong>, 18 tuổi — lớp 12</p>
+            <p><strong class="text-slate-700">Dylan Klebold</strong>, 17 tuổi — lớp 12</p>
+            <p class="text-slate-400">Cả hai tự sát tại thư viện</p>
+          </div>
+        </div>
+        <div class="stat-card bg-white rounded-2xl border border-slate-200 p-4">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="fa-solid fa-building-columns text-slate-400 text-xs"></i>
+            <span class="text-xs font-medium text-slate-700">Trường học</span>
+          </div>
+          <div class="text-xs text-slate-500 space-y-1">
+            <p><strong class="text-slate-700">Columbine High School</strong></p>
+            <p>Littleton, Colorado</p>
+            <p>~1.945 học sinh tại thời điểm vụ việc</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dòng thời gian -->
+    <section class="fade-in mb-10" style="animation-delay: 0.2s">
+      <div class="flex items-center gap-2 mb-4">
+        <div class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
+          <i class="fa-solid fa-clock-rotate-left text-slate-500 text-sm"></i>
+        </div>
+        <h2 class="text-lg font-semibold text-slate-900">Dòng thời gian — 20/04/1999</h2>
+      </div>
+      <div class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6">
+        <div class="relative">
+          <div class="timeline-line"></div>
+
+          <div class="timeline-item mb-6">
+            <div class="timeline-dot info"></div>
+            <div class="text-xs font-semibold text-indigo-600 mb-0.5">11:10 AM</div>
+            <div class="text-sm font-medium text-slate-800">Đặt bom trong nhà ăn</div>
+            <p class="text-xs text-slate-500 mt-1">
+              Harris và Klebold mang 2 túi duffel chứa bom propane 20 pound vào cafeteria, hẹn giờ phát nổ lúc 11:17.
+              Mỗi quả có sức công phá tương đương vụ nổ lớn — đủ sập trần và giết hàng trăm người ở giờ ăn trưa cao điểm.
+            </p>
+          </div>
+
+          <div class="timeline-item mb-6">
+            <div class="timeline-dot info"></div>
+            <div class="text-xs font-semibold text-indigo-600 mb-0.5">11:17 AM</div>
+            <div class="text-sm font-medium text-slate-800">Bom không phát nổ</div>
+            <p class="text-xs text-slate-500 mt-1">
+              Hẹn giờ trôi qua nhưng bom propane không kích nổ do lỗi dây nối. Đây là điểm then chốt — 
+              nếu bom nổ, thương vong có thể lên tới hàng trăm. Harris và Klebold chuyển sang phương án dự phòng: xả súng.
+            </p>
+          </div>
+
+          <div class="timeline-item mb-6">
+            <div class="timeline-dot critical"></div>
+            <div class="text-xs font-semibold text-red-600 mb-0.5">11:19 AM</div>
+            <div class="text-sm font-medium text-slate-800">Nổ súng bên ngoài trường</div>
+            <p class="text-xs text-slate-500 mt-1">
+              Từ đỉnh đồi phía tây, hai thủ phạm khai hoả vào học sinh đang ăn trưa ngoài trời.
+              <strong class="text-slate-700">Rachel Scott</strong> (17) là nạn nhân đầu tiên thiệt mạng.
+              <strong class="text-slate-700">Daniel Rohrbough</strong> (15) bị giết khi đang cố chạy xuống cầu thang.
+            </p>
+          </div>
+
+          <div class="timeline-item mb-6">
+            <div class="timeline-dot critical"></div>
+            <div class="text-xs font-semibold text-red-600 mb-0.5">11:22 AM</div>
+            <div class="text-sm font-medium text-slate-800">Xâm nhập toà nhà</div>
+            <p class="text-xs text-slate-500 mt-1">
+              Hai thủ phạm tiến vào bên trong trường qua cửa phía tây, bắn dọc hành lang.
+              Giáo viên <strong class="text-slate-700">Dave Sanders</strong> — người đang chạy dọc hành lang hét lớn "chạy đi!" 
+              để sơ tán học sinh — bị bắn trúng. Ông qua đời sau đó vì mất máu, là giáo viên duy nhất thiệt mạng.
+            </p>
+          </div>
+
+          <div class="timeline-item mb-6">
+            <div class="timeline-dot critical"></div>
+            <div class="text-xs font-semibold text-red-600 mb-0.5">11:29 AM</div>
+            <div class="text-sm font-medium text-slate-800">Vào thư viện — giai đoạn đẫm máu nhất</div>
+            <p class="text-xs text-slate-500 mt-1">
+              Thư viện có khoảng 56 người đang trú ẩn dưới bàn. Trong 7 phút 30 giây, Harris và Klebold
+              giết <strong class="text-red-700">10 người</strong> và làm bị thương 12 người khác.
+              Đây là khoảng thời gian có thương vong lớn nhất trong toàn bộ vụ tấn công.
+            </p>
+          </div>
+
+          <div class="timeline-item mb-6">
+            <div class="timeline-dot warning"></div>
+            <div class="text-xs font-semibold text-amber-600 mb-0.5">11:36 AM</div>
+            <div class="text-sm font-medium text-slate-800">Rời thư viện</div>
+            <p class="text-xs text-slate-500 mt-1">
+              Bất ngờ, cả hai rời thư viện — mặc dù vẫn còn nhiều người sống sót bên trong.
+              34 người sống sót bắt đầu thoát ra ngoài qua cửa thoát hiểm.
+              Hai thủ phạm lang thang dọc hành lang và quay lại cafeteria, cố kích nổ bom nhưng thất bại.
+            </p>
+          </div>
+
+          <div class="timeline-item mb-6">
+            <div class="timeline-dot warning"></div>
+            <div class="text-xs font-semibold text-amber-600 mb-0.5">11:44 AM</div>
+            <div class="text-sm font-medium text-slate-800">Bắn vào bom propane trong cafeteria</div>
+            <p class="text-xs text-slate-500 mt-1">
+              Harris bắn vào một trong hai quả bom propane, gây cháy nhỏ nhưng bom vẫn không nổ hoàn toàn.
+              Hệ thống chữa cháy tự động kích hoạt. Cả hai tiếp tục đi qua các hành lang, bắn ngẫu nhiên qua cửa sổ vào cảnh sát bên ngoài.
+            </p>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot end"></div>
+            <div class="text-xs font-semibold text-slate-800 mb-0.5">12:08 PM</div>
+            <div class="text-sm font-medium text-slate-800">Kết thúc — Tự sát trong thư viện</div>
+            <p class="text-xs text-slate-500 mt-1">
+              Harris và Klebold quay lại thư viện và tự sát bằng súng.
+              Đội SWAT chỉ vào được bên trong trường lúc <strong class="text-slate-700">13:09</strong> — hơn một giờ sau khi vụ xả súng bắt đầu.
+              Toà nhà chỉ được xác nhận "an toàn" lúc <strong class="text-slate-700">16:30</strong>.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Tác động -->
+    <section class="fade-in mb-10" style="animation-delay: 0.25s">
+      <div class="flex items-center gap-2 mb-4">
+        <div class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
+          <i class="fa-solid fa-arrows-spin text-slate-500 text-sm"></i>
+        </div>
+        <h2 class="text-lg font-semibold text-slate-900">Tác động</h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 hover:border-indigo-300 transition-colors">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-7 h-7 rounded-full bg-red-50 flex items-center justify-center">
+              <i class="fa-solid fa-shield-halved text-red-500 text-xs"></i>
+            </div>
+            <h3 class="text-sm font-semibold text-slate-800">An ninh trường học</h3>
+          </div>
+          <ul class="text-xs text-slate-500 space-y-2">
+            <li>• Chính sách <strong class="text-slate-700">"zero tolerance"</strong> lan rộng toàn quốc — cấm tuyệt đối vũ khí, đe doạ bạo lực</li>
+            <li>• Camera giám sát, cửa khoá tự động, máy dò kim loại trở thành tiêu chuẩn</li>
+            <li>• Chương trình <strong class="text-slate-700">diễn tập lockdown</strong> được áp dụng cho hầu hết trường học Mỹ</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 hover:border-indigo-300 transition-colors">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-7 h-7 rounded-full bg-amber-50 flex items-center justify-center">
+              <i class="fa-solid fa-scale-balanced text-amber-500 text-xs"></i>
+            </div>
+            <h3 class="text-sm font-semibold text-slate-800">Luật kiểm soát súng</h3>
+          </div>
+          <ul class="text-xs text-slate-500 space-y-2">
+            <li>• Colorado thông qua luật yêu cầu <strong class="text-slate-700">kiểm tra lý lịch</strong> khi mua súng tại gun show (2000)</li>
+            <li>• Thúc đẩy tranh luận toàn quốc về kiểm soát súng — nhưng không có luật liên bang lớn nào được thông qua</li>
+            <li>• Các bang khác bắt đầu xem xét <strong class="text-slate-700">red flag laws</strong> (luật cho phép tịch thu súng từ người nguy hiểm)</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 hover:border-indigo-300 transition-colors">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-7 h-7 rounded-full bg-violet-50 flex items-center justify-center">
+              <i class="fa-solid fa-brain text-violet-500 text-xs"></i>
+            </div>
+            <h3 class="text-sm font-semibold text-slate-800">Sức khoẻ tâm thần</h3>
+          </div>
+          <ul class="text-xs text-slate-500 space-y-2">
+            <li>• Thay đổi nhận thức: bạo lực học đường không chỉ là "trẻ hư" mà là vấn đề <strong class="text-slate-700">sức khoẻ tâm thần</strong></li>
+            <li>• Chương trình <strong class="text-slate-700">tư vấn tâm lý học đường</strong> được mở rộng</li>
+            <li>• Hệ thống <strong class="text-slate-700">"threat assessment"</strong> — nhận diện sớm dấu hiệu nguy hiểm ở học sinh — ra đời</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 hover:border-indigo-300 transition-colors">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-7 h-7 rounded-full bg-emerald-50 flex items-center justify-center">
+              <i class="fa-solid fa-handshake-angle text-emerald-500 text-xs"></i>
+            </div>
+            <h3 class="text-sm font-semibold text-slate-800">Phản ứng khẩn cấp</h3>
+          </div>
+          <ul class="text-xs text-slate-500 space-y-2">
+            <li>• Chiến thuật cảnh sát thay đổi hoàn toàn: từ "bao vây chờ SWAT" sang <strong class="text-slate-700">"immediate action rapid deployment"</strong></li>
+            <li>• Cảnh sát tuần tra phải được huấn luyện <strong class="text-slate-700">xử lý active shooter</strong> ngay lập tức</li>
+            <li>• Giao thức phối hợp cảnh sát — cứu thương — cứu hoả được thiết kế lại</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 hover:border-indigo-300 transition-colors sm:col-span-2">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center">
+              <i class="fa-solid fa-tv text-blue-500 text-xs"></i>
+            </div>
+            <h3 class="text-sm font-semibold text-slate-800">Truyền thông & Văn hoá</h3>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <ul class="text-xs text-slate-500 space-y-2">
+              <li>• Columbine là một trong những vụ bạo lực đầu tiên được <strong class="text-slate-700">tường thuật trực tiếp 24/7</strong> trên truyền hình</li>
+              <li>• Nhiều thần thoại sai lệch ("Trench Coat Mafia", "bị bắt nạt", "hỏi nạn nhân có tin Chúa không") lan truyền rộng rãi do báo chí vội vàng</li>
+              <li>• Tranh luận về tác động của <strong class="text-slate-700">video game bạo lực</strong> (Doom) và nhạc rock (Marilyn Manson)</li>
+            </ul>
+            <ul class="text-xs text-slate-500 space-y-2">
+              <li>• Phim tài liệu <strong class="text-slate-700">"Bowling for Columbine"</strong> (2002) của Michael Moore đoạt Oscar</li>
+              <li>• Khái niệm <strong class="text-slate-700">"Columbine effect"</strong> — hiện tượng copycat, nhiều vụ xả súng sau đó lấy cảm hứng từ Columbine</li>
+              <li>• Thay đổi cách truyền thông đưa tin: hạn chế tôn vinh thủ phạm, tập trung vào nạn nhân</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Danh sách nạn nhân -->
+    <section class="fade-in mb-10" style="animation-delay: 0.3s">
+      <div class="flex items-center gap-2 mb-4">
+        <div class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
+          <i class="fa-solid fa-heart text-slate-500 text-sm"></i>
+        </div>
+        <h2 class="text-lg font-semibold text-slate-900">Tưởng nhớ — 13 nạn nhân</h2>
+      </div>
+      <div class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <div class="text-xs text-slate-600"><strong>Cassie Bernall</strong>, 17</div>
+          <div class="text-xs text-slate-600"><strong>Steven Curnow</strong>, 14</div>
+          <div class="text-xs text-slate-600"><strong>Corey DePooter</strong>, 17</div>
+          <div class="text-xs text-slate-600"><strong>Kelly Fleming</strong>, 16</div>
+          <div class="text-xs text-slate-600"><strong>Matthew Kechter</strong>, 16</div>
+          <div class="text-xs text-slate-600"><strong>Daniel Mauser</strong>, 15</div>
+          <div class="text-xs text-slate-600"><strong>Daniel Rohrbough</strong>, 15</div>
+          <div class="text-xs text-slate-600"><strong>Rachel Scott</strong>, 17</div>
+          <div class="text-xs text-slate-600"><strong>Isaiah Shoels</strong>, 18</div>
+          <div class="text-xs text-slate-600"><strong>John Tomlin</strong>, 16</div>
+          <div class="text-xs text-slate-600"><strong>Lauren Townsend</strong>, 18</div>
+          <div class="text-xs text-slate-600"><strong>Kyle Velasquez</strong>, 16</div>
+          <div class="text-xs text-slate-600"><strong>Dave Sanders</strong>, 47 <span class="text-slate-400">— giáo viên</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Nguồn & Liên kết sách -->
+    <section class="fade-in" style="animation-delay: 0.35s">
+      <div class="flex items-center gap-2 mb-4">
+        <div class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
+          <i class="fa-solid fa-link text-slate-500 text-sm"></i>
+        </div>
+        <h2 class="text-lg font-semibold text-slate-900">Nguồn tham khảo</h2>
+      </div>
+      <div class="bg-white rounded-2xl border border-slate-200 p-5 sm:p-6 text-xs text-slate-500 space-y-2">
+        <p><i class="fa-solid fa-book mr-1 text-indigo-400"></i>
+          <strong class="text-slate-700">Beyond Order: 12 More Rules for Life</strong> — Jordan B. Peterson (2021), Penguin Books
+        </p>
+        <p><i class="fa-solid fa-globe mr-1 text-slate-400"></i>
+          Columbine Report — Jefferson County Sheriff's Office (2000)
+        </p>
+        <p><i class="fa-solid fa-globe mr-1 text-slate-400"></i>
+          "Columbine" — Dave Cullen (2009), Twelve/Hachette
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 bg-white mt-12">
+    <div class="max-w-5xl mx-auto px-4 sm:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <span class="text-xs text-slate-400">Visualizing Historical — Ghi chép & trực quan hoá sự kiện lịch sử từ sách</span>
+      <span class="text-xs text-slate-400">by Ngọc Quỳnh Phạm</span>
+    </div>
+  </footer>
+
+</body>
+</html>

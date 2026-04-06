@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualizing Historical — Mục lục sách & sự kiện lịch sử</title>
+  <meta name="description" content="Trực quan hoá sự kiện lịch sử từ hành trình đọc sách. Mỗi cuốn sách, mỗi sự kiện, được ghi chép và phân tích.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        }
+      }
+    }
+  </script>
+  <style>
+    html { font-size: 16px; }
+    body { font-family: 'Inter', system-ui, sans-serif; font-size: 14px; color: #334155; -webkit-font-smoothing: antialiased; }
+    .label-caps { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #94a3b8; }
+    .fade-in { animation: fadeIn 0.5s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .book-card { transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s; }
+    .book-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px -5px rgba(0,0,0,0.08); border-color: #a5b4fc; }
+    .event-link { transition: background 0.15s, border-color 0.15s; }
+    .event-link:hover { background: #f8fafc; border-color: #c7d2fe; }
+  </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+
+  <!-- Nav -->
+  <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200/80 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 sm:px-8 h-14 flex items-center">
+      <div class="flex items-center gap-2">
+        <div class="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center">
+          <i class="fa-solid fa-landmark text-white text-xs"></i>
+        </div>
+        <span class="font-semibold text-sm text-slate-800">Visualizing Historical</span>
+        <span class="text-slate-300 text-xs hidden sm:inline ml-1">— sự kiện lịch sử từ sách</span>
+      </div>
+    </div>
+  </nav>
+
+  <main class="flex-1 max-w-5xl mx-auto px-4 sm:px-8 py-8 sm:py-12 w-full">
+
+    <!-- Hero -->
+    <header class="fade-in mb-10">
+      <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 leading-tight mb-2">
+        Mục lục sách
+      </h1>
+      <p class="text-sm text-slate-500 max-w-xl">
+        Ghi chép & trực quan hoá sự kiện lịch sử từ hành trình đọc sách.
+        Mỗi cuốn là một "hộp" — chứa các sự kiện, nhân vật, và bối cảnh lịch sử được nhắc đến.
+      </p>
+    </header>
+
+    <!-- Book: Beyond Order -->
+    <section class="fade-in mb-8" style="animation-delay: 0.1s">
+      <div class="book-card bg-white rounded-2xl border-2 border-slate-200 p-5 sm:p-6">
+        <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+
+          <!-- Book info -->
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-semibold">
+                <i class="fa-solid fa-book-open text-[8px]"></i> Đang đọc
+              </span>
+            </div>
+            <h2 class="text-lg font-bold text-slate-900 mb-0.5">
+              Vượt lên trật tự — 12 quy tắc cho cuộc sống
+            </h2>
+            <p class="text-xs text-slate-400 mb-3">
+              Beyond Order: 12 More Rules for Life — <strong class="text-slate-500">Jordan B. Peterson</strong> · 2021
+            </p>
+            <p class="text-xs text-slate-500 leading-relaxed mb-4 max-w-lg">
+              Peterson tiếp nối 12 Rules for Life bằng 12 quy tắc mới, xoay quanh việc đối mặt với sự hỗn loạn,
+              tìm ý nghĩa trong trách nhiệm, và vượt lên trật tự cứng nhắc. Ông trích dẫn nhiều sự kiện lịch sử
+              để minh hoạ các nguyên tắc tâm lý và triết học.
+            </p>
+
+            <!-- Events list -->
+            <div>
+              <p class="label-caps mb-2">Sự kiện lịch sử đã ghi chép</p>
+              <div class="space-y-2">
+                <a href="columbine-1999.html"
+                   class="event-link flex items-center gap-3 p-3 rounded-xl border border-slate-200 group">
+                  <div class="w-9 h-9 rounded-lg bg-red-50 flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-crosshairs text-red-400 text-sm"></i>
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <div class="text-sm font-medium text-slate-800 group-hover:text-indigo-600 transition-colors">
+                      Vụ xả súng tại Trung học Columbine
+                    </div>
+                    <div class="text-xs text-slate-400">20/04/1999 · Littleton, Colorado</div>
+                  </div>
+                  <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-indigo-400 text-xs transition-colors"></i>
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Book cover placeholder -->
+          <div class="hidden sm:flex w-28 h-40 rounded-xl bg-gradient-to-br from-indigo-100 to-violet-100 border border-indigo-200/60 items-center justify-center flex-shrink-0">
+            <div class="text-center px-2">
+              <i class="fa-solid fa-book text-indigo-300 text-2xl mb-1"></i>
+              <div class="text-[9px] text-indigo-400 font-medium leading-tight">Beyond<br>Order</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Empty state for future books -->
+    <section class="fade-in" style="animation-delay: 0.15s">
+      <div class="border-2 border-dashed border-slate-200 rounded-2xl p-8 text-center">
+        <i class="fa-solid fa-plus text-slate-300 text-xl mb-2"></i>
+        <p class="text-sm text-slate-400">Thêm sách tiếp theo khi bạn đọc xong...</p>
+        <p class="text-xs text-slate-300 mt-1">Mỗi cuốn sách sẽ là một "hộp" chứa các sự kiện lịch sử.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-200 bg-white mt-12">
+    <div class="max-w-5xl mx-auto px-4 sm:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <span class="text-xs text-slate-400">Visualizing Historical — Ghi chép & trực quan hoá sự kiện lịch sử từ sách</span>
+      <span class="text-xs text-slate-400">by Ngọc Quỳnh Phạm</span>
+    </div>
+  </footer>
+
+</body>
+</html>
