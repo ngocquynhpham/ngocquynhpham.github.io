@@ -29,6 +29,12 @@
       cat: "tools",
     },
     {
+      title: "Visualizing Historical — Virginia Tech 2007",
+      desc: "Infographic page (Vietnamese): context, figures, alternating timeline, and legacy of the 2007 Virginia Tech shooting — stone/orange theme, Tailwind.",
+      href: "../projects/visualizing-historical/virginia-tech-2007.html",
+      cat: "research",
+    },
+    {
       title: "Transform Lab",
       desc: "Multi-format transformer: HTML, Markdown, JSON, LaTeX, SCSS, SVG, and more.",
       href: "../projects/tools/transform-lab.html",

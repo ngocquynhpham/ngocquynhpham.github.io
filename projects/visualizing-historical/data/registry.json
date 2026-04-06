@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "version": 1,
+    "description": "Nguồn dữ liệu duy nhất cho Visualizing Historical. Sửa file này rồi push lên GitHub."
+  },
+  "books": [
+    {
+      "id": "beyond-order",
+      "title": "Vượt lên trật tự — 12 quy tắc cho cuộc sống",
+      "titleEn": "Beyond Order: 12 More Rules for Life",
+      "author": "Jordan B. Peterson",
+      "publishedYear": 2021,
+      "status": "reading",
+      "shortNote": "Peterson trích dẫn nhiều sự kiện lịch sử để minh hoạ các nguyên tắc tâm lý và triết học."
+    },
+    {
+      "id": "placeholder-no-events",
+      "title": "Sách mẫu — chưa gắn sự kiện",
+      "titleEn": "",
+      "author": "—",
+      "publishedYear": null,
+      "status": "planned",
+      "shortNote": "Ví dụ: một cuốn có thể tồn tại mà chưa có sự kiện nào được ghi."
+    }
+  ],
+  "events": [
+    {
+      "id": "columbine-1999",
+      "title": "Vụ xả súng tại Trung học Columbine",
+      "date": "1999-04-20",
+      "location": "Littleton, Colorado, Hoa Kỳ",
+      "summary": "Bối cảnh, số liệu, timeline và tác động — ghi chép từ Beyond Order.",
+      "bookIds": ["beyond-order"],
+      "href": "columbine-1999.html",
+      "kind": "history"
+    },
+    {
+      "id": "virginia-tech-2007",
+      "title": "Thảm sát Đại học Virginia Tech (2007)",
+      "date": "2007-04-16",
+      "location": "Blacksburg, Virginia, Hoa Kỳ",
+      "summary": "Bối cảnh, số liệu, timeline và hậu quả — không gắn sách; tổng hợp nguồn công khai.",
+      "bookIds": [],
+      "href": "virginia-tech-2007.html",
+      "kind": "history"
+    },
+    {
+      "id": "sample-orphan-event",
+      "title": "Sự kiện không gắn sách (ví dụ)",
+      "date": "1945-07-16",
+      "location": "New Mexico, Hoa Kỳ",
+      "summary": "Ví dụ: sự kiện độc lập, bookIds rỗng — có thể bổ sung trang chi tiết sau.",
+      "bookIds": [],
+      "href": "",
+      "kind": "history"
+    }
+  ]
+}

@@ -5,6 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Visualizing Historical — Mục lục sách & sự kiện lịch sử</title>
   <meta name="description" content="Trực quan hoá sự kiện lịch sử từ hành trình đọc sách. Mỗi cuốn sách, mỗi sự kiện, được ghi chép và phân tích.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Ngọc Quỳnh Phạm">
+  <meta name="keywords" content="lịch sử, đọc sách, timeline, sự kiện lịch sử, visualizer, ghi chép sách">
+  <meta name="theme-color" content="#4f46e5">
+  <link rel="canonical" href="https://ngocquynhpham.github.io/projects/visualizing-historical/home.html">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./favicon.svg">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Visualizing Historical">
+  <meta property="og:locale" content="vi_VN">
+  <meta property="og:url" content="https://ngocquynhpham.github.io/projects/visualizing-historical/home.html">
+  <meta property="og:title" content="Visualizing Historical — Mục lục sách & sự kiện lịch sử">
+  <meta property="og:description" content="Trực quan hoá sự kiện lịch sử từ hành trình đọc sách. Mỗi cuốn sách, mỗi sự kiện, được ghi chép và phân tích.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Visualizing Historical — Mục lục sách & sự kiện lịch sử">
+  <meta name="twitter:description" content="Trực quan hoá sự kiện lịch sử từ hành trình đọc sách. Mỗi cuốn sách, mỗi sự kiện, được ghi chép và phân tích.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -23,118 +39,124 @@
     html { font-size: 16px; }
     body { font-family: 'Inter', system-ui, sans-serif; font-size: 14px; color: #334155; -webkit-font-smoothing: antialiased; }
     .label-caps { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #94a3b8; }
-    .fade-in { animation: fadeIn 0.5s ease-out; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-in { animation: fadeIn 0.45s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .book-card { transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s; }
-    .book-card:hover { transform: translateY(-2px); box-shadow: 0 8px 25px -5px rgba(0,0,0,0.08); border-color: #a5b4fc; }
+    .book-card:hover { transform: translateY(-1px); box-shadow: 0 6px 20px -6px rgba(0,0,0,0.08); border-color: #e2e8f0; }
     .event-link { transition: background 0.15s, border-color 0.15s; }
-    .event-link:hover { background: #f8fafc; border-color: #c7d2fe; }
+    .event-link:hover { background: #fafafa; border-color: #c7d2fe; }
+    .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   </style>
 </head>
 <body class="bg-slate-50 min-h-screen flex flex-col">
 
-  <!-- Nav -->
-  <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200/80 shadow-sm">
-    <div class="max-w-5xl mx-auto px-4 sm:px-8 h-14 flex items-center">
-      <div class="flex items-center gap-2">
-        <div class="w-7 h-7 rounded-lg bg-indigo-600 flex items-center justify-center">
-          <i class="fa-solid fa-landmark text-white text-xs"></i>
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200/80 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 sm:px-8 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-lg bg-indigo-600 flex items-center justify-center flex-shrink-0">
+          <i class="fa-solid fa-landmark text-white text-sm"></i>
         </div>
-        <span class="font-semibold text-sm text-slate-800">Visualizing Historical</span>
-        <span class="text-slate-300 text-xs hidden sm:inline ml-1">— sự kiện lịch sử từ sách</span>
+        <div>
+          <h1 class="text-base font-semibold text-slate-900 leading-tight">Visualizing Historical</h1>
+          <p class="text-xs text-slate-400">Sự kiện lịch sử · ghi chép từ sách</p>
+        </div>
+      </div>
+      <div class="flex flex-wrap items-center gap-2">
+        <button type="button" id="btn-add-book" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-200 bg-white text-slate-700 text-xs font-medium hover:bg-slate-50 transition-colors">
+          <i class="fa-solid fa-book-medical text-indigo-500"></i> Thêm sách
+        </button>
+        <button type="button" id="btn-add-event" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-indigo-200 bg-indigo-50 text-indigo-700 text-xs font-medium hover:bg-indigo-100 transition-colors">
+          <i class="fa-solid fa-plus"></i> Thêm sự kiện
+        </button>
+        <button type="button" id="btn-export-csv" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-slate-200 bg-white text-slate-500 text-xs font-medium hover:bg-slate-50 transition-colors" title="Xuất events ra CSV (từ dữ liệu đang tải)">
+          <i class="fa-solid fa-file-csv"></i> CSV
+        </button>
       </div>
     </div>
-  </nav>
+  </header>
 
-  <main class="flex-1 max-w-5xl mx-auto px-4 sm:px-8 py-8 sm:py-12 w-full">
+  <main class="flex-1 max-w-5xl mx-auto px-4 sm:px-8 py-8 w-full">
 
-    <!-- Hero -->
-    <header class="fade-in mb-10">
-      <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 leading-tight mb-2">
-        Mục lục sách
-      </h1>
-      <p class="text-sm text-slate-500 max-w-xl">
-        Ghi chép & trực quan hoá sự kiện lịch sử từ hành trình đọc sách.
-        Mỗi cuốn là một "hộp" — chứa các sự kiện, nhân vật, và bối cảnh lịch sử được nhắc đến.
-      </p>
-    </header>
-
-    <!-- Book: Beyond Order -->
-    <section class="fade-in mb-8" style="animation-delay: 0.1s">
-      <div class="book-card bg-white rounded-2xl border-2 border-slate-200 p-5 sm:p-6">
-        <div class="flex flex-col sm:flex-row sm:items-start gap-4">
-
-          <!-- Book info -->
-          <div class="flex-1">
-            <div class="flex items-center gap-2 mb-1">
-              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-semibold">
-                <i class="fa-solid fa-book-open text-[8px]"></i> Đang đọc
-              </span>
-            </div>
-            <h2 class="text-lg font-bold text-slate-900 mb-0.5">
-              Vượt lên trật tự — 12 quy tắc cho cuộc sống
-            </h2>
-            <p class="text-xs text-slate-400 mb-3">
-              Beyond Order: 12 More Rules for Life — <strong class="text-slate-500">Jordan B. Peterson</strong> · 2021
-            </p>
-            <p class="text-xs text-slate-500 leading-relaxed mb-4 max-w-lg">
-              Peterson tiếp nối 12 Rules for Life bằng 12 quy tắc mới, xoay quanh việc đối mặt với sự hỗn loạn,
-              tìm ý nghĩa trong trách nhiệm, và vượt lên trật tự cứng nhắc. Ông trích dẫn nhiều sự kiện lịch sử
-              để minh hoạ các nguyên tắc tâm lý và triết học.
-            </p>
-
-            <!-- Events list -->
-            <div>
-              <p class="label-caps mb-2">Sự kiện lịch sử đã ghi chép</p>
-              <div class="space-y-2">
-                <a href="columbine-1999.html"
-                   class="event-link flex items-center gap-3 p-3 rounded-xl border border-slate-200 group">
-                  <div class="w-9 h-9 rounded-lg bg-red-50 flex items-center justify-center flex-shrink-0">
-                    <i class="fa-solid fa-crosshairs text-red-400 text-sm"></i>
-                  </div>
-                  <div class="flex-1 min-w-0">
-                    <div class="text-sm font-medium text-slate-800 group-hover:text-indigo-600 transition-colors">
-                      Vụ xả súng tại Trung học Columbine
-                    </div>
-                    <div class="text-xs text-slate-400">20/04/1999 · Littleton, Colorado</div>
-                  </div>
-                  <i class="fa-solid fa-arrow-right text-slate-300 group-hover:text-indigo-400 text-xs transition-colors"></i>
-                </a>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Book cover placeholder -->
-          <div class="hidden sm:flex w-28 h-40 rounded-xl bg-gradient-to-br from-indigo-100 to-violet-100 border border-indigo-200/60 items-center justify-center flex-shrink-0">
-            <div class="text-center px-2">
-              <i class="fa-solid fa-book text-indigo-300 text-2xl mb-1"></i>
-              <div class="text-[9px] text-indigo-400 font-medium leading-tight">Beyond<br>Order</div>
-            </div>
-          </div>
-
+    <!-- Sự kiện (trọng tâm) -->
+    <section class="fade-in mb-12" aria-labelledby="events-heading">
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-4">
+        <div>
+          <p class="label-caps mb-1">Trọng tâm</p>
+          <h2 id="events-heading" class="text-lg font-bold text-slate-900">Sự kiện lịch sử</h2>
+          <p class="text-xs text-slate-400 mt-1 max-w-md">Lọc theo ngày; mỗi dòng có thể không gắn sách (<code class="text-[10px] bg-slate-100 px-1 rounded">bookIds: []</code>).</p>
+        </div>
+        <div class="flex flex-wrap items-end gap-2">
+          <label class="sr-only" for="filter-year">Năm</label>
+          <select id="filter-year" class="text-xs border border-slate-200 rounded-lg px-2 py-2 bg-white text-slate-700 min-w-[7rem]"></select>
+          <label class="sr-only" for="filter-month">Tháng</label>
+          <select id="filter-month" class="text-xs border border-slate-200 rounded-lg px-2 py-2 bg-white text-slate-700 min-w-[7.5rem]"></select>
+          <label class="sr-only" for="filter-day">Ngày</label>
+          <select id="filter-day" class="text-xs border border-slate-200 rounded-lg px-2 py-2 bg-white text-slate-700 min-w-[7.5rem]"></select>
+          <button type="button" id="btn-filter-reset" class="text-xs text-indigo-600 hover:text-indigo-800 px-2 py-2">Xoá lọc</button>
         </div>
       </div>
+      <div id="event-list-root" class="grid grid-cols-1 sm:grid-cols-2 gap-3 min-h-[4rem]"></div>
+      <div id="event-pagination" class="mt-4"></div>
     </section>
 
-    <!-- Empty state for future books -->
-    <section class="fade-in" style="animation-delay: 0.15s">
-      <div class="border-2 border-dashed border-slate-200 rounded-2xl p-8 text-center">
-        <i class="fa-solid fa-plus text-slate-300 text-xl mb-2"></i>
-        <p class="text-sm text-slate-400">Thêm sách tiếp theo khi bạn đọc xong...</p>
-        <p class="text-xs text-slate-300 mt-1">Mỗi cuốn sách sẽ là một "hộp" chứa các sự kiện lịch sử.</p>
+    <!-- Sách (gọn) -->
+    <section class="fade-in border-t border-slate-200 pt-10" aria-labelledby="books-heading">
+      <div class="mb-4">
+        <p class="label-caps mb-1">Phụ</p>
+        <h2 id="books-heading" class="text-lg font-bold text-slate-900">Sách</h2>
+        <p class="text-xs text-slate-400 mt-1">Danh sách gọn; một cuốn có thể chưa có sự kiện nào.</p>
       </div>
+      <div id="book-list-root" class="space-y-3 min-h-[3rem]"></div>
+      <div id="book-pagination" class="mt-4"></div>
     </section>
 
+    <p class="text-[11px] text-slate-400 mt-10 text-center">
+      Dữ liệu: <code class="bg-slate-100 px-1 rounded">data/registry.json</code>
+      · Site tĩnh: chỉnh file rồi push, hoặc dùng nút Thêm để copy mẫu JSON.
+    </p>
   </main>
 
-  <!-- Footer -->
-  <footer class="border-t border-slate-200 bg-white mt-12">
+  <!-- Modal: Thêm sách -->
+  <div id="modal-add-book" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50" aria-hidden="true" role="dialog" aria-labelledby="modal-book-heading">
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-xl max-w-lg w-full max-h-[90vh] overflow-hidden flex flex-col">
+      <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+        <h3 id="modal-book-heading" class="text-sm font-semibold text-slate-900">Thêm sách</h3>
+        <button type="button" id="modal-add-book-close" class="text-slate-400 hover:text-slate-600 p-1" aria-label="Đóng">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="px-5 py-4 overflow-y-auto text-xs text-slate-600 space-y-3">
+        <p>Thêm object sau vào mảng <code class="bg-slate-100 px-1 rounded">"books"</code> trong <code class="bg-slate-100 px-1 rounded">data/registry.json</code>, rồi commit.</p>
+        <pre id="modal-book-json" class="bg-slate-50 border border-slate-200 rounded-xl p-3 overflow-x-auto text-[11px] leading-relaxed"></pre>
+        <button type="button" id="btn-copy-book-json" class="w-full py-2 rounded-lg bg-indigo-600 text-white text-xs font-medium hover:bg-indigo-700">Copy JSON</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Thêm sự kiện -->
+  <div id="modal-add-event" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50" aria-hidden="true" role="dialog" aria-labelledby="modal-event-heading">
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-xl max-w-lg w-full max-h-[90vh] overflow-hidden flex flex-col">
+      <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+        <h3 id="modal-event-heading" class="text-sm font-semibold text-slate-900"><span id="modal-event-title">Thêm sự kiện</span></h3>
+        <button type="button" id="modal-add-event-close" class="text-slate-400 hover:text-slate-600 p-1" aria-label="Đóng">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="px-5 py-4 overflow-y-auto text-xs text-slate-600 space-y-3">
+        <p id="modal-event-hint">Dán vào mảng <code class="bg-slate-100 px-1 rounded">"events"</code>. Để trống liên kết sách: <code class="bg-slate-100 px-1 rounded">"bookIds": []</code>. Tạo trang HTML riêng rồi điền <code class="bg-slate-100 px-1 rounded">href</code>.</p>
+        <pre id="modal-event-json" class="bg-slate-50 border border-slate-200 rounded-xl p-3 overflow-x-auto text-[11px] leading-relaxed"></pre>
+        <button type="button" id="btn-copy-event-json" class="w-full py-2 rounded-lg bg-indigo-600 text-white text-xs font-medium hover:bg-indigo-700">Copy JSON</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="border-t border-slate-200 bg-white mt-auto">
     <div class="max-w-5xl mx-auto px-4 sm:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-2">
-      <span class="text-xs text-slate-400">Visualizing Historical — Ghi chép & trực quan hoá sự kiện lịch sử từ sách</span>
-      <span class="text-xs text-slate-400">by Ngọc Quỳnh Phạm</span>
+      <span class="text-xs text-slate-400">Visualizing Historical — by Ngọc Quỳnh Phạm</span>
     </div>
   </footer>
 
+  <script src="js/home.js" defer></script>
 </body>
 </html>
