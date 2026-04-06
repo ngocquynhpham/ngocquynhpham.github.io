@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Writing Task 1 Pro Lab | Luyện biểu đồ &amp; đếm từ</title>
+    <meta name="description" content="Luyện IELTS Writing Task 1: tạo đề từ dữ liệu, biểu đồ Chart.js (bar, line, pie, mix), đếm từ 150+, lịch sử bài viết và bài mẫu theo đề — lưu cục bộ trên trình duyệt.">
+    <meta name="keywords" content="IELTS Writing Task 1, luyện Task 1, biểu đồ IELTS, Chart.js, đếm từ, IELTS practice, band 5, band 6, Ngoc Quynh Pham">
+    <meta name="author" content="Ngoc Quynh Pham">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#4f46e5">
+    <link rel="canonical" href="https://ngocquynhpham.github.io/projects/ielts-lab/writting-task1.html">
+
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="./favicon.svg">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="IELTS Lab — Task 1">
+    <meta property="og:locale" content="vi_VN">
+    <meta property="og:url" content="https://ngocquynhpham.github.io/projects/ielts-lab/writting-task1.html">
+    <meta property="og:title" content="IELTS Writing Task 1 Pro Lab | Luyện biểu đồ &amp; đếm từ">
+    <meta property="og:description" content="Tạo đề Task 1, xem biểu đồ trực quan, đếm từ và lưu lịch sử bài viết — công cụ luyện tập tập trung cho Writing Task 1.">
+    <meta property="og:image" content="https://ngocquynhpham.github.io/projects/ielts-lab/favicon.svg">
+    <meta property="og:image:type" content="image/svg+xml">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="IELTS Writing Task 1 Pro Lab">
+    <meta name="twitter:description" content="Luyện Task 1 với biểu đồ, đếm từ và lịch sử bài viết — chạy trên trình duyệt.">
+    <meta name="twitter:image" content="https://ngocquynhpham.github.io/projects/ielts-lab/favicon.svg">
+
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","name":"IELTS Writing Task 1 Pro Lab","url":"https://ngocquynhpham.github.io/projects/ielts-lab/writting-task1.html","applicationCategory":"EducationalApplication","operatingSystem":"Any","browserRequirements":"Requires JavaScript. Dữ liệu lưu cục bộ (localStorage).","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"author":{"@type":"Person","name":"Ngoc Quynh Pham","url":"https://ngocquynhpham.github.io/"},"inLanguage":"vi"}
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+            },
+        };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        html { font-size: 16px; }
+        body { font-family: 'Inter', system-ui, sans-serif; font-weight: 400; font-size: 14px; line-height: 1.5; -webkit-font-smoothing: antialiased; color: #334155; }
+        .heading-page { font-weight: 600; font-size: 15px; letter-spacing: -0.02em; color: #1e293b; line-height: 1.35; }
+        @media (min-width: 640px) { .heading-page { font-size: 16px; } }
+        .label-caps { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #94a3b8; }
+        .essay-input { font-family: 'Inter', system-ui, sans-serif !important; font-size: 14px; line-height: 1.6; }
+        @media (min-width: 640px) { .essay-input { font-size: 15px; } }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; font-family: inherit; font-weight: 500; font-size: 14px; line-height: 1.25rem; border-radius: 0.5rem; transition: background 0.15s, color 0.15s, box-shadow 0.15s, border-color 0.15s, transform 0.1s; min-height: 40px; height: 40px; padding-left: 0.875rem; padding-right: 0.875rem; box-sizing: border-box; }
+        .btn.btn-text-wrap { height: auto; min-height: 40px; padding-top: 0.5rem; padding-bottom: 0.5rem; }
+        .btn:active { transform: scale(0.98); }
+        .btn-primary { background: linear-gradient(180deg, #4f46e5 0%, #4338ca 100%); color: #fff; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .btn-primary:hover { filter: brightness(1.06); }
+        .btn-secondary { background: #fff; color: #475569; border: 1px solid #e2e8f0; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+        .btn-secondary:hover { background: #f8fafc; }
+        .btn-dark { background: #1e293b; color: #fff; border: 1px solid #1e293b; }
+        .btn-dark:hover { background: #334155; }
+        .btn-ghost { background: transparent; color: #64748b; }
+        .btn-ghost:hover { background: #f1f5f9; color: #334155; }
+        .btn-nav-active { background: #4f46e5; color: #fff; box-shadow: 0 1px 2px rgba(79,70,229,0.25); }
+        .btn-nav-idle { background: transparent; color: #64748b; }
+        .btn-nav-idle:hover { background: #f1f5f9; color: #334155; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .chart-container { position: relative; height: 350px; width: 100%; }
+        .view-hidden { display: none; }
+        .card-chart-container { height: 120px; width: 100%; }
+        .fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        #history-modal:not(.hidden) { display: flex; }
+        @keyframes bank-shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .bank-skeleton-shimmer {
+            background: linear-gradient(90deg, #e2e8f0 0%, #f1f5f9 45%, #e2e8f0 90%);
+            background-size: 200% 100%;
+            animation: bank-shimmer 1.2s ease-in-out infinite;
+        }
+        /* Thẻ đề + skeleton: (100vw - gap) / 2 (sm) · (100vw - 2*gap) / 3 (lg) — min(100%,…) để khớp max-w-7xl */
+        #questions-grid {
+            --bank-gap: 1.5rem; /* gap-6 */
+        }
+        #questions-grid > .bank-skeleton-card,
+        #questions-grid > .question-bank-card {
+            min-width: 0;
+            justify-self: stretch;
+            box-sizing: border-box;
+            width: 100%;
+        }
+        @media (min-width: 640px) and (max-width: 1023.98px) {
+            #questions-grid > .bank-skeleton-card,
+            #questions-grid > .question-bank-card {
+                width: min(100%, calc((100vw - var(--bank-gap)) / 2));
+            }
+        }
+        @media (min-width: 1024px) {
+            #questions-grid > .bank-skeleton-card,
+            #questions-grid > .question-bank-card {
+                width: min(100%, calc((100vw - 2 * var(--bank-gap)) / 3));
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-700 overflow-x-hidden font-sans flex flex-col min-h-screen">
+
+    <div id="toast" class="fixed bottom-4 right-4 z-[100] transition-all transform translate-y-20 opacity-0 pointer-events-none">
+        <div class="bg-slate-800 text-white px-4 py-2.5 rounded-lg shadow-lg flex items-center gap-3 text-[14px] font-medium">
+            <i id="toast-icon" class="fas fa-info-circle text-indigo-400"></i>
+            <span id="toast-msg">Thông báo</span>
+        </div>
+    </div>
+
+    <!-- History detail modal -->
+    <div id="history-modal" class="hidden fixed inset-0 z-[90] items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="history-modal-title">
+        <div class="bg-white rounded-[2rem] shadow-2xl max-w-2xl w-full max-h-[85vh] flex flex-col border border-slate-200">
+            <div class="px-6 py-4 border-b border-slate-100 flex items-start justify-between gap-4">
+                <div class="min-w-0">
+                    <p id="history-modal-meta" class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mb-1"></p>
+                    <h2 id="history-modal-title" class="text-[15px] sm:text-[16px] font-semibold text-slate-800 leading-snug"></h2>
+                </div>
+                <button type="button" onclick="closeHistoryModal()" class="shrink-0 h-10 w-10 rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-700 transition flex items-center justify-center" aria-label="Đóng">
+                    <i class="fas fa-times text-base"></i>
+                </button>
+            </div>
+            <div id="history-modal-body" class="px-6 py-4 overflow-y-auto custom-scrollbar flex-1 text-slate-700 text-[14px] sm:text-[15px] leading-relaxed whitespace-pre-wrap font-sans"></div>
+            <div class="px-6 py-4 border-t border-slate-100 flex flex-wrap gap-2 justify-end">
+                <button type="button" id="history-modal-export" class="btn btn-dark">
+                    <i class="fas fa-file-download"></i> Tải .txt
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <nav class="bg-white/95 backdrop-blur border-b border-slate-200/80 sticky top-0 z-50 px-3 sm:px-4 h-14 flex items-center justify-between gap-2 shadow-sm">
+        <div class="flex items-center gap-2 min-w-0">
+            <a href="./home.html" class="flex items-center gap-2 text-indigo-600 font-semibold text-[14px] sm:text-[15px] tracking-tight hover:opacity-90 shrink-0" title="Trang chủ IELTS Lab">
+                <div class="bg-indigo-600 text-white p-1 rounded-lg w-8 h-8 flex items-center justify-center shrink-0"><i class="fas fa-chart-line text-sm"></i></div>
+                <span class="truncate">IELTS LAB <span class="text-slate-400 font-normal">Task 1</span></span>
+            </a>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+            <a href="./tac-gia.html" class="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white text-slate-700 text-[13px] font-medium px-3 py-2 hover:bg-slate-50" title="Tác giả">
+                <span translate="no" aria-hidden="true">👩‍💻</span> Tác giả
+            </a>
+            <a href="./course.html#bank" class="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-[13px] font-semibold px-3.5 py-2 shadow-sm hover:brightness-105">
+                <i class="fas fa-graduation-cap text-sm"></i>
+                <span class="hidden sm:inline">Course</span>
+            </a>
+            <button type="button" class="md:hidden h-10 w-10 rounded-lg text-slate-600 hover:bg-slate-100 flex items-center justify-center shrink-0" onclick="toggleMobileMenu()" aria-label="Menu">
+                <i class="fas fa-bars" id="menu-icon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-40 hidden pt-20 px-6 flex flex-col gap-1 overflow-y-auto">
+        <a href="./home.html" class="w-full text-left py-3.5 text-[14px] font-medium border-b border-slate-100 text-indigo-600">Trang chủ</a>
+        <a href="./course.html" class="w-full text-left py-3.5 text-[14px] font-medium border-b border-slate-100 text-indigo-700">Course — kho đề &amp; lịch sử</a>
+        <a href="./tac-gia.html" class="w-full text-left py-3.5 text-[14px] font-medium border-b border-slate-100 text-slate-800">Tác giả</a>
+    </div>
+
+    <main class="max-w-7xl w-full mx-auto px-4 py-6 sm:px-6 sm:py-8 md:px-8 flex-1">
+
+        <section id="view-bank" class="space-y-8 fade-in">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div class="min-w-0">
+                    <h2 class="heading-page">Danh sách đề · Task 1</h2>
+                </div>
+            </div>
+            <div id="questions-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            <div id="bank-pagination" class="hidden flex flex-col sm:flex-row items-center justify-center gap-3 pt-4 border-t border-slate-100/80">
+                <div class="flex items-center gap-2">
+                    <button type="button" id="bank-page-prev" onclick="bankGoPage(-1)" class="btn btn-secondary min-w-[7rem] justify-center text-[13px]">
+                        <i class="fas fa-chevron-left text-[11px]"></i> Trước
+                    </button>
+                    <span id="bank-page-info" class="text-[13px] font-medium text-slate-600 tabular-nums px-2 min-w-[10rem] text-center"></span>
+                    <button type="button" id="bank-page-next" onclick="bankGoPage(1)" class="btn btn-secondary min-w-[7rem] justify-center text-[13px]">
+                        Sau <i class="fas fa-chevron-right text-[11px]"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-create" class="view-hidden max-w-5xl mx-auto fade-in pb-8">
+            <button type="button" onclick="showView('bank')" class="flex items-center gap-2 text-slate-500 font-medium mb-6 hover:text-indigo-600 transition text-sm">
+                <i class="fas fa-arrow-left"></i> Quay lại thư viện
+            </button>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div class="bg-white p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200">
+                        <h2 class="text-[15px] sm:text-[16px] font-semibold mb-5 flex items-center gap-2 text-indigo-600">
+                            <i class="fas fa-magic text-sm"></i> Thiết kế đồ thị
+                        </h2>
+
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block label-caps mb-2">Tiêu đề đề bài</label>
+                                <textarea id="edit-title" class="w-full px-3 py-2.5 bg-slate-50 border-2 border-transparent rounded-xl focus:border-indigo-100 outline-none transition min-h-[88px] text-[14px] font-sans" placeholder="The chart shows..."></textarea>
+                            </div>
+
+                            <div>
+                                <label class="block label-caps mb-2">Dạng biểu đồ</label>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                                    <button type="button" onclick="setChartType('bar')" class="type-btn h-10 rounded-lg text-[11px] font-semibold uppercase tracking-wide transition bg-indigo-600 text-white shadow-sm" data-type="bar">Bar</button>
+                                    <button type="button" onclick="setChartType('line')" class="type-btn h-10 rounded-lg text-[11px] font-semibold uppercase tracking-wide transition bg-slate-100 text-slate-600 border border-slate-200" data-type="line">Line</button>
+                                    <button type="button" onclick="setChartType('pie')" class="type-btn h-10 rounded-lg text-[11px] font-semibold uppercase tracking-wide transition bg-slate-100 text-slate-600 border border-slate-200" data-type="pie">Pie</button>
+                                    <button type="button" onclick="setChartType('mix')" class="type-btn h-10 rounded-lg text-[11px] font-semibold uppercase tracking-wide transition bg-slate-100 text-slate-600 border border-slate-200" data-type="mix">Mix</button>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between items-center pt-4">
+                                <label class="label-caps">Dữ liệu bảng</label>
+                                <div class="flex gap-2">
+                                    <button type="button" onclick="toggleImport()" class="text-indigo-600 text-[11px] font-semibold uppercase tracking-wider flex items-center gap-1 hover:underline"><i class="fas fa-file-import"></i> Import</button>
+                                    <button type="button" onclick="addRow()" class="bg-indigo-50 text-indigo-600 rounded-lg w-10 h-10 flex items-center justify-center hover:bg-indigo-100 transition border border-indigo-100/50 shrink-0"><i class="fas fa-plus text-sm"></i></button>
+                                </div>
+                            </div>
+
+                            <div id="import-area" class="hidden bg-indigo-50/80 p-4 sm:p-5 rounded-xl sm:rounded-2xl border border-indigo-100">
+                                <p class="text-[11px] text-indigo-500 font-medium mb-2 uppercase tracking-wide"><i class="fas fa-info-circle mr-1"></i> Định dạng: Tên, Số1, Số2</p>
+                                <textarea id="import-text" class="w-full p-3 text-[13px] font-mono bg-white border border-indigo-100 rounded-xl h-32 focus:ring-2 focus:ring-indigo-100 outline-none" placeholder="2020, 50, 10&#10;2021, 80, 15"></textarea>
+                                <button type="button" onclick="handleImport()" class="btn btn-primary w-full mt-3">Xử lý dữ liệu</button>
+                            </div>
+
+                            <div id="data-rows" class="space-y-2 max-h-60 overflow-y-auto pr-2 custom-scrollbar"></div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block label-caps mb-1">Đơn vị 1</label>
+                                    <input id="unit1" class="w-full px-3 py-2 text-[14px] font-sans border-2 border-slate-100 rounded-lg outline-none focus:border-indigo-100" value="Units" oninput="updatePreview()">
+                                </div>
+                                <div id="unit2-container" class="hidden">
+                                    <label class="block label-caps mb-1">Đơn vị 2</label>
+                                    <input id="unit2" class="w-full px-3 py-2 text-xs border-2 border-green-50 text-green-600 rounded-xl outline-none focus:border-green-100" value="Rate (%)" oninput="updatePreview()">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block label-caps mb-2">Bài mẫu tham khảo (tuỳ chọn)</label>
+                                <textarea id="edit-sample-essay" class="w-full px-3 py-2.5 bg-slate-50 border-2 border-transparent rounded-xl focus:border-indigo-100 outline-none transition min-h-[100px] text-[14px] font-sans leading-relaxed" placeholder="Để trống sẽ dùng bài mẫu mặc định (~150+ từ). Bạn có thể dán sẵn một model answer..."></textarea>
+                            </div>
+
+                            <button type="button" onclick="saveQuestion()" id="save-btn" class="btn btn-dark w-full mt-4 rounded-lg gap-2 hover:!bg-indigo-600">
+                                <i class="fas fa-save"></i> Lưu đề bài
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hidden lg:block">
+                    <div class="bg-white p-6 lg:p-8 rounded-2xl border border-slate-200 sticky top-20 shadow-sm">
+                        <span class="text-[11px] font-semibold text-indigo-500 uppercase tracking-widest block mb-3 text-center">Live Preview</span>
+                        <h3 id="preview-title-display" class="text-[14px] sm:text-[15px] font-semibold text-slate-800 mb-4 text-center leading-snug">Tiêu đề bài viết</h3>
+                        <div class="chart-container">
+                            <canvas id="previewChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="view-history" class="view-hidden space-y-6 sm:space-y-8 fade-in pb-8">
+            <p class="text-[13px] text-slate-600 mb-2">Tổng quan lịch sử theo đề: <a href="./course.html#history" class="text-indigo-600 font-semibold hover:underline">Course → Lịch sử</a></p>
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                <div class="min-w-0">
+                    <h2 class="heading-page">Lịch sử làm bài</h2>
+                    <p class="text-slate-500 text-[14px] mt-1 leading-relaxed">Đã lưu khi bạn bấm “Hoàn thành &amp; Lưu bài” ở phòng luyện.</p>
+                </div>
+                <div class="flex flex-col sm:flex-row flex-wrap gap-2 w-full lg:w-auto">
+                    <button type="button" onclick="exportHistoryJson()" class="btn btn-secondary w-full sm:w-auto justify-center">
+                        <i class="fas fa-file-export"></i> Backup JSON
+                    </button>
+                    <button type="button" onclick="clearAllHistory()" class="btn w-full sm:w-auto justify-center bg-red-50 text-red-700 border border-red-100 hover:bg-red-100">
+                        <i class="fas fa-trash-alt"></i> Xóa toàn bộ
+                    </button>
+                </div>
+            </div>
+            <div id="history-list" class="space-y-4"></div>
+        </section>
+
+        <section id="view-essays" class="view-hidden fade-in pb-8 max-w-3xl mx-auto">
+            <button type="button" onclick="showView('bank')" class="flex items-center gap-2 text-slate-500 font-medium mb-5 hover:text-indigo-600 transition text-[14px]">
+                <i class="fas fa-arrow-left"></i> Quay lại thư viện
+            </button>
+            <div class="space-y-6">
+                <div>
+                    <h2 id="essays-page-title" class="heading-page"></h2>
+                </div>
+                <div>
+                    <h3 class="label-caps mb-3">Bài đã làm của bạn</h3>
+                    <div id="essays-user-list" class="space-y-3"></div>
+                </div>
+                <div class="rounded-2xl border border-indigo-100 bg-indigo-50/50 p-4 sm:p-5">
+                    <h3 class="text-[11px] font-semibold text-indigo-700 uppercase tracking-wider mb-3">Bài mẫu tham khảo</h3>
+                    <div id="essays-sample-body" class="text-[14px] leading-relaxed text-slate-700 whitespace-pre-wrap font-sans"></div>
+                </div>
+                <button type="button" onclick="startPracticeFromEssaysPage()" class="btn btn-primary">
+                    <i class="fas fa-pen-nib"></i> Luyện viết đề này
+                </button>
+            </div>
+        </section>
+
+        <section id="view-practice" class="view-hidden fade-in pb-8">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 gap-4">
+                <div class="flex items-center gap-3 min-w-0">
+                    <button type="button" onclick="showView('bank')" class="btn btn-secondary p-0 w-10 h-10 shrink-0 rounded-lg" aria-label="Về thư viện"><i class="fas fa-arrow-left text-indigo-600 text-sm"></i></button>
+                    <div class="min-w-0">
+                        <h2 class="heading-page truncate">Phòng luyện tập</h2>
+                        <p class="text-[11px] text-slate-500 uppercase font-medium tracking-wider">Thời gian tối ưu: 20:00</p>
+                    </div>
+                </div>
+
+                <div class="flex items-stretch sm:items-center gap-2 sm:gap-3 flex-wrap">
+                    <div id="word-count-badge" class="h-10 px-3 rounded-lg font-medium text-[14px] flex items-center gap-3 border shadow-sm transition-all bg-amber-50 text-amber-800 border-amber-200/80">
+                        <i id="count-icon" class="fas fa-pen-fancy text-[13px]"></i>
+                        <span><span id="word-count">0</span> <span class="text-amber-700/90">words</span></span>
+                    </div>
+                    <button type="button" onclick="exportEssay()" class="btn btn-dark">
+                        <i class="fas fa-file-download"></i> Export .txt
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
+                <div class="space-y-6 order-2 lg:order-1">
+                    <div class="bg-white p-5 sm:p-6 md:p-8 rounded-2xl sm:rounded-3xl border border-slate-200 shadow-sm">
+                        <div class="bg-slate-50 p-4 sm:p-5 rounded-xl border-l-4 border-indigo-500 mb-6">
+                            <p id="practice-title" class="text-[14px] sm:text-[15px] font-medium text-slate-700 leading-relaxed italic font-sans"></p>
+                        </div>
+                        <div class="chart-container h-[280px] sm:h-[360px] lg:h-[400px]">
+                            <canvas id="practiceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col min-h-[420px] sm:min-h-[500px] md:h-[650px] space-y-3 sm:space-y-4 order-1 lg:order-2">
+                    <div class="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 flex flex-col flex-1 min-h-[320px] sm:min-h-0 shadow-sm overflow-hidden focus-within:ring-2 focus-within:ring-indigo-100 transition-all">
+                        <div class="px-4 sm:px-6 py-3 border-b bg-slate-50/90 flex items-center justify-between gap-2">
+                            <span class="label-caps !text-slate-500">Essay Canvas</span>
+                            <span id="target-msg" class="text-[11px] font-medium text-amber-600">Mục tiêu: 150+ từ</span>
+                        </div>
+                        <textarea id="essay-input" class="essay-input flex-1 p-4 sm:p-5 focus:outline-none resize-none text-slate-800 bg-transparent min-h-[200px] font-sans" placeholder="The provided graph illustrates the changes in..."></textarea>
+                    </div>
+                    <button type="button" onclick="finishPractice()" class="btn btn-primary w-full rounded-lg">
+                        <i class="fas fa-check-double"></i> Hoàn thành &amp; Lưu bài
+                    </button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-slate-200 bg-white mt-auto">
+        <div class="max-w-7xl mx-auto px-4 py-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-[13px] text-slate-500">
+            <p>© IELTS Writing Lab — Task 1 lưu cục bộ (localStorage).</p>
+            <nav class="flex flex-wrap gap-x-4 gap-y-2">
+                <a href="./home.html" class="hover:text-indigo-600">Home</a>
+                <a href="./course.html" class="hover:text-indigo-600">Course</a>
+                <a href="./writting-task1.html" class="hover:text-indigo-600 font-medium text-indigo-600">Task 1</a>
+                <a href="./writting-task2.html" class="hover:text-indigo-600">Task 2</a>
+                <a href="./tac-gia.html" class="hover:text-indigo-600">Tác giả</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script src="./journey.js"></script>
+    <script>
+        const STORAGE_QUESTIONS = 'ielts-t1-questions-v1';
+        const STORAGE_HISTORY = 'ielts-t1-writing-history-v1';
+
+        const COLORS = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4'];
+
+        const DEFAULT_SAMPLE_ESSAY = 'The provided illustration presents the key figures for the task. Overall, the data reveal clear patterns that are worth highlighting before moving to a more detailed comparison.\n\nIn more detail, the largest values are associated with the first category shown, while the second category follows a different trajectory. The gap between these series is particularly noticeable in the middle of the range, where changes are most pronounced. By contrast, the remaining figures remain comparatively stable, with only modest movement from one point to the next.\n\nAnother feature is the relationship between peaks and troughs. Where one series rises, the other may level off or dip slightly, which suggests that the factors behind each line or bar are not identical. Finally, taken together, the chart supports a concise summary of how the measured items developed over the period shown.\n\nIn summary, the visual information allows a structured Task 1 response: an overview sentence, a clear body that compares categories, and a brief closing remark that reflects the main trends without adding opinion.';
+
+        const SEED_QUESTIONS = [
+            {
+                id: 'seed-1',
+                title: 'Visitors to the National Museum (2010-2020)',
+                type: 'line',
+                unit1: 'Visitors',
+                unit2: '',
+                createdAt: Date.now(),
+                data: [{ name: '2010', value1: 50 }, { name: '2015', value1: 80 }, { name: '2020', value1: 65 }],
+                sampleEssay: 'The line graph compares how many people visited the National Museum in 2010, 2015 and 2020. Overall, visitor numbers increased between 2010 and 2015, but then fell back somewhat by the end of the period, although they remained above the 2010 level.\n\nIn 2010, the museum welcomed approximately 50,000 visitors. Over the next five years, attendance grew steadily, reaching a peak of around 80,000 visitors in 2015. This represented a substantial rise and made 2015 the busiest year on the chart.\n\nHowever, after 2015 the trend was downward. By 2020, the figure had declined to roughly 65,000 visitors. Despite this drop, the museum still attracted more people in 2020 than it had at the beginning of the period.\n\nIn summary, the museum was most popular in the middle of the decade, while the final year recorded fewer visitors than the peak but more than in 2010.'
+            },
+            {
+                id: 'seed-2',
+                title: 'Fruit consumption and health index',
+                type: 'mix',
+                unit1: 'Kg',
+                unit2: 'Score',
+                createdAt: Date.now(),
+                data: [{ name: 'A', value1: 20, value2: 5 }, { name: 'B', value1: 35, value2: 8 }],
+                sampleEssay: 'The chart combines bar and line data to compare fruit consumption in kilograms with a health index score for two groups, A and B. Overall, group B records higher consumption than group A, and the health score follows the same ranking.\n\nLooking at consumption first, group A accounts for about 20 kg, whereas group B reaches roughly 35 kg. This means that B consumes noticeably more fruit than A, with a gap of around 15 kg between the two.\n\nThe line series for the health index mirrors this pattern. Group A has a score of about 5, while group B achieves a higher score of approximately 8. Thus, the group with greater fruit consumption also reports the better health index on the chart.\n\nIn summary, the figure suggests a positive association between the two measures in this simple comparison, with B outperforming A on both indicators.'
+            }
+        ];
+
+        let currentView = 'bank';
+        let questions = [];
+        let writingHistory = [];
+        let creatorState = { type: 'bar', data: [{ name: 'Jan', value1: 45, value2: 12 }], unit1: 'Values', unit2: 'Rate' };
+        let activeQuestion = null;
+        let previewChart = null;
+        let practiceChart = null;
+        let thumbnailCharts = {};
+        let historyModalEntryId = null;
+        let activeEssaysQuestionId = null;
+        const BANK_PAGE_SIZE = 6;
+        let bankPage = 1;
+
+        function bankTotalPages() {
+            if (!questions.length) return 1;
+            return Math.ceil(questions.length / BANK_PAGE_SIZE);
+        }
+
+        function clampBankPage() {
+            const tp = bankTotalPages();
+            if (bankPage > tp) bankPage = tp;
+            if (bankPage < 1) bankPage = 1;
+        }
+
+        function destroyAllThumbnailCharts() {
+            Object.keys(thumbnailCharts).forEach(function (id) {
+                try {
+                    if (thumbnailCharts[id]) thumbnailCharts[id].destroy();
+                } catch (_) {}
+                delete thumbnailCharts[id];
+            });
+        }
+
+        function showBankSkeleton() {
+            const grid = document.getElementById('questions-grid');
+            const pag = document.getElementById('bank-pagination');
+            if (pag) pag.classList.add('hidden');
+            destroyAllThumbnailCharts();
+            const card = `
+                <div class="bank-skeleton-card bg-white rounded-2xl sm:rounded-3xl border border-slate-200 overflow-hidden flex flex-col h-full box-border">
+                    <div class="p-5 sm:p-6 flex-1 w-full min-w-0">
+                        <div class="flex justify-between items-center mb-3 sm:mb-4 gap-2 w-full min-w-0">
+                            <span class="bank-skeleton-shimmer h-5 w-24 sm:w-28 shrink-0 rounded-md"></span>
+                            <span class="bank-skeleton-shimmer h-9 w-9 shrink-0 rounded-lg"></span>
+                        </div>
+                        <div class="space-y-2 mb-4 sm:mb-6 min-h-[2.75rem] sm:min-h-[3rem] w-full">
+                            <div class="bank-skeleton-shimmer h-3.5 rounded w-full"></div>
+                            <div class="bank-skeleton-shimmer h-3.5 rounded w-full max-w-[95%]"></div>
+                        </div>
+                        <div class="bg-slate-50 rounded-xl p-3 sm:p-4 card-chart-container w-full min-w-0 flex items-center justify-center overflow-hidden">
+                            <div class="bank-skeleton-shimmer w-full h-full rounded-lg min-h-[104px]"></div>
+                        </div>
+                    </div>
+                    <div class="p-5 sm:p-6 pt-0 flex flex-col gap-2 w-full min-w-0">
+                        <div class="bank-skeleton-shimmer h-10 rounded-lg w-full"></div>
+                        <div class="bank-skeleton-shimmer h-10 rounded-lg w-full"></div>
+                    </div>
+                </div>`;
+            grid.innerHTML = Array.from({ length: 6 }, function () { return card; }).join('');
+        }
+
+        function updateBankPagination(totalItems, totalPages) {
+            const pag = document.getElementById('bank-pagination');
+            const info = document.getElementById('bank-page-info');
+            const prev = document.getElementById('bank-page-prev');
+            const next = document.getElementById('bank-page-next');
+            if (!pag || !info || !prev || !next) return;
+            if (totalItems === 0 || totalPages <= 1) {
+                pag.classList.add('hidden');
+                return;
+            }
+            pag.classList.remove('hidden');
+            const start = (bankPage - 1) * BANK_PAGE_SIZE + 1;
+            const end = Math.min(totalItems, bankPage * BANK_PAGE_SIZE);
+            info.textContent = 'Trang ' + bankPage + ' / ' + totalPages + ' · ' + start + '–' + end + ' / ' + totalItems + ' đề';
+            prev.disabled = bankPage <= 1;
+            next.disabled = bankPage >= totalPages;
+            prev.classList.toggle('opacity-40', prev.disabled);
+            prev.classList.toggle('pointer-events-none', prev.disabled);
+            next.classList.toggle('opacity-40', next.disabled);
+            next.classList.toggle('pointer-events-none', next.disabled);
+        }
+
+        window.bankGoPage = function (delta) {
+            const tp = bankTotalPages();
+            const next = bankPage + delta;
+            if (next < 1 || next > tp) return;
+            bankPage = next;
+            renderQuestionBank();
+            const grid = document.getElementById('questions-grid');
+            if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+
+        function getSampleEssay(q) {
+            if (!q) return DEFAULT_SAMPLE_ESSAY;
+            const s = q.sampleEssay;
+            if (s != null && String(s).trim() !== '') return String(s).trim();
+            return DEFAULT_SAMPLE_ESSAY;
+        }
+
+        function countEssaysForQuestion(questionId) {
+            return writingHistory.filter(function (h) { return h.questionId === questionId; }).length;
+        }
+
+        function escapeHtml(s) {
+            return String(s ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function loadQuestions() {
+            try {
+                const raw = localStorage.getItem(STORAGE_QUESTIONS);
+                if (!raw) return null;
+                const parsed = JSON.parse(raw);
+                return Array.isArray(parsed) ? parsed : null;
+            } catch (_) {
+                return null;
+            }
+        }
+
+        function saveQuestions() {
+            try {
+                localStorage.setItem(STORAGE_QUESTIONS, JSON.stringify(questions));
+            } catch (e) {
+                showToast('Không thể lưu đề (bộ nhớ đầy hoặc chế độ riêng tư)', 'fa-exclamation');
+            }
+        }
+
+        function loadHistory() {
+            try {
+                const raw = localStorage.getItem(STORAGE_HISTORY);
+                if (!raw) return [];
+                const parsed = JSON.parse(raw);
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (_) {
+                return [];
+            }
+        }
+
+        function saveHistory() {
+            try {
+                localStorage.setItem(STORAGE_HISTORY, JSON.stringify(writingHistory));
+            } catch (e) {
+                showToast('Không thể lưu lịch sử', 'fa-exclamation');
+            }
+        }
+
+        function newId() {
+            return crypto.randomUUID ? crypto.randomUUID() : 'id-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+        }
+
+        function initApp() {
+            showBankSkeleton();
+            setTimeout(function () {
+                questions = loadQuestions();
+                if (!questions || questions.length === 0) {
+                    questions = SEED_QUESTIONS.map((q) => ({ ...q, id: q.id || newId() }));
+                    saveQuestions();
+                }
+                writingHistory = loadHistory();
+                bankPage = 1;
+                clampBankPage();
+                renderQuestionBank();
+                renderHistoryList();
+                (function handleUrlParams() {
+                var params = new URLSearchParams(window.location.search);
+                var practiceId = params.get('practice');
+                if (practiceId) {
+                    setTimeout(function () {
+                        window.startPractice(practiceId);
+                    }, 120);
+                    return;
+                }
+                if (params.get('view') === 'create') {
+                    setTimeout(function () {
+                        window.showView('create');
+                    }, 0);
+                    return;
+                }
+                if (params.get('view') === 'history') {
+                    var openHistory = params.get('openHistory');
+                    setTimeout(function () {
+                        window.showView('history');
+                        if (openHistory) {
+                            setTimeout(function () {
+                                window.openHistoryModal(openHistory);
+                            }, 120);
+                        }
+                    }, 80);
+                }
+            })();
+            }, 120);
+        }
+
+        window.showView = function (name) {
+            document.getElementById('view-' + currentView).classList.add('view-hidden');
+            document.getElementById('view-' + name).classList.remove('view-hidden');
+
+            const navIds = ['bank', 'create', 'history'];
+            document.querySelectorAll('.nav-btn').forEach((b) => {
+                b.className = 'nav-btn btn btn-nav-idle px-3 sm:px-3.5 rounded-lg text-[14px]';
+            });
+            if (navIds.includes(name)) {
+                const activeBtn = document.getElementById('btn-' + name);
+                if (activeBtn) activeBtn.className = 'nav-btn btn btn-nav-active px-3 sm:px-3.5 rounded-lg text-[14px]';
+            }
+
+            currentView = name;
+            if (name === 'create') {
+                const se = document.getElementById('edit-sample-essay');
+                if (se) se.value = '';
+                renderDataRows();
+                updatePreview();
+            }
+            if (name === 'bank') renderQuestionBank();
+            if (name === 'history') renderHistoryList();
+            if (name === 'essays') renderQuestionEssays();
+        };
+
+        function renderQuestionBank() {
+            const grid = document.getElementById('questions-grid');
+            clampBankPage();
+            const totalPages = bankTotalPages();
+            if (questions.length === 0) {
+                destroyAllThumbnailCharts();
+                grid.innerHTML = '<div class="col-span-full py-16 sm:py-20 text-center rounded-2xl border border-dashed border-slate-200 bg-white px-4"><p class="text-slate-500 font-medium mb-4 text-[14px]">Chưa có đề bài.</p><button type="button" onclick="showView(\'create\')" class="btn btn-primary px-6">Tạo đề đầu tiên</button></div>';
+                updateBankPagination(0, 0);
+                return;
+            }
+
+            const start = (bankPage - 1) * BANK_PAGE_SIZE;
+            const pageQuestions = questions.slice(start, start + BANK_PAGE_SIZE);
+            destroyAllThumbnailCharts();
+
+            grid.innerHTML = pageQuestions.map((q) => {
+                const qid = String(q.id).replace(/'/g, "\\'");
+                const nEssay = countEssaysForQuestion(q.id);
+                return `
+                <div class="question-bank-card bg-white rounded-2xl sm:rounded-3xl border border-slate-200 overflow-hidden hover:shadow-md hover:-translate-y-0.5 transition-all group flex flex-col h-full fade-in">
+                    <div class="p-5 sm:p-6 flex-1">
+                        <div class="mb-3 sm:mb-4">
+                            <span class="bg-indigo-50 text-indigo-600 text-[11px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded border border-indigo-100/80">${escapeHtml(q.type)}</span>
+                        </div>
+                        <h3 class="font-medium text-slate-800 line-clamp-2 mb-4 sm:mb-6 group-hover:text-indigo-600 transition-colors min-h-[2.75rem] sm:min-h-[3rem] text-[14px] leading-relaxed font-sans">${escapeHtml(q.title)}</h3>
+                        <div class="bg-slate-50 rounded-xl p-3 sm:p-4 card-chart-container flex items-center justify-center overflow-hidden">
+                            <canvas id="thumb-${q.id}"></canvas>
+                        </div>
+                    </div>
+                    <div class="p-5 sm:p-6 pt-0 flex flex-col gap-2">
+                        <button type="button" onclick="openQuestionEssays('${qid}')" class="btn btn-secondary w-full justify-center gap-2">
+                            <i class="fas fa-file-alt text-[13px]"></i> Đã luyện tập (${nEssay})
+                        </button>
+                        <button type="button" onclick="startPractice('${qid}')" class="btn btn-dark w-full justify-center gap-2 group-hover:!bg-indigo-600">
+                            <i class="fas fa-pen-nib"></i> Luyện viết
+                        </button>
+                    </div>
+                </div>
+            `;
+            }).join('');
+
+            updateBankPagination(questions.length, totalPages);
+
+            pageQuestions.forEach((q) => {
+                const el = document.getElementById('thumb-' + q.id);
+                if (!el) return;
+                const ctx = el.getContext('2d');
+                thumbnailCharts[q.id] = createChart(ctx, q.type, q.data, '', '', true);
+            });
+        }
+
+        function renderQuestionEssays() {
+            const q = questions.find(function (x) { return x.id === activeEssaysQuestionId; });
+            const titleEl = document.getElementById('essays-page-title');
+            const listEl = document.getElementById('essays-user-list');
+            const sampleEl = document.getElementById('essays-sample-body');
+            if (!titleEl || !listEl || !sampleEl) return;
+            if (!q) {
+                titleEl.textContent = 'Không tìm thấy đề';
+                listEl.innerHTML = '';
+                sampleEl.textContent = '';
+                return;
+            }
+            titleEl.textContent = q.title;
+            sampleEl.textContent = getSampleEssay(q);
+            const list = writingHistory.filter(function (h) { return h.questionId === q.id; }).sort(function (a, b) { return b.completedAt - a.completedAt; });
+            const hid = function (id) { return String(id).replace(/'/g, "\\'"); };
+            if (list.length === 0) {
+                listEl.innerHTML = '<p class="text-slate-500 text-[14px] border border-dashed border-slate-200 rounded-xl p-5 text-center leading-relaxed">Chưa có bài nào của bạn cho đề này. Xem <span class="font-semibold text-slate-600">bài mẫu</span> bên dưới, rồi dùng <span class="font-semibold text-slate-600">Luyện viết đề này</span> để tự làm bài.</p>';
+            } else {
+                listEl.innerHTML = list.map(function (h) {
+                    const preview = (h.essay || '').trim();
+                    const short = preview.length > 180 ? preview.slice(0, 177) + '…' : preview;
+                    const safe = short || '(Trống)';
+                    return `
+                        <article class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                                <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">${escapeHtml(formatHistoryDate(h.completedAt))}</span>
+                                <span class="text-[11px] font-semibold text-slate-600">${h.wordCount} từ</span>
+                            </div>
+                            <p class="text-[13px] text-slate-600 leading-relaxed mb-3 line-clamp-3">${escapeHtml(safe)}</p>
+                            <button type="button" onclick="openHistoryModal('${hid(h.id)}')" class="btn btn-secondary px-4">Xem đầy đủ</button>
+                        </article>`;
+                }).join('');
+            }
+        }
+
+        window.openQuestionEssays = function (id) {
+            activeEssaysQuestionId = id;
+            renderQuestionEssays();
+            showView('essays');
+        };
+
+        window.startPracticeFromEssaysPage = function () {
+            if (!activeEssaysQuestionId) return;
+            startPractice(activeEssaysQuestionId);
+        };
+
+        const createChart = (ctx, type, data, u1, u2, isThumb = false) => {
+            const labels = data.map((d) => d.name);
+            const datasets = [];
+
+            if (type === 'pie') {
+                datasets.push({
+                    data: data.map((d) => d.value1),
+                    backgroundColor: COLORS,
+                    borderWidth: 0
+                });
+            } else if (type === 'mix') {
+                datasets.push({ type: 'bar', label: u1, order: 0, data: data.map((d) => d.value1), backgroundColor: '#6366f1', borderRadius: isThumb ? 2 : 6, yAxisID: 'y' });
+                datasets.push({ type: 'line', label: u2, order: 10, data: data.map((d) => d.value2), borderColor: '#10b981', backgroundColor: '#10b981', borderWidth: isThumb ? 1 : 3, pointRadius: isThumb ? 0 : 4, tension: 0.4, yAxisID: 'y1' });
+            } else {
+                datasets.push({
+                    type: type,
+                    label: u1,
+                    order: type === 'line' ? 10 : 0,
+                    data: data.map((d) => d.value1),
+                    backgroundColor: type === 'line' ? 'transparent' : '#6366f1',
+                    borderColor: '#6366f1',
+                    borderRadius: isThumb ? 2 : 6,
+                    borderWidth: isThumb ? 1 : 3,
+                    tension: 0.4,
+                    fill: type === 'line' ? false : true
+                });
+            }
+
+            return new Chart(ctx, {
+                data: { labels, datasets },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: !isThumb, position: 'bottom', labels: { usePointStyle: true, boxWidth: 6, font: { size: 11, family: 'Inter, system-ui, sans-serif', weight: '500' } } },
+                        tooltip: { enabled: !isThumb }
+                    },
+                    scales: isThumb || type === 'pie' ? { x: { display: false }, y: { display: false } } : {
+                        y: { position: 'left', grid: { color: '#f1f5f9' }, title: { display: !!u1, text: u1, font: { size: 11, family: 'Inter, system-ui, sans-serif', weight: '500' } } },
+                        y1: type === 'mix' ? { position: 'right', grid: { display: false }, title: { display: !!u2, text: u2, font: { size: 11, family: 'Inter, system-ui, sans-serif', weight: '500' } } } : { display: false }
+                    }
+                }
+            });
+        };
+
+        window.setChartType = function (type) {
+            creatorState.type = type;
+            document.getElementById('unit2-container').classList.toggle('hidden', type !== 'mix');
+            document.querySelectorAll('.type-btn').forEach((b) => {
+                const isActive = b.getAttribute('data-type') === type;
+                b.className = isActive
+                    ? 'type-btn h-10 rounded-lg text-[11px] font-semibold uppercase tracking-wide transition bg-indigo-600 text-white shadow-sm'
+                    : 'type-btn h-10 rounded-lg text-[11px] font-semibold uppercase tracking-wide transition bg-slate-100 text-slate-600 border border-slate-200';
+            });
+            renderDataRows();
+            updatePreview();
+        };
+
+        window.addRow = function () {
+            creatorState.data.push({ name: 'Point ' + (creatorState.data.length + 1), value1: 0, value2: 0 });
+            renderDataRows();
+            updatePreview();
+        };
+
+        function renderDataRows() {
+            const container = document.getElementById('data-rows');
+            container.innerHTML = creatorState.data.map((d, i) => `
+                <div class="flex gap-2 items-center bg-white border border-slate-100 p-2 rounded-xl group transition-all hover:border-indigo-100">
+                    <input class="w-[4.5rem] px-2 py-1.5 text-[13px] font-sans outline-none font-medium text-slate-700" value="${escapeHtml(d.name)}" oninput="updateDataRow(${i}, 'name', this.value)">
+                    <input type="number" class="flex-1 px-2 py-1.5 text-[13px] font-sans bg-slate-50 rounded-lg outline-none focus:ring-1 focus:ring-indigo-100" value="${d.value1}" oninput="updateDataRow(${i}, 'value1', this.value)">
+                    <input type="number" class="flex-1 px-2 py-1.5 text-[13px] font-sans bg-green-50 text-green-700 rounded-lg outline-none focus:ring-1 focus:ring-green-100 ${creatorState.type !== 'mix' ? 'hidden' : ''}" value="${d.value2}" oninput="updateDataRow(${i}, 'value2', this.value)">
+                    <button type="button" onclick="removeDataRow(${i})" class="text-slate-200 hover:text-red-400 p-1" aria-label="Xóa dòng"><i class="fas fa-times-circle"></i></button>
+                </div>
+            `).join('');
+        }
+
+        window.updateDataRow = function (idx, field, val) {
+            creatorState.data[idx][field] = field === 'name' ? val : parseFloat(val) || 0;
+            updatePreview();
+        };
+
+        window.removeDataRow = function (idx) {
+            if (creatorState.data.length <= 1) return;
+            creatorState.data.splice(idx, 1);
+            renderDataRows();
+            updatePreview();
+        };
+
+        window.updatePreview = function () {
+            const title = document.getElementById('edit-title').value || 'Tiêu đề bài viết';
+            document.getElementById('preview-title-display').innerText = title;
+            const ctx = document.getElementById('previewChart').getContext('2d');
+            if (previewChart) previewChart.destroy();
+            previewChart = createChart(ctx, creatorState.type, creatorState.data, document.getElementById('unit1').value, document.getElementById('unit2').value);
+        };
+
+        window.saveQuestion = function () {
+            const title = document.getElementById('edit-title').value.trim();
+            if (!title) return showToast('Vui lòng nhập tiêu đề!', 'fa-exclamation');
+
+            const q = {
+                id: newId(),
+                title,
+                type: creatorState.type,
+                data: JSON.parse(JSON.stringify(creatorState.data)),
+                unit1: document.getElementById('unit1').value,
+                unit2: document.getElementById('unit2').value,
+                createdAt: Date.now()
+            };
+            const sampleRaw = (document.getElementById('edit-sample-essay') && document.getElementById('edit-sample-essay').value.trim()) || '';
+            if (sampleRaw) q.sampleEssay = sampleRaw;
+            questions.push(q);
+            saveQuestions();
+            bankPage = bankTotalPages();
+            showToast('Đã lưu đề bài', 'fa-check');
+            showView('bank');
+        };
+
+        window.toggleImport = function () {
+            document.getElementById('import-area').classList.toggle('hidden');
+        };
+
+        window.handleImport = function () {
+            const text = document.getElementById('import-text').value;
+            try {
+                const newData = text.trim().split('\n').map((line) => {
+                    const parts = line.split(/[,;\t]/);
+                    return { name: parts[0]?.trim() || '...', value1: parseFloat(parts[1]) || 0, value2: parseFloat(parts[2]) || 0 };
+                });
+                creatorState.data = newData;
+                renderDataRows();
+                updatePreview();
+                toggleImport();
+                showToast('Đã nhập dữ liệu', 'fa-file-import');
+            } catch (e) {
+                showToast('Lỗi định dạng dữ liệu', 'fa-times');
+            }
+        };
+
+        window.startPractice = function (id) {
+            activeQuestion = questions.find((q) => q.id === id);
+            if (!activeQuestion) {
+                showToast('Không tìm thấy đề bài', 'fa-exclamation');
+                return;
+            }
+            document.getElementById('practice-title').innerText = activeQuestion.title;
+            document.getElementById('essay-input').value = '';
+            updateWordCount('');
+            showView('practice');
+
+            setTimeout(function () {
+                const ctx = document.getElementById('practiceChart').getContext('2d');
+                if (practiceChart) practiceChart.destroy();
+                practiceChart = createChart(ctx, activeQuestion.type, activeQuestion.data, activeQuestion.unit1, activeQuestion.unit2);
+            }, 300);
+        };
+
+        function wordCountFromText(val) {
+            return val.trim() === '' ? 0 : val.trim().split(/\s+/).length;
+        }
+
+        function updateWordCount(val) {
+            const count = wordCountFromText(val);
+            document.getElementById('word-count').innerText = count;
+            const badge = document.getElementById('word-count-badge');
+            const icon = document.getElementById('count-icon');
+            const msg = document.getElementById('target-msg');
+
+            if (count >= 150) {
+                badge.className = 'h-10 px-3 rounded-lg font-medium text-[14px] flex items-center gap-3 border shadow-sm transition-all bg-green-50 text-green-800 border-green-200/80';
+                icon.className = 'fas fa-check-circle text-[13px]';
+                msg.innerText = 'Đã đạt yêu cầu!';
+                msg.className = 'text-[11px] font-medium text-green-600';
+            } else {
+                badge.className = 'h-10 px-3 rounded-lg font-medium text-[14px] flex items-center gap-3 border shadow-sm transition-all bg-amber-50 text-amber-800 border-amber-200/80';
+                icon.className = 'fas fa-pen-fancy text-[13px]';
+                msg.innerText = 'Cần thêm ' + (150 - count) + ' từ';
+                msg.className = 'text-[11px] font-medium text-amber-600 animate-pulse';
+            }
+        }
+
+        document.getElementById('essay-input').addEventListener('input', function (e) {
+            updateWordCount(e.target.value);
+        });
+
+        window.exportEssay = function () {
+            const essay = document.getElementById('essay-input').value;
+            if (!essay) return showToast('Chưa có nội dung để xuất!', 'fa-exclamation');
+            const count = document.getElementById('word-count').innerText;
+            const content = 'IELTS WRITING TASK 1 PRACTICE\n\nTOPIC: ' + activeQuestion.title + '\nWORD COUNT: ' + count + '\n\nESSAY:\n' + essay;
+            downloadText(content, 'ielts-writing-task1.txt');
+            showToast('Đã tải bài viết về máy', 'fa-download');
+        };
+
+        function downloadText(content, filename) {
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        window.finishPractice = function () {
+            const essay = document.getElementById('essay-input').value.trim();
+            const count = wordCountFromText(document.getElementById('essay-input').value);
+            if (count < 150 && !confirm('Bài viết chưa đủ 150 từ. Bạn vẫn muốn kết thúc và lưu vào lịch sử?')) return;
+
+            const entry = {
+                id: newId(),
+                questionId: activeQuestion ? activeQuestion.id : '',
+                title: activeQuestion ? activeQuestion.title : '',
+                chartType: activeQuestion ? activeQuestion.type : '',
+                essay: essay,
+                wordCount: count,
+                completedAt: Date.now()
+            };
+            writingHistory.unshift(entry);
+            saveHistory();
+            if (window.IELTSJourney) IELTSJourney.bumpTask1();
+            renderHistoryList();
+            showToast('Đã lưu bài vào lịch sử', 'fa-trophy');
+            showView('bank');
+        };
+
+        function formatHistoryDate(ts) {
+            try {
+                return new Date(ts).toLocaleString('vi-VN', { dateStyle: 'medium', timeStyle: 'short' });
+            } catch (_) {
+                return '';
+            }
+        }
+
+        function renderHistoryList() {
+            const list = document.getElementById('history-list');
+            if (!writingHistory.length) {
+                list.innerHTML = '<div class="rounded-2xl border border-dashed border-slate-200 bg-white py-14 px-4 sm:px-6 text-center text-slate-500 text-[14px] leading-relaxed">Chưa có bài nào. Vào <button type="button" class="text-indigo-600 font-semibold underline" onclick="showView(\'bank\')">Thư viện</button>, chọn đề và bấm “Hoàn thành &amp; Lưu bài” sau khi viết.</div>';
+                return;
+            }
+
+            const hid = (id) => String(id).replace(/'/g, "\\'");
+            list.innerHTML = writingHistory.map((h) => {
+                const wcClass = h.wordCount >= 150 ? 'bg-green-50 text-green-700 border-green-100' : 'bg-amber-50 text-amber-700 border-amber-100';
+                return `
+                <article class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-6 shadow-sm flex flex-col gap-4 fade-in">
+                    <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                    <div class="flex-1 min-w-0">
+                        <div class="flex flex-wrap items-center gap-2 mb-2">
+                            <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">${escapeHtml(formatHistoryDate(h.completedAt))}</span>
+                            ${h.chartType ? '<span class="text-[11px] font-semibold uppercase px-2 py-0.5 rounded border bg-slate-100 text-slate-600">' + escapeHtml(h.chartType) + '</span>' : ''}
+                            <span class="text-[11px] font-semibold px-2 py-0.5 rounded border ${wcClass}">${h.wordCount} từ</span>
+                        </div>
+                        <h3 class="font-medium text-slate-800 line-clamp-2 text-[14px] leading-relaxed font-sans">${escapeHtml(h.title || '(Không tiêu đề)')}</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2 shrink-0">
+                        <button type="button" onclick="openHistoryModal('${hid(h.id)}')" class="btn btn-dark px-4">Xem</button>
+                        <button type="button" onclick="retryPracticeFromHistory('${hid(h.id)}')" class="btn bg-indigo-50 text-indigo-700 border border-indigo-100 hover:bg-indigo-100 px-4">Luyện lại</button>
+                        <button type="button" onclick="exportHistoryEntry('${hid(h.id)}')" class="btn btn-secondary px-3 w-10 min-w-[2.5rem]" aria-label="Tải xuống"><i class="fas fa-download"></i></button>
+                        <button type="button" onclick="deleteHistoryEntry('${hid(h.id)}')" class="btn btn-ghost px-3 w-10 min-w-[2.5rem] text-slate-400 hover:text-red-500" aria-label="Xóa"><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                    </div>
+                </article>`;
+            }).join('');
+        }
+
+        window.openHistoryModal = function (id) {
+            const h = writingHistory.find((x) => x.id === id);
+            if (!h) return;
+            historyModalEntryId = id;
+            document.getElementById('history-modal-meta').textContent = formatHistoryDate(h.completedAt) + ' · ' + h.wordCount + ' từ · ' + (h.chartType || '');
+            document.getElementById('history-modal-title').textContent = h.title || '(Không tiêu đề)';
+            document.getElementById('history-modal-body').textContent = h.essay || '(Trống)';
+            const modal = document.getElementById('history-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.getElementById('history-modal-export').onclick = function () {
+                exportHistoryEntry(id);
+            };
+        };
+
+        window.closeHistoryModal = function () {
+            const modal = document.getElementById('history-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            historyModalEntryId = null;
+        };
+
+        document.getElementById('history-modal').addEventListener('click', function (e) {
+            if (e.target === this) closeHistoryModal();
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key !== 'Escape') return;
+            if (historyModalEntryId) closeHistoryModal();
+        });
+
+        window.exportHistoryEntry = function (id) {
+            const h = writingHistory.find((x) => x.id === id);
+            if (!h) return;
+            const content = 'IELTS WRITING TASK 1 — LỊCH SỬ\n\nDATE: ' + formatHistoryDate(h.completedAt) + '\nTOPIC: ' + h.title + '\nWORD COUNT: ' + h.wordCount + '\n\nESSAY:\n' + h.essay;
+            downloadText(content, 'ielts-task1-history-' + id.slice(0, 8) + '.txt');
+            showToast('Đã tải file', 'fa-download');
+        };
+
+        window.deleteHistoryEntry = function (id) {
+            if (!confirm('Xóa bài này khỏi lịch sử?')) return;
+            writingHistory = writingHistory.filter((x) => x.id !== id);
+            saveHistory();
+            renderHistoryList();
+            if (historyModalEntryId === id) closeHistoryModal();
+            if (currentView === 'essays') renderQuestionEssays();
+            if (currentView === 'bank') renderQuestionBank();
+            showToast('Đã xóa', 'fa-check');
+        };
+
+        window.clearAllHistory = function () {
+            if (!writingHistory.length) return;
+            if (!confirm('Xóa toàn bộ lịch sử làm bài? Không thể hoàn tác.')) return;
+            writingHistory = [];
+            saveHistory();
+            renderHistoryList();
+            closeHistoryModal();
+            if (currentView === 'essays') renderQuestionEssays();
+            if (currentView === 'bank') renderQuestionBank();
+            showToast('Đã xóa toàn bộ lịch sử', 'fa-check');
+        };
+
+        window.exportHistoryJson = function () {
+            const payload = { exportedAt: Date.now(), history: writingHistory };
+            downloadText(JSON.stringify(payload, null, 2), 'ielts-task1-history-backup.json');
+            showToast('Đã tải backup JSON', 'fa-file-export');
+        };
+
+        window.retryPracticeFromHistory = function (historyId) {
+            const h = writingHistory.find((x) => x.id === historyId);
+            if (!h || !h.questionId) {
+                showToast('Không tìm thấy đề gốc để luyện lại', 'fa-exclamation');
+                return;
+            }
+            const q = questions.find((x) => x.id === h.questionId);
+            if (!q) {
+                showToast('Đề này đã bị xóa khỏi thư viện', 'fa-exclamation');
+                return;
+            }
+            startPractice(q.id);
+        };
+
+        window.toggleMobileMenu = function () {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            const hidden = menu.classList.toggle('hidden');
+            icon.className = hidden ? 'fas fa-bars' : 'fas fa-times';
+        };
+
+        function showToast(msg, icon) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            document.getElementById('toast-icon').className = 'fas ' + icon + ' text-indigo-400';
+            toast.classList.remove('pointer-events-none');
+            toast.classList.replace('translate-y-20', 'translate-y-0');
+            toast.classList.replace('opacity-0', 'opacity-100');
+            setTimeout(function () {
+                toast.classList.replace('translate-y-0', 'translate-y-20');
+                toast.classList.replace('opacity-100', 'opacity-0');
+                toast.classList.add('pointer-events-none');
+            }, 3000);
+        }
+
+        window.onload = initApp;
+    </script>
+    <script type="module">
+        (async function () {
+            const debug = window.location.search.includes('debug=vitals');
+            try {
+                const { onCLS, onINP, onFCP, onLCP, onTTFB } = await import('https://unpkg.com/web-vitals@3?module');
+                function send(metric) {
+                    if (debug) console.info('[Web Vitals]', metric.name, metric.value, metric.rating || '');
+                    if (typeof gtag === 'function') {
+                        gtag('event', metric.name, {
+                            value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
+                            metric_id: metric.id,
+                            non_interaction: true,
+                        });
+                    }
+                }
+                onCLS(send);
+                onINP(send);
+                onFCP(send);
+                onLCP(send);
+                onTTFB(send);
+            } catch (e) {
+                if (debug) console.warn('[Web Vitals] load failed', e);
+            }
+        })();
+    </script>
+</body>
+</html>

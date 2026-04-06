@@ -23,6 +23,12 @@
       cat: "tools",
     },
     {
+      title: "IELTS Writing Lab (Task 1 & 2)",
+      desc: "Dashboard: Data Insight vs Critical Thinking. Task 1 charts + Task 2 outline notes, Writing Journey counts, localStorage — static hosting only.",
+      href: "../projects/ielts-lab/home.html",
+      cat: "tools",
+    },
+    {
       title: "Transform Lab",
       desc: "Multi-format transformer: HTML, Markdown, JSON, LaTeX, SCSS, SVG, and more.",
       href: "../projects/tools/transform-lab.html",

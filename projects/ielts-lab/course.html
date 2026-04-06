@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khóa học — IELTS Writing Lab</title>
+    <meta name="description" content="Dashboard luyện IELTS Writing: thống kê, lịch sử, kho đề — dữ liệu lưu trên trình duyệt.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#4f46e5">
+    <link rel="canonical" href="https://ngocquynhpham.github.io/projects/ielts-lab/course.html">
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        html { font-size: 16px; }
+        body { font-family: 'Inter', system-ui, sans-serif; font-size: 14px; color: #334155; -webkit-font-smoothing: antialiased; }
+        .label-caps { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #94a3b8; }
+        .pixel-year { display: flex; flex-wrap: wrap; gap: 5px; max-width: 100%; }
+        .pixel-year .px { width: 15px; height: 15px; border-radius: 3px; background: #e2e8f0; flex-shrink: 0; }
+        .pixel-year .px.on { background: #4f46e5; box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.08); }
+        .pixel-year .px.future { background: #f1f5f9; opacity: 0.55; }
+        .pixel-year .px.dim { opacity: 0.25; }
+        .pixel-year .px.on.dim { opacity: 0.35; }
+        .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+    <nav class="bg-white/95 backdrop-blur border-b border-slate-200/80 sticky top-0 z-50 px-4 h-14 flex items-center justify-between shadow-sm shrink-0">
+        <a href="./home.html" class="flex items-center gap-2 text-indigo-600 font-semibold text-[15px] tracking-tight hover:opacity-90">
+            <div class="bg-indigo-600 text-white p-1 rounded-lg w-8 h-8 flex items-center justify-center"><i class="fas fa-pen-fancy text-sm"></i></div>
+            <span>IELTS LAB <span class="text-slate-400 font-normal">Writing</span></span>
+        </a>
+        <div class="flex items-center gap-2">
+            <a href="./tac-gia.html" class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white text-slate-700 text-[13px] font-medium px-3.5 py-2 hover:bg-slate-50" title="Giới thiệu">
+                <span class="text-[1.125rem] leading-none select-none" translate="no" aria-hidden="true">👩‍💻</span>
+                <span class="hidden sm:inline">Tác giả</span>
+            </a>
+            <span class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-[13px] font-semibold px-3.5 sm:px-4 py-2 shadow-md shadow-indigo-300/40 ring-1 ring-white/20" title="Khóa học">
+                <i class="fas fa-graduation-cap text-sm"></i>
+                <span>Course</span>
+            </span>
+        </div>
+    </nav>
+
+    <div class="flex flex-1 w-full max-w-7xl mx-auto min-h-0">
+        <aside class="hidden lg:flex flex-col w-56 shrink-0 border-r border-slate-200/80 bg-white/50 p-4 gap-1">
+            <p class="label-caps text-slate-400 px-3 mb-2">Menu</p>
+            <button type="button" data-nav="dashboard" class="text-left rounded-xl px-3 py-2.5 text-[14px] text-slate-700 hover:bg-slate-100 transition">
+                <i class="fas fa-chart-pie w-5 text-indigo-500"></i> Dashboard
+            </button>
+            <button type="button" data-nav="history" class="text-left rounded-xl px-3 py-2.5 text-[14px] text-slate-700 hover:bg-slate-100 transition">
+                <i class="fas fa-history w-5 text-indigo-500"></i> Lịch sử
+            </button>
+            <button type="button" data-nav="bank" class="text-left rounded-xl px-3 py-2.5 text-[14px] text-slate-700 hover:bg-slate-100 transition">
+                <i class="fas fa-database w-5 text-indigo-500"></i> Kho đề
+            </button>
+        </aside>
+
+        <main class="flex-1 min-w-0 px-4 py-6 sm:px-6 md:py-8">
+            <div class="lg:hidden flex gap-2 mb-6 overflow-x-auto pb-1">
+                <button type="button" data-nav="dashboard" class="shrink-0 rounded-full px-4 py-2 text-[13px] font-medium border border-slate-200 bg-white">Dashboard</button>
+                <button type="button" data-nav="history" class="shrink-0 rounded-full px-4 py-2 text-[13px] font-medium border border-slate-200 bg-white">Lịch sử</button>
+                <button type="button" data-nav="bank" class="shrink-0 rounded-full px-4 py-2 text-[13px] font-medium border border-slate-200 bg-white">Kho đề</button>
+            </div>
+
+            <section id="section-dashboard" class="space-y-8">
+                <header>
+                    <h1 class="text-xl font-semibold text-slate-800 tracking-tight">Dashboard</h1>
+                    <p class="text-slate-500 text-[14px] mt-1">Tổng quan luyện tập và lịch theo ngày (localStorage trên trình duyệt này).</p>
+                </header>
+
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                        <p class="label-caps text-emerald-600 mb-1">Đã làm · Task 1</p>
+                        <p id="stat-journey-t1" class="text-3xl font-semibold text-slate-800 tabular-nums">0</p>
+                        <p class="text-[12px] text-slate-500 mt-1">Số lần lưu bài hoàn chỉnh</p>
+                    </div>
+                    <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                        <p class="label-caps text-amber-600 mb-1">Đã làm · Task 2</p>
+                        <p id="stat-journey-t2" class="text-3xl font-semibold text-slate-800 tabular-nums">0</p>
+                        <p class="text-[12px] text-slate-500 mt-1">Số lần lưu bài hoàn chỉnh</p>
+                    </div>
+                    <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                        <p class="label-caps text-indigo-600 mb-1">Kho đề · Task 1</p>
+                        <p id="stat-bank-t1" class="text-3xl font-semibold text-slate-800 tabular-nums">0</p>
+                        <p class="text-[12px] text-slate-500 mt-1">Đề trong thư viện</p>
+                    </div>
+                    <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                        <p class="label-caps text-slate-500 mb-1">Kho đề · Task 2</p>
+                        <p id="stat-bank-t2" class="text-3xl font-semibold text-slate-800 tabular-nums">0</p>
+                        <p class="text-[12px] text-slate-500 mt-1">Đề có sẵn theo chủ đề</p>
+                    </div>
+                </div>
+
+                <div class="rounded-2xl border border-indigo-200/80 bg-gradient-to-b from-indigo-50/60 to-white p-6 shadow-sm">
+                    <div class="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 mb-4">
+                        <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-600 text-white shadow-sm shrink-0" aria-hidden="true"><i class="fas fa-th text-sm"></i></span>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <label class="text-[12px] font-medium text-slate-600">Năm</label>
+                            <select id="pixel-year-select" class="text-[13px] border border-slate-200 rounded-lg px-2 py-1.5 bg-white"></select>
+                            <label class="text-[12px] font-medium text-slate-600 ml-2">Tháng</label>
+                            <select id="pixel-month-select" class="text-[13px] border border-slate-200 rounded-lg px-2 py-1.5 bg-white">
+                                <option value="">Tất cả</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                        </div>
+                        <p class="text-[12px] font-mono uppercase tracking-[0.08em] text-slate-500 sm:ml-auto">Pixel in Year <span id="pixel-year-label" class="text-indigo-600 font-semibold normal-case tracking-normal"></span></p>
+                    </div>
+                    <p class="text-[13px] text-slate-600 mb-4">Mỗi ô là một ngày; ô indigo = có ít nhất một bài đã lưu. Chọn tháng để làm nổi bật (mờ phần còn lại).</p>
+                    <div id="pixel-year-grid" class="pixel-year justify-start" aria-hidden="true"></div>
+                    <p id="pixel-year-legend" class="text-[12px] text-slate-500 mt-4"></p>
+                </div>
+
+            </section>
+
+            <section id="section-history" class="hidden space-y-6">
+                <header>
+                    <h1 class="text-xl font-semibold text-slate-800 tracking-tight">Lịch sử làm bài</h1>
+                    <p class="text-slate-500 text-[14px] mt-1">Tab Task 1 / Task 2 — mở chi tiết hoặc luyện lại cùng đề.</p>
+                </header>
+                <div class="border-b border-slate-200 flex gap-1">
+                    <button type="button" id="hist-tab-t1" class="px-4 py-2.5 text-[14px] font-semibold border-b-2 border-indigo-600 text-indigo-700 -mb-px">Task 1</button>
+                    <button type="button" id="hist-tab-t2" class="px-4 py-2.5 text-[14px] font-medium text-slate-500 border-b-2 border-transparent hover:text-slate-700 -mb-px">Task 2</button>
+                </div>
+                <div id="panel-hist-t1" class="space-y-3">
+                    <div id="history-t1-list" class="space-y-3"></div>
+                </div>
+                <div id="panel-hist-t2" class="space-y-3 hidden">
+                    <div id="history-t2-list" class="space-y-3"></div>
+                </div>
+            </section>
+
+            <section id="section-bank" class="hidden space-y-6">
+                <header>
+                    <h1 class="text-xl font-semibold text-slate-800 tracking-tight">Kho đề</h1>
+                    <p class="text-slate-500 text-[14px] mt-1">Task 1: đề tự tạo (biểu đồ). Task 2: đề theo chủ đề trong app.</p>
+                </header>
+                <div class="border-b border-slate-200 flex flex-wrap gap-1">
+                    <button type="button" id="bank-tab-t1" class="px-4 py-2.5 text-[14px] font-semibold border-b-2 border-indigo-600 text-indigo-700 -mb-px">Task 1</button>
+                    <button type="button" id="bank-tab-t2" class="px-4 py-2.5 text-[14px] font-medium text-slate-500 border-b-2 border-transparent hover:text-slate-700 -mb-px">Task 2</button>
+                </div>
+                <div id="panel-bank-t1" class="space-y-4">
+                    <a href="./writting-task1.html?view=create" class="inline-flex items-center gap-2 rounded-xl bg-indigo-600 text-white text-[14px] font-medium px-4 py-2.5 shadow-sm hover:brightness-105">
+                        <i class="fas fa-plus"></i> Thêm đề Task 1
+                    </a>
+                    <div id="bank-t1-list" class="space-y-3"></div>
+                </div>
+                <div id="panel-bank-t2" class="space-y-4 hidden">
+                    <p class="text-[13px] text-slate-600">Chọn đề để vào phòng luyện Task 2.</p>
+                    <div id="bank-t2-list" class="space-y-4"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="border-t border-slate-200 bg-white mt-auto">
+        <div class="max-w-7xl mx-auto px-4 py-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-[13px] text-slate-500">
+            <p>© IELTS Writing Lab — dữ liệu luyện tập lưu cục bộ trên trình duyệt.</p>
+            <nav class="flex flex-wrap gap-x-4 gap-y-2">
+                <a href="./home.html" class="hover:text-indigo-600">Home</a>
+                <a href="./course.html" class="hover:text-indigo-600 font-medium text-indigo-600">Course</a>
+                <a href="./writting-task1.html" class="hover:text-indigo-600">Task 1</a>
+                <a href="./writting-task2.html" class="hover:text-indigo-600">Task 2</a>
+                <a href="./tac-gia.html" class="hover:text-indigo-600">Tác giả</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script src="./journey.js"></script>
+    <script src="./course.js"></script>
+    <script>
+        document.getElementById('hist-tab-t1').addEventListener('click', function () {
+            document.getElementById('panel-hist-t1').classList.remove('hidden');
+            document.getElementById('panel-hist-t2').classList.add('hidden');
+            this.className = 'px-4 py-2.5 text-[14px] font-semibold border-b-2 border-indigo-600 text-indigo-700 -mb-px';
+            document.getElementById('hist-tab-t2').className =
+                'px-4 py-2.5 text-[14px] font-medium text-slate-500 border-b-2 border-transparent hover:text-slate-700 -mb-px';
+        });
+        document.getElementById('hist-tab-t2').addEventListener('click', function () {
+            document.getElementById('panel-hist-t1').classList.add('hidden');
+            document.getElementById('panel-hist-t2').classList.remove('hidden');
+            this.className = 'px-4 py-2.5 text-[14px] font-semibold border-b-2 border-amber-600 text-amber-800 -mb-px';
+            document.getElementById('hist-tab-t1').className =
+                'px-4 py-2.5 text-[14px] font-medium text-slate-500 border-b-2 border-transparent hover:text-slate-700 -mb-px';
+        });
+        document.getElementById('bank-tab-t1').addEventListener('click', function () {
+            document.getElementById('panel-bank-t1').classList.remove('hidden');
+            document.getElementById('panel-bank-t2').classList.add('hidden');
+            this.className = 'px-4 py-2.5 text-[14px] font-semibold border-b-2 border-indigo-600 text-indigo-700 -mb-px';
+            document.getElementById('bank-tab-t2').className =
+                'px-4 py-2.5 text-[14px] font-medium text-slate-500 border-b-2 border-transparent hover:text-slate-700 -mb-px';
+        });
+        document.getElementById('bank-tab-t2').addEventListener('click', function () {
+            document.getElementById('panel-bank-t1').classList.add('hidden');
+            document.getElementById('panel-bank-t2').classList.remove('hidden');
+            this.className = 'px-4 py-2.5 text-[14px] font-semibold border-b-2 border-amber-600 text-amber-800 -mb-px';
+            document.getElementById('bank-tab-t1').className =
+                'px-4 py-2.5 text-[14px] font-medium text-slate-500 border-b-2 border-transparent hover:text-slate-700 -mb-px';
+        });
+        IELTSCourseInit();
+    </script>
+</body>
+</html>
