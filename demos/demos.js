@@ -29,9 +29,9 @@
       cat: "tools",
     },
     {
-      title: "Visualizing Historical — Virginia Tech 2007",
-      desc: "Infographic page (Vietnamese): context, figures, alternating timeline, and legacy of the 2007 Virginia Tech shooting — stone/orange theme, Tailwind.",
-      href: "../projects/visualizing-historical/virginia-tech-2007.html",
+      title: "Visualizing Historical",
+      desc: "Mini project: historical events from reading notes — registry in JSON, filterable index, infographic detail pages (e.g. Columbine, Virginia Tech). Vietnamese, static site + Tailwind.",
+      href: "../projects/visualizing-historical/home.html",
       cat: "research",
     },
     {
