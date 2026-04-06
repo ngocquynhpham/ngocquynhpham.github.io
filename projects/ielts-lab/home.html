@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Writing Lab — Trang chủ</title>
+    <meta name="description" content="Chọn Task 1 (mô tả dữ liệu) hoặc Task 2 (luận điểm) — tóm tắt tiêu chí IELTS Writing theo British Council.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#4f46e5">
+    <link rel="canonical" href="https://ngocquynhpham.github.io/projects/ielts-lab/home.html">
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        html { font-size: 16px; }
+        body { font-family: 'Inter', system-ui, sans-serif; font-size: 14px; color: #334155; -webkit-font-smoothing: antialiased; }
+        .heading-page { font-weight: 600; font-size: 15px; letter-spacing: -0.02em; color: #1e293b; }
+        @media (min-width: 640px) { .heading-page { font-size: 16px; } }
+        .label-caps { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #94a3b8; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; font-weight: 500; font-size: 14px; min-height: 40px; height: 40px; padding-left: 0.875rem; padding-right: 0.875rem; border-radius: 0.5rem; transition: background 0.15s, transform 0.1s; box-sizing: border-box; }
+        .btn:active { transform: scale(0.98); }
+        .btn-primary { background: linear-gradient(180deg, #4f46e5 0%, #4338ca 100%); color: #fff; border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .btn-primary:hover { filter: brightness(1.06); }
+        .btn-secondary { background: #fff; color: #475569; border: 1px solid #e2e8f0; }
+        .btn-secondary:hover { background: #f8fafc; }
+        .btn-ghost { background: transparent; color: #64748b; }
+        .btn-ghost:hover { background: #f1f5f9; color: #334155; }
+        .fade-in { animation: fadeIn 0.35s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .ref-details > summary { list-style: none; cursor: pointer; }
+        .ref-details > summary::-webkit-details-marker { display: none; }
+        .ref-details > summary::marker { content: ''; }
+        .ref-details[open] > summary .ref-chevron { transform: rotate(90deg); }
+        .rubric-details > summary { align-items: center; }
+        .rubric-details > summary .rubric-chevron { transition: transform 0.42s cubic-bezier(0.33, 1, 0.68, 1); }
+        .rubric-details[open] > summary .rubric-chevron { transform: rotate(180deg); }
+        @supports (interpolate-size: allow-keywords) {
+            .rubric-details { interpolate-size: allow-keywords; }
+            .rubric-details::details-content { transition: height 0.42s cubic-bezier(0.33, 1, 0.68, 1); overflow: hidden; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex flex-col">
+    <nav class="bg-white/95 backdrop-blur border-b border-slate-200/80 sticky top-0 z-50 px-4 h-14 flex items-center justify-between shadow-sm shrink-0">
+        <a href="./home.html" class="flex items-center gap-2 text-indigo-600 font-semibold text-[15px] tracking-tight hover:opacity-90">
+            <div class="bg-indigo-600 text-white p-1 rounded-lg w-8 h-8 flex items-center justify-center"><i class="fas fa-pen-fancy text-sm"></i></div>
+            <span>IELTS LAB <span class="text-slate-400 font-normal">Writing</span></span>
+        </a>
+        <div class="flex items-center gap-2">
+            <a href="./tac-gia.html" class="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white text-slate-700 text-[13px] font-medium px-3.5 py-2 hover:bg-slate-50" title="Giới thiệu tác giả">
+                <span class="text-[1.125rem] leading-none select-none" translate="no" aria-hidden="true">👩‍💻</span>
+                <span class="hidden sm:inline">Tác giả</span>
+            </a>
+            <a href="./course.html" class="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-[13px] font-semibold px-3.5 sm:px-4 py-2 shadow-md shadow-indigo-300/40 ring-1 ring-white/20 hover:brightness-105 active:scale-[0.98] transition-all duration-150" title="Khóa học — dashboard &amp; kho đề">
+                <i class="fas fa-graduation-cap text-sm"></i>
+                <span>Course</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto flex min-h-0 flex-1 flex-col px-4 py-6 sm:py-8 md:px-8">
+        <section class="fade-in flex w-full flex-1 flex-col justify-center gap-5 sm:gap-6">
+            <details class="rubric-details ref-details rounded-2xl border-2 border-indigo-100 bg-white shadow-sm overflow-hidden" aria-label="Bốn tiêu chí chấm điểm IELTS Writing">
+                <summary class="flex select-none items-center gap-3 p-5 sm:p-6 sm:gap-4">
+                    <div class="w-11 h-11 rounded-xl bg-indigo-50 text-indigo-600 flex flex-col items-center justify-center shrink-0">
+                        <i class="fas fa-sliders-h text-lg" aria-hidden="true"></i>
+                    </div>
+                    <div class="min-w-0 flex-1 text-left">
+                        <p class="label-caps text-indigo-600 mb-0.5">IELTS Writing</p>
+                        <h3 class="text-[16px] font-semibold text-slate-800 tracking-tight">4 tiêu chí chấm điểm</h3>
+                    </div>
+                    <i class="fas fa-chevron-down text-slate-400 rubric-chevron inline-flex shrink-0 text-sm leading-none" aria-hidden="true"></i>
+                </summary>
+                <div class="border-t border-slate-100 px-5 sm:px-6 pb-5 sm:pb-6 pt-4">
+                    <ul class="text-[12px] sm:text-[13px] text-slate-500 mb-4 space-y-1 leading-relaxed list-disc pl-4 marker:text-indigo-300">
+                        <li>Mỗi tiêu chí khoảng <strong class="text-slate-600">25%</strong> tổng điểm phần viết.</li>
+                        <li>Tiêu chí “hoàn thành yêu cầu đề”: <strong class="text-slate-700">Task Achievement</strong> (Task 1) hoặc <strong class="text-slate-700">Task Response</strong> (Task 2).</li>
+                        <li>Ba tiêu chí còn lại (mạch lạc &amp; nối ý, từ vựng, ngữ pháp) áp dụng giống nhau cho Task 1 và Task 2.</li>
+                    </ul>
+                    <ul class="text-[13px] text-slate-600 leading-relaxed grid sm:grid-cols-2 gap-x-6 gap-y-2.5 list-none pl-0">
+                        <li class="border-l-2 border-indigo-200 pl-3 min-w-0"><strong class="text-slate-800">Task Achievement</strong> <span class="text-slate-400">(T1)</span> / <strong class="text-slate-800">Task Response</strong> <span class="text-slate-400">(T2)</span> — hoàn thành đúng yêu cầu đề.</li>
+                        <li class="border-l-2 border-indigo-200 pl-3 min-w-0"><strong class="text-slate-800">Coherence &amp; Cohesion</strong> — mạch lạc, nối ý rõ.</li>
+                        <li class="border-l-2 border-indigo-200 pl-3 min-w-0"><strong class="text-slate-800">Lexical Resource</strong> — từ vựng đa dạng, chính xác.</li>
+                        <li class="border-l-2 border-indigo-200 pl-3 min-w-0"><strong class="text-slate-800">Grammatical Range &amp; Accuracy</strong> — ngữ pháp đa dạng, ít lỗi.</li>
+                    </ul>
+                    <p class="text-[12px] text-slate-500 mt-4 text-center rounded-lg border border-slate-100 bg-slate-50/80 px-3 py-2 leading-relaxed">Nguồn tham khảo khung chấm điểm: British Council / Hội đồng Anh (IELTS).</p>
+                </div>
+            </details>
+
+            <div class="grid sm:grid-cols-2 gap-4 sm:gap-6">
+                <a href="./writting-task1.html" class="text-left self-start rounded-2xl border-2 border-slate-200 bg-white p-5 sm:p-6 hover:border-indigo-300 hover:shadow-md transition-all group block">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                        <i class="fas fa-chart-line text-xl"></i>
+                    </div>
+                    <p class="label-caps text-emerald-600 mb-1">Task 1 — Mô tả / báo cáo</p>
+                    <h3 class="text-[16px] font-semibold text-slate-800 mb-2">≥150 từ · ~20 phút</h3>
+                    <p class="text-slate-600 text-[13px] leading-relaxed mb-3">Mở danh sách đề, chọn đề và luyện viết — export .txt để gửi chấm.</p>
+                    <span class="text-indigo-600 font-medium text-[14px] inline-flex items-center gap-2">Vào Task 1 <i class="fas fa-arrow-right text-xs"></i></span>
+                </a>
+
+                <a href="./writting-task2.html" class="text-left self-start rounded-2xl border-2 border-slate-200 bg-white p-5 sm:p-6 hover:border-amber-300 hover:shadow-md transition-all group block">
+                    <div class="flex items-start justify-between gap-2">
+                        <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+                            <i class="fas fa-lightbulb text-xl"></i>
+                        </div>
+                        <span class="inline-flex items-center rounded-full bg-amber-100 border border-amber-200/90 text-amber-900 text-[10px] sm:text-[11px] font-semibold px-2.5 py-0.5 shrink-0 tabular-nums">Chiếm ~2/3 điểm</span>
+                    </div>
+                    <p class="label-caps text-amber-700 mb-1">Task 2 — Viết luận</p>
+                    <h3 class="text-[16px] font-semibold text-slate-800 mb-2">≥250 từ · ~40 phút</h3>
+                    <p class="text-slate-600 text-[13px] leading-relaxed mb-3">Chọn đề theo chủ đề, làm bài với Outline — export .txt khi cần.</p>
+                    <span class="text-indigo-600 font-medium text-[14px] inline-flex items-center gap-2">Vào Task 2 <i class="fas fa-arrow-right text-xs"></i></span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-slate-200 bg-white mt-auto shrink-0">
+        <div class="max-w-5xl mx-auto px-4 py-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-[13px] text-slate-500">
+            <p>© IELTS Writing Lab — luyện Writing Task 1 &amp; 2 trên trình duyệt.</p>
+            <nav class="flex flex-wrap gap-x-4 gap-y-2">
+                <a href="./home.html" class="hover:text-indigo-600 font-medium text-indigo-600">Home</a>
+                <a href="./course.html" class="hover:text-indigo-600">Course</a>
+                <a href="./writting-task1.html" class="hover:text-indigo-600">Task 1</a>
+                <a href="./writting-task2.html" class="hover:text-indigo-600">Task 2</a>
+                <a href="./tac-gia.html" class="hover:text-indigo-600">Tác giả</a>
+            </nav>
+        </div>
+    </footer>
+</body>
+</html>

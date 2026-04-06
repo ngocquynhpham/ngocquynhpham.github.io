@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IELTS Writing Task 2 — Critical Thinking Lab</title>
+    <meta name="description" content="Luyện IELTS Writing Task 2: chủ đề nghị luận, Outline Note (Intro — Body — Conclusion), đếm từ 250+, lịch sử localStorage.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#d97706">
+    <link rel="canonical" href="https://ngocquynhpham.github.io/projects/ielts-lab/writting-task2.html">
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] } } };
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        html { font-size: 16px; }
+        body { font-family: 'Inter', system-ui, sans-serif; font-size: 14px; color: #334155; -webkit-font-smoothing: antialiased; }
+        .heading-page { font-weight: 600; font-size: 15px; letter-spacing: -0.02em; color: #1e293b; }
+        @media (min-width: 640px) { .heading-page { font-size: 16px; } }
+        .label-caps { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #94a3b8; }
+        .essay-input { font-family: 'Inter', system-ui, sans-serif !important; font-size: 14px; line-height: 1.6; }
+        @media (min-width: 640px) { .essay-input { font-size: 15px; } }
+        .outline-input { font-family: 'Inter', system-ui, sans-serif !important; font-size: 13px; line-height: 1.5; min-height: 72px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; font-weight: 500; font-size: 14px; min-height: 40px; height: 40px; padding-left: 0.875rem; padding-right: 0.875rem; border-radius: 0.5rem; transition: background 0.15s, transform 0.1s; box-sizing: border-box; }
+        .btn:active { transform: scale(0.98); }
+        .btn-primary { background: linear-gradient(180deg, #d97706 0%, #b45309 100%); color: #fff; border: 1px solid rgba(0,0,0,0.06); }
+        .btn-primary:hover { filter: brightness(1.06); }
+        .btn-secondary { background: #fff; color: #475569; border: 1px solid #e2e8f0; }
+        .btn-secondary:hover { background: #f8fafc; }
+        .btn-dark { background: #1e293b; color: #fff; border: 1px solid #1e293b; }
+        .btn-dark:hover { background: #334155; }
+        .btn-ghost { background: transparent; color: #64748b; }
+        .btn-ghost:hover { background: #f1f5f9; color: #334155; }
+        .view-hidden { display: none !important; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        #outline-column.collapsed { display: none !important; }
+        #practice-grid.outline-off { grid-template-columns: 1fr; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen overflow-x-hidden flex flex-col">
+
+    <div id="toast" class="fixed bottom-4 right-4 z-[100] transition-all transform translate-y-20 opacity-0 pointer-events-none">
+        <div class="bg-slate-800 text-white px-4 py-2.5 rounded-lg shadow-lg flex items-center gap-3 text-[14px] font-medium">
+            <i id="toast-icon" class="fas fa-info-circle text-amber-400"></i>
+            <span id="toast-msg">Thông báo</span>
+        </div>
+    </div>
+
+    <nav class="bg-white/95 backdrop-blur border-b border-slate-200/80 sticky top-0 z-50 px-3 sm:px-4 h-14 flex items-center justify-between gap-2 shadow-sm">
+        <div class="flex items-center gap-2 min-w-0">
+            <a href="./home.html" class="flex items-center gap-2 text-amber-700 font-semibold text-[14px] sm:text-[15px] tracking-tight shrink-0" title="Trang chủ">
+                <div class="bg-amber-500 text-white p-1 rounded-lg w-8 h-8 flex items-center justify-center"><i class="fas fa-lightbulb text-sm"></i></div>
+                <span class="truncate">IELTS LAB <span class="text-slate-400 font-normal">Task 2</span></span>
+            </a>
+            <button type="button" id="nav-topics" class="hidden btn btn-ghost px-2.5 text-[13px] text-slate-600"><i class="fas fa-list-ul mr-1"></i> Chủ đề</button>
+        </div>
+        <div class="flex items-center gap-2">
+            <a href="./tac-gia.html" class="hidden sm:inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white text-slate-700 text-[13px] font-medium px-3 py-2 hover:bg-slate-50" title="Tác giả"><span translate="no" aria-hidden="true">👩‍💻</span> Tác giả</a>
+            <a href="./course.html#history" class="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-[13px] font-semibold px-3 sm:px-3.5 py-2 shadow-sm hover:brightness-105">
+                <i class="fas fa-graduation-cap text-sm"></i><span class="hidden sm:inline">Course</span>
+            </a>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 py-6 sm:px-6 sm:py-8 flex-1">
+
+        <!-- Topics -->
+        <section id="view-topics" class="space-y-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <p class="label-caps text-amber-700 mb-1">Critical Thinking</p>
+                    <h1 class="text-[1.25rem] sm:text-2xl font-semibold text-slate-800 tracking-tight">Chọn đề nghị luận</h1>
+                </div>
+            </div>
+
+            <div id="categories-mount" class="space-y-10"></div>
+        </section>
+
+        <!-- History -->
+        <section id="view-history" class="view-hidden space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <button type="button" id="back-from-history" class="btn btn-ghost px-0 h-auto min-h-0 text-slate-500 mb-2"><i class="fas fa-arrow-left mr-2"></i> Chủ đề</button>
+                    <h2 class="heading-page">Lịch sử Task 2</h2>
+                    <p class="text-slate-500 text-[14px] mt-1">Các bài đã lưu khi bấm “Hoàn thành &amp; Lưu bài”.</p>
+                </div>
+                <button type="button" id="clear-t2-history" class="btn text-red-700 bg-red-50 border border-red-100 hover:bg-red-100 text-[13px]">Xóa toàn bộ</button>
+            </div>
+            <div id="history-list" class="space-y-4"></div>
+        </section>
+
+        <!-- Practice -->
+        <section id="view-practice" class="view-hidden pb-10">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+                <div class="flex items-start gap-3 min-w-0">
+                    <button type="button" id="exit-practice" class="btn btn-secondary p-0 w-10 h-10 shrink-0 rounded-lg" aria-label="Quay lại"><i class="fas fa-arrow-left text-amber-700"></i></button>
+                    <div class="min-w-0">
+                        <p id="practice-category" class="text-[11px] font-semibold text-amber-700 uppercase tracking-wider mb-0.5"></p>
+                        <h2 id="practice-title" class="heading-page text-[15px] sm:text-[16px] leading-snug"></h2>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 flex-wrap">
+                    <div id="word-count-badge" class="h-10 px-3 rounded-lg font-medium text-[14px] flex items-center gap-2 border shadow-sm bg-amber-50 text-amber-900 border-amber-200/80">
+                        <i class="fas fa-pen-fancy text-[13px]"></i>
+                        <span><span id="word-count">0</span> <span class="text-amber-800/90">words</span></span>
+                    </div>
+                    <span id="target-msg" class="text-[11px] font-medium text-amber-700">Mục tiêu: 250+ từ</span>
+                    <button type="button" id="toggle-outline" class="btn btn-secondary text-[13px] px-3">
+                        <i class="fas fa-columns"></i> <span id="toggle-outline-label">Ẩn Outline</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="practice-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
+                <div id="outline-column" class="space-y-4 order-2 lg:order-1">
+                    <div class="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+                        <div class="px-4 sm:px-5 py-3 border-b bg-amber-50/80 flex items-center justify-between">
+                            <span class="label-caps !text-amber-800">Outline Note</span>
+                            <span class="text-[11px] text-slate-500">Nháp ý trước khi viết</span>
+                        </div>
+                        <div class="p-4 sm:p-5 space-y-4 max-h-[70vh] overflow-y-auto custom-scrollbar">
+                            <div>
+                                <label class="block text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Introduction</label>
+                                <textarea id="outline-intro" class="outline-input w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-100 focus:border-amber-200 outline-none resize-y" placeholder="Paraphrase + thesis / roadmap…"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Body 1</label>
+                                <textarea id="outline-body1" class="outline-input w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-100 outline-none resize-y" placeholder="Topic sentence + idea + example…"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Body 2</label>
+                                <textarea id="outline-body2" class="outline-input w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-100 outline-none resize-y" placeholder="Counter / another angle + example…"></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-1.5">Conclusion</label>
+                                <textarea id="outline-conclusion" class="outline-input w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-amber-100 outline-none resize-y" placeholder="Tóm ý, không ý mới…"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col min-h-[420px] space-y-3 order-1 lg:order-2">
+                    <div class="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 flex flex-col flex-1 min-h-[300px] shadow-sm overflow-hidden focus-within:ring-2 focus-within:ring-amber-100">
+                        <div class="px-4 sm:px-6 py-3 border-b bg-slate-50/90 flex items-center justify-between gap-2">
+                            <span class="label-caps !text-slate-500">Essay Canvas</span>
+                            <span class="text-[11px] text-slate-400 hidden sm:inline">Task 2 · Opinion / Discussion</span>
+                        </div>
+                        <textarea id="essay-input" class="essay-input flex-1 p-4 sm:p-5 focus:outline-none resize-none text-slate-800 bg-transparent min-h-[260px]" placeholder="In recent years, many people argue that…"></textarea>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <button type="button" id="btn-export" class="btn btn-dark flex-1 rounded-lg"><i class="fas fa-file-download"></i> Export .txt</button>
+                        <button type="button" id="btn-finish" class="btn btn-primary flex-1 rounded-lg"><i class="fas fa-check-double"></i> Hoàn thành &amp; Lưu bài</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="border-t border-slate-200 bg-white mt-auto">
+        <div class="max-w-6xl mx-auto px-4 py-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-[13px] text-slate-500">
+            <p>© IELTS Writing Lab — Task 2 lưu cục bộ (localStorage).</p>
+            <nav class="flex flex-wrap gap-x-4 gap-y-2">
+                <a href="./home.html" class="hover:text-amber-700">Home</a>
+                <a href="./course.html" class="hover:text-amber-700">Course</a>
+                <a href="./writting-task1.html" class="hover:text-amber-700">Task 1</a>
+                <a href="./writting-task2.html" class="hover:text-amber-700 font-medium text-amber-800">Task 2</a>
+                <a href="./tac-gia.html" class="hover:text-amber-700">Tác giả</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script src="./journey.js"></script>
+    <script>
+        var STORAGE_HISTORY = 'ielts-t2-writing-history-v1';
+
+        var CATEGORIES = [
+            {
+                id: 'environment',
+                name: 'Environment',
+                icon: 'leaf',
+                prompts: [
+                    { id: 'env-1', title: 'Climate change is the most serious threat facing the world today. To what extent do you agree or disagree?', hint: 'Give reasons and examples.' },
+                    { id: 'env-2', title: 'Plastic waste should be reduced by banning single-use products. Discuss both views and give your opinion.', hint: 'Balance practicality vs environment.' },
+                ],
+            },
+            {
+                id: 'education',
+                name: 'Education',
+                icon: 'graduation-cap',
+                prompts: [
+                    { id: 'edu-1', title: 'Some believe online learning will replace schools in the future. Others disagree. Discuss both views.', hint: 'Social skills, access, quality.' },
+                    { id: 'edu-2', title: 'University education should be free for everyone. To what extent do you agree or disagree?', hint: 'Taxes, fairness, skills.' },
+                ],
+            },
+            {
+                id: 'technology',
+                name: 'Technology',
+                icon: 'microchip',
+                prompts: [
+                    { id: 'tech-1', title: 'Artificial intelligence will create more problems than it solves. To what extent do you agree or disagree?', hint: 'Jobs, ethics, productivity.' },
+                    { id: 'tech-2', title: 'Social media has a negative impact on young people. Discuss the advantages and disadvantages.', hint: 'Connection vs mental health.' },
+                ],
+            },
+            {
+                id: 'health',
+                name: 'Health & Society',
+                icon: 'heart-pulse',
+                prompts: [
+                    { id: 'health-1', title: 'Governments should tax unhealthy food to reduce obesity. To what extent do you agree or disagree?', hint: 'Personal freedom vs public health.' },
+                    { id: 'health-2', title: 'Public healthcare should be available to all citizens free of charge. Discuss both views.', hint: 'Cost, quality, incentives.' },
+                ],
+            },
+            {
+                id: 'work',
+                name: 'Work & Economy',
+                icon: 'briefcase',
+                prompts: [
+                    { id: 'work-1', title: 'People should work fewer hours and have more leisure time. Do the advantages outweigh the disadvantages?', hint: 'Income, wellbeing, productivity.' },
+                    { id: 'work-2', title: 'Remote work will become the norm. To what extent is this a positive development?', hint: 'Cities, collaboration, isolation.' },
+                ],
+            },
+            {
+                id: 'culture',
+                name: 'Culture & Media',
+                icon: 'book-open',
+                prompts: [
+                    { id: 'cul-1', title: 'News media should not report violent crimes in detail. To what extent do you agree or disagree?', hint: 'Public interest vs copycats.' },
+                    { id: 'cul-2', title: 'Traditional cultures are disappearing as globalization spreads. Is this a positive or negative development?', hint: 'Identity vs exchange.' },
+                ],
+            },
+        ];
+
+        var t2History = [];
+        var activePrompt = null;
+        var activeCategory = null;
+        var outlineVisible = true;
+
+        function escapeHtml(s) {
+            return String(s ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function newId() {
+            return crypto.randomUUID ? crypto.randomUUID() : 't2-' + Date.now() + '-' + Math.random().toString(36).slice(2);
+        }
+
+        function loadHistory() {
+            try {
+                var raw = localStorage.getItem(STORAGE_HISTORY);
+                if (!raw) return [];
+                var p = JSON.parse(raw);
+                return Array.isArray(p) ? p : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function saveHistory() {
+            try {
+                localStorage.setItem(STORAGE_HISTORY, JSON.stringify(t2History));
+            } catch (e) {
+                showToast('Không thể lưu lịch sử', 'fa-exclamation');
+            }
+        }
+
+        function wordCountFromText(val) {
+            return val.trim() === '' ? 0 : val.trim().split(/\s+/).length;
+        }
+
+        function updateWordCount() {
+            var val = document.getElementById('essay-input').value;
+            var count = wordCountFromText(val);
+            document.getElementById('word-count').textContent = count;
+            var badge = document.getElementById('word-count-badge');
+            var msg = document.getElementById('target-msg');
+            if (count >= 250) {
+                badge.className = 'h-10 px-3 rounded-lg font-medium text-[14px] flex items-center gap-2 border shadow-sm bg-green-50 text-green-800 border-green-200/80';
+                msg.textContent = 'Đã đạt 250+ từ';
+                msg.className = 'text-[11px] font-medium text-green-600';
+            } else {
+                badge.className = 'h-10 px-3 rounded-lg font-medium text-[14px] flex items-center gap-2 border shadow-sm bg-amber-50 text-amber-900 border-amber-200/80';
+                msg.textContent = 'Mục tiêu: 250+ từ';
+                msg.className = 'text-[11px] font-medium text-amber-700';
+            }
+        }
+
+        function showToast(msg, icon) {
+            var toast = document.getElementById('toast');
+            document.getElementById('toast-msg').innerText = msg;
+            document.getElementById('toast-icon').className = 'fas ' + icon + ' text-amber-400';
+            toast.classList.remove('pointer-events-none');
+            toast.classList.replace('translate-y-20', 'translate-y-0');
+            toast.classList.replace('opacity-0', 'opacity-100');
+            setTimeout(function () {
+                toast.classList.replace('translate-y-0', 'translate-y-20');
+                toast.classList.replace('opacity-100', 'opacity-0');
+                toast.classList.add('pointer-events-none');
+            }, 2800);
+        }
+
+        function showView(name) {
+            document.getElementById('view-topics').classList.toggle('view-hidden', name !== 'topics');
+            document.getElementById('view-history').classList.toggle('view-hidden', name !== 'history');
+            document.getElementById('view-practice').classList.toggle('view-hidden', name !== 'practice');
+            document.getElementById('nav-topics').classList.toggle('hidden', name === 'topics');
+            window.scrollTo(0, 0);
+        }
+
+        function findPrompt(promptId) {
+            for (var i = 0; i < CATEGORIES.length; i++) {
+                var c = CATEGORIES[i];
+                for (var j = 0; j < c.prompts.length; j++) {
+                    if (c.prompts[j].id === promptId) return { category: c, prompt: c.prompts[j] };
+                }
+            }
+            return null;
+        }
+
+        function clearPracticeFields() {
+            ['outline-intro', 'outline-body1', 'outline-body2', 'outline-conclusion', 'essay-input'].forEach(function (id) {
+                var el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+            updateWordCount();
+        }
+
+        function startPractice(promptId) {
+            var found = findPrompt(promptId);
+            if (!found) {
+                showToast('Không tìm thấy đề', 'fa-exclamation');
+                return;
+            }
+            activeCategory = found.category;
+            activePrompt = found.prompt;
+            document.getElementById('practice-category').textContent = activeCategory.name;
+            document.getElementById('practice-title').textContent = activePrompt.title;
+            clearPracticeFields();
+            outlineVisible = true;
+            document.getElementById('outline-column').classList.remove('collapsed');
+            document.getElementById('practice-grid').classList.remove('outline-off');
+            document.getElementById('toggle-outline-label').textContent = 'Ẩn Outline';
+            showView('practice');
+        }
+
+        function renderCategories() {
+            var mount = document.getElementById('categories-mount');
+            mount.innerHTML = CATEGORIES.map(function (cat) {
+                var cards = cat.prompts
+                    .map(function (p) {
+                        var pid = String(p.id).replace(/'/g, "\\'");
+                        return (
+                            '<div class="rounded-xl border border-slate-100 bg-slate-50/80 p-4 flex flex-col sm:flex-row sm:items-center gap-3">' +
+                            '<div class="flex-1 min-w-0">' +
+                            '<p class="font-medium text-slate-800 text-[14px] leading-snug">' +
+                            escapeHtml(p.title) +
+                            '</p>' +
+                            (p.hint ? '<p class="text-[12px] text-slate-500 mt-1">' + escapeHtml(p.hint) + '</p>' : '') +
+                            '</div>' +
+                            '<button type="button" class="btn btn-primary px-4 shrink-0" data-prompt="' +
+                            escapeHtml(p.id) +
+                            '">Luyện viết</button>' +
+                            '</div>'
+                        );
+                    })
+                    .join('');
+                return (
+                    '<div id="cat-' +
+                    escapeHtml(cat.id) +
+                    '" class="scroll-mt-24 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm">' +
+                    '<div class="flex items-center gap-3 mb-4">' +
+                    '<div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center"><i class="fas fa-' +
+                    cat.icon +
+                    '"></i></div>' +
+                    '<h2 class="text-[17px] font-semibold text-slate-800">' +
+                    escapeHtml(cat.name) +
+                    '</h2>' +
+                    '</div>' +
+                    '<div class="space-y-3">' +
+                    cards +
+                    '</div>' +
+                    '</div>'
+                );
+            }).join('');
+
+            mount.querySelectorAll('[data-prompt]').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    startPractice(btn.getAttribute('data-prompt'));
+                });
+            });
+        }
+
+        function formatDate(ts) {
+            try {
+                return new Date(ts).toLocaleString('vi-VN', { dateStyle: 'medium', timeStyle: 'short' });
+            } catch (e) {
+                return '';
+            }
+        }
+
+        function renderHistoryList() {
+            var list = document.getElementById('history-list');
+            if (!t2History.length) {
+                list.innerHTML =
+                    '<div class="rounded-2xl border border-dashed border-slate-200 bg-white py-14 px-4 text-center text-slate-500 text-[14px]">Chưa có bài Task 2 nào được lưu.</div>';
+                return;
+            }
+            list.innerHTML = t2History
+                .map(function (h) {
+                    var hid = String(h.id).replace(/'/g, "\\'");
+                    var wc = h.wordCount || 0;
+                    var wcClass = wc >= 250 ? 'bg-green-50 text-green-700 border-green-100' : 'bg-amber-50 text-amber-800 border-amber-100';
+                    return (
+                        '<article class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-5 flex flex-col gap-4">' +
+                        '<div class="flex flex-col sm:flex-row sm:items-start gap-4">' +
+                        '<div class="flex-1 min-w-0">' +
+                        '<div class="flex flex-wrap gap-2 mb-2">' +
+                        '<span class="text-[11px] font-semibold text-slate-400 uppercase">' +
+                        formatDate(h.completedAt) +
+                        '</span>' +
+                        '<span class="text-[11px] font-semibold px-2 py-0.5 rounded border ' +
+                        wcClass +
+                        '">' +
+                        wc +
+                        ' từ</span>' +
+                        '</div>' +
+                        '<p class="text-[11px] font-semibold text-amber-700 uppercase mb-1">' +
+                        escapeHtml(h.categoryName || '') +
+                        '</p>' +
+                        '<h3 class="font-medium text-slate-800 text-[14px] leading-relaxed line-clamp-2">' +
+                        escapeHtml(h.promptTitle || '') +
+                        '</h3>' +
+                        '</div>' +
+                        '<div class="flex flex-wrap gap-2 shrink-0">' +
+                        '<button type="button" class="btn btn-dark text-[13px] px-3" data-reopen="' +
+                        hid +
+                        '">Xem outline &amp; bài</button>' +
+                        '<button type="button" class="btn btn-secondary px-3 w-10" data-del="' +
+                        hid +
+                        '" aria-label="Xóa"><i class="fas fa-trash-alt"></i></button>' +
+                        '</div>' +
+                        '</div>' +
+                        '</article>'
+                    );
+                })
+                .join('');
+
+            list.querySelectorAll('[data-reopen]').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var h = t2History.find(function (x) {
+                        return x.id === btn.getAttribute('data-reopen');
+                    });
+                    if (!h) return;
+                    var lines = [
+                        'OUTLINE',
+                        '',
+                        'Intro: ' + (h.outline && h.outline.intro ? h.outline.intro : ''),
+                        'Body 1: ' + (h.outline && h.outline.body1 ? h.outline.body1 : ''),
+                        'Body 2: ' + (h.outline && h.outline.body2 ? h.outline.body2 : ''),
+                        'Conclusion: ' + (h.outline && h.outline.conclusion ? h.outline.conclusion : ''),
+                        '',
+                        '--- ESSAY ---',
+                        '',
+                        h.essay || '',
+                    ];
+                    alert(lines.join('\n'));
+                });
+            });
+            list.querySelectorAll('[data-del]').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    if (!confirm('Xóa bài này?')) return;
+                    var id = btn.getAttribute('data-del');
+                    t2History = t2History.filter(function (x) {
+                        return x.id !== id;
+                    });
+                    saveHistory();
+                    renderHistoryList();
+                    showToast('Đã xóa', 'fa-check');
+                });
+            });
+        }
+
+        function downloadText(content, filename) {
+            var blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function collectOutline() {
+            return {
+                intro: document.getElementById('outline-intro').value.trim(),
+                body1: document.getElementById('outline-body1').value.trim(),
+                body2: document.getElementById('outline-body2').value.trim(),
+                conclusion: document.getElementById('outline-conclusion').value.trim(),
+            };
+        }
+
+        function finishPractice() {
+            if (!activePrompt || !activeCategory) return;
+            var essay = document.getElementById('essay-input').value.trim();
+            var count = wordCountFromText(document.getElementById('essay-input').value);
+            if (count < 250 && !confirm('Bài chưa đủ 250 từ. Vẫn lưu vào lịch sử?')) return;
+
+            var entry = {
+                id: newId(),
+                promptId: activePrompt.id,
+                categoryId: activeCategory.id,
+                categoryName: activeCategory.name,
+                promptTitle: activePrompt.title,
+                outline: collectOutline(),
+                essay: essay,
+                wordCount: count,
+                completedAt: Date.now(),
+            };
+            t2History.unshift(entry);
+            saveHistory();
+            if (window.IELTSJourney) IELTSJourney.bumpTask2();
+            showToast('Đã lưu — Writing Journey (Task 2) +1', 'fa-trophy');
+            showView('topics');
+            renderHistoryList();
+        }
+
+        function exportEssay() {
+            var essay = document.getElementById('essay-input').value;
+            if (!essay.trim()) return showToast('Chưa có bài để xuất', 'fa-exclamation');
+            var o = collectOutline();
+            var content =
+                'IELTS WRITING TASK 2\n\nTOPIC: ' +
+                (activePrompt ? activePrompt.title : '') +
+                '\nWORD COUNT: ' +
+                wordCountFromText(essay) +
+                '\n\n--- OUTLINE ---\nIntro:\n' +
+                o.intro +
+                '\n\nBody 1:\n' +
+                o.body1 +
+                '\n\nBody 2:\n' +
+                o.body2 +
+                '\n\nConclusion:\n' +
+                o.conclusion +
+                '\n\n--- ESSAY ---\n' +
+                essay;
+            downloadText(content, 'ielts-writing-task2.txt');
+            showToast('Đã tải file', 'fa-download');
+        }
+
+        function setOutlineCollapsed(collapsed) {
+            outlineVisible = !collapsed;
+            var col = document.getElementById('outline-column');
+            var grid = document.getElementById('practice-grid');
+            var label = document.getElementById('toggle-outline-label');
+            if (collapsed) {
+                col.classList.add('collapsed');
+                grid.classList.add('outline-off');
+                label.textContent = 'Hiện Outline';
+            } else {
+                col.classList.remove('collapsed');
+                grid.classList.remove('outline-off');
+                label.textContent = 'Ẩn Outline';
+            }
+        }
+
+        document.getElementById('essay-input').addEventListener('input', updateWordCount);
+        document.getElementById('btn-finish').addEventListener('click', finishPractice);
+        document.getElementById('btn-export').addEventListener('click', exportEssay);
+        document.getElementById('exit-practice').addEventListener('click', function () {
+            showView('topics');
+        });
+        document.getElementById('nav-topics').addEventListener('click', function () {
+            showView('topics');
+        });
+        document.getElementById('back-from-history').addEventListener('click', function () {
+            showView('topics');
+        });
+        document.getElementById('clear-t2-history').addEventListener('click', function () {
+            if (!t2History.length) return;
+            if (!confirm('Xóa toàn bộ lịch sử Task 2?')) return;
+            t2History = [];
+            saveHistory();
+            renderHistoryList();
+            showToast('Đã xóa', 'fa-check');
+        });
+        document.getElementById('toggle-outline').addEventListener('click', function () {
+            setOutlineCollapsed(outlineVisible);
+        });
+
+        function init() {
+            t2History = loadHistory();
+            renderCategories();
+            renderHistoryList();
+
+            var params = new URLSearchParams(window.location.search);
+            if (params.get('view') === 'history') {
+                showView('history');
+                renderHistoryList();
+            } else {
+                var promptId = params.get('prompt');
+                var cat = params.get('category');
+                if (promptId) {
+                    setTimeout(function () {
+                        startPractice(promptId);
+                    }, 80);
+                } else if (cat) {
+                    setTimeout(function () {
+                        var el = document.getElementById('cat-' + cat);
+                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 200);
+                }
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>
