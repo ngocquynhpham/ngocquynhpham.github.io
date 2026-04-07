@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CJ Interview Master Hub - Quynh Pham</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23e11932'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial Black' font-weight='900' font-size='18' fill='white'>CJ</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8fafc; 
+            color: #0f172a; 
+            font-size: 14px; 
+            line-height: 1.6;
+        }
+        .cj-red { color: #e11932; }
+        .cj-bg-red { background-color: #e11932; }
+        .tab-active { 
+            border-bottom: 3px solid #e11932; 
+            color: #e11932; 
+            font-weight: 700; 
+        }
+        .card-white { 
+            background: #ffffff; 
+            border: 1px solid #e2e8f0; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .research-gradient {
+            background: linear-gradient(135deg, #fff 0%, #fff1f2 100%);
+            border-left: 6px solid #e11932;
+        }
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .detail-box {
+            background: #f1f5f9;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            border-left: 4px solid #64748b;
+            margin-bottom: 1rem;
+        }
+        .demo-box {
+            background: #fff1f2;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            border-left: 4px solid #e11932;
+            font-style: italic;
+        }
+        .step-label {
+            font-weight: 700;
+            color: #334155;
+            display: block;
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+        .case-study-badge {
+            background: #fee2e2;
+            color: #ef4444;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body class="py-8 px-4 md:px-10 lg:px-20">
+
+    <div class="max-w-6xl mx-auto">
+        
+        <!-- PHẦN 1: DEEP RESEARCH REPORT -->
+        <section class="mb-12">
+            <header class="text-center mb-10">
+                <h1 class="text-4xl font-black tracking-tighter uppercase italic mb-2">
+                    <span class="cj-red">CJ</span> DEEP RESEARCH
+                </h1>
+                <p class="text-slate-500 font-medium uppercase tracking-widest text-xs">GDC Vietnam | Strategic Intelligence Report</p>
+            </header>
+
+            <div class="grid lg:grid-cols-2 gap-6 mb-6">
+                <div class="card-white research-gradient">
+                    <span class="step-label">GDC LÀ GÌ? (GLOBAL DELIVERY CENTER)</span>
+                    <p class="text-slate-600">
+                        <strong>GDC</strong> là mô hình trung tâm CNTT tập trung toàn cầu. Tại <strong>CJ OliveNetworks Vina</strong>, team GDC đóng vai trò là "Hub công nghệ" xây dựng các giải pháp DX (Digital Transformation) cho toàn bộ hệ sinh thái CJ (CGV, Logistics, Food...). Bà sẽ làm <strong>Product Core</strong> phục vụ các dự án trọng điểm từ Hàn Quốc và Global.
+                    </p>
+                </div>
+                <div class="card-white research-gradient">
+                    <span class="step-label">DỰ ÁN DIGITAL TRANSFORMATION (DX)</span>
+                    <p class="text-slate-600 italic mb-2 font-bold">"Tối ưu hóa không gian và cuộc sống"</p>
+                    <ul class="text-slate-600 list-disc ml-5 space-y-1">
+                        <li><strong>Smart Logistics:</strong> AI quản lý kho vận (CJ Logistics).</li>
+                        <li><strong>Smart Factory:</strong> Tự động hóa sản xuất thực phẩm (CJ CheilJedang).</li>
+                        <li><strong>Digital Twin:</strong> Mô phỏng rạp phim (CGV) để tối ưu trải nghiệm.</li>
+                        <li><strong>AI-Retail:</strong> Phân tích hành vi mua sắm hệ thống rạp và nhà hàng.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card-white research-gradient">
+                <span class="step-label">TẠI SAO LÀ ANT DESIGN CHO AI & DASHBOARD?</span>
+                <div class="grid md:grid-cols-2 gap-6 mt-4">
+                    <div>
+                        <p class="text-slate-600">
+                            <strong>1. Tính Hệ Thống:</strong> Cung cấp <strong>Design Language</strong> đồng nhất, giúp Integrator tập trung vào logic dữ liệu phức tạp thay vì sửa CSS lẻ tẻ.
+                        </p>
+                    </div>
+                    <div>
+                        <p class="text-slate-600">
+                            <strong>2. Hiệu năng Data:</strong> Ant Design tối ưu cho Dashboard nhờ bộ Component cực mạnh như Virtual Table, Dynamic Form và Filter phức tạp.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BỔ SUNG: TECH STACK MAPPING TỪ JD -->
+            <div class="grid lg:grid-cols-3 gap-6 mb-6">
+                <div class="card-white research-gradient">
+                    <span class="step-label">TẠI SAO VITE? (KHÔNG PHẢI CRA/WEBPACK)</span>
+                    <ul class="text-slate-600 list-disc ml-5 space-y-1">
+                        <li><strong>HMR cực nhanh:</strong> Vite dùng ESBuild (Go-based) nên Hot Module Replacement gần như tức thì, phù hợp dự án AI Dashboard phức tạp nhiều component.</li>
+                        <li><strong>Build tối ưu:</strong> Rollup-based production build, tree-shaking triệt để — giảm bundle size cho data-heavy platform.</li>
+                        <li><strong>DX vượt trội:</strong> Dev server khởi động &lt;1s bất kể project size, tăng năng suất team GDC toàn cầu.</li>
+                    </ul>
+                </div>
+                <div class="card-white research-gradient">
+                    <span class="step-label">TYPESCRIPT = BẮT BUỘC (TẠI SAO?)</span>
+                    <ul class="text-slate-600 list-disc ml-5 space-y-1">
+                        <li><strong>Type-safe Data Schema:</strong> AI Platform xử lý data phức tạp (model outputs, predictions) — TS đảm bảo contract giữa Frontend và Backend API không bị lệch.</li>
+                        <li><strong>Refactor an toàn:</strong> Hệ thống lớn với nhiều dev (VN + Korea), TS giúp bắt lỗi compile-time thay vì runtime.</li>
+                        <li><strong>IntelliSense:</strong> Autocomplete chính xác cho Ant Design props, giảm thời gian tra docs.</li>
+                    </ul>
+                </div>
+                <div class="card-white research-gradient">
+                    <span class="step-label">REACT ROUTER — ĐIỀU HƯỚNG AI PLATFORM</span>
+                    <ul class="text-slate-600 list-disc ml-5 space-y-1">
+                        <li><strong>Nested Routes:</strong> AI Platform nhiều module (Dashboard, Models, Data, Settings) — React Router v6+ quản lý layout lồng nhau rất tốt.</li>
+                        <li><strong>Protected Routes:</strong> Phân quyền truy cập theo role (Admin, Analyst, Viewer) cho từng section.</li>
+                        <li><strong>Lazy Loading:</strong> Code-splitting theo route, chỉ load module user cần — tối ưu performance.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- BỔ SUNG: UI PUBLISHER LÀ GÌ? -->
+            <div class="card-white research-gradient">
+                <span class="step-label">"UI PUBLISHER" LÀ GÌ? (THUẬT NGỮ HÀN/NHẬT)</span>
+                <div class="grid md:grid-cols-3 gap-6 mt-4">
+                    <div>
+                        <p class="text-slate-600">
+                            <strong>UI Publisher:</strong> Thuật ngữ phổ biến trong công ty Hàn/Nhật, chỉ người chuyên chuyển đổi Design (Figma/PSD) thành HTML/CSS pixel-perfect. Tập trung vào <strong>markup chính xác</strong> và <strong>cross-browser compatibility</strong>.
+                        </p>
+                    </div>
+                    <div>
+                        <p class="text-slate-600">
+                            <strong>Frontend Integrator:</strong> Bước tiến hóa từ Publisher — không chỉ cắt UI mà còn <strong>tích hợp logic</strong>, gọi API, quản lý state và đảm bảo data flow hoạt động đúng giữa Frontend &amp; Backend.
+                        </p>
+                    </div>
+                    <div>
+                        <p class="text-slate-600">
+                            <strong>Vai trò tại CJ:</strong> Kết hợp cả hai — vừa đảm bảo UI pixel-perfect theo Figma, vừa integrate component vào hệ thống React/TS phức tạp của AI Platform. Là <strong>cầu nối Design ↔ Engineering</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BỔ SUNG: DESIGN-TO-CODE & API INTEGRATION -->
+            <div class="grid lg:grid-cols-2 gap-6 mb-6">
+                <div class="card-white research-gradient">
+                    <span class="step-label">DESIGN-TO-CODE WORKFLOW (FIGMA → REACT)</span>
+                    <ul class="text-slate-600 list-disc ml-5 space-y-1">
+                        <li><strong>Figma Inspect:</strong> Đọc specs trực tiếp (spacing, color tokens, typography) từ Figma Dev Mode để code chính xác.</li>
+                        <li><strong>Component Mapping:</strong> Map Figma components → Ant Design components, customize qua ConfigProvider &amp; Design Tokens thay vì override CSS.</li>
+                        <li><strong>Responsive Desktop:</strong> JD focus Desktop — xử lý breakpoints cho các kích thước màn hình 1280px, 1440px, 1920px+ (không phải mobile-first).</li>
+                        <li><strong>Handoff Review:</strong> QA pixel-perfect bằng overlay tools, đảm bảo 1:1 với design trước khi merge.</li>
+                    </ul>
+                </div>
+                <div class="card-white research-gradient">
+                    <span class="step-label">RESTFUL API INTEGRATION</span>
+                    <ul class="text-slate-600 list-disc ml-5 space-y-1">
+                        <li><strong>Axios/Fetch + TS:</strong> Định nghĩa Response Types chặt chẽ cho mỗi endpoint — tránh runtime error khi backend thay đổi schema.</li>
+                        <li><strong>API Layer Pattern:</strong> Tách riêng service layer (api/*.ts) khỏi UI logic, dễ mock khi dev và dễ swap endpoint.</li>
+                        <li><strong>Error Handling:</strong> Xử lý HTTP status codes (401, 403, 500) tập trung qua interceptors, hiển thị thông báo user-friendly.</li>
+                        <li><strong>Loading States:</strong> Skeleton/Spinner cho async data, optimistic updates cho form submissions.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- BỔ SUNG: COMPLEX FORMS & STATE MANAGEMENT -->
+            <div class="grid lg:grid-cols-2 gap-6 mb-6">
+                <div class="card-white research-gradient">
+                    <span class="step-label">COMPLEX FORMS & VALIDATION (KEY COMPONENT)</span>
+                    <ul class="text-slate-600 list-disc ml-5 space-y-1">
+                        <li><strong>Ant Design Form:</strong> Hệ thống Form mạnh nhất React ecosystem — field validation, dynamic fields, form list, dependencies giữa các field.</li>
+                        <li><strong>Multi-step Forms:</strong> AI Platform thường có wizard flows (tạo model, config pipeline) — cần quản lý state across steps.</li>
+                        <li><strong>Validation Flows:</strong> Async validation (check trùng tên model từ API), conditional rules, custom validators cho data AI-specific.</li>
+                        <li><strong>Dynamic Fields:</strong> Thêm/xóa fields runtime (VD: config hyperparameters cho AI model — số lượng params thay đổi theo model type).</li>
+                    </ul>
+                </div>
+                <div class="card-white research-gradient">
+                    <span class="step-label">STATE MANAGEMENT — QUẢN LÝ DỮ LIỆU PHỨC TẠP</span>
+                    <ul class="text-slate-600 list-disc ml-5 space-y-1">
+                        <li><strong>React Context + useReducer:</strong> Phù hợp cho shared state nhỏ (theme, auth, locale) — lightweight, không cần thêm library.</li>
+                        <li><strong>Zustand / Redux Toolkit:</strong> Khi state phức tạp (filter states, cached API data, multi-tab sync) — cần predictable state container.</li>
+                        <li><strong>Server State (React Query/SWR):</strong> Tách biệt server state khỏi client state — auto caching, revalidation, optimistic updates cho data-heavy dashboard.</li>
+                        <li><strong>Tại sao quan trọng:</strong> AI Platform có nhiều data source đồng thời (models, datasets, metrics) — state management tốt = UI không bị desync.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- BỔ SUNG: AI PLATFORM CONTEXT -->
+            <div class="card-white research-gradient">
+                <span class="step-label">AI PLATFORM CỦA CJ — PHÂN TÍCH CONTEXT</span>
+                <div class="grid md:grid-cols-2 gap-6 mt-4">
+                    <div>
+                        <p class="text-xs font-bold mb-1 underline text-slate-700">AI Platform có thể bao gồm:</p>
+                        <ul class="text-slate-600 list-disc ml-5 space-y-1">
+                            <li><strong>AI Dashboard:</strong> Monitor model performance, accuracy metrics, inference logs — cần Charts (ECharts/Recharts) + Data Tables nặng.</li>
+                            <li><strong>Data Annotation Tool:</strong> Giao diện gán nhãn dữ liệu cho training AI — complex forms + drag-and-drop UI.</li>
+                            <li><strong>Model Management:</strong> CRUD models, versioning, A/B testing config — nhiều dynamic forms và nested data.</li>
+                            <li><strong>Analytics Console:</strong> Phân tích kết quả AI predictions cho business teams (CGV, Logistics) — data visualization nặng.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold mb-1 underline text-slate-700">Frontend challenges đặc thù:</p>
+                        <ul class="text-slate-600 list-disc ml-5 space-y-1">
+                            <li><strong>Real-time data:</strong> WebSocket/SSE cho streaming AI inference results lên Dashboard.</li>
+                            <li><strong>Large datasets:</strong> Virtual scrolling, pagination server-side cho bảng hàng chục nghìn records.</li>
+                            <li><strong>Complex filters:</strong> Multi-dimensional filtering (theo model, date range, accuracy threshold, dataset) — cần UI/UX thông minh.</li>
+                            <li><strong>Role-based UI:</strong> Admin thấy full, Data Scientist thấy models, Business User thấy reports — cần component-level access control.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PHẦN 2: TABS -->
+        <nav class="flex justify-center mb-10 border-b border-slate-200">
+            <button onclick="showTab('battle')" id="btn-battle" class="px-6 py-4 text-xs font-bold uppercase tracking-widest transition-all tab-active">
+                1. 6 Giai Đoạn Tác Chiến
+            </button>
+            <button onclick="showTab('poster')" id="btn-poster" class="px-6 py-4 text-xs font-bold uppercase tracking-widest transition-all text-slate-400">
+                2. Framework Poster
+            </button>
+            <button onclick="showTab('mapping')" id="btn-mapping" class="px-6 py-4 text-xs font-bold uppercase tracking-widest transition-all text-slate-400">
+                3. Mapping CV & Mock Interview
+            </button>
+        </nav>
+
+        <!-- TAB 1: 6 STAGES (KHÔI PHỤC ĐẦY ĐỦ) -->
+        <div id="tab-battle" class="tab-content block space-y-6">
+            <!-- Stage 1 -->
+            <div class="card-white">
+                <h3 class="section-title cj-red">Stage 01: Branding & ONLYONE</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="detail-box">
+                        <span class="step-label">Tại sao & Nó là gì?</span>
+                        <p class="text-slate-600">CJ coi trọng <strong>ONLYONE</strong> (Đầu tiên - Tốt nhất - Khác biệt). Sếp Hàn cần tuyển người không chỉ code giỏi mà phải hiểu DNA văn hóa tập đoàn để cùng phát triển sản phẩm bền vững.</p>
+                    </div>
+                    <div class="demo-box">
+                        <span class="step-label">Demo Trả lời:</span>
+                        <p>"Em đam mê triết lý ONLYONE. Với em, Frontend Integrator là người tích hợp cả cảm xúc và thương hiệu vào code. Em muốn mang DNA giải trí của CJ vào các Dashboard AI khô khan."</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Stage 2 -->
+            <div class="card-white border-l-4 border-blue-400">
+                <h3 class="section-title text-blue-600">Stage 02: Tech Arsenal (Desktop Focus)</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="detail-box">
+                        <span class="step-label">Tại sao & Nó là gì?</span>
+                        <p class="text-slate-600">Kiểm tra khả năng sử dụng <strong>React, TS, AntD</strong>. Vì dự án GDC tập trung vào Desktop Dashboard, bạn phải chứng minh sự tỉ mỉ và khả năng xử lý logic phức tạp.</p>
+                        <ul class="text-slate-600 list-disc ml-5 mt-3 space-y-1 text-[13px]">
+                            <li><strong>Ant Design Pro:</strong> ProTable, ProForm, ConfigProvider custom theme, Design Tokens override.</li>
+                            <li><strong>Testing:</strong> Unit test (Jest/Vitest) + E2E (Cypress/Playwright) — GDC chuẩn QA chặt.</li>
+                            <li><strong>State Management:</strong> Context API cho scope nhỏ, Zustand/Redux cho Dashboard phức tạp nhiều module.</li>
+                        </ul>
+                    </div>
+                    <div class="demo-box">
+                        <span class="step-label">Demo Trả lời:</span>
+                        <p>"Thế mạnh của em là React/TS trên Desktop. Em dùng TS để quản lý Data Schema chặt chẽ cho AI, master Ant Design ProComponents (ProTable, ProForm) và override Design Tokens qua ConfigProvider. Em cũng viết Unit Test cho mọi shared component để đảm bảo chất lượng khi nhiều team cùng dùng."</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Stage 3 -->
+            <div class="card-white border-l-4 border-orange-400">
+                <h3 class="section-title text-orange-600">Stage 03: Combat Q&A (Performance)</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="detail-box">
+                        <span class="step-label">Tại sao & Nó là gì?</span>
+                        <p class="text-slate-600">Dữ liệu AI thường rất nặng. Đây là lúc sếp Hàn check trình độ thật bằng các bài toán <strong>Performance Optimization</strong> (Bảng 10k dòng, Charts realtime).</p>
+                        <ul class="text-slate-600 list-disc ml-5 mt-3 space-y-1 text-[13px]">
+                            <li><strong>Code Splitting / Lazy Loading:</strong> React.lazy + Suspense để Dashboard nhiều module không load hết 1 lần.</li>
+                            <li><strong>Web Workers:</strong> Đẩy heavy computation (parse CSV, transform data AI) ra khỏi main thread.</li>
+                            <li><strong>Debounce/Throttle:</strong> Filter, search realtime không gọi API mỗi keystroke.</li>
+                        </ul>
+                    </div>
+                    <div class="demo-box">
+                        <span class="step-label">Demo Trả lời:</span>
+                        <p>"Với 10k records, em dùng <strong>Virtual Scroll</strong> của AntD để tối ưu DOM. Kết hợp <strong>React.memo</strong>, <strong>useMemo</strong> và <strong>Code Splitting</strong> cho từng module Dashboard. Nếu data AI quá nặng, em đẩy transform sang <strong>Web Worker</strong> để main thread không bị block, user vẫn tương tác mượt."</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Stage 4 -->
+            <div class="card-white border-l-4 border-purple-400">
+                <h3 class="section-title text-purple-600">Stage 04: Integration Mindset</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="detail-box">
+                        <span class="step-label">Tại sao & Nó là gì?</span>
+                        <p class="text-slate-600">Vai trò 'Integrator' là cầu nối Design và Code. Bạn phải show được việc từng xây dựng <strong>UI Library</strong> và quản lý nó ở quy mô nhiều team.</p>
+                        <ul class="text-slate-600 list-disc ml-5 mt-3 space-y-1 text-[13px]">
+                            <li><strong>Governance:</strong> Versioning (semver), changelog, migration guide khi breaking changes.</li>
+                            <li><strong>Documentation:</strong> Storybook để document & demo component cho Designer và Dev cùng review.</li>
+                            <li><strong>Git Workflow:</strong> PR review, branch strategy (Git Flow/Trunk-based), CI/CD pipeline.</li>
+                        </ul>
+                    </div>
+                    <div class="demo-box">
+                        <span class="step-label">Demo Trả lời:</span>
+                        <p>"Em đã build UI Library cho sản phẩm SaaS, tăng 30% tốc độ deploy. Em quản lý library bằng <strong>Storybook</strong> để Designer và Dev cùng review, dùng <strong>semver</strong> để control breaking changes. Em không chỉ cắt CSS — em 'integrate' hệ thống component vào quy trình CI/CD của cả team."</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Stage 5 -->
+            <div class="card-white border-l-4 border-green-400">
+                <h3 class="section-title text-green-600">Stage 05: Global Culture & English</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="detail-box">
+                        <span class="step-label">Tại sao & Nó là gì?</span>
+                        <p class="text-slate-600">Team GDC làm việc trực tiếp với chuyên gia Hàn Quốc. Kỷ luật, sự tỉ mỉ và tiếng Anh trôi chảy là chìa khóa để bà có cơ hội đi <strong>Onsite</strong> nước ngoài.</p>
+                        <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 mt-3 text-[12px] text-amber-800">
+                            <strong>Cultural Note:</strong> Tuyệt đối không nhắc nhiều về kinh nghiệm "công ty Nhật" trước sếp Hàn — quan hệ Hàn-Nhật nhạy cảm về lịch sử. Reframe thành <strong>"kinh nghiệm đa văn hóa quốc tế"</strong>, tập trung vào kỹ năng đã học được (kỷ luật, quy trình, giao tiếp cross-timezone) chứ không gán cho quốc gia cụ thể.
+                        </div>
+                    </div>
+                    <div class="demo-box">
+                        <span class="step-label">Demo Trả lời:</span>
+                        <p>"Em có kinh nghiệm làm việc trong môi trường <strong>đa văn hóa quốc tế</strong>, nơi yêu cầu tính kỷ luật cao về deadline và quy trình. Em đã viết technical spec bằng tiếng Anh để các team ở nhiều timezone cùng review, và trình bày demo trực tiếp cho stakeholder nước ngoài. Em rất mong được áp dụng những kỹ năng này khi phối hợp với team CJ tại Hàn Quốc."</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Stage 6 -->
+            <div class="card-white border-l-4 border-slate-400">
+                <h3 class="section-title text-slate-800">Stage 06: Q&A (Initiative)</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="detail-box">
+                        <span class="step-label">Tại sao & Nó là gì?</span>
+                        <p class="text-slate-600">Kết thúc bằng sự chủ động. Đừng hỏi về phúc lợi, hãy hỏi về <strong>Roadmap</strong>, <strong>Team Structure</strong> và <strong>Definition of Done</strong> để thể hiện bạn đã sẵn sàng nhập cuộc ngay.</p>
+                    </div>
+                    <div class="demo-box">
+                        <span class="step-label">Chuẩn bị 3 câu hỏi:</span>
+                        <ul class="space-y-3 text-[13px] not-italic">
+                            <li><strong>1. Tech Direction:</strong> "Dự án AI Platform hiện đang là greenfield hay migrate từ hệ thống cũ ạ? Em muốn hiểu để chuẩn bị approach phù hợp."</li>
+                            <li><strong>2. Team Structure:</strong> "Frontend team bao nhiêu người và phối hợp trực tiếp với AI team hay thông qua PM ạ? Em hỏi để hình dung luồng collaboration."</li>
+                            <li><strong>3. Roadmap:</strong> "Anh/chị có thể chia sẻ về lộ trình phát triển GDC Platform trong 1 năm tới không? Em rất mong muốn được đóng góp vào việc scale hệ thống."</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: POSTER ANALYSIS (CHI TIẾT FRAMEWORK) -->
+        <div id="tab-poster" class="tab-content hidden space-y-8">
+            
+            <div class="card-white">
+                <h2 class="text-2xl font-black mb-6 cj-red uppercase">Framework Phân Tích Cinematic UI (5 Bước Chi Tiết)</h2>
+                
+                <div class="space-y-10">
+                    <!-- Bước 1 -->
+                    <div class="border-b pb-6">
+                        <span class="step-label text-blue-600">01. Bố Cục (Layout & Grid)</span>
+                        <div class="grid md:grid-cols-2 gap-6 mt-2">
+                            <div>
+                                <p class="text-xs font-bold mb-1 underline">Các loại phổ biến:</p>
+                                <ul class="list-disc ml-5 text-[12px] text-slate-600">
+                                    <li><strong>Z-Pattern:</strong> Di chuyển mắt theo chữ Z (phù hợp Landing page ít nội dung).</li>
+                                    <li><strong>F-Pattern:</strong> Quét từ trái sang, trên xuống (Chuẩn cho Desktop Dashboard).</li>
+                                    <li><strong>Rule of Thirds:</strong> Chia 3x3 để đặt điểm nhấn vào các giao điểm vàng.</li>
+                                    <li><strong>Central/Symmetry:</strong> Bố cục trung tâm/đối xứng tạo sự vững chãi.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-blue-50 p-4 rounded-lg italic text-[11px] text-blue-700">
+                                <strong>Mapping UI:</strong> Cách sắp xếp Sidebar, Topbar và Content Area giúp user Desktop vận hành mượt mà nhất.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bước 2 -->
+                    <div class="border-b pb-6">
+                        <span class="step-label text-red-600">02. Màu Sắc (Color Theory)</span>
+                        <div class="grid md:grid-cols-2 gap-6 mt-2">
+                            <div>
+                                <p class="text-xs font-bold mb-1 underline">Lý thuyết áp dụng:</p>
+                                <ul class="list-disc ml-5 text-[12px] text-slate-600">
+                                    <li><strong>Semantic Colors:</strong> Đỏ (Error), Vàng (Warning), Xanh (Success).</li>
+                                    <li><strong>Contrast (Tương phản):</strong> Độ đối lập sáng tối để dẫn dắt sự chú ý.</li>
+                                    <li><strong>Color Palette:</strong> Phối màu đơn sắc (Monochromatic) hay bổ túc (Complementary).</li>
+                                </ul>
+                            </div>
+                            <div class="bg-red-50 p-4 rounded-lg italic text-[11px] text-red-700">
+                                <strong>Mapping UI:</strong> Dùng High-contrast cho các thông báo quan trọng của AI Platform để Power User không bỏ lỡ.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bước 3 -->
+                    <div class="border-b pb-6">
+                        <span class="step-label text-orange-600">03. Ánh Sáng & Chiều Sâu (Depth)</span>
+                        <div class="grid md:grid-cols-2 gap-6 mt-2">
+                            <div>
+                                <p class="text-xs font-bold mb-1 underline">Kỹ thuật phân tích:</p>
+                                <ul class="list-disc ml-5 text-[12px] text-slate-600">
+                                    <li><strong>Shadows/Elevation:</strong> Tạo khối cho vật thể, tách biệt với nền.</li>
+                                    <li><strong>Layers:</strong> Các lớp không gian chồng lên nhau (Tiền cảnh/Hậu cảnh).</li>
+                                    <li><strong>Focus Points:</strong> Vùng sáng nhất là vùng user cần thao tác.</li>
+                                </ul>
+                            </div>
+                            <div class="bg-orange-50 p-4 rounded-lg italic text-[11px] text-orange-700">
+                                <strong>Mapping UI:</strong> Dùng Z-index thông minh để quản lý Modals, Overlays và Context Menus.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bước 4 -->
+                    <div class="border-b pb-6">
+                        <span class="step-label text-purple-600">04. Typography (Chữ & Phân Cấp)</span>
+                        <div class="grid md:grid-cols-2 gap-6 mt-2">
+                            <div>
+                                <p class="text-xs font-bold mb-1 underline">Các yếu tố cần phân tích:</p>
+                                <ul class="list-disc ml-5 text-[12px] text-slate-600">
+                                    <li><strong>Hierarchy:</strong> Phân cấp rõ ràng giữa H1 (Tiêu đề phim), H2 (Tagline), Body (Credits, ngày chiếu).</li>
+                                    <li><strong>Readability:</strong> Kích thước, khoảng cách dòng, trọng lượng font có đủ dễ đọc từ khoảng cách xa?</li>
+                                    <li><strong>Personality:</strong> Font chữ có truyền tải đúng "tính cách" tác phẩm? (Serif = cổ điển, Sans = hiện đại, Display = cá tính).</li>
+                                    <li><strong>Contrast Ratio:</strong> Chữ trên nền phức tạp có đủ tương phản để đọc được (WCAG AA)?</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 p-4 rounded-lg italic text-[11px] text-purple-700">
+                                <strong>Mapping UI:</strong> Xây dựng Type Scale hệ thống (Design Tokens) để mọi Dashboard trong GDC dùng chung bộ font size, line-height và font-weight nhất quán.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bước 5 -->
+                    <div>
+                        <span class="step-label text-green-600">05. Ẩn Dụ & Storytelling (Visual Metaphor)</span>
+                        <div class="grid md:grid-cols-2 gap-6 mt-2">
+                            <div>
+                                <p class="text-xs font-bold mb-1 underline">Cách đọc ẩn dụ thị giác:</p>
+                                <ul class="list-disc ml-5 text-[12px] text-slate-600">
+                                    <li><strong>User Journey:</strong> Poster dẫn dắt mắt theo một "câu chuyện" — từ hook (điểm bắt mắt) đến climax (thông điệp chính) đến CTA (ngày chiếu).</li>
+                                    <li><strong>Visual Metaphor:</strong> Hình ảnh biểu tượng gợi sự liên tưởng sâu hơn lời nói (VD: vệt che mắt = sự phân tầng giai cấp).</li>
+                                    <li><strong>Emotional Trigger:</strong> Yếu tố nào kích hoạt cảm xúc? Sợ hãi, tò mò, hồi hộp hay phấn khích?</li>
+                                    <li><strong>Easter Eggs:</strong> Chi tiết ẩn giấu khiến người xem quay lại nhìn kỹ hơn (tăng engagement).</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 p-4 rounded-lg italic text-[11px] text-green-700">
+                                <strong>Mapping UI:</strong> Áp dụng Storytelling vào Onboarding Flow và Empty States — biến trải nghiệm khô khan thành hành trình có cảm xúc cho user.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Case Study Parasite -->
+            <div class="card-white border-l-8 border-red-600">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge">Case Study</span>
+                </div>
+                <h3 class="text-2xl font-black italic uppercase mb-6">Ký Sinh Trùng (Parasite)</h3>
+
+                <div class="grid lg:grid-cols-2 gap-8 items-start">
+                    <!-- Left: Poster + Chart -->
+                    <div class="space-y-6">
+                        <div class="rounded-2xl overflow-hidden border border-slate-200 shadow-md">
+                            <img src="https://visualliteracy.blog/wp-content/uploads/2023/04/parasite.webp?w=640"
+                                 alt="Parasite Poster"
+                                 class="w-full h-auto">
+                        </div>
+                        <div class="bg-slate-50 rounded-xl p-5 border border-slate-200">
+                            <p class="step-label mb-4">Chỉ số Hiệu Quả Truyền Tải</p>
+                            <div style="position:relative; width:100%; height:220px;">
+                                <canvas id="parasiteChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Analysis -->
+                    <div class="space-y-8">
+                        <!-- Section 1: Bố Cục -->
+                        <div class="border-l-4 border-red-500 pl-5">
+                            <h4 class="font-extrabold text-base uppercase tracking-tight mb-3 text-slate-800">Bố Cục & Hierarchy</h4>
+                            <div class="space-y-3 text-[13px] text-slate-600 leading-relaxed">
+                                <p><strong class="text-slate-800">Điểm Nhấn Thị Giác:</strong> Poster dùng bố cục trung tâm nhưng đầy phá cách. Ánh mắt bị thu hút ngay vào vệt đen/trắng che mắt các nhân vật — tạo cảm giác ẩn danh và bất ổn.</p>
+                                <p><strong class="text-slate-800">Z-Pattern:</strong> Mắt di chuyển từ Tiêu đề (Top/Center) → Các nhân vật → Đôi chân người chết (Bottom Left) → Thông tin khởi chiếu (Bottom Right).</p>
+                                <p><strong class="text-slate-800">Màu sắc:</strong> Màu xanh cỏ tạo nền tương phản hoàn hảo cho trang phục trung tính, làm bật sự sống động giả tạo của bối cảnh thượng lưu.</p>
+                            </div>
+                        </div>
+
+                        <!-- Section 2: Biểu Tượng Học -->
+                        <div class="border-l-4 border-red-500 pl-5">
+                            <h4 class="font-extrabold text-base uppercase tracking-tight mb-3 text-slate-800">Biểu Tượng Học</h4>
+                            <div class="space-y-3 text-[13px] text-slate-600 leading-relaxed">
+                                <p><strong class="text-slate-800">Ẩn Ý Về Giai Cấp:</strong> Vệt đen che mắt nhà nghèo và vệt trắng che mắt nhà giàu không chỉ là thiết kế — đó là <strong>UX của sự phân tầng</strong>. Nó ngăn cản sự kết nối ánh mắt, tạo ra khoảng cách lạnh lẽo giữa hai giai cấp.</p>
+                                <p><strong class="text-slate-800">Easter Egg:</strong> Chi tiết đôi chân ở góc dưới là một điểm chạm bất ngờ, buộc người xem phải quan sát kỹ — tăng thời gian tương tác với poster (Anomaly Detection).</p>
+                                <p><strong class="text-slate-800">Phản Chiếu Nội Tâm:</strong> Hình ảnh phản chiếu trên cửa kính tạo ra các lớp không gian (layers), ẩn dụ cho việc "ký sinh" vào cuộc sống của người khác.</p>
+                            </div>
+                        </div>
+
+                        <!-- Section 3: Typography -->
+                        <div class="border-l-4 border-red-500 pl-5">
+                            <h4 class="font-extrabold text-base uppercase tracking-tight mb-3 text-slate-800">Typography</h4>
+                            <div class="demo-box mb-3 text-[12px]">
+                                "Việc Việt hóa tiêu đề vẫn giữ được tinh thần bản gốc với các nét cắt sắc lẹm và biểu tượng vòng xoắn ở chữ 'I'."
+                            </div>
+                            <p class="text-[13px] text-slate-600 leading-relaxed">Tuy nhiên, một số chi tiết nhỏ trong dấu tiếng Việt có thể gây nhiễu nếu nhìn từ rất xa. Đây là bài toán cân bằng giữa <strong>Visual Semantics</strong> và <strong>Accessibility</strong>.</p>
+                        </div>
+
+                        <!-- Scoring Table -->
+                        <div class="overflow-hidden rounded-xl border border-slate-200 shadow-sm">
+                            <table class="w-full text-left text-xs">
+                                <thead class="bg-slate-100 text-slate-500 font-black uppercase tracking-widest">
+                                    <tr>
+                                        <th class="p-4">Tiêu chí</th>
+                                        <th class="p-4 text-right">Điểm</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-slate-600">
+                                    <tr class="border-b border-slate-100">
+                                        <td class="p-4 uppercase font-medium">Composition</td>
+                                        <td class="p-4 font-bold text-slate-800 text-right">9.5/10</td>
+                                    </tr>
+                                    <tr class="border-b border-slate-100">
+                                        <td class="p-4 uppercase font-medium">Typography</td>
+                                        <td class="p-4 font-bold text-slate-800 text-right">9.0/10</td>
+                                    </tr>
+                                    <tr class="border-b border-slate-100">
+                                        <td class="p-4 uppercase font-medium">Visual Metaphor</td>
+                                        <td class="p-4 font-bold text-slate-800 text-right">10/10</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-4 uppercase font-medium">Color Palette</td>
+                                        <td class="p-4 font-bold text-slate-800 text-right">10/10</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Case Study 02: K-Pop -->
+            <div class="card-white border-l-8 border-blue-600">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge" style="background:#dbeafe; color:#2563eb;">Case Study</span>
+                    <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest">Poster Nhạc vs Poster Phim</span>
+                </div>
+                <h3 class="text-2xl font-black italic uppercase mb-2 text-blue-800">K-Pop Brand Poster (VD: NewJeans)</h3>
+                <p class="text-[12px] text-slate-500 mb-6 leading-relaxed">Khi phân tích Poster Nhạc, trọng tâm chuyển từ <strong class="text-slate-700">Story (Kể chuyện)</strong> sang <strong class="text-slate-700">Vibe & Brand (Cảm xúc & Thương hiệu)</strong>. Cùng framework 5 bước nhưng cách "đọc" hoàn toàn khác.</p>
+
+                <div class="grid lg:grid-cols-2 gap-8 items-start">
+                    <!-- Left: Poster + Chart -->
+                    <div class="space-y-6">
+                        <div class="rounded-2xl overflow-hidden border border-slate-200 shadow-md bg-gradient-to-b from-sky-50 to-blue-50 p-6 flex items-center justify-center">
+                            <img src="https://i.scdn.co/image/ab67616d0000b273d70036292d54f29e8b68ec01"
+                                 alt="NewJeans Get Up Album Poster"
+                                 class="w-full max-w-[320px] h-auto rounded-xl shadow-lg">
+                        </div>
+                        <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                            <p class="step-label text-blue-600 mb-4">Chỉ số Hiệu Quả Truyền Tải</p>
+                            <div style="position:relative; width:100%; height:220px;">
+                                <canvas id="kpopChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Analysis -->
+                    <div class="space-y-8">
+                        <!-- Section 1: Bố Cục -->
+                        <div class="border-l-4 border-blue-500 pl-5">
+                            <h4 class="font-extrabold text-base uppercase tracking-tight mb-3 text-slate-800">Bố Cục & Grid</h4>
+                            <div class="space-y-3 text-[13px] text-slate-600 leading-relaxed">
+                                <p><strong class="text-slate-800">Symmetry / Central:</strong> Poster K-Pop ưu tiên bố cục đối xứng hoặc trung tâm — các thành viên được sắp xếp cân bằng để không ai bị "kém quan trọng" hơn. Đây là yêu cầu branding bắt buộc của ngành giải trí Hàn.</p>
+                                <p><strong class="text-slate-800">Grid năng động:</strong> Thay vì dẫn dắt theo câu chuyện (Z-Pattern), poster nhạc dùng Grid lặp lại (repetition) để tạo nhịp điệu thị giác — giống beat nhạc.</p>
+                                <p><strong class="text-slate-800">Negative Space:</strong> Khoảng trắng lớn xung quanh subject tạo sự "thở", khác hẳn poster phim thường nén chặt thông tin.</p>
+                            </div>
+                        </div>
+
+                        <!-- Section 2: Màu sắc & Vibe -->
+                        <div class="border-l-4 border-blue-500 pl-5">
+                            <h4 class="font-extrabold text-base uppercase tracking-tight mb-3 text-slate-800">Màu Sắc & Brand DNA</h4>
+                            <div class="space-y-3 text-[13px] text-slate-600 leading-relaxed">
+                                <p><strong class="text-slate-800">Aesthetic Palette:</strong> Tông Pastel / Y2K / Retro — màu sắc không để kể chuyện mà để tạo <strong>mood</strong> và định vị thương hiệu. NewJeans = xanh dương nhạt + trắng = sạch sẽ, tươi trẻ, effortless cool.</p>
+                                <p><strong class="text-slate-800">Không Semantic:</strong> Khác poster phim dùng đỏ = nguy hiểm, xanh = bình yên, poster K-Pop dùng màu theo <strong>trend/season</strong> — mùa hè = pastel, comeback mạnh = neon.</p>
+                                <p><strong class="text-slate-800">Brand Consistency:</strong> Mỗi era/album có color system riêng, nhưng vẫn nhận ra ngay đó là nhóm nào — chính là Design Tokens ở cấp độ giải trí.</p>
+                            </div>
+                        </div>
+
+                        <!-- Section 3: Typography & Identity -->
+                        <div class="border-l-4 border-blue-500 pl-5">
+                            <h4 class="font-extrabold text-base uppercase tracking-tight mb-3 text-slate-800">Typography & Nhận Diện</h4>
+                            <div class="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-3 text-[12px] italic text-blue-700">
+                                "Font chữ K-Pop không chỉ để đọc — nó chính là logo, là bản sắc, là thứ fan tattoo lên tay."
+                            </div>
+                            <div class="space-y-3 text-[13px] text-slate-600 leading-relaxed">
+                                <p><strong class="text-slate-800">Custom Wordmark:</strong> Tên nhóm thường dùng custom typeface riêng biệt (NewJeans dùng font retro 90s), trở thành biểu tượng nhận diện mạnh hơn cả hình ảnh.</p>
+                                <p><strong class="text-slate-800">Typo phá cách:</strong> Xoay nghiêng, chồng chữ, mix font — phá vỡ hierarchy truyền thống để tạo năng lượng trẻ trung, khác hẳn sự nghiêm túc của poster phim.</p>
+                            </div>
+                        </div>
+
+                        <!-- Comparison Table: Film vs K-Pop -->
+                        <div class="overflow-hidden rounded-xl border border-slate-200 shadow-sm">
+                            <table class="w-full text-left text-xs">
+                                <thead class="bg-blue-50 text-blue-600 font-black uppercase tracking-widest">
+                                    <tr>
+                                        <th class="p-4">Tiêu chí</th>
+                                        <th class="p-4 text-center">Poster Phim</th>
+                                        <th class="p-4 text-center">Poster K-Pop</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-slate-600">
+                                    <tr class="border-b border-slate-100">
+                                        <td class="p-4 uppercase font-medium">Mục tiêu chính</td>
+                                        <td class="p-4 text-center">Kể chuyện</td>
+                                        <td class="p-4 text-center font-bold text-blue-700">Tạo Vibe / Brand</td>
+                                    </tr>
+                                    <tr class="border-b border-slate-100">
+                                        <td class="p-4 uppercase font-medium">Bố cục</td>
+                                        <td class="p-4 text-center">Z / F-Pattern</td>
+                                        <td class="p-4 text-center font-bold text-blue-700">Symmetry / Grid</td>
+                                    </tr>
+                                    <tr class="border-b border-slate-100">
+                                        <td class="p-4 uppercase font-medium">Màu sắc</td>
+                                        <td class="p-4 text-center">Semantic (mood phim)</td>
+                                        <td class="p-4 text-center font-bold text-blue-700">Aesthetic (trend/era)</td>
+                                    </tr>
+                                    <tr class="border-b border-slate-100">
+                                        <td class="p-4 uppercase font-medium">Typography</td>
+                                        <td class="p-4 text-center">Hierarchy rõ ràng</td>
+                                        <td class="p-4 text-center font-bold text-blue-700">Phá cách / Wordmark</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-4 uppercase font-medium">Ẩn dụ</td>
+                                        <td class="p-4 text-center">Story-driven</td>
+                                        <td class="p-4 text-center font-bold text-blue-700">Emotion-driven</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Integrator Takeaway -->
+                        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-5 border border-blue-100">
+                            <p class="step-label text-blue-600 mb-2">Integrator Takeaway</p>
+                            <p class="text-[13px] text-slate-700 leading-relaxed">Integrator tại CJ (đặc biệt mảng CGV, giải trí) cần linh hoạt áp dụng <strong>"DNA Giải Trí"</strong> này: biết khi nào dùng hierarchy nghiêm túc (Dashboard AI), khi nào phá cách tạo engagement (Fan Platform, Event Page). Cùng một Design System nhưng output hoàn toàn khác nhau.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: MAPPING CV & MOCK INTERVIEW -->
+        <div id="tab-mapping" class="tab-content hidden space-y-6">
+
+            <!-- HEADER -->
+            <div class="card-white flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                    <h3 class="text-2xl font-black mb-1 uppercase">Mapping: Quynh Pham <span class="cj-red">&rarr;</span> CJ GDC</h3>
+                    <p class="text-slate-500 text-xs italic font-bold">Role: Frontend Integrator | Desktop Dashboard &amp; AI Platform</p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="bg-red-50 text-red-600 px-3 py-1 rounded text-[10px] font-bold">4+ Yrs React/TS</span>
+                    <span class="bg-blue-50 text-blue-600 px-3 py-1 rounded text-[10px] font-bold">ECharts.js</span>
+                    <span class="bg-green-50 text-green-600 px-3 py-1 rounded text-[10px] font-bold">UI Library Builder</span>
+                    <span class="bg-purple-50 text-purple-600 px-3 py-1 rounded text-[10px] font-bold">Design System</span>
+                </div>
+            </div>
+
+            <!-- PHẦN A: CV MAPPING TABLE -->
+            <div class="card-white">
+                <h4 class="section-title cj-red">A. CV Mapping &mdash; Kinh Nghiệm &harr; Yêu Cầu CJ GDC</h4>
+                <p class="text-xs text-slate-500 mb-4 italic">Mỗi dòng map 1 kinh nghiệm thực tế từ CV sang giá trị cụ thể cho CJ. Cột &ldquo;Mức độ sẵn sàng&rdquo; đánh giá trung thực.</p>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead class="bg-slate-100 text-slate-500 font-black uppercase tracking-widest">
+                            <tr>
+                                <th class="p-3 w-[5%]">#</th>
+                                <th class="p-3 w-[28%]">Kinh Nghiệm (CV)</th>
+                                <th class="p-3 w-[28%]">CJ GDC Cần Gì</th>
+                                <th class="p-3 w-[27%]">Cách Chuyển Giao</th>
+                                <th class="p-3 w-[12%] text-center">Sẵn sàng</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-slate-600">
+                            <tr class="border-b border-slate-100">
+                                <td class="p-3 font-bold text-slate-400">1</td>
+                                <td class="p-3"><strong>UI Library 10+ layouts</strong> tại TechX cho SaaS Easier/It&rsquo;szai</td>
+                                <td class="p-3">Xây component system <strong>Ant Design</strong> đồng nhất cho các dự án DX (Logistics, CGV, Food)</td>
+                                <td class="p-3">Đã quen tư duy &ldquo;1 Library &rarr; N Products&rdquo;. Cần học thêm Ant Design Token System &amp; theming API</td>
+                                <td class="p-3 text-center"><span class="bg-green-100 text-green-700 px-2 py-0.5 rounded font-bold">90%</span></td>
+                            </tr>
+                            <tr class="border-b border-slate-100">
+                                <td class="p-3 font-bold text-slate-400">2</td>
+                                <td class="p-3"><strong>ECharts.js dashboards</strong> &mdash; configurable chart interfaces cho business users</td>
+                                <td class="p-3">Dashboard AI Platform &mdash; biểu đồ realtime, data nặng từ hệ thống AI/ML</td>
+                                <td class="p-3">ECharts là thế mạnh trực tiếp. Cần hiểu thêm data pipeline từ AI models &rarr; Frontend</td>
+                                <td class="p-3 text-center"><span class="bg-green-100 text-green-700 px-2 py-0.5 rounded font-bold">95%</span></td>
+                            </tr>
+                            <tr class="border-b border-slate-100">
+                                <td class="p-3 font-bold text-slate-400">3</td>
+                                <td class="p-3"><strong>Data tables 10k+ records</strong> &mdash; sorting, filtering, pagination, optimized rendering</td>
+                                <td class="p-3">Bảng dữ liệu AI nặng, Virtual Table của Ant Design, stream data</td>
+                                <td class="p-3">Đã xử lý scale tương đương. Cần adapt sang Ant Design Virtual Table API</td>
+                                <td class="p-3 text-center"><span class="bg-green-100 text-green-700 px-2 py-0.5 rounded font-bold">90%</span></td>
+                            </tr>
+                            <tr class="border-b border-slate-100">
+                                <td class="p-3 font-bold text-slate-400">4</td>
+                                <td class="p-3"><strong>Role-based layouts</strong> &mdash; navigation adapt theo user roles tại Thang Loi Group</td>
+                                <td class="p-3">Multi-tenant system &mdash; mỗi BU (CGV, Logistics, Food) có context riêng</td>
+                                <td class="p-3">Concept giống nhau. Chưa rõ CJ phân quyền theo BU hay theo project-level</td>
+                                <td class="p-3 text-center"><span class="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded font-bold">75%</span></td>
+                            </tr>
+                            <tr class="border-b border-slate-100">
+                                <td class="p-3 font-bold text-slate-400">5</td>
+                                <td class="p-3"><strong>Figma &rarr; Pixel-perfect UI</strong>, mentoring juniors, Agile/Scrum</td>
+                                <td class="p-3">Collaborate với Designer Korea, dịch specs thành code chuẩn, quy trình GDC</td>
+                                <td class="p-3">Workflow Figma &rarr; Code đã thuần thục. Cần adapt văn hóa làm việc Hàn Quốc</td>
+                                <td class="p-3 text-center"><span class="bg-green-100 text-green-700 px-2 py-0.5 rounded font-bold">85%</span></td>
+                            </tr>
+                            <tr class="border-b border-slate-100">
+                                <td class="p-3 font-bold text-slate-400">6</td>
+                                <td class="p-3"><strong>FastAPI + RESTful APIs</strong> &mdash; fullstack EconWiki, database schema design</td>
+                                <td class="p-3">Hiểu backend integration, API contracts với team AI/Backend Korea</td>
+                                <td class="p-3">Lợi thế: hiểu cả 2 phía. Giúp giao tiếp với Backend team chính xác hơn pure FE</td>
+                                <td class="p-3 text-center"><span class="bg-green-100 text-green-700 px-2 py-0.5 rounded font-bold">85%</span></td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold text-slate-400">7</td>
+                                <td class="p-3"><strong>Design System</strong> &mdash; centralized tại Thang Loi cho 5+ internal apps</td>
+                                <td class="p-3">GDC cần Design Language thống nhất toàn hệ sinh thái CJ</td>
+                                <td class="p-3">Đã làm scale nhỏ (200 users). CJ scale lớn hơn nhiều &mdash; cần học cách govern tokens ở enterprise level</td>
+                                <td class="p-3 text-center"><span class="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded font-bold">70%</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-4 bg-slate-50 rounded-lg p-4 text-xs text-slate-600">
+                    <strong class="text-slate-800">Tổng kết mapping:</strong> Skill set chuyển giao trực tiếp ~85%. Gaps chính nằm ở domain knowledge (hệ sinh thái CJ, quy trình GDC, Ant Design ecosystem) &mdash; không phải gaps về năng lực kỹ thuật.
+                </div>
+            </div>
+
+            <!-- PHẦN B: MOCK INTERVIEW — MAIN CASE -->
+            <div class="card-white border-l-8 border-red-600">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge">Mock Case</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Scenario-Based Interview</span>
+                </div>
+                <h4 class="text-xl font-black uppercase mb-1">Case: &ldquo;Smart Logistics Dashboard &mdash; Ngày Đầu Nhận Việc&rdquo;</h4>
+                <p class="text-xs text-slate-500 italic mb-6">Tình huống giả lập: Bạn vừa join team GDC, được assign vào dự án Smart Logistics. Bạn chưa biết gì về hệ thống nội bộ CJ.</p>
+
+                <!-- Bối cảnh -->
+                <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 mb-6">
+                    <span class="step-label text-slate-500">Bối cảnh Interviewer đưa ra:</span>
+                    <p class="text-sm text-slate-700 leading-relaxed mt-2">
+                        &ldquo;Tưởng tượng bạn vừa vào CJ GDC được 1 tuần. Team lead Korea giao cho bạn task đầu tiên: <strong>Build một trang Dashboard hiển thị realtime tracking của 50,000 kiện hàng/ngày</strong> cho hệ thống CJ Logistics. Dữ liệu từ API backend team Korea cung cấp. Design đã có trên Figma. Bạn sẽ approach task này như thế nào &mdash; biết rằng bạn chưa biết gì về codebase, conventions, hay internal tools của CJ?&rdquo;
+                    </p>
+                </div>
+
+                <!-- Q1: Approach -->
+                <div class="space-y-5">
+                    <div class="border-l-4 border-red-500 pl-5">
+                        <span class="step-label cj-red">Q1: Approach &mdash; Bước đầu tiên bạn làm gì?</span>
+                        <p class="font-bold text-sm mb-3">&ldquo;Bạn chưa biết gì về hệ thống. Tuần đầu tiên bạn sẽ làm gì trước khi code?&rdquo;</p>
+                        <div class="demo-box text-xs leading-relaxed">
+                            <strong class="not-italic text-red-700 block mb-2">Gợi ý trả lời (thật thà, không nổ):</strong>
+                            &ldquo;Em sẽ <strong>không code ngay</strong>. Tuần đầu em tập trung 3 việc:<br><br>
+                            <strong>1. Đọc hiểu codebase:</strong> Xem project structure, folder conventions, xem team đang dùng Ant Design version nào, có custom theme không, state management là gì (Redux? Zustand? Context?).<br><br>
+                            <strong>2. Đọc Figma kỹ:</strong> Xác định component nào đã có sẵn trong Design System team, component nào phải build mới. Em sẽ hỏi Designer rõ: bảng tracking này có bao nhiêu trạng thái kiện hàng? Có filter theo khu vực không? Có real-time hay polling?<br><br>
+                            <strong>3. Hỏi team:</strong> API docs ở đâu? Response format ra sao? Có mock data không? Convention đặt tên file, commit message, PR review process là gì?<br><br>
+                            Tại TechX em cũng từng join dự án giữa chừng &mdash; bài học lớn nhất là: <em>hỏi sớm 1 ngày thì tiết kiệm được 1 tuần debug.</em>&rdquo;
+                        </div>
+                    </div>
+
+                    <!-- Q2: Technical -->
+                    <div class="border-l-4 border-blue-500 pl-5">
+                        <span class="step-label text-blue-600">Q2: Technical &mdash; 50,000 records, làm sao không lag?</span>
+                        <p class="font-bold text-sm mb-3">&ldquo;Dashboard hiển thị 50K kiện hàng. Bạn xử lý performance thế nào?&rdquo;</p>
+                        <div class="demo-box text-xs leading-relaxed">
+                            <strong class="not-italic text-red-700 block mb-2">Gợi ý trả lời:</strong>
+                            &ldquo;Ở Thang Loi em đã xử lý bảng 10K+ records, nên em có kinh nghiệm thực tế:<br><br>
+                            <strong>1. Không render hết:</strong> Dùng <strong>Virtual Scroll</strong> &mdash; chỉ render ~50 rows visible trên viewport, DOM nhẹ hơn 200 lần.<br><br>
+                            <strong>2. Pagination phía server:</strong> 50K records thì Frontend không nên hold hết. Em sẽ confirm với Backend: API có hỗ trợ <code>offset/limit</code> hoặc <code>cursor-based pagination</code> không?<br><br>
+                            <strong>3. Memoization:</strong> <code>React.memo</code> cho row components, <code>useMemo</code> cho filter/sort logic, tránh re-render toàn bộ table khi 1 cell thay đổi.<br><br>
+                            <strong>4. Debounce search/filter:</strong> User gõ tìm kiếm &rarr; debounce 300ms trước khi call API, tránh spam requests.<br><br>
+                            Tuy nhiên, em chưa biết Ant Design Pro Table handle virtual scroll khác gì so với thư viện em từng dùng. Em sẽ cần thời gian spike 1-2 ngày để benchmark.&rdquo;
+                        </div>
+                    </div>
+
+                    <!-- Q3: Integration -->
+                    <div class="border-l-4 border-purple-500 pl-5">
+                        <span class="step-label text-purple-600">Q3: Integration &mdash; Làm việc với team Korea</span>
+                        <p class="font-bold text-sm mb-3">&ldquo;API từ Backend Korea trả về format khác hoàn toàn với mock data Designer đưa. Bạn xử lý sao?&rdquo;</p>
+                        <div class="demo-box text-xs leading-relaxed">
+                            <strong class="not-italic text-red-700 block mb-2">Gợi ý trả lời:</strong>
+                            &ldquo;Đây là tình huống em gặp thường xuyên ở cả TechX lẫn Thang Loi. Cách em xử lý:<br><br>
+                            <strong>1. Tạo Adapter Layer:</strong> Viết một lớp <code>transform/mapper</code> nằm giữa API response và UI components. Frontend luôn nhận data đúng format mà UI cần, bất kể Backend thay đổi gì.<br><br>
+                            <strong>2. Type-safe contract:</strong> Dùng TypeScript interface định nghĩa rõ <code>APIResponse</code> vs <code>UIModel</code>. Nếu Backend thay field name, TypeScript sẽ báo lỗi ngay lúc build &mdash; không cần chờ đến runtime.<br><br>
+                            <strong>3. Giao tiếp:</strong> Gửi tin nhắn rõ ràng cho Backend team: &lsquo;Anh/chị ơi, em thấy field <code>pkg_status</code> trong API nhưng Figma ghi là <code>delivery_state</code> &mdash; confirm giúp em field nào là source of truth?&rsquo;<br><br>
+                            Với em, Integrator không chỉ là code &mdash; là <em>cầu nối</em> giữa mọi người.&rdquo;
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PHẦN C: EDGE CASES -->
+            <div class="card-white border-l-8 border-orange-500">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge" style="background:#fff7ed; color:#ea580c;">Edge Cases</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Câu hỏi &ldquo;bẫy&rdquo; &mdash; test phản ứng thật</span>
+                </div>
+                <h4 class="text-xl font-black uppercase mb-1">Edge Cases: Khi Không Biết &rarr; Nói Không Biết</h4>
+                <p class="text-xs text-slate-500 italic mb-6">Mindset: Interviewer CJ không cần người giỏi tất cả &mdash; họ cần người biết giới hạn mình và biết cách lấp gap nhanh.</p>
+
+                <div class="space-y-5">
+                    <!-- Edge 1 -->
+                    <div class="bg-orange-50 rounded-xl p-5 border border-orange-100">
+                        <div class="flex items-start gap-3">
+                            <span class="bg-orange-200 text-orange-800 px-2 py-0.5 rounded text-[10px] font-black shrink-0 mt-0.5">EDGE 1</span>
+                            <div class="w-full">
+                                <p class="font-bold text-sm mb-2">&ldquo;Bạn có kinh nghiệm với Ant Design không?&rdquo;</p>
+                                <div class="grid md:grid-cols-2 gap-4 mt-3">
+                                    <div class="bg-white rounded-lg p-4 border border-red-200">
+                                        <span class="text-[10px] font-black text-red-500 uppercase block mb-1">&#10060; Trả lời sai</span>
+                                        <p class="text-xs text-slate-600 italic">&ldquo;Dạ em biết Ant Design ạ, em đã dùng nhiều rồi.&rdquo;</p>
+                                        <p class="text-[10px] text-red-500 mt-1">(Nổ &rarr; nếu hỏi sâu sẽ lộ)</p>
+                                    </div>
+                                    <div class="bg-white rounded-lg p-4 border border-green-200">
+                                        <span class="text-[10px] font-black text-green-600 uppercase block mb-1">&#10003; Trả lời đúng</span>
+                                        <p class="text-xs text-slate-600 italic">&ldquo;Em chưa dùng Ant Design trong production. Tuy nhiên em đã build UI Library riêng tại TechX với MantineUI/ShadCN và hiểu concept Design Tokens, theming. Ant Design cũng dựa trên cùng pattern &mdash; em tự tin adapt trong 1-2 tuần là productive.&rdquo;</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Edge 2 -->
+                    <div class="bg-orange-50 rounded-xl p-5 border border-orange-100">
+                        <div class="flex items-start gap-3">
+                            <span class="bg-orange-200 text-orange-800 px-2 py-0.5 rounded text-[10px] font-black shrink-0 mt-0.5">EDGE 2</span>
+                            <div class="w-full">
+                                <p class="font-bold text-sm mb-2">&ldquo;Hệ thống CJ có microservices, bạn hiểu gì về architecture này?&rdquo;</p>
+                                <div class="grid md:grid-cols-2 gap-4 mt-3">
+                                    <div class="bg-white rounded-lg p-4 border border-red-200">
+                                        <span class="text-[10px] font-black text-red-500 uppercase block mb-1">&#10060; Trả lời sai</span>
+                                        <p class="text-xs text-slate-600 italic">&ldquo;Dạ em hiểu microservices, mỗi service xử lý 1 domain riêng...&rdquo;</p>
+                                        <p class="text-[10px] text-red-500 mt-1">(Quá chung chung, nghe như đọc sách)</p>
+                                    </div>
+                                    <div class="bg-white rounded-lg p-4 border border-green-200">
+                                        <span class="text-[10px] font-black text-green-600 uppercase block mb-1">&#10003; Trả lời đúng</span>
+                                        <p class="text-xs text-slate-600 italic">&ldquo;Em chưa trực tiếp làm với hệ thống microservices lớn. Nhưng ở góc độ Frontend Integrator, em hiểu rằng mình sẽ gọi nhiều API endpoints từ các services khác nhau. Ở EconWiki em đã tự thiết kế RESTful API &mdash; nên em hiểu cách nghĩ của Backend. Với hệ thống CJ, em cần được onboard về architecture diagram để biết service nào cung cấp data gì cho Dashboard em đang build.&rdquo;</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Edge 3 -->
+                    <div class="bg-orange-50 rounded-xl p-5 border border-orange-100">
+                        <div class="flex items-start gap-3">
+                            <span class="bg-orange-200 text-orange-800 px-2 py-0.5 rounded text-[10px] font-black shrink-0 mt-0.5">EDGE 3</span>
+                            <div class="w-full">
+                                <p class="font-bold text-sm mb-2">&ldquo;Deadline gấp, Designer chưa giao Figma, Backend API chưa sẵn sàng. Bạn làm gì?&rdquo;</p>
+                                <div class="grid md:grid-cols-2 gap-4 mt-3">
+                                    <div class="bg-white rounded-lg p-4 border border-red-200">
+                                        <span class="text-[10px] font-black text-red-500 uppercase block mb-1">&#10060; Trả lời sai</span>
+                                        <p class="text-xs text-slate-600 italic">&ldquo;Em sẽ chờ Designer và Backend xong rồi em mới làm.&rdquo;</p>
+                                        <p class="text-[10px] text-red-500 mt-1">(Bị động, thiếu initiative)</p>
+                                    </div>
+                                    <div class="bg-white rounded-lg p-4 border border-green-200">
+                                        <span class="text-[10px] font-black text-green-600 uppercase block mb-1">&#10003; Trả lời đúng</span>
+                                        <p class="text-xs text-slate-600 italic">&ldquo;Em sẽ chủ động unblock bản thân: <strong>(1)</strong> Tự wireframe low-fi dựa trên cuộc họp requirements, gửi Designer confirm trước khi họ hoàn thành Figma chi tiết. <strong>(2)</strong> Tự tạo mock API bằng MSW hoặc json-server, define TypeScript types trước theo API contract đã thống nhất. <strong>(3)</strong> Build skeleton UI + loading states. Khi Design &amp; API sẵn sàng, em chỉ cần swap &mdash; không phải bắt đầu từ zero.&rdquo;</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Edge 4 -->
+                    <div class="bg-orange-50 rounded-xl p-5 border border-orange-100">
+                        <div class="flex items-start gap-3">
+                            <span class="bg-orange-200 text-orange-800 px-2 py-0.5 rounded text-[10px] font-black shrink-0 mt-0.5">EDGE 4</span>
+                            <div class="w-full">
+                                <p class="font-bold text-sm mb-2">&ldquo;Sếp Hàn review code và nói: &lsquo;Cái này không đúng cách CJ làm.&rsquo; Bạn phản ứng sao?&rdquo;</p>
+                                <div class="grid md:grid-cols-2 gap-4 mt-3">
+                                    <div class="bg-white rounded-lg p-4 border border-red-200">
+                                        <span class="text-[10px] font-black text-red-500 uppercase block mb-1">&#10060; Trả lời sai</span>
+                                        <p class="text-xs text-slate-600 italic">&ldquo;Em sẽ sửa lại ngay theo ý anh.&rdquo;</p>
+                                        <p class="text-[10px] text-red-500 mt-1">(Quá thụ động, không học được gì)</p>
+                                    </div>
+                                    <div class="bg-white rounded-lg p-4 border border-green-200">
+                                        <span class="text-[10px] font-black text-green-600 uppercase block mb-1">&#10003; Trả lời đúng</span>
+                                        <p class="text-xs text-slate-600 italic">&ldquo;Em sẽ hỏi cụ thể: &lsquo;Anh có thể chỉ em convention nào đúng không? Có docs hay example nào em có thể tham khảo?&rsquo; Sau đó em sẽ ghi chú lại thành checklist riêng, để lần sau không lặp lại sai lầm. Ở TechX em cũng phải adapt convention khác khi chuyển từ Thang Loi sang &mdash; em quen với việc học lại cách làm mới.&rdquo;</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PHẦN D: FRAMEWORK KHI MƠ HỒ -->
+            <div class="card-white">
+                <h4 class="section-title text-slate-800">D. Framework: Khi Không Biết Hệ Thống CJ</h4>
+                <p class="text-xs text-slate-500 mb-5 italic">Công thức chung cho mọi câu hỏi mà mình không có kinh nghiệm trực tiếp:</p>
+
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="bg-red-50 rounded-xl p-5 border border-red-100 text-center">
+                        <div class="text-3xl font-black cj-red mb-2">1</div>
+                        <p class="text-xs font-bold uppercase mb-2 text-slate-700">Thừa Nhận</p>
+                        <p class="text-[11px] text-slate-600 leading-relaxed">&ldquo;Em chưa trực tiếp làm việc với [X]...&rdquo;</p>
+                        <p class="text-[10px] text-slate-400 mt-2 italic">Trung thực &rarr; Tạo trust</p>
+                    </div>
+                    <div class="bg-blue-50 rounded-xl p-5 border border-blue-100 text-center">
+                        <div class="text-3xl font-black text-blue-600 mb-2">2</div>
+                        <p class="text-xs font-bold uppercase mb-2 text-slate-700">Bridge</p>
+                        <p class="text-[11px] text-slate-600 leading-relaxed">&ldquo;Tuy nhiên, em đã làm [Y] &mdash; có cùng pattern/concept...&rdquo;</p>
+                        <p class="text-[10px] text-slate-400 mt-2 italic">Chứng minh nền tảng</p>
+                    </div>
+                    <div class="bg-green-50 rounded-xl p-5 border border-green-100 text-center">
+                        <div class="text-3xl font-black text-green-600 mb-2">3</div>
+                        <p class="text-xs font-bold uppercase mb-2 text-slate-700">Action Plan</p>
+                        <p class="text-[11px] text-slate-600 leading-relaxed">&ldquo;Em sẽ cần [Z] để adapt &mdash; và em estimate khoảng [thời gian].&rdquo;</p>
+                        <p class="text-[10px] text-slate-400 mt-2 italic">Chủ động &rarr; Có kế hoạch</p>
+                    </div>
+                </div>
+
+                <div class="mt-5 bg-gradient-to-r from-red-50 to-orange-50 rounded-xl p-5 border border-red-100">
+                    <p class="text-xs text-slate-700 leading-relaxed">
+                        <strong class="cj-red">Nhớ:</strong> CJ GDC tuyển cho team product dài hạn. Họ đánh giá <strong>learning ability + cultural fit</strong> cao hơn là &ldquo;biết hết mọi thứ ngay lúc phỏng vấn&rdquo;. Việc thừa nhận chưa biết nhưng có plan rõ ràng để học &rarr; <strong>mạnh hơn nhiều</strong> so với việc nổ kinh nghiệm không có thật.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        let kpopChartInstance = null;
+        function initKpopChart() {
+            if (kpopChartInstance) return;
+            const canvas = document.getElementById('kpopChart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            kpopChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Brand Vibe', 'Nhận diện', 'Dễ đọc', 'Engagement'],
+                    datasets: [{
+                        label: 'Hiệu quả (%)',
+                        data: [100, 100, 70, 95],
+                        backgroundColor: ['#2563eb', '#2563eb', '#94a3b8', '#2563eb'],
+                        borderRadius: 8,
+                        barPercentage: 0.5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: { color: 'rgba(0,0,0,0.05)' },
+                            ticks: { color: '#94a3b8', font: { size: 9 } }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#475569', font: { size: 10, weight: 'bold' } }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#1e3a5f',
+                            titleFont: { size: 12, family: 'Inter' },
+                            bodyFont: { size: 11, family: 'Inter' },
+                            padding: 12,
+                            cornerRadius: 10
+                        }
+                    }
+                }
+            });
+        }
+
+        let parasiteChartInstance = null;
+        function initParasiteChart() {
+            if (parasiteChartInstance) return;
+            const canvas = document.getElementById('parasiteChart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            parasiteChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Sự tò mò', 'Nhận diện', 'Dễ đọc', 'Cảm xúc'],
+                    datasets: [{
+                        label: 'Hiệu quả (%)',
+                        data: [100, 95, 85, 100],
+                        backgroundColor: ['#e11932', '#e11932', '#94a3b8', '#e11932'],
+                        borderRadius: 8,
+                        barPercentage: 0.5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: { color: 'rgba(0,0,0,0.05)' },
+                            ticks: { color: '#94a3b8', font: { size: 9 } }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#475569', font: { size: 10, weight: 'bold' } }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#0f172a',
+                            titleFont: { size: 12, family: 'Inter' },
+                            bodyFont: { size: 11, family: 'Inter' },
+                            padding: 12,
+                            cornerRadius: 10
+                        }
+                    }
+                }
+            });
+        }
+
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+                tab.classList.remove('block');
+            });
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+            document.getElementById('tab-' + tabId).classList.add('block');
+
+            document.querySelectorAll('nav button').forEach(btn => {
+                btn.classList.remove('tab-active');
+                btn.classList.add('text-slate-400');
+            });
+            document.getElementById('btn-' + tabId).classList.add('tab-active');
+            document.getElementById('btn-' + tabId).classList.remove('text-slate-400');
+
+            window.scrollTo({ top: document.querySelector('nav').offsetTop - 20, behavior: 'smooth' });
+
+            if (tabId === 'poster') {
+                setTimeout(initParasiteChart, 100);
+                setTimeout(initKpopChart, 150);
+            }
+        }
+    </script>
+</body>
+</html>

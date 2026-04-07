@@ -1,0 +1,5 @@
+# https://ngocquynhpham.github.io/robots.txt
+# Thư mục projects/archive: không muốn crawler index (ghi chú cá nhân, portfolio cũ, v.v.)
+
+User-agent: *
+Disallow: /projects/archive/
