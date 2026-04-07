@@ -84,13 +84,15 @@
         
         <!-- PHẦN 1: DEEP RESEARCH REPORT -->
         <section class="mb-12">
-            <header class="text-center mb-10">
+            <header class="text-center mb-10 cursor-pointer select-none" onclick="toggleResearch()">
                 <h1 class="text-4xl font-black tracking-tighter uppercase italic mb-2">
                     <span class="cj-red">CJ</span> DEEP RESEARCH
+                    <span id="research-toggle-icon" class="inline-block text-slate-400 text-2xl ml-2 transition-transform duration-300" style="transform: rotate(180deg);">&#9660;</span>
                 </h1>
-                <p class="text-slate-500 font-medium uppercase tracking-widest text-xs">GDC Vietnam | Strategic Intelligence Report</p>
+                <p class="text-slate-500 font-medium uppercase tracking-widest text-xs">GDC Vietnam | Strategic Intelligence Report <span class="text-slate-400">&mdash; click to toggle</span></p>
             </header>
 
+            <div id="research-content" class="transition-all duration-300 overflow-hidden">
             <div class="grid lg:grid-cols-2 gap-6 mb-6">
                 <div class="card-white research-gradient">
                     <span class="step-label">GDC LÀ GÌ? (GLOBAL DELIVERY CENTER)</span>
@@ -244,6 +246,7 @@
                     </div>
                 </div>
             </div>
+            </div><!-- end #research-content -->
         </section>
 
         <!-- PHẦN 2: TABS -->
@@ -256,6 +259,12 @@
             </button>
             <button onclick="showTab('mapping')" id="btn-mapping" class="px-6 py-4 text-xs font-bold uppercase tracking-widest transition-all text-slate-400">
                 3. Mapping CV & Mock Interview
+            </button>
+            <button onclick="showTab('hotseat')" id="btn-hotseat" class="px-6 py-4 text-xs font-bold uppercase tracking-widest transition-all text-slate-400">
+                4. Hot Seat Q&A
+            </button>
+            <button onclick="showTab('study')" id="btn-study" class="px-6 py-4 text-xs font-bold uppercase tracking-widest transition-all text-slate-400">
+                5. Lộ Trình Ôn Tập
             </button>
         </nav>
 
@@ -953,6 +962,1112 @@
 
         </div>
 
+        <!-- TAB 4: HOT SEAT Q&A -->
+        <div id="tab-hotseat" class="tab-content hidden space-y-6">
+
+            <!-- HEADER -->
+            <div class="card-white">
+                <h2 class="text-2xl font-black mb-2 cj-red uppercase">Hot Seat: 11 Câu Hỏi Quyết Định</h2>
+                <p class="text-xs text-slate-500 italic">Những câu hỏi chắc chắn sẽ gặp &mdash; chuẩn bị kỹ = tự tin gấp 10 lần.</p>
+            </div>
+
+            <!-- Q1: GIỚI THIỆU BẢN THÂN -->
+            <div class="card-white border-l-8 border-red-600">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge">Q1</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Mở màn &mdash; 60 giây quyết định ấn tượng</span>
+                </div>
+                <h4 class="text-xl font-black uppercase mb-1">&ldquo;Giới thiệu bản thân đi.&rdquo;</h4>
+                <p class="text-xs text-slate-500 italic mb-6">Không phải kể tiểu sử &mdash; là pitch ngắn gọn: Tui là ai + Tui mang gì đến cho CJ.</p>
+
+                <div class="space-y-5">
+                    <div class="bg-slate-50 rounded-xl p-5 border border-slate-200">
+                        <span class="step-label text-slate-500">Nguyên tắc: CÔNG THỨC P.A.R (Position &rarr; Asset &rarr; Relevance)</span>
+                        <div class="grid md:grid-cols-3 gap-4 mt-3">
+                            <div class="bg-white rounded-lg p-4 border border-slate-200 text-center">
+                                <div class="text-2xl font-black cj-red mb-1">P</div>
+                                <p class="text-xs font-bold uppercase mb-1">Position</p>
+                                <p class="text-[11px] text-slate-600">Tui là ai, làm gì, bao lâu</p>
+                            </div>
+                            <div class="bg-white rounded-lg p-4 border border-slate-200 text-center">
+                                <div class="text-2xl font-black cj-red mb-1">A</div>
+                                <p class="text-xs font-bold uppercase mb-1">Asset</p>
+                                <p class="text-[11px] text-slate-600">Thế mạnh nổi bật nhất</p>
+                            </div>
+                            <div class="bg-white rounded-lg p-4 border border-slate-200 text-center">
+                                <div class="text-2xl font-black cj-red mb-1">R</div>
+                                <p class="text-xs font-bold uppercase mb-1">Relevance</p>
+                                <p class="text-[11px] text-slate-600">Tại sao match với CJ GDC</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="demo-box text-xs leading-relaxed">
+                        <strong class="not-italic text-red-700 block mb-2">Script mẫu (VI) ~45 giây:</strong>
+                        &ldquo;Dạ em chào anh/chị. Em là Quỳnh, <strong>Frontend Developer</strong> với hơn <strong>4 năm kinh nghiệm</strong> chuyên về React và TypeScript.<br><br>
+                        Thế mạnh của em nằm ở việc <strong>xây dựng UI Component Library</strong> và <strong>Dashboard dữ liệu nặng</strong>. Ở công ty trước, em đã build hệ thống Design System phục vụ 5+ internal apps, xử lý bảng dữ liệu 10,000+ records với ECharts.js, và tự tay convert Figma specs thành pixel-perfect UI.<br><br>
+                        Em tìm hiểu về vị trí Frontend Integrator tại CJ GDC và thấy rất phù hợp &mdash; vì em vừa có kinh nghiệm <strong>cắt UI chuẩn</strong> từ Design, vừa biết <strong>integrate logic phức tạp</strong> với API và state management. Em đặc biệt hứng thú với việc xây dựng <strong>AI Platform Dashboard</strong> cho hệ sinh thái CJ.&rdquo;
+                    </div>
+
+                    <div class="demo-box text-xs leading-relaxed mt-3" style="border-left-color: #2563eb;">
+                        <strong class="not-italic text-blue-700 block mb-2">English Version (~45s):</strong>
+                        &ldquo;Hi, I&rsquo;m Quynh &mdash; a <strong>Frontend Developer</strong> with over <strong>4 years of experience</strong> specializing in React and TypeScript.<br><br>
+                        My core strength is building <strong>UI Component Libraries</strong> and <strong>data-heavy Dashboards</strong>. At my previous company, I built a Design System serving 5+ internal apps, handled data tables with <strong>10,000+ records</strong> using ECharts.js, and converted Figma specs into pixel-perfect UI.<br><br>
+                        I researched the Frontend Integrator role at CJ GDC and I see a strong match &mdash; I have experience both <strong>crafting precise UI</strong> from Design and <strong>integrating complex logic</strong> with APIs and state management. I&rsquo;m particularly excited about building the <strong>AI Platform Dashboard</strong> for CJ&rsquo;s ecosystem.&rdquo;
+                    </div>
+
+                    <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 text-[12px] text-amber-800">
+                        <strong>Tips:</strong> Không nhắc &ldquo;em tốt nghiệp trường X năm Y&rdquo;. Không liệt kê mọi thứ. Chỉ nói thứ <strong>liên quan trực tiếp</strong> đến role đang ứng tuyển. Kết bằng 1 câu kết nối với CJ &rarr; cho thấy đã research.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Q2: SAO NGHỈ VIỆC? -->
+            <div class="card-white border-l-8 border-orange-500">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge" style="background:#fff7ed; color:#ea580c;">Q2</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Nhạy cảm &mdash; trả lời sai = red flag ngay</span>
+                </div>
+                <h4 class="text-xl font-black uppercase mb-1">&ldquo;Tại sao nghỉ việc chỗ cũ?&rdquo;</h4>
+                <p class="text-xs text-slate-500 italic mb-6">Bối cảnh: Bị layoff do công ty tái cơ cấu. Phỏng vấn công ty Hàn &rarr; cần xử lý khéo léo.</p>
+
+                <div class="grid md:grid-cols-2 gap-5 mb-5">
+                    <div class="bg-white rounded-lg p-5 border-2 border-red-200">
+                        <span class="text-[10px] font-black text-red-500 uppercase block mb-2">&#10060; Tuyệt đối KHÔNG nói</span>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li>&bull; &ldquo;Công ty <strong>Nhật</strong> em bị cắt giảm...&rdquo; <span class="text-[10px] text-red-500">(Nhấn mạnh &ldquo;Nhật&rdquo; trước sếp Hàn = nhạy cảm)</span></li>
+                            <li>&bull; &ldquo;Em bị đuổi / bị sa thải...&rdquo; <span class="text-[10px] text-red-500">(Từ ngữ tiêu cực)</span></li>
+                            <li>&bull; Kể lể chi tiết nội bộ công ty cũ <span class="text-[10px] text-red-500">(Thiếu professional)</span></li>
+                            <li>&bull; Tỏ ra tiêu cực, trách móc <span class="text-[10px] text-red-500">(Red flag lớn nhất)</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-lg p-5 border-2 border-green-200">
+                        <span class="text-[10px] font-black text-green-600 uppercase block mb-2">&#10003; Cách frame đúng</span>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li>&bull; Dùng từ: <strong>&ldquo;tái cơ cấu&rdquo;</strong> / <strong>&ldquo;restructuring&rdquo;</strong></li>
+                            <li>&bull; Nhấn mạnh: đây là quyết định <strong>tổ chức</strong>, không phải năng lực cá nhân</li>
+                            <li>&bull; Nhấn mạnh <strong>kết quả tốt</strong> trong thời gian làm &mdash; team lead đánh giá cao</li>
+                            <li>&bull; Chuyển hướng nhanh sang <strong>lý do muốn join CJ</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="demo-box text-xs leading-relaxed">
+                    <strong class="not-italic text-red-700 block mb-2">Script mẫu (VI):</strong>
+                    &ldquo;Dạ, công ty trước của em trải qua đợt <strong>tái cơ cấu tổ chức</strong> &mdash; toàn bộ phòng ban em bị ảnh hưởng, không riêng em. Trong thời gian làm việc em luôn <strong>hoàn thành tốt</strong> và được team lead đánh giá cao.<br><br>
+                    Thật ra, đây là cơ hội để em tìm một môi trường phù hợp hơn với định hướng dài hạn. Em muốn làm việc trong một <strong>hệ sinh thái sản phẩm lớn</strong> &mdash; nơi Frontend không chỉ là cắt giao diện mà là phần cốt lõi của platform. Đó chính là lý do em hứng thú với <strong>CJ GDC</strong>.&rdquo;
+                </div>
+
+                <div class="demo-box text-xs leading-relaxed mt-3" style="border-left-color: #2563eb;">
+                    <strong class="not-italic text-blue-700 block mb-2">English Version:</strong>
+                    &ldquo;My previous company went through an <strong>organizational restructuring</strong> &mdash; the entire department was affected, not just my position. During my time there, I consistently <strong>delivered quality work</strong> and received positive evaluations from my team lead.<br><br>
+                    Honestly, I see this as an opportunity to find a better long-term fit. I want to work within a <strong>large-scale product ecosystem</strong> where Frontend is a core part of the platform, not just a UI layer. That&rsquo;s exactly why I&rsquo;m excited about <strong>CJ GDC</strong>.&rdquo;
+                </div>
+
+                <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mt-4 text-[12px] text-amber-800">
+                    <strong>Lưu ý văn hóa Hàn-Nhật:</strong> KHÔNG nhắc quốc tịch công ty cũ. Nếu bị hỏi thêm, nói &ldquo;một công ty công nghệ quốc tế&rdquo; hoặc &ldquo;môi trường đa văn hóa&rdquo;. Reframe toàn bộ thành <strong>kinh nghiệm tích cực đã học được</strong>. Tập trung vào kết quả công việc tốt + được đánh giá cao.
+                </div>
+            </div>
+
+            <!-- Q3: KINH NGHIỆM -->
+            <div class="card-white border-l-8 border-blue-600">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge" style="background:#dbeafe; color:#2563eb;">Q3</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Show, don't tell &mdash; kể bằng con số</span>
+                </div>
+                <h4 class="text-xl font-black uppercase mb-1">&ldquo;Nói về kinh nghiệm làm việc của bạn.&rdquo;</h4>
+                <p class="text-xs text-slate-500 italic mb-6">Không kể theo timeline. Kể theo IMPACT &mdash; chọn 2-3 điểm mạnh nhất, gắn với role CJ cần.</p>
+
+                <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 mb-5">
+                    <span class="step-label text-slate-500">Công thức: S.T.A.R rút gọn (Situation &rarr; Task &rarr; Action &rarr; Result)</span>
+                    <p class="text-[11px] text-slate-500 mt-1">Mỗi kinh nghiệm kể trong ~30 giây. Tối đa 3 story. Luôn kết bằng con số/kết quả cụ thể.</p>
+                </div>
+
+                <div class="space-y-4">
+                    <!-- Story 1 -->
+                    <div class="border-l-4 border-blue-500 pl-5">
+                        <span class="step-label text-blue-600">Story 1: UI Component Library (Match: Ant Design System tại CJ)</span>
+                        <div class="demo-box text-xs leading-relaxed">
+                            <strong class="not-italic text-red-700 block mb-1">VI:</strong>
+                            &ldquo;Tại TechX, em được giao xây dựng <strong>UI Library từ zero</strong> phục vụ 2 sản phẩm SaaS cùng lúc. Em thiết kế hệ thống <strong>10+ layout templates</strong>, component reusable với theming support. Kết quả: team dev mới join chỉ cần <strong>1 tuần</strong> là productive thay vì 3 tuần trước đó, tốc độ ship feature tăng <strong>~30%</strong>.&rdquo;
+                        </div>
+                        <div class="demo-box text-xs leading-relaxed mt-2" style="border-left-color: #2563eb;">
+                            <strong class="not-italic text-blue-700 block mb-1">EN:</strong>
+                            &ldquo;At TechX, I was tasked with building a <strong>UI Library from scratch</strong> to serve 2 SaaS products simultaneously. I designed <strong>10+ layout templates</strong> and reusable components with theming support. Result: new developers became productive in <strong>1 week</strong> instead of 3, and feature delivery speed increased by <strong>~30%</strong>.&rdquo;
+                        </div>
+                    </div>
+                    <!-- Story 2 -->
+                    <div class="border-l-4 border-blue-500 pl-5">
+                        <span class="step-label text-blue-600">Story 2: Data Dashboard (Match: AI Platform Dashboard)</span>
+                        <div class="demo-box text-xs leading-relaxed">
+                            <strong class="not-italic text-red-700 block mb-1">VI:</strong>
+                            &ldquo;Tại Thang Loi Group, em build <strong>Dashboard quản lý bất động sản</strong> với bảng dữ liệu <strong>10,000+ records</strong>, biểu đồ ECharts.js realtime, và hệ thống filter phức tạp theo khu vực, dự án, trạng thái. Em tự xử lý virtual scrolling, server-side pagination, và role-based navigation cho 3 loại user khác nhau.&rdquo;
+                        </div>
+                        <div class="demo-box text-xs leading-relaxed mt-2" style="border-left-color: #2563eb;">
+                            <strong class="not-italic text-blue-700 block mb-1">EN:</strong>
+                            &ldquo;At Thang Loi Group, I built a <strong>real estate management Dashboard</strong> handling <strong>10,000+ records</strong>, ECharts.js realtime charts, and complex filtering by region, project, and status. I implemented virtual scrolling, server-side pagination, and role-based navigation for 3 different user types.&rdquo;
+                        </div>
+                    </div>
+                    <!-- Story 3 -->
+                    <div class="border-l-4 border-blue-500 pl-5">
+                        <span class="step-label text-blue-600">Story 3: Fullstack Mindset (Match: API Integration với Backend Korea)</span>
+                        <div class="demo-box text-xs leading-relaxed">
+                            <strong class="not-italic text-red-700 block mb-1">VI:</strong>
+                            &ldquo;Ngoài Frontend, em cũng tự build <strong>EconWiki</strong> &mdash; một ứng dụng fullstack với FastAPI + React, tự thiết kế database schema và RESTful API. Điều này giúp em <strong>hiểu cả hai phía</strong> &mdash; khi làm việc với Backend team, em giao tiếp chính xác hơn vì em biết phía họ đang xử lý gì.&rdquo;
+                        </div>
+                        <div class="demo-box text-xs leading-relaxed mt-2" style="border-left-color: #2563eb;">
+                            <strong class="not-italic text-blue-700 block mb-1">EN:</strong>
+                            &ldquo;Beyond Frontend, I also built <strong>EconWiki</strong> &mdash; a fullstack app with FastAPI + React, where I designed the database schema and RESTful API myself. This gives me a <strong>dual perspective</strong> &mdash; when working with Backend teams, I communicate more precisely because I understand what&rsquo;s happening on their side.&rdquo;
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 border border-blue-100 rounded-lg p-4 mt-5 text-[12px] text-blue-800">
+                    <strong>Tips:</strong> Sau mỗi story, dừng 1 nhịp và hỏi: &ldquo;Anh/chị muốn em chia sẻ thêm về phần nào không ạ?&rdquo; &rarr; Cho interviewer dẫn dắt, tránh nói quá dài.
+                </div>
+            </div>
+
+            <!-- Q4: SAO KHÔNG LÀM FE THUẦN MÀ LÀM UI? -->
+            <div class="card-white border-l-8 border-purple-600">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge" style="background:#f3e8ff; color:#9333ea;">Q4</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Câu hỏi &ldquo;test tư duy&rdquo; &mdash; trả lời sai = bị đánh giá thấp</span>
+                </div>
+                <h4 class="text-xl font-black uppercase mb-1">&ldquo;Sao không làm FE thuần mà apply vị trí UI?&rdquo;</h4>
+                <p class="text-xs text-slate-500 italic mb-6">Ẩn ý: Ngta muốn biết bạn có <strong>hiểu đúng role</strong> không, hay chỉ apply đại vì cần việc.</p>
+
+                <div class="grid md:grid-cols-2 gap-5 mb-5">
+                    <div class="bg-white rounded-lg p-5 border-2 border-red-200">
+                        <span class="text-[10px] font-black text-red-500 uppercase block mb-2">&#10060; Trả lời sai</span>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li>&bull; &ldquo;Tại em thấy JD phù hợp nên em apply thôi.&rdquo; <span class="text-[10px] text-red-500">(Hời hợt)</span></li>
+                            <li>&bull; &ldquo;UI hay FE gì em cũng làm được.&rdquo; <span class="text-[10px] text-red-500">(Không hiểu sự khác biệt)</span></li>
+                            <li>&bull; &ldquo;Em muốn chuyển sang UI thôi, FE mệt quá.&rdquo; <span class="text-[10px] text-red-500">(Tiêu cực)</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-lg p-5 border-2 border-green-200">
+                        <span class="text-[10px] font-black text-green-600 uppercase block mb-2">&#10003; Mindset đúng</span>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li>&bull; Frontend Integrator tại CJ = <strong>FE + UI + System Thinking</strong></li>
+                            <li>&bull; Đây là <strong>nâng cấp</strong>, không phải hạ cấp</li>
+                            <li>&bull; Role này cần người vừa hiểu pixel, vừa hiểu logic</li>
+                            <li>&bull; Chính xác là thế mạnh của mình</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="demo-box text-xs leading-relaxed">
+                    <strong class="not-italic text-red-700 block mb-2">Script mẫu (VI):</strong>
+                    &ldquo;Thật ra em thấy vị trí <strong>Frontend Integrator</strong> tại CJ không phải là &lsquo;UI thuần&rsquo; &mdash; mà là <strong>sự kết hợp</strong> giữa khả năng code pixel-perfect và tích hợp logic hệ thống phức tạp.<br><br>
+                    Em đã làm FE thuần nhiều năm &mdash; nhưng thế mạnh thật sự của em là ở <strong>vùng giao nhau</strong>: vừa convert Design thành code chuẩn, vừa integrate API, state management, và data flow. Ở nhiều team, người làm UI không hiểu logic, người làm logic không care pixel &mdash; em làm được <strong>cả hai</strong>.<br><br>
+                    Với AI Platform của CJ, Dashboard cần cực kỳ chính xác về mặt <strong>data visualization</strong> lẫn <strong>UI/UX</strong>. Em nghĩ đây chính là chỗ em phát huy tốt nhất &mdash; không phải em &lsquo;bỏ FE làm UI&rsquo;, mà em chọn role <strong>đòi hỏi cả hai skillset cùng lúc</strong>.&rdquo;
+                </div>
+
+                <div class="demo-box text-xs leading-relaxed mt-3" style="border-left-color: #2563eb;">
+                    <strong class="not-italic text-blue-700 block mb-2">English Version:</strong>
+                    &ldquo;Actually, I see the <strong>Frontend Integrator</strong> role at CJ as more than just &lsquo;pure UI&rsquo; &mdash; it&rsquo;s a <strong>combination</strong> of pixel-perfect coding and complex system integration.<br><br>
+                    I&rsquo;ve been doing pure FE for years, but my real strength lies at the <strong>intersection</strong>: converting Design into precise code while also integrating APIs, state management, and data flow. In many teams, UI developers don&rsquo;t understand logic, and logic developers don&rsquo;t care about pixels &mdash; I can do <strong>both</strong>.<br><br>
+                    For CJ&rsquo;s AI Platform, the Dashboard demands extreme accuracy in both <strong>data visualization</strong> and <strong>UI/UX</strong>. I believe this is exactly where I thrive &mdash; I&rsquo;m not &lsquo;downgrading from FE to UI&rsquo;, I&rsquo;m choosing a role that <strong>requires both skillsets simultaneously</strong>.&rdquo;
+                </div>
+            </div>
+
+            <!-- Q5: LƯƠNG -->
+            <div class="card-white border-l-8 border-green-600">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge" style="background:#dcfce7; color:#16a34a;">Q5</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Deal closer &mdash; 23.5tr &rarr; 30tr gross</span>
+                </div>
+                <h4 class="text-xl font-black uppercase mb-1">&ldquo;Mức lương mong muốn?&rdquo;</h4>
+                <p class="text-xs text-slate-500 italic mb-6">Hiện tại: 23.5tr VNĐ (~$940). Target: 30tr VNĐ (~$1,200) gross (~28% tăng). Đang mất việc nhưng KHÔNG được để lộ sự cấp bách.</p>
+
+                <!-- Cảnh báo: Đang mất việc -->
+                <div class="bg-red-50 border-2 border-red-200 rounded-xl p-5 mb-5">
+                    <span class="step-label text-red-600">Tình huống đặc biệt: ĐANG MẤT VIỆC &mdash; cách deal không bị ép giá</span>
+                    <div class="grid md:grid-cols-2 gap-4 mt-3">
+                        <div class="bg-white rounded-lg p-4 border border-red-200">
+                            <span class="text-[10px] font-black text-red-500 uppercase block mb-2">&#10060; Bất lợi nếu để lộ</span>
+                            <ul class="text-xs text-slate-600 space-y-2">
+                                <li>&bull; Ngta biết mình <strong>cần việc gấp</strong> &rarr; ép giá thấp</li>
+                                <li>&bull; Mất leverage trong negotiate</li>
+                                <li>&bull; Bị đánh giá là &ldquo;đang chạy deadline tìm việc&rdquo;</li>
+                            </ul>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 border border-green-200">
+                            <span class="text-[10px] font-black text-green-600 uppercase block mb-2">&#10003; Chiến thuật đúng</span>
+                            <ul class="text-xs text-slate-600 space-y-2">
+                                <li>&bull; Frame: <strong>&ldquo;đang tìm môi trường phù hợp&rdquo;</strong> chứ không phải &ldquo;đang cần việc&rdquo;</li>
+                                <li>&bull; Tỏ ra <strong>chọn lọc</strong>: &ldquo;Em đang tìm hiểu một vài công ty, CJ là ưu tiên hàng đầu&rdquo;</li>
+                                <li>&bull; <strong>KHÔNG bao giờ</strong> nhắc &ldquo;em đang thất nghiệp&rdquo; hay &ldquo;em cần việc gấp&rdquo;</li>
+                                <li>&bull; 23.5 &rarr; 30tr = <strong>~28% tăng = hoàn toàn hợp lý</strong> cho 4+ năm kinh nghiệm FE tại HCMC</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-3 bg-amber-50 rounded-lg p-3 text-[11px] text-amber-800">
+                        <strong>Thực tế thị trường:</strong> Market rate cho React/TS 4+ năm tại HCMC 2024-2026: <strong>25-35 triệu gross</strong>. 30 triệu nằm ngay giữa range &mdash; hoàn toàn hợp lý, không quá đáng. Nếu bị hỏi &ldquo;lương cũ bao nhiêu&rdquo; &rarr; <strong>KHÔNG trả lời trực tiếp</strong>. Nói: &ldquo;Em muốn discuss based on value em mang lại cho vị trí này, chứ không phải mức cũ ạ.&rdquo;
+                    </div>
+                </div>
+
+                <!-- Bảng quy đổi + phiên âm -->
+                <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 mb-5">
+                    <span class="step-label text-slate-500">Bảng quy đổi &amp; Phiên âm tiếng Anh (cả VNĐ lẫn USD)</span>
+                    <div class="overflow-x-auto mt-3">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead class="bg-white text-slate-500 font-black uppercase tracking-widest">
+                                <tr>
+                                    <th class="p-3">Mức</th>
+                                    <th class="p-3 text-center">VNĐ</th>
+                                    <th class="p-3 text-center">USD (~x25k)</th>
+                                    <th class="p-3">Đọc VNĐ bằng tiếng Anh</th>
+                                    <th class="p-3">Đọc USD bằng tiếng Anh</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-slate-600">
+                                <tr class="border-b border-slate-100">
+                                    <td class="p-3 font-bold text-slate-400">Hiện tại</td>
+                                    <td class="p-3 text-center font-bold">23.5 triệu</td>
+                                    <td class="p-3 text-center">~$940</td>
+                                    <td class="p-3"><span class="italic text-blue-700">&ldquo;twenty-three point five million dong&rdquo;</span><br><span class="text-slate-400 text-[10px]">/TWEN-ti-thri point faiv MIL-y&#x259;n dong/</span></td>
+                                    <td class="p-3"><span class="italic text-blue-700">&ldquo;nine forty&rdquo;</span><br><span class="text-slate-400 text-[10px]">/nain FOR-ti/</span></td>
+                                </tr>
+                                <tr class="border-b border-slate-100">
+                                    <td class="p-3 font-bold text-orange-500">Chấp nhận được</td>
+                                    <td class="p-3 text-center font-bold">27 triệu</td>
+                                    <td class="p-3 text-center">~$1,080</td>
+                                    <td class="p-3"><span class="italic text-blue-700">&ldquo;twenty-seven million dong&rdquo;</span><br><span class="text-slate-400 text-[10px]">/TWEN-ti-SEV-&#x259;n MIL-y&#x259;n dong/</span></td>
+                                    <td class="p-3"><span class="italic text-blue-700">&ldquo;about eleven hundred&rdquo;</span><br><span class="text-slate-400 text-[10px]">/i-LEV-&#x259;n H&#x28C;N-drid/</span></td>
+                                </tr>
+                                <tr class="border-b border-slate-100 bg-green-50">
+                                    <td class="p-3 font-bold text-green-700">TARGET</td>
+                                    <td class="p-3 text-center font-black text-green-700">30 triệu</td>
+                                    <td class="p-3 text-center font-black text-green-700">~$1,200</td>
+                                    <td class="p-3"><span class="italic text-blue-700 font-bold">&ldquo;thirty million dong&rdquo;</span><br><span class="text-slate-400 text-[10px]">/TH&#x25C;R-ti MIL-y&#x259;n dong/</span></td>
+                                    <td class="p-3"><span class="italic text-blue-700 font-bold">&ldquo;twelve hundred&rdquo;</span><br><span class="text-slate-400 text-[10px]">/twelv H&#x28C;N-drid/</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-3 font-bold text-purple-500">Neo cao (nói trước)</td>
+                                    <td class="p-3 text-center font-bold">33 triệu</td>
+                                    <td class="p-3 text-center">~$1,320</td>
+                                    <td class="p-3"><span class="italic text-blue-700">&ldquo;thirty-three million dong&rdquo;</span><br><span class="text-slate-400 text-[10px]">/TH&#x25C;R-ti-thri MIL-y&#x259;n dong/</span></td>
+                                    <td class="p-3"><span class="italic text-blue-700">&ldquo;thirteen hundred&rdquo;</span><br><span class="text-slate-400 text-[10px]">/th&#x25C;r-TIN H&#x28C;N-drid/</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-3 bg-blue-50 rounded-lg p-3 text-[11px] text-blue-800">
+                        <strong>Mẹo đọc số:</strong> USD dùng dạng ngắn: <strong>&ldquo;twelve hundred&rdquo;</strong> (tự nhiên hơn &ldquo;one thousand two hundred&rdquo;). VNĐ nói <strong>&ldquo;thirty million dong&rdquo;</strong>. <strong>Chiến thuật neo:</strong> Nói 33tr trước, ngta counter xuống 30tr = đúng target. Nếu nói 30tr trước, ngta counter xuống 27tr.
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 mb-5">
+                    <span class="step-label text-slate-500">Chiến thuật: KHÔNG nói số trước. Nếu bị ép &rarr; NEO CAO + JUSTIFY</span>
+                    <div class="grid md:grid-cols-4 gap-4 mt-3">
+                        <div class="bg-white rounded-lg p-4 border border-slate-200 text-center">
+                            <div class="text-lg font-black text-green-600 mb-1">Bước 1</div>
+                            <p class="text-xs font-bold uppercase mb-1">Hỏi ngược</p>
+                            <p class="text-[11px] text-slate-600">&ldquo;Anh/chị có thể chia sẻ range cho vị trí này không ạ?&rdquo;</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 border border-slate-200 text-center">
+                            <div class="text-lg font-black text-green-600 mb-1">Bước 2</div>
+                            <p class="text-xs font-bold uppercase mb-1">Neo cao</p>
+                            <p class="text-[11px] text-slate-600">Nếu bị ép: <strong>&ldquo;khoảng 33 triệu gross&rdquo;</strong></p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 border border-slate-200 text-center">
+                            <div class="text-lg font-black text-green-600 mb-1">Bước 3</div>
+                            <p class="text-xs font-bold uppercase mb-1">Justify</p>
+                            <p class="text-[11px] text-slate-600">Gắn với giá trị mang lại, không phải chi phí sống</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 border border-slate-200 text-center">
+                            <div class="text-lg font-black text-green-600 mb-1">Bước 4</div>
+                            <p class="text-xs font-bold uppercase mb-1">Linh hoạt</p>
+                            <p class="text-[11px] text-slate-600">Ngta counter 30tr &rarr; nhận ngay. Đó là target thật.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="demo-box text-xs leading-relaxed mb-3">
+                    <strong class="not-italic text-red-700 block mb-2">Script mẫu (VI):</strong>
+                    &ldquo;Dạ, dựa trên kinh nghiệm và giá trị em mang lại, em mong muốn mức khoảng <strong>33 triệu gross</strong>, tùy theo cấu trúc phúc lợi tổng thể.<br><br>
+                    Em đưa ra mức này dựa trên giá trị em mang lại chứ không phải mức cũ. Cụ thể:<br><br>
+                    <strong>1.</strong> Em có <strong>4+ năm</strong> kinh nghiệm thực chiến React/TypeScript, đã build <strong>UI Library</strong> và <strong>Design System</strong> phục vụ nhiều sản phẩm &mdash; đây là việc CJ GDC cần ngay.<br><br>
+                    <strong>2.</strong> Em xử lý được <strong>Data Dashboard phức tạp</strong> (10K+ records, ECharts, virtual scroll) &mdash; không cần thời gian dài onboard cho mảng này.<br><br>
+                    <strong>3.</strong> Em có <strong>fullstack mindset</strong> (FastAPI, database design) &mdash; giúp tiết kiệm thời gian giao tiếp với Backend team Korea vì em hiểu cả hai phía.<br><br>
+                    <strong>4.</strong> Em có kinh nghiệm làm việc trong môi trường <strong>đa văn hóa quốc tế</strong> với quy trình kỷ luật cao &mdash; fit ngay vào văn hóa GDC.<br><br>
+                    Tất nhiên em cũng <strong>linh hoạt</strong> tùy theo cấu trúc tổng thể &mdash; nếu có lộ trình review rõ ràng thì em sẵn sàng discuss thêm.&rdquo;
+                </div>
+
+                <div class="demo-box text-xs leading-relaxed mb-5" style="border-left-color: #2563eb;">
+                    <strong class="not-italic text-blue-700 block mb-2">English Version:</strong>
+                    &ldquo;Based on my experience and the value I can bring, I&rsquo;m looking at around <strong>thirteen hundred gross</strong> &mdash; that&rsquo;s about <strong>thirty-three million dong</strong> &mdash; depending on the overall benefits structure.<br><br>
+                    I base this on the <strong>value I bring</strong>, not my previous salary. Specifically:<br><br>
+                    <strong>1.</strong> I have <strong>4+ years</strong> of hands-on React/TypeScript experience, having built <strong>UI Libraries</strong> and <strong>Design Systems</strong> serving multiple products &mdash; exactly what CJ GDC needs right now.<br><br>
+                    <strong>2.</strong> I can handle <strong>complex Data Dashboards</strong> (10K+ records, ECharts, virtual scroll) &mdash; minimal onboarding time needed for this area.<br><br>
+                    <strong>3.</strong> I have a <strong>fullstack mindset</strong> (FastAPI, database design) &mdash; saving communication time with the Backend team in Korea because I understand both sides.<br><br>
+                    <strong>4.</strong> I have experience working in a <strong>multicultural international environment</strong> with highly disciplined processes &mdash; ready to fit into GDC culture from day one.<br><br>
+                    Of course, I&rsquo;m <strong>flexible</strong> depending on the total package &mdash; if there&rsquo;s a clear performance review path, I&rsquo;m happy to discuss further.&rdquo;
+                </div>
+
+                <!-- Bảng ROI -->
+                <div class="overflow-hidden rounded-xl border border-slate-200 shadow-sm mb-5">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead class="bg-green-50 text-green-700 font-black uppercase tracking-widest">
+                            <tr>
+                                <th class="p-4">Giá trị em mang lại</th>
+                                <th class="p-4 text-center">Thay vì phải</th>
+                                <th class="p-4 text-center">CJ tiết kiệm</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-slate-600">
+                            <tr class="border-b border-slate-100">
+                                <td class="p-4">Đã biết build UI Library &rarr; productive từ tháng 1</td>
+                                <td class="p-4 text-center">Tuyển junior + training 3 tháng</td>
+                                <td class="p-4 text-center font-bold text-green-700">~2 tháng salary</td>
+                            </tr>
+                            <tr class="border-b border-slate-100">
+                                <td class="p-4">Xử lý được Data Table/Chart nặng ngay</td>
+                                <td class="p-4 text-center">Thuê thêm 1 FE chuyên data viz</td>
+                                <td class="p-4 text-center font-bold text-green-700">1 headcount</td>
+                            </tr>
+                            <tr class="border-b border-slate-100">
+                                <td class="p-4">Fullstack mindset &rarr; giao tiếp Backend chính xác</td>
+                                <td class="p-4 text-center">Nhiều vòng ping-pong sửa API</td>
+                                <td class="p-4 text-center font-bold text-green-700">~20% dev time</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4">Kinh nghiệm đa văn hóa &rarr; fit GDC ngay</td>
+                                <td class="p-4 text-center">Adaptation period 3-6 tháng</td>
+                                <td class="p-4 text-center font-bold text-green-700">Faster output</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="bg-green-50 border border-green-100 rounded-lg p-4 text-[12px] text-green-800">
+                    <strong>Nhớ:</strong> KHÔNG BAO GIỜ nói &ldquo;em đang cần tiền&rdquo;, &ldquo;em cần trả nợ&rdquo;, hay &ldquo;mức cũ em thấp quá&rdquo;. Luôn frame bằng <strong>giá trị mang lại cho CJ</strong>, không phải chi phí sống cá nhân. Nếu ngta offer thấp hơn range, có thể negotiate: &ldquo;Em có thể linh hoạt nếu có lộ trình review sau 6 tháng ạ.&rdquo;
+                </div>
+            </div>
+
+            <!-- Q6: SAO HỌC QTKD, ĐỔI NGÀNH? -->
+            <div class="card-white border-l-8 border-amber-500">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge" style="background:#fffbeb; color:#d97706;">Q6</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Background check &mdash; giải thích chuyển ngành thuyết phục</span>
+                </div>
+                <h4 class="text-xl font-black uppercase mb-1">&ldquo;Sao học QTKD chi, đổi ngành hả? Học xong chưa?&rdquo;</h4>
+                <p class="text-xs text-slate-500 italic mb-6">Ẩn ý: Ngta muốn biết bạn có <strong>nghiêm túc</strong> với con đường IT không, hay chỉ học lung tung rồi nhảy bừa.</p>
+
+                <!-- Trạng thái hiện tại -->
+                <div class="bg-green-50 border-2 border-green-200 rounded-xl p-5 mb-5">
+                    <span class="step-label text-green-600">Trạng thái bằng QTKD: ĐÃ HOÀN THÀNH</span>
+                    <div class="grid md:grid-cols-3 gap-4 mt-3">
+                        <div class="bg-white rounded-lg p-4 border border-green-200 text-center">
+                            <div class="text-2xl font-black text-green-600 mb-1">&#10003;</div>
+                            <p class="text-xs font-bold uppercase mb-1">Luận văn</p>
+                            <p class="text-[11px] text-slate-600">Đã bảo vệ xong, có điểm</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 border border-green-200 text-center">
+                            <div class="text-2xl font-black text-green-600 mb-1">&#10003;</div>
+                            <p class="text-xs font-bold uppercase mb-1">Hoàn tất chương trình</p>
+                            <p class="text-[11px] text-slate-600">Đủ tín chỉ, đủ điểm</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 border border-amber-200 text-center">
+                            <div class="text-2xl font-black text-amber-500 mb-1">&#9203;</div>
+                            <p class="text-xs font-bold uppercase mb-1">Chờ lấy bằng</p>
+                            <p class="text-[11px] text-slate-600">Đang đợi trường cấp bằng chính thức</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-5 mb-5">
+                    <div class="bg-white rounded-lg p-5 border-2 border-red-200">
+                        <span class="text-[10px] font-black text-red-500 uppercase block mb-2">&#10060; Tuyệt đối KHÔNG nói</span>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li>&bull; &ldquo;Hồi đó em chọn sai ngành...&rdquo; <span class="text-[10px] text-red-500">(Tự hạ giá trị)</span></li>
+                            <li>&bull; &ldquo;Em học cho vui / ba mẹ bắt học...&rdquo; <span class="text-[10px] text-red-500">(Thiếu chủ đích)</span></li>
+                            <li>&bull; &ldquo;Bằng QTKD em không dùng đâu...&rdquo; <span class="text-[10px] text-red-500">(Phí phạm thời gian = red flag)</span></li>
+                            <li>&bull; &ldquo;Em chưa lấy bằng / còn nợ...&rdquo; <span class="text-[10px] text-red-500">(Sự thật là đã xong &rarr; nói rõ)</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-lg p-5 border-2 border-green-200">
+                        <span class="text-[10px] font-black text-green-600 uppercase block mb-2">&#10003; Cách frame đúng</span>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li>&bull; QTKD = <strong>lợi thế cạnh tranh</strong>, không phải đi vòng</li>
+                            <li>&bull; Hiểu business + hiểu tech = <strong>hiếm và giá trị</strong></li>
+                            <li>&bull; Đã <strong>hoàn thành nghiêm túc</strong>: luận văn xong, có điểm, chờ bằng</li>
+                            <li>&bull; Chuyển ngành = <strong>có kế hoạch</strong>, không phải bỏ cuộc</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="demo-box text-xs leading-relaxed">
+                    <strong class="not-italic text-red-700 block mb-2">Script mẫu (VI):</strong>
+                    &ldquo;Dạ, em đã <strong>hoàn thành chương trình QTKD</strong> rồi ạ &mdash; luận văn đã bảo vệ xong, có điểm, hiện đang chờ trường cấp bằng chính thức.<br><br>
+                    Việc học QTKD không phải là đi vòng &mdash; mà là <strong>đầu tư có chủ đích</strong>. Khi làm Frontend Developer, em nhận ra rất nhiều dev giỏi kỹ thuật nhưng <strong>không hiểu business logic</strong> &mdash; không hiểu tại sao sản phẩm cần feature này, không đọc được KPI, không nói cùng ngôn ngữ với stakeholder.<br><br>
+                    Bằng QTKD giúp em hiểu <strong>vận hành doanh nghiệp, tài chính, marketing, chiến lược</strong> &mdash; nên khi em build Dashboard hay Platform, em không chỉ code theo spec mà còn <strong>hiểu data đó có ý nghĩa gì</strong> với người dùng cuối. Đặc biệt với CJ &mdash; một tập đoàn đa ngành &mdash; người vừa hiểu tech vừa hiểu business sẽ <strong>đóng góp nhiều hơn</strong> so với người chỉ biết code.&rdquo;
+                </div>
+
+                <div class="demo-box text-xs leading-relaxed mt-3" style="border-left-color: #2563eb;">
+                    <strong class="not-italic text-blue-700 block mb-2">English Version:</strong>
+                    &ldquo;Yes, I&rsquo;ve actually <strong>completed the BBA program</strong> &mdash; my thesis is done and graded, I&rsquo;m just waiting for the official diploma.<br><br>
+                    Studying Business Administration wasn&rsquo;t a detour &mdash; it was a <strong>deliberate investment</strong>. As a Frontend Developer, I noticed that many devs are technically strong but <strong>don&rsquo;t understand the business logic</strong> behind what they build &mdash; they can&rsquo;t read KPIs, can&rsquo;t speak the same language as stakeholders.<br><br>
+                    My BBA gives me understanding of <strong>operations, finance, marketing, and strategy</strong> &mdash; so when I build Dashboards or Platforms, I don&rsquo;t just code to spec, I actually <strong>understand what the data means</strong> to end users. Especially at CJ &mdash; a multi-industry conglomerate &mdash; someone who understands both tech and business can <strong>contribute far more</strong> than a pure coder.&rdquo;
+                </div>
+
+                <div class="bg-amber-50 border border-amber-200 rounded-lg p-4 mt-4 text-[12px] text-amber-800">
+                    <strong>Tips:</strong> Luôn nói rõ &ldquo;đã hoàn thành, chờ bằng&rdquo; &mdash; không để mập mờ. Nhấn mạnh QTKD là <strong>competitive advantage</strong> chứ không phải baggage. Nếu bị hỏi thêm &ldquo;vậy bằng chính là gì?&rdquo; &rarr; &ldquo;Bằng chính của em là CNTT, QTKD là văn bằng 2 em học thêm để bổ sung năng lực.&rdquo;
+                </div>
+            </div>
+
+            <!-- Q7: SAO KHÔNG HỌC LÊN CNTT MÀ HỌC VĂN BẰNG KHÁC? -->
+            <div class="card-white border-l-8 border-teal-600">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge" style="background:#ccfbf1; color:#0d9488;">Q7</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Tư duy chiến lược &mdash; giải thích tại sao không học lên mà học ngang</span>
+                </div>
+                <h4 class="text-xl font-black uppercase mb-1">&ldquo;Sao không học lên CNTT mà học qua văn bằng khác?&rdquo;</h4>
+                <p class="text-xs text-slate-500 italic mb-6">Ẩn ý: Ngta muốn biết bạn có <strong>tư duy chiến lược</strong> trong việc phát triển bản thân hay không &mdash; sao không đi sâu mà lại đi rộng?</p>
+
+                <div class="grid md:grid-cols-2 gap-5 mb-5">
+                    <div class="bg-white rounded-lg p-5 border-2 border-red-200">
+                        <span class="text-[10px] font-black text-red-500 uppercase block mb-2">&#10060; Tuyệt đối KHÔNG nói</span>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li>&bull; &ldquo;Thi cao học CNTT khó quá...&rdquo; <span class="text-[10px] text-red-500">(Tự nhận yếu)</span></li>
+                            <li>&bull; &ldquo;Em lười học thuật / không thích nghiên cứu...&rdquo; <span class="text-[10px] text-red-500">(Thiếu chí tiến thủ)</span></li>
+                            <li>&bull; &ldquo;Thạc sĩ CNTT vô dụng, ra làm gì...&rdquo; <span class="text-[10px] text-red-500">(Thiếu tôn trọng)</span></li>
+                            <li>&bull; &ldquo;Em chưa nghĩ tới...&rdquo; <span class="text-[10px] text-red-500">(Không có kế hoạch)</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-lg p-5 border-2 border-green-200">
+                        <span class="text-[10px] font-black text-green-600 uppercase block mb-2">&#10003; Cách frame đúng</span>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li>&bull; IT thay đổi quá nhanh &rarr; kinh nghiệm thực chiến <strong>giá trị hơn</strong> bằng cấp hàn lâm</li>
+                            <li>&bull; Mở rộng ngang = <strong>T-shaped skill</strong> &mdash; sâu tech + rộng business</li>
+                            <li>&bull; Thạc sĩ CNTT dạy lý thuyết, nhưng em cần <strong>domain knowledge thực tế</strong></li>
+                            <li>&bull; Đây là <strong>quyết định chiến lược</strong> dựa trên thị trường, không phải random</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- T-shaped diagram -->
+                <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 mb-5">
+                    <span class="step-label text-slate-500">Chiến lược phát triển: T-SHAPED PROFESSIONAL</span>
+                    <div class="grid md:grid-cols-2 gap-5 mt-3">
+                        <div class="bg-white rounded-lg p-4 border border-slate-200">
+                            <div class="text-center mb-3">
+                                <span class="text-xs font-black text-teal-600 uppercase">Chiều dọc (Deep)</span>
+                            </div>
+                            <ul class="text-[11px] text-slate-600 space-y-2">
+                                <li>&bull; 4+ năm React/TypeScript thực chiến</li>
+                                <li>&bull; UI Library, Design System, Data Dashboard</li>
+                                <li>&bull; Fullstack mindset (FastAPI, DB design)</li>
+                                <li>&bull; Tự học liên tục qua projects thực tế</li>
+                            </ul>
+                            <p class="text-[10px] text-teal-600 mt-3 font-bold">&rarr; Không cần bằng thạc sĩ để chứng minh &mdash; portfolio + kinh nghiệm nói thay.</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 border border-slate-200">
+                            <div class="text-center mb-3">
+                                <span class="text-xs font-black text-amber-600 uppercase">Chiều ngang (Broad)</span>
+                            </div>
+                            <ul class="text-[11px] text-slate-600 space-y-2">
+                                <li>&bull; QTKD: hiểu vận hành, tài chính, chiến lược</li>
+                                <li>&bull; Đọc được business requirements, KPI</li>
+                                <li>&bull; Nói cùng ngôn ngữ với PM, stakeholder</li>
+                                <li>&bull; Hiểu sản phẩm từ góc nhìn kinh doanh</li>
+                            </ul>
+                            <p class="text-[10px] text-amber-600 mt-3 font-bold">&rarr; Đây là thứ thạc sĩ CNTT KHÔNG dạy &mdash; chỉ có khi học riêng.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="demo-box text-xs leading-relaxed">
+                    <strong class="not-italic text-red-700 block mb-2">Script mẫu (VI):</strong>
+                    &ldquo;Dạ, em có cân nhắc kỹ chuyện này. Ngành IT thay đổi rất nhanh &mdash; những gì em học trong chương trình thạc sĩ CNTT có thể <strong>lỗi thời sau 2-3 năm</strong>. Trong khi đó, kinh nghiệm thực chiến 4 năm với React/TypeScript, tự build project, tự giải quyết vấn đề production &mdash; đó mới là thứ <strong>thị trường đánh giá cao</strong>.<br><br>
+                    Còn QTKD thì khác &mdash; kiến thức về <strong>vận hành, tài chính, chiến lược kinh doanh</strong> là nền tảng bền vững, không bị lỗi thời. Em chọn mở rộng <strong>chiều ngang</strong> thay vì đi sâu thêm lý thuyết &mdash; vì trong thực tế, dev hiểu business sẽ <strong>đóng góp nhiều hơn</strong> cho sản phẩm so với dev chỉ giỏi kỹ thuật.<br><br>
+                    Chiến lược của em là trở thành <strong>T-shaped professional</strong>: sâu về Frontend, rộng về Business. Đặc biệt ở CJ &mdash; một tập đoàn đa ngành với logistics, thương mại, giải trí &mdash; em tin rằng người hiểu cả hai phía sẽ <strong>tạo ra giá trị lớn hơn</strong>.&rdquo;
+                </div>
+
+                <div class="demo-box text-xs leading-relaxed mt-3" style="border-left-color: #2563eb;">
+                    <strong class="not-italic text-blue-700 block mb-2">English Version:</strong>
+                    &ldquo;I actually thought about this carefully. The IT industry changes so fast &mdash; what you learn in a CS Master&rsquo;s program can become <strong>outdated within 2-3 years</strong>. Meanwhile, 4 years of hands-on React/TypeScript experience, building real projects, solving production issues &mdash; that&rsquo;s what the <strong>market truly values</strong>.<br><br>
+                    Business knowledge is different &mdash; understanding <strong>operations, finance, and strategy</strong> is foundational and doesn&rsquo;t become obsolete. I chose to <strong>expand horizontally</strong> rather than go deeper into academic theory &mdash; because in practice, a developer who understands business will <strong>contribute more</strong> to a product than one who only knows code.<br><br>
+                    My strategy is to become a <strong>T-shaped professional</strong>: deep in Frontend, broad in Business. Especially at CJ &mdash; a multi-industry conglomerate spanning logistics, commerce, and entertainment &mdash; I believe someone who understands both sides can <strong>create greater value</strong>.&rdquo;
+                </div>
+
+                <div class="bg-teal-50 border border-teal-200 rounded-lg p-4 mt-4 text-[12px] text-teal-800">
+                    <strong>Tips:</strong> Nếu bị hỏi &ldquo;vậy tương lai có học lên không?&rdquo; &rarr; &ldquo;Em luôn mở rộng kiến thức, nhưng ưu tiên hiện tại là <strong>tạo impact thực tế tại CJ</strong> trước. Nếu sau này có nhu cầu chuyên sâu một mảng cụ thể, em sẵn sàng học thêm.&rdquo; &rarr; Cho thấy cam kết với công ty, không phải chỉ chạy theo bằng cấp.
+                </div>
+            </div>
+
+            <!-- Q8: LÀM CTY NHẬT CÓ HỌC TIẾNG NHẬT KHÔNG? + MUỐN HỌC TIẾNG HÀN -->
+            <div class="card-white border-l-8 border-rose-500">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge" style="background:#fff1f2; color:#e11d48;">Q8</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Ngôn ngữ &amp; văn hóa &mdash; biến bất lợi thành thiện chí</span>
+                </div>
+                <h4 class="text-xl font-black uppercase mb-1">&ldquo;Làm công ty Nhật có học được tiếng Nhật không?&rdquo;</h4>
+                <p class="text-xs text-slate-500 italic mb-6">Ẩn ý: Ngta đang test thái độ với ngôn ngữ &amp; văn hóa nước sở tại. Công ty Hàn hỏi câu này = muốn biết bạn có <strong>sẵn sàng hòa nhập</strong> không.</p>
+
+                <!-- Bối cảnh -->
+                <div class="bg-rose-50 border-2 border-rose-200 rounded-xl p-5 mb-5">
+                    <span class="step-label text-rose-600">Bối cảnh: Chưa biết tiếng Nhật, chưa biết tiếng Hàn</span>
+                    <div class="grid md:grid-cols-2 gap-4 mt-3">
+                        <div class="bg-white rounded-lg p-4 border border-slate-200">
+                            <div class="text-center mb-2">
+                                <span class="text-lg">&#127471;&#127477;</span>
+                                <p class="text-xs font-bold uppercase mt-1">Tiếng Nhật</p>
+                            </div>
+                            <p class="text-[11px] text-slate-600 text-center">Làm công ty Nhật nhưng <strong>chưa biết tiếng Nhật</strong>. Giao tiếp bằng tiếng Anh + tiếng Việt là chính.</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 border border-green-200">
+                            <div class="text-center mb-2">
+                                <span class="text-lg">&#127472;&#127479;</span>
+                                <p class="text-xs font-bold uppercase mt-1">Tiếng Hàn</p>
+                            </div>
+                            <p class="text-[11px] text-slate-600 text-center"><strong>Muốn học tiếng Hàn</strong> nếu vào CJ &mdash; đây là thiện chí rất lớn, cần nhấn mạnh.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-5 mb-5">
+                    <div class="bg-white rounded-lg p-5 border-2 border-red-200">
+                        <span class="text-[10px] font-black text-red-500 uppercase block mb-2">&#10060; Tuyệt đối KHÔNG nói</span>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li>&bull; &ldquo;Dạ em không biết tiếng Nhật.&rdquo; rồi im. <span class="text-[10px] text-red-500">(Cụt lủn, tiêu cực)</span></li>
+                            <li>&bull; &ldquo;Làm IT thì không cần tiếng Nhật đâu...&rdquo; <span class="text-[10px] text-red-500">(Coi thường văn hóa)</span></li>
+                            <li>&bull; &ldquo;Em không giỏi học ngôn ngữ lắm...&rdquo; <span class="text-[10px] text-red-500">(Tự đóng cửa)</span></li>
+                            <li>&bull; So sánh Nhật vs Hàn theo hướng tiêu cực <span class="text-[10px] text-red-500">(Nhạy cảm cực kỳ)</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-lg p-5 border-2 border-green-200">
+                        <span class="text-[10px] font-black text-green-600 uppercase block mb-2">&#10003; Chiến thuật: PIVOT nhanh sang tiếng Hàn</span>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li>&bull; Thừa nhận thật: chưa biết tiếng Nhật &rarr; <strong>1 câu ngắn</strong></li>
+                            <li>&bull; Giải thích ngắn: giao tiếp chủ yếu bằng tiếng Anh</li>
+                            <li>&bull; <strong>PIVOT ngay</strong> sang tiếng Hàn &rarr; thể hiện thiện chí</li>
+                            <li>&bull; Gắn với CJ: muốn học tiếng Hàn = <strong>muốn gắn bó lâu dài</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Chiến thuật 3 bước -->
+                <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 mb-5">
+                    <span class="step-label text-slate-500">Chiến thuật: 3 BƯỚC &mdash; Thừa nhận &rarr; Giải thích &rarr; Pivot</span>
+                    <div class="grid md:grid-cols-3 gap-4 mt-3">
+                        <div class="bg-white rounded-lg p-4 border border-slate-200 text-center">
+                            <div class="text-lg font-black text-rose-500 mb-1">Bước 1</div>
+                            <p class="text-xs font-bold uppercase mb-1">Thừa nhận thật</p>
+                            <p class="text-[11px] text-slate-600">&ldquo;Thật ra em chưa biết tiếng Nhật&rdquo; &mdash; nói thẳng, không vòng vo.</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 border border-slate-200 text-center">
+                            <div class="text-lg font-black text-rose-500 mb-1">Bước 2</div>
+                            <p class="text-xs font-bold uppercase mb-1">Giải thích ngắn</p>
+                            <p class="text-[11px] text-slate-600">Môi trường giao tiếp bằng tiếng Anh + tiếng Việt &rarr; không có cơ hội dùng tiếng Nhật.</p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 border border-green-200 text-center">
+                            <div class="text-lg font-black text-green-600 mb-1">Bước 3</div>
+                            <p class="text-xs font-bold uppercase mb-1">Pivot sang tiếng Hàn</p>
+                            <p class="text-[11px] text-slate-600">&ldquo;Nhưng nếu vào CJ, em rất muốn học tiếng Hàn&rdquo; &rarr; <strong>điểm sáng của câu trả lời</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="demo-box text-xs leading-relaxed">
+                    <strong class="not-italic text-red-700 block mb-2">Script mẫu (VI):</strong>
+                    &ldquo;Dạ, thật ra em <strong>chưa biết tiếng Nhật</strong> ạ. Ở công ty trước, ngôn ngữ làm việc chính là <strong>tiếng Anh và tiếng Việt</strong> &mdash; documentation, code review, Jira ticket đều bằng tiếng Anh, còn giao tiếp nội bộ team Việt Nam thì dùng tiếng Việt. Nên em không có nhiều cơ hội tiếp xúc tiếng Nhật trong công việc hàng ngày.<br><br>
+                    Nhưng điều em muốn chia sẻ là &mdash; nếu được làm việc tại CJ, em <strong>rất muốn học tiếng Hàn</strong>. Không chỉ vì công việc, mà vì em tin rằng <strong>hiểu ngôn ngữ là hiểu văn hóa</strong>. Khi em hiểu được cách đồng nghiệp Hàn Quốc suy nghĩ và giao tiếp, em sẽ collaborate hiệu quả hơn rất nhiều.<br><br>
+                    Em biết CJ có văn hóa doanh nghiệp rất mạnh, và em muốn <strong>hòa nhập thật sự</strong> chứ không chỉ làm việc ở mức bề mặt. Tiếng Hàn sẽ là một trong những thứ em đầu tư ngay khi có cơ hội.&rdquo;
+                </div>
+
+                <div class="demo-box text-xs leading-relaxed mt-3" style="border-left-color: #2563eb;">
+                    <strong class="not-italic text-blue-700 block mb-2">English Version:</strong>
+                    &ldquo;Honestly, I <strong>don&rsquo;t speak Japanese</strong>. At my previous company, the working language was primarily <strong>English and Vietnamese</strong> &mdash; all documentation, code reviews, and Jira tickets were in English, while internal team communication was in Vietnamese. So I didn&rsquo;t have much exposure to Japanese in my daily work.<br><br>
+                    But what I&rsquo;d like to share is &mdash; if I join CJ, I <strong>really want to learn Korean</strong>. Not just for work, but because I believe <strong>understanding the language means understanding the culture</strong>. When I can understand how Korean colleagues think and communicate, I&rsquo;ll be able to collaborate much more effectively.<br><br>
+                    I know CJ has a very strong corporate culture, and I want to <strong>truly integrate</strong>, not just work at a surface level. Korean is something I plan to invest in right away given the opportunity.&rdquo;
+                </div>
+
+                <div class="bg-rose-50 border border-rose-200 rounded-lg p-4 mt-4 text-[12px] text-rose-800">
+                    <strong>Tại sao câu này cực kỳ quan trọng với công ty Hàn:</strong> Văn hóa Hàn Quốc rất coi trọng <strong>sự hòa nhập và cam kết</strong>. Nói &ldquo;muốn học tiếng Hàn&rdquo; = signal rằng bạn muốn <strong>gắn bó lâu dài</strong>, không phải nhảy việc sau 6 tháng. Đây là điểm cộng lớn mà nhiều ứng viên bỏ qua. Nếu bạn biết vài câu tiếng Hàn cơ bản (감사합니다, 안녕하세요), nói luôn trong phỏng vấn &rarr; gây ấn tượng mạnh.
+                </div>
+            </div>
+
+            <!-- Q9: EM MONG ĐỢI ĐIỀU GÌ Ở VỊ TRÍ NÀY? -->
+            <div class="card-white border-l-8 border-indigo-600">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge" style="background:#e0e7ff; color:#4f46e5;">Q9</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Đo lường kỳ vọng &mdash; xem bạn có realistic không</span>
+                </div>
+                <h4 class="text-xl font-black uppercase mb-1">&ldquo;Em mong đợi điều gì ở vị trí này?&rdquo;</h4>
+                <p class="text-xs text-slate-500 italic mb-6">Ẩn ý: Họ muốn biết bạn đã tìm hiểu role chưa, kỳ vọng có match thực tế không, hay chỉ apply đại.</p>
+
+                <div class="grid md:grid-cols-2 gap-5 mb-5">
+                    <div class="bg-white rounded-lg p-5 border-2 border-red-200">
+                        <span class="text-[10px] font-black text-red-500 uppercase block mb-2">&#10060; Trả lời sai</span>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li>&bull; &ldquo;Em mong được học hỏi nhiều.&rdquo; <span class="text-[10px] text-red-500">(Quá chung, ai cũng nói)</span></li>
+                            <li>&bull; &ldquo;Em muốn lương cao hơn.&rdquo; <span class="text-[10px] text-red-500">(Quá thực dụng, thiếu vision)</span></li>
+                            <li>&bull; &ldquo;Em mong môi trường thoải mái.&rdquo; <span class="text-[10px] text-red-500">(Nghe như muốn &ldquo;chill&rdquo;)</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-lg p-5 border-2 border-green-200">
+                        <span class="text-[10px] font-black text-green-600 uppercase block mb-2">&#10003; Mindset đúng</span>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li>&bull; Nói về <strong>impact</strong> muốn tạo ra, không phải thứ muốn nhận</li>
+                            <li>&bull; Gắn kỳ vọng với <strong>roadmap cụ thể của CJ GDC</strong></li>
+                            <li>&bull; Thể hiện mình là người <strong>chủ động đóng góp</strong>, không phải chờ được cho</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="demo-box text-xs leading-relaxed">
+                    <strong class="not-italic text-red-700 block mb-2">Script mẫu (VI):</strong>
+                    &ldquo;Dạ, em mong đợi 3 điều chính ở vị trí này:<br><br>
+                    <strong>1. Được làm sản phẩm có quy mô:</strong> Em đã build UI Library cho 2-3 sản phẩm &mdash; ở CJ GDC em muốn được thử thách với <strong>Design System phục vụ toàn hệ sinh thái</strong> (CGV, Logistics, Food). Đây là level-up thực sự cho em.<br><br>
+                    <strong>2. Được đóng góp vào AI Platform:</strong> Em rất hứng thú với việc xây Dashboard cho AI &mdash; đây là intersection giữa <strong>data visualization</strong> mà em giỏi và <strong>AI domain</strong> mà em muốn học. Em mong được contribute chứ không chỉ nhận task.<br><br>
+                    <strong>3. Được phát triển trong môi trường Global:</strong> Làm việc trực tiếp với team Korea, tham gia quy trình phát triển sản phẩm ở cấp độ tập đoàn &mdash; đây là kinh nghiệm mà em tin sẽ giúp em trưởng thành rất nhanh cả về kỹ thuật lẫn chuyên nghiệp.&rdquo;
+                </div>
+
+                <div class="demo-box text-xs leading-relaxed mt-3" style="border-left-color: #2563eb;">
+                    <strong class="not-italic text-blue-700 block mb-2">English Version:</strong>
+                    &ldquo;I have three main expectations for this role:<br><br>
+                    <strong>1. Building at scale:</strong> I&rsquo;ve built UI Libraries for 2-3 products &mdash; at CJ GDC I want to be challenged with a <strong>Design System serving the entire ecosystem</strong> (CGV, Logistics, Food). That&rsquo;s a real level-up for me.<br><br>
+                    <strong>2. Contributing to AI Platform:</strong> I&rsquo;m genuinely excited about building Dashboards for AI &mdash; it&rsquo;s the intersection of <strong>data visualization</strong> (my strength) and <strong>AI domain</strong> (my growth area). I want to contribute, not just take tickets.<br><br>
+                    <strong>3. Growing in a Global environment:</strong> Working directly with the Korea team and participating in enterprise-level product development &mdash; I believe this will accelerate my growth both technically and professionally.&rdquo;
+                </div>
+
+                <div class="bg-indigo-50 border border-indigo-100 rounded-lg p-4 mt-4 text-[12px] text-indigo-800">
+                    <strong>Tips:</strong> Kỳ vọng tốt nhất = <strong>Win-Win</strong>. Thứ bạn muốn đạt được cũng chính là thứ CJ cần bạn làm. Tránh kỳ vọng &ldquo;ích kỷ&rdquo; (chỉ nói về bản thân) hoặc &ldquo;viển vông&rdquo; (muốn làm CTO sau 1 năm).
+                </div>
+            </div>
+
+            <!-- Q10: TẠI SAO CHỌN CJ? -->
+            <div class="card-white border-l-8 border-red-600">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge">Q10</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Câu hỏi &ldquo;tình cảm&rdquo; &mdash; test cultural fit</span>
+                </div>
+                <h4 class="text-xl font-black uppercase mb-1">&ldquo;Tại sao bạn chọn CJ?&rdquo;</h4>
+                <p class="text-xs text-slate-500 italic mb-6">Ẩn ý: Họ muốn biết bạn apply vì <strong>hiểu CJ</strong> hay chỉ vì &ldquo;thấy JD phù hợp&rdquo;. Đây là lúc deep research phát huy tác dụng.</p>
+
+                <div class="grid md:grid-cols-2 gap-5 mb-5">
+                    <div class="bg-white rounded-lg p-5 border-2 border-red-200">
+                        <span class="text-[10px] font-black text-red-500 uppercase block mb-2">&#10060; Trả lời sai</span>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li>&bull; &ldquo;CJ là công ty lớn, em muốn làm ở công ty lớn.&rdquo; <span class="text-[10px] text-red-500">(Ai cũng nói vậy)</span></li>
+                            <li>&bull; &ldquo;Em thấy mức lương tốt.&rdquo; <span class="text-[10px] text-red-500">(Red flag)</span></li>
+                            <li>&bull; &ldquo;Em thích văn hóa Hàn Quốc, em xem phim Hàn nhiều.&rdquo; <span class="text-[10px] text-red-500">(Thiếu chuyên nghiệp)</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-lg p-5 border-2 border-green-200">
+                        <span class="text-[10px] font-black text-green-600 uppercase block mb-2">&#10003; Mindset đúng</span>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li>&bull; Nhắc đến <strong>ONLYONE</strong> hoặc giá trị cụ thể của CJ</li>
+                            <li>&bull; Gắn với <strong>hệ sinh thái sản phẩm</strong> (GDC, DX, AI Platform)</li>
+                            <li>&bull; Thể hiện đã <strong>research kỹ</strong> về CJ OliveNetworks</li>
+                            <li>&bull; Kết nối với <strong>career path cá nhân</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="demo-box text-xs leading-relaxed">
+                    <strong class="not-italic text-red-700 block mb-2">Script mẫu (VI):</strong>
+                    &ldquo;Em chọn CJ vì 3 lý do rất cụ thể, không phải vì &lsquo;công ty lớn&rsquo;:<br><br>
+                    <strong>1. Hệ sinh thái sản phẩm:</strong> CJ không chỉ là 1 sản phẩm &mdash; mà là cả một hệ sinh thái từ <strong>Logistics, CGV, Food đến Giải trí</strong>. Với Frontend Integrator, đây là cơ hội hiếm được xây dựng <strong>Design System phục vụ nhiều ngành</strong> cùng lúc. Em chưa thấy vị trí nào khác ở Việt Nam có scope rộng như vậy.<br><br>
+                    <strong>2. GDC &amp; AI Platform:</strong> Em tìm hiểu và biết CJ OliveNetworks đang đầu tư mạnh vào <strong>Digital Transformation</strong> &mdash; Smart Logistics, Smart Factory, Digital Twin. Frontend cho AI Platform không phải landing page đơn giản, mà là <strong>tool thực sự cho người dùng chuyên nghiệp</strong>. Đó chính là thứ em muốn build.<br><br>
+                    <strong>3. Triết lý ONLYONE:</strong> Em ấn tượng với triết lý &ldquo;Đầu tiên &mdash; Tốt nhất &mdash; Khác biệt&rdquo;. Trong công việc của em, em cũng theo đuổi mindset tương tự: không chỉ hoàn thành task mà phải tìm cách làm <strong>tốt hơn cách cũ</strong>. Em nghĩ đó là lý do em fit với văn hóa CJ.&rdquo;
+                </div>
+
+                <div class="demo-box text-xs leading-relaxed mt-3" style="border-left-color: #2563eb;">
+                    <strong class="not-italic text-blue-700 block mb-2">English Version:</strong>
+                    &ldquo;I chose CJ for 3 very specific reasons, not just because it&rsquo;s a large corporation:<br><br>
+                    <strong>1. Product Ecosystem:</strong> CJ isn&rsquo;t just one product &mdash; it&rsquo;s an entire ecosystem spanning <strong>Logistics, CGV, Food, and Entertainment</strong>. As a Frontend Integrator, this is a rare opportunity to build a <strong>Design System serving multiple industries</strong> simultaneously. I haven&rsquo;t found another position in Vietnam with this scope.<br><br>
+                    <strong>2. GDC &amp; AI Platform:</strong> I researched that CJ OliveNetworks is investing heavily in <strong>Digital Transformation</strong> &mdash; Smart Logistics, Smart Factory, Digital Twin. Frontend for AI Platform isn&rsquo;t a simple landing page &mdash; it&rsquo;s a <strong>real tool for professional users</strong>. That&rsquo;s exactly what I want to build.<br><br>
+                    <strong>3. ONLYONE Philosophy:</strong> I&rsquo;m impressed by the &lsquo;First &mdash; Best &mdash; Different&rsquo; philosophy. In my own work, I pursue the same mindset: not just completing tasks, but finding ways to do it <strong>better than before</strong>. I believe that&rsquo;s why I fit CJ&rsquo;s culture.&rdquo;
+                </div>
+
+                <div class="bg-red-50 border border-red-100 rounded-lg p-4 mt-4 text-[12px] text-red-800">
+                    <strong>Power move:</strong> Nếu interviewer ấn tượng, có thể bổ sung: &ldquo;Em cũng biết CJ Group vừa kỷ niệm 70 năm thành lập, và GDC Vietnam là phần quan trọng trong chiến lược mở rộng công nghệ toàn cầu. Em muốn được là một phần của giai đoạn phát triển này.&rdquo;
+                </div>
+            </div>
+
+            <!-- Q11: CÓ APPLY CÔNG TY KHÁC KHÔNG? -->
+            <div class="card-white border-l-8 border-teal-600">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge" style="background:#ccfbf1; color:#0f766e;">Q11</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Pipeline &amp; so sánh &mdash; đừng tự làm mình &ldquo;yếu thế&rdquo;</span>
+                </div>
+                <h4 class="text-xl font-black uppercase mb-1">&ldquo;Em có apply thêm công ty nào không? Vị trí gì? Đang tới giai đoạn nào rồi?&rdquo;</h4>
+                <p class="text-xs text-slate-500 italic mb-6">Ẩn ý: Họ muốn biết bạn có đang active trên thị trường không, có offer khác không (để đo urgency), và bạn có chọn lọc hay apply đại. <strong>Không</strong> bắt buộc phải có nhiều pipeline hay đã được gọi &mdash; quan trọng là cách trả lời tự tin, trung thực, có trọng tâm.</p>
+
+                <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 mb-5">
+                    <span class="step-label text-slate-500">Nếu bạn apply mà chưa ai gọi &mdash; đó là bình thường</span>
+                    <p class="text-[11px] text-slate-600 mt-2">Recruitment có thể chậm, JD đóng hàng loạt, hoặc hồ sơ đang queue. <strong>Không</strong> cần xin lỗi hay nói &ldquo;em yếu quá&rdquo;. Frame: em đang <strong>chọn lọc</strong> role phù hợp profile, và CJ là một trong những ưu tiên vì fit quy mô &amp; hướng sản phẩm.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-5 mb-5">
+                    <div class="bg-white rounded-lg p-5 border-2 border-red-200">
+                        <span class="text-[10px] font-black text-red-500 uppercase block mb-2">&#10060; Trả lời dễ hại</span>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li>&bull; Bịa có offer / nhiều công ty đang chờ để &ldquo;trông giá&rdquo; <span class="text-[10px] text-red-500">(Dễ lộ, mất uy tín)</span></li>
+                            <li>&bull; &ldquo;Em apply 20 chỗ mà chả ai thèm gọi&rdquo; <span class="text-[10px] text-red-500">(Tự làm mình nhỏ đi)</span></li>
+                            <li>&bull; Liệt kê dài dòng cả list rồi than thở <span class="text-[10px] text-red-500">(Thiếu professional)</span></li>
+                            <li>&bull; Nói &ldquo;em chỉ apply mỗi CJ&rdquo; nếu không đúng <span class="text-[10px] text-red-500">(Rủi ro nếu họ check)</span></li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-lg p-5 border-2 border-green-200">
+                        <span class="text-[10px] font-black text-green-600 uppercase block mb-2">&#10003; Cách frame đúng</span>
+                        <ul class="text-xs text-slate-600 space-y-2">
+                            <li>&bull; <strong>Chọn lọc:</strong> đang tìm role gần với định hướng (dashboard, data viz, FE nặng)</li>
+                            <li>&bull; <strong>1 ví dụ cụ thể:</strong> BioTurning &mdash; vị trí FE / Data Visualizer (tên JD có thể điều chỉnh theo đúng bài đăng)</li>
+                            <li>&bull; <strong>Process:</strong> &ldquo;Mới nộp&rdquo; / &ldquo;early stage&rdquo; / &ldquo;chưa có phản hồi tiếp theo&rdquo; &mdash; bình thường, không phải lỗi cá nhân</li>
+                            <li>&bull; <strong>Chốt:</strong> CJ vẫn là ưu tiên vì [scope AI Platform / GDC / ecosystem] &mdash; không phải vì &ldquo;chỗ khác không gọi&rdquo;</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="demo-box text-xs leading-relaxed">
+                    <strong class="not-italic text-red-700 block mb-2">Script mẫu (VI) &mdash; thành thật, có BioTurning:</strong>
+                    &ldquo;Dạ, em đang chủ động tìm hiểu một vài công ty có product và stack gần với định hướng của em &mdash; dashboard, data visualization, Frontend cho nền tảng dữ liệu.<br><br>
+                    Cụ thể em có nộp hồ sơ vào <strong>BioTurning</strong> cho vị trí <strong>Frontend (Data Visualizer)</strong> &mdash; scope khá na ná với những gì em đã làm và muốn làm tiếp. Hiện tại process vẫn ở giai đoạn đầu / em chưa nhận được bước tiếp theo; em hiểu recruitment đôi khi cần thời gian nên em không đặt hết kỳ vọng vào một pipeline.<br><br>
+                    Với CJ, em đang đặt <strong>ưu tiên hàng đầu</strong> vì quy mô hệ sinh thái và hướng AI Platform mà em đã research &mdash; đây là chỗ em thấy mình contribute được nhiều nhất, chứ không phải vì em &lsquo;apply đại&rsquo;.&rdquo;
+                </div>
+
+                <div class="demo-box text-xs leading-relaxed mt-3" style="border-left-color: #2563eb;">
+                    <strong class="not-italic text-blue-700 block mb-2">English Version:</strong>
+                    &ldquo;I&rsquo;m actively exploring a few companies whose products align with my focus &mdash; dashboards, data visualization, and Frontend for data-heavy platforms.<br><br>
+                    Specifically, I applied to <strong>BioTurning</strong> for a <strong>Frontend (Data Visualizer)</strong> role &mdash; it&rsquo;s quite close to what I&rsquo;ve been doing and what I want to keep building. At this stage, the process is still early / I haven&rsquo;t received the next step yet; I know hiring can take time, so I don&rsquo;t rely on a single pipeline.<br><br>
+                    For CJ, I&rsquo;m placing this opportunity as <strong>top priority</strong> because of the ecosystem scale and the AI Platform direction I&rsquo;ve researched &mdash; that&rsquo;s where I believe I can contribute the most, not because I&rsquo;m applying randomly.&rdquo;
+                </div>
+
+                <div class="bg-teal-50 border border-teal-200 rounded-lg p-4 mt-4 text-[12px] text-teal-900">
+                    <strong>Tips:</strong> Nếu interviewer hỏi sâu &ldquo;BioTurning đang làm gì?&rdquo; &rarr; nói ngắn 1 câu: biotech / data platform &mdash; phù hợp kỹ năng chart &amp; table của em. Nếu <strong>không</strong> muốn nhắc tên công ty: thay bằng &ldquo;một công ty cũng trong domain data visualization&rdquo; vẫn ổn. Quan trọng là tone &mdash; bình tĩnh, có kế hoạch, CJ là lựa chọn có lý do.
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TAB 5: LỘ TRÌNH ÔN TẬP -->
+        <div id="tab-study" class="tab-content hidden space-y-6">
+
+            <!-- HEADER -->
+            <div class="card-white">
+                <h2 class="text-2xl font-black mb-2 cj-red uppercase">Lộ Trình Ôn Tập: Kiến Thức Nền Tảng</h2>
+                <p class="text-xs text-slate-500 italic">Những khái niệm kỹ thuật có thể được hỏi trực tiếp hoặc gián tiếp trong buổi phỏng vấn &mdash; chuẩn bị sẵn để trả lời tự tin.</p>
+            </div>
+
+            <!-- SECTION 1: WCAG & ACCESSIBILITY -->
+            <div class="card-white border-l-8 border-red-600">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge">A11Y</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Accessibility &mdash; Câu hỏi phổ biến FE Interview</span>
+                </div>
+                <h4 class="text-xl font-black uppercase mb-4">WCAG Là Gì? Accessibility Trong Frontend</h4>
+                <div class="space-y-4">
+                    <div class="detail-box">
+                        <span class="step-label">WCAG (Web Content Accessibility Guidelines)</span>
+                        <p class="text-slate-600 text-xs leading-relaxed">Bộ tiêu chuẩn quốc tế giúp nội dung web có thể truy cập được bởi <strong>mọi người</strong>, bao gồm người khuyết tật. Phiên bản hiện tại: <strong>WCAG 2.1 / 2.2</strong>.</p>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-red-50 rounded-xl p-5 border border-red-100">
+                            <span class="step-label cj-red">4 Nguyên tắc P.O.U.R</span>
+                            <ul class="text-xs text-slate-600 space-y-2 mt-2">
+                                <li><strong>Perceivable:</strong> Nội dung phải nhận biết được (alt text, captions, contrast)</li>
+                                <li><strong>Operable:</strong> Giao diện phải thao tác được (keyboard navigation, no time traps)</li>
+                                <li><strong>Understandable:</strong> Nội dung phải hiểu được (clear language, predictable UI)</li>
+                                <li><strong>Robust:</strong> Tương thích với nhiều công cụ (assistive tech, screen readers)</li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-50 rounded-xl p-5 border border-slate-200">
+                            <span class="step-label text-slate-700">Các mức tuân thủ</span>
+                            <ul class="text-xs text-slate-600 space-y-2 mt-2">
+                                <li><strong>Level A:</strong> Mức tối thiểu (alt text, keyboard accessible)</li>
+                                <li><strong>Level AA:</strong> Mức khuyến nghị &mdash; <strong>đây là chuẩn CJ nên follow</strong> (contrast 4.5:1, focus visible)</li>
+                                <li><strong>Level AAA:</strong> Mức cao nhất (contrast 7:1, sign language cho video)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="demo-box text-xs leading-relaxed">
+                        <strong class="not-italic text-red-700 block mb-2">Ví dụ câu hỏi &amp; cách trả lời:</strong>
+                        <strong>Q: &ldquo;WCAG là gì? Bạn áp dụng thế nào?&rdquo;</strong><br>
+                        &ldquo;WCAG là bộ tiêu chuẩn accessibility quốc tế. Em áp dụng Level AA: đảm bảo <strong>contrast ratio tối thiểu 4.5:1</strong>, dùng <strong>semantic HTML</strong>, thêm <strong>aria-label</strong> cho interactive elements, và test <strong>keyboard navigation</strong> cho toàn bộ flow.&rdquo;
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 2: CSS MIXIN & PREPROCESSOR -->
+            <div class="card-white border-l-8 border-blue-600">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge" style="background:#dbeafe; color:#2563eb;">CSS</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">CSS Preprocessor &mdash; Giải thích code</span>
+                </div>
+                <h4 class="text-xl font-black uppercase mb-4">CSS Mixin, Variables &amp; Preprocessor</h4>
+                <div class="space-y-4">
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="detail-box">
+                            <span class="step-label">Mixin là gì?</span>
+                            <p class="text-xs text-slate-600">Một &ldquo;function&rdquo; trong SCSS/LESS cho phép <strong>tái sử dụng</strong> một nhóm declarations. Truyền tham số để tạo biến thể.</p>
+                        </div>
+                        <div class="detail-box">
+                            <span class="step-label">Variables</span>
+                            <p class="text-xs text-slate-600">CSS Custom Properties (<code>--color-primary</code>) hoặc SCSS (<code>$primary</code>). Quản lý <strong>Design Tokens</strong> tập trung.</p>
+                        </div>
+                        <div class="detail-box">
+                            <span class="step-label">Extend vs Mixin</span>
+                            <p class="text-xs text-slate-600"><code>@extend</code> gộp selectors (DRY). <code>@mixin</code> copy declarations (linh hoạt hơn, dùng với params).</p>
+                        </div>
+                    </div>
+                    <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                        <span class="step-label text-blue-600">Ví dụ giải thích code SCSS Mixin</span>
+                        <pre class="bg-slate-800 text-green-300 rounded-lg p-4 mt-3 text-[11px] leading-relaxed overflow-x-auto"><code>// Mixin: responsive font-size
+@mixin responsive-text($min, $max, $min-vw: 320px, $max-vw: 1440px) {
+  font-size: $min;
+  @media (min-width: $min-vw) {
+    font-size: calc(#{$min} + #{strip-unit($max - $min)}
+      * (100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)});
+  }
+  @media (min-width: $max-vw) { font-size: $max; }
+}
+// Sử dụng:
+h1 { @include responsive-text(24px, 48px); }
+p  { @include responsive-text(14px, 18px); }</code></pre>
+                        <p class="text-xs text-slate-600 mt-3"><strong>Giải thích:</strong> Mixin tạo <strong>fluid typography</strong> &mdash; font-size tự scale mượt theo viewport. Pattern phổ biến trong Design System.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 3: TYPOGRAPHY -->
+            <div class="card-white border-l-8 border-purple-600">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge" style="background:#f3e8ff; color:#9333ea;">TYPO</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Typography &mdash; Thuật ngữ quan trọng</span>
+                </div>
+                <h4 class="text-xl font-black uppercase mb-4">Leading, Kerning &amp; Tracking</h4>
+                <div class="grid md:grid-cols-3 gap-4 mb-5">
+                    <div class="bg-purple-50 rounded-xl p-5 border border-purple-100 text-center">
+                        <div class="text-3xl font-black text-purple-600 mb-2">Aa</div>
+                        <p class="text-xs font-bold uppercase mb-2 text-slate-700">Leading (Line Height)</p>
+                        <p class="text-[11px] text-slate-600">Khoảng cách <strong>giữa các dòng</strong> chữ. CSS: <code>line-height</code>. Thường: <strong>1.4&ndash;1.6</strong> cho body.</p>
+                        <div class="bg-white rounded-lg p-3 mt-3 border border-purple-100 text-left"><code class="text-[10px] text-purple-700">line-height: 1.5;</code></div>
+                    </div>
+                    <div class="bg-purple-50 rounded-xl p-5 border border-purple-100 text-center">
+                        <div class="text-3xl font-black text-purple-600 mb-2" style="letter-spacing:0.2em;">AV</div>
+                        <p class="text-xs font-bold uppercase mb-2 text-slate-700">Kerning (Cặp ký tự)</p>
+                        <p class="text-[11px] text-slate-600">Khoảng cách <strong>giữa 2 ký tự cụ thể</strong>. Font tốt có kerning table riêng. CSS: <code>font-kerning: auto;</code></p>
+                        <div class="bg-white rounded-lg p-3 mt-3 border border-purple-100 text-left"><code class="text-[10px] text-purple-700">font-kerning: auto;</code></div>
+                    </div>
+                    <div class="bg-purple-50 rounded-xl p-5 border border-purple-100 text-center">
+                        <div class="text-3xl font-black text-purple-600 mb-2" style="letter-spacing:0.3em;">ABC</div>
+                        <p class="text-xs font-bold uppercase mb-2 text-slate-700">Tracking (Letter Spacing)</p>
+                        <p class="text-[11px] text-slate-600">Khoảng cách <strong>đồng đều giữa TẤT CẢ</strong> ký tự. Thường tăng cho uppercase/headings.</p>
+                        <div class="bg-white rounded-lg p-3 mt-3 border border-purple-100 text-left"><code class="text-[10px] text-purple-700">letter-spacing: 0.05em;</code></div>
+                    </div>
+                </div>
+                <div class="demo-box text-xs leading-relaxed">
+                    <strong class="not-italic text-red-700 block mb-2">Cách nhớ nhanh:</strong>
+                    <strong>Leading</strong> = Line (dọc, giữa các dòng) &bull; <strong>Kerning</strong> = cặp Ký tự (2 chữ cạnh nhau) &bull; <strong>Tracking</strong> = Toàn bộ (tất cả ký tự đều cách đều)
+                </div>
+            </div>
+
+            <!-- SECTION 4: COLOR THEORY -->
+            <div class="card-white border-l-8 border-orange-500">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge" style="background:#fff7ed; color:#ea580c;">COLOR</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Color Theory &mdash; Hue, Tint, Shade, Tone</span>
+                </div>
+                <h4 class="text-xl font-black uppercase mb-4">Hue, Tint, Shade &amp; Tone</h4>
+                <div class="grid md:grid-cols-4 gap-4 mb-5">
+                    <div class="rounded-xl p-5 border text-center" style="background:linear-gradient(135deg,#ef4444,#f97316);border-color:#fed7aa;">
+                        <div class="text-3xl mb-2">&#127912;</div>
+                        <p class="text-xs font-bold uppercase mb-1 text-white">Hue</p>
+                        <p class="text-[11px] text-white/90">Màu <strong>nguyên chất</strong> trên bánh xe màu. Không pha trộn.</p>
+                    </div>
+                    <div class="rounded-xl p-5 border text-center" style="background:linear-gradient(135deg,#fca5a5,#fecaca);border-color:#fecaca;">
+                        <div class="text-3xl mb-2">&#9898;</div>
+                        <p class="text-xs font-bold uppercase mb-1 text-red-700">Tint</p>
+                        <p class="text-[11px] text-red-800"><strong>Hue + Trắng</strong>. Sáng hơn, nhẹ nhàng. VD: Đỏ &rarr; Hồng pastel.</p>
+                    </div>
+                    <div class="rounded-xl p-5 border text-center" style="background:linear-gradient(135deg,#991b1b,#7f1d1d);border-color:#991b1b;">
+                        <div class="text-3xl mb-2">&#9899;</div>
+                        <p class="text-xs font-bold uppercase mb-1 text-red-200">Shade</p>
+                        <p class="text-[11px] text-red-100"><strong>Hue + Đen</strong>. Tối hơn, sâu hơn. VD: Đỏ &rarr; Maroon.</p>
+                    </div>
+                    <div class="rounded-xl p-5 border text-center" style="background:linear-gradient(135deg,#d4d4d8,#a1a1aa);border-color:#d4d4d8;">
+                        <div class="text-3xl mb-2">&#128295;</div>
+                        <p class="text-xs font-bold uppercase mb-1 text-slate-700">Tone</p>
+                        <p class="text-[11px] text-slate-800"><strong>Hue + Xám</strong>. Giảm bão hòa, trầm và tinh tế hơn.</p>
+                    </div>
+                </div>
+                <div class="overflow-hidden rounded-xl border border-slate-200 shadow-sm">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead class="bg-orange-50 text-orange-700 font-black uppercase tracking-widest">
+                            <tr><th class="p-3">Thuật ngữ</th><th class="p-3 text-center">Công thức</th><th class="p-3">Hiệu ứng</th><th class="p-3">Ứng dụng UI</th></tr>
+                        </thead>
+                        <tbody class="text-slate-600">
+                            <tr class="border-b border-slate-100"><td class="p-3 font-bold">Hue</td><td class="p-3 text-center">Màu gốc</td><td class="p-3">Mạnh, nổi bật</td><td class="p-3">Primary buttons, CTA, brand color</td></tr>
+                            <tr class="border-b border-slate-100"><td class="p-3 font-bold">Tint</td><td class="p-3 text-center">Hue + White</td><td class="p-3">Sáng, nhẹ nhàng</td><td class="p-3">Background, badges, hover states</td></tr>
+                            <tr class="border-b border-slate-100"><td class="p-3 font-bold">Shade</td><td class="p-3 text-center">Hue + Black</td><td class="p-3">Sâu, mạnh mẽ</td><td class="p-3">Active states, headers, dark mode</td></tr>
+                            <tr><td class="p-3 font-bold">Tone</td><td class="p-3 text-center">Hue + Gray</td><td class="p-3">Trầm, chuyên nghiệp</td><td class="p-3">Neutral UI, muted elements, borders</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SECTION 5: STYLE GUIDE vs UI COMPONENT vs UI PATTERN -->
+            <div class="card-white border-l-8 border-green-600">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge" style="background:#dcfce7; color:#16a34a;">UI</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Design System &mdash; Phân biệt khái niệm</span>
+                </div>
+                <h4 class="text-xl font-black uppercase mb-4">Style Guide vs UI Component vs UI Pattern</h4>
+                <div class="grid md:grid-cols-3 gap-4 mb-5">
+                    <div class="bg-green-50 rounded-xl p-5 border border-green-100">
+                        <p class="text-xs font-bold uppercase mb-2 text-green-800">Style Guide</p>
+                        <p class="text-[11px] text-slate-600"><strong>Bộ quy tắc thiết kế:</strong> Color palette, typography scale, spacing, iconography. Là &ldquo;luật&rdquo; cho team.</p>
+                        <p class="text-[10px] text-green-600 mt-2 italic">VD: CJ Red = #e11932, font: Inter, spacing: 4px</p>
+                    </div>
+                    <div class="bg-blue-50 rounded-xl p-5 border border-blue-100">
+                        <p class="text-xs font-bold uppercase mb-2 text-blue-800">UI Component</p>
+                        <p class="text-[11px] text-slate-600"><strong>Khối xây dựng cụ thể:</strong> Button, Input, Modal, Table... Các phần tử <strong>tái sử dụng</strong> có props/variants.</p>
+                        <p class="text-[10px] text-blue-600 mt-2 italic">VD: &lt;Button type=&quot;primary&quot; size=&quot;large&quot; /&gt;</p>
+                    </div>
+                    <div class="bg-purple-50 rounded-xl p-5 border border-purple-100">
+                        <p class="text-xs font-bold uppercase mb-2 text-purple-800">UI Pattern</p>
+                        <p class="text-[11px] text-slate-600"><strong>Giải pháp thiết kế lặp lại</strong> cho bài toán UX. Gồm nhiều Components phối hợp theo <strong>flow logic</strong>.</p>
+                        <p class="text-[10px] text-purple-600 mt-2 italic">VD: Search = Input + Filters + Results + Pagination</p>
+                    </div>
+                </div>
+                <div class="demo-box text-xs leading-relaxed">
+                    <strong class="not-italic text-red-700 block mb-2">Quan hệ:</strong>
+                    <strong>Style Guide</strong> (quy tắc) &rarr; <strong>UI Components</strong> (khối xây dựng) &rarr; <strong>UI Patterns</strong> (giải pháp UX).<br>
+                    VD tại CJ: Style Guide quy định CJ Red #e11932 &rarr; Button dùng màu đó &rarr; Login Pattern = Form + Button + Error Message.
+                </div>
+            </div>
+
+            <!-- SECTION 6: i18n -->
+            <div class="card-white border-l-8 border-indigo-600">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge" style="background:#e0e7ff; color:#4f46e5;">i18n</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Internationalization &mdash; Rất relevant cho CJ Global</span>
+                </div>
+                <h4 class="text-xl font-black uppercase mb-4">Quốc Tế Hóa (i18n) Trong CSS &amp; HTML</h4>
+                <p class="text-xs text-slate-500 italic mb-5">CJ là tập đoàn Hàn Quốc hoạt động toàn cầu. Hiểu i18n là điểm cộng lớn khi phỏng vấn.</p>
+                <div class="space-y-4">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="detail-box">
+                            <span class="step-label">i18n vs L10n</span>
+                            <ul class="text-xs text-slate-600 space-y-1">
+                                <li><strong>i18n (Internationalization):</strong> Thiết kế code/UI <strong>sẵn sàng</strong> cho đa ngôn ngữ</li>
+                                <li><strong>L10n (Localization):</strong> <strong>Áp dụng</strong> ngôn ngữ/văn hóa cụ thể (dịch, format ngày/tiền, RTL)</li>
+                            </ul>
+                        </div>
+                        <div class="detail-box">
+                            <span class="step-label">Tại sao quan trọng tại CJ?</span>
+                            <ul class="text-xs text-slate-600 space-y-1">
+                                <li>GDC phục vụ team <strong>Korea + Vietnam + Global</strong></li>
+                                <li>AI Platform cần <strong>Korean / English / Vietnamese</strong></li>
+                                <li>CGV hoạt động ở <strong>nhiều quốc gia</strong> Đông Nam Á</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="bg-indigo-50 rounded-xl p-5 border border-indigo-100">
+                        <span class="step-label text-indigo-600">Kỹ thuật i18n trong CSS &amp; HTML</span>
+                        <div class="grid md:grid-cols-2 gap-4 mt-3">
+                            <div>
+                                <p class="text-xs font-bold mb-2 text-slate-700">HTML:</p>
+                                <ul class="text-[11px] text-slate-600 space-y-1">
+                                    <li>&bull; <code>lang=&quot;ko&quot;</code> / <code>lang=&quot;vi&quot;</code> trên thẻ html</li>
+                                    <li>&bull; <code>dir=&quot;rtl&quot;</code> cho Arabic/Hebrew</li>
+                                    <li>&bull; <code>&lt;meta charset=&quot;UTF-8&quot;&gt;</code> hỗ trợ ký tự đặc biệt</li>
+                                    <li>&bull; Không hardcode text &mdash; dùng translation keys</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold mb-2 text-slate-700">CSS:</p>
+                                <ul class="text-[11px] text-slate-600 space-y-1">
+                                    <li>&bull; <code>:lang(ko)</code> selector cho font-family riêng tiếng Hàn</li>
+                                    <li>&bull; Logical properties: <code>margin-inline-start</code> thay <code>margin-left</code></li>
+                                    <li>&bull; <code>text-overflow: ellipsis</code> &mdash; text dài hơn khi dịch</li>
+                                    <li>&bull; Flexible width &mdash; không fix width cứng cho text</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-indigo-50 rounded-xl p-5 border border-indigo-100">
+                        <span class="step-label text-indigo-600">Thư viện i18n phổ biến trong React</span>
+                        <div class="grid md:grid-cols-3 gap-4 mt-3">
+                            <div class="bg-white rounded-lg p-4 border border-indigo-100">
+                                <p class="text-xs font-bold text-slate-800">react-i18next</p>
+                                <p class="text-[11px] text-slate-600 mt-1">Phổ biến nhất, JSON translation files, lazy-loading namespaces.</p>
+                            </div>
+                            <div class="bg-white rounded-lg p-4 border border-indigo-100">
+                                <p class="text-xs font-bold text-slate-800">react-intl (FormatJS)</p>
+                                <p class="text-[11px] text-slate-600 mt-1">Mạnh về format số, ngày, tiền tệ theo locale.</p>
+                            </div>
+                            <div class="bg-white rounded-lg p-4 border border-indigo-100">
+                                <p class="text-xs font-bold text-slate-800">Ant Design ConfigProvider</p>
+                                <p class="text-[11px] text-slate-600 mt-1">Built-in locale cho AntD components. Wrap app = done.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="demo-box text-xs leading-relaxed">
+                        <strong class="not-italic text-red-700 block mb-2">Cách trả lời:</strong>
+                        &ldquo;Em hiểu i18n là thiết kế UI <strong>sẵn sàng</strong> cho đa ngôn ngữ từ đầu. Dùng <code>react-i18next</code> với translation keys, CSS logical properties, Ant Design <code>ConfigProvider</code> cho locale. Ở CJ em sẽ structure translation files theo namespace (common, dashboard, settings) để dễ maintain.&rdquo;
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 7: FLASHCARD -->
+            <div class="card-white border-l-8 border-slate-600">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="case-study-badge" style="background:#f1f5f9; color:#475569;">MISC</span>
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Quick Reference &mdash; Câu hỏi ngắn, đáp nhanh</span>
+                </div>
+                <h4 class="text-xl font-black uppercase mb-4">Flashcard: Các Câu Hỏi Kỹ Thuật Có Thể Gặp</h4>
+                <div class="space-y-3">
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                        <p class="text-xs font-bold text-slate-800 mb-2">Q: Box Model trong CSS là gì?</p>
+                        <p class="text-[11px] text-slate-600">Mỗi element = <strong>Content + Padding + Border + Margin</strong>. <code>box-sizing: border-box</code> để width tính luôn padding + border.</p>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                        <p class="text-xs font-bold text-slate-800 mb-2">Q: Flexbox vs Grid &mdash; khi nào dùng gì?</p>
+                        <p class="text-[11px] text-slate-600"><strong>Flexbox</strong> = 1 chiều (hàng HOẶC cột). <strong>Grid</strong> = 2 chiều (hàng VÀ cột). CJ Dashboard &rarr; Grid cho layout, Flex cho component.</p>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                        <p class="text-xs font-bold text-slate-800 mb-2">Q: BEM là gì?</p>
+                        <p class="text-[11px] text-slate-600"><strong>Block__Element--Modifier</strong>. Naming convention cho CSS. VD: <code>.card__title--highlighted</code>. Với CSS Modules / AntD, BEM ít cần hơn.</p>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                        <p class="text-xs font-bold text-slate-800 mb-2">Q: Semantic HTML là gì?</p>
+                        <p class="text-[11px] text-slate-600">Dùng đúng tag: <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;aside&gt;</code>. Quan trọng cho <strong>SEO</strong>, <strong>Accessibility</strong>, và <strong>maintainability</strong>.</p>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                        <p class="text-xs font-bold text-slate-800 mb-2">Q: CSS Specificity?</p>
+                        <p class="text-[11px] text-slate-600">Inline (1000) &gt; ID (100) &gt; Class (10) &gt; Element (1). <code>!important</code> ghi đè nhưng <strong>tránh dùng</strong>. AntD dùng Design Tokens thay vì override.</p>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                        <p class="text-xs font-bold text-slate-800 mb-2">Q: Responsive vs Adaptive?</p>
+                        <p class="text-[11px] text-slate-600"><strong>Responsive</strong> = fluid (%, vw). <strong>Adaptive</strong> = layout cố định cho breakpoints. CJ Desktop &rarr; Adaptive cho 1280/1440/1920px.</p>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                        <p class="text-xs font-bold text-slate-800 mb-2">Q: Design Tokens là gì?</p>
+                        <p class="text-[11px] text-slate-600">Giá trị thiết kế được <strong>đặt tên tập trung</strong>: colors, spacing, typography... AntD dùng <code>ConfigProvider</code> + <code>theme</code> để override. Nền tảng mọi Design System.</p>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                        <p class="text-xs font-bold text-slate-800 mb-2">Q: Virtual DOM là gì?</p>
+                        <p class="text-[11px] text-slate-600">Bản sao nhẹ của Real DOM. React diff Virtual DOM mới vs cũ, chỉ update phần thay đổi (reconciliation). Nhanh hơn manipulate DOM trực tiếp.</p>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                        <p class="text-xs font-bold text-slate-800 mb-2">Q: useMemo vs useCallback?</p>
+                        <p class="text-[11px] text-slate-600"><code>useMemo</code> = cache <strong>kết quả</strong>. <code>useCallback</code> = cache <strong>hàm</strong>. Tránh re-compute khi re-render. Dùng khi truyền props cho <code>React.memo</code>.</p>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                        <p class="text-xs font-bold text-slate-800 mb-2">Q: Cross-browser compatibility?</p>
+                        <p class="text-[11px] text-slate-600">Dùng <strong>autoprefixer</strong>, check <strong>caniuse.com</strong>. CJ Desktop &rarr; ưu tiên Chrome + Edge (90%+ enterprise users).</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
     </div>
 
     <script>
@@ -1049,6 +2164,27 @@
                 }
             });
         }
+
+        function toggleResearch() {
+            const content = document.getElementById('research-content');
+            const icon = document.getElementById('research-toggle-icon');
+            if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                content.style.maxHeight = '0px';
+                content.style.opacity = '0';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                content.style.opacity = '1';
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Initialize research section as open
+        document.addEventListener('DOMContentLoaded', function() {
+            const content = document.getElementById('research-content');
+            content.style.maxHeight = content.scrollHeight + 'px';
+            content.style.opacity = '1';
+        });
 
         function showTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(tab => {
