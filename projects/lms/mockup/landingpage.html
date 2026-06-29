@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<title>LMSmini — Nền tảng kết nối Phụ huynh & Giáo viên Tiếng Anh</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --indigo: #4338ca; --indigo-dark: #1e1b4b; --indigo-mid: #312e81;
+  --violet: #7c3aed; --violet-light: #a78bfa;
+  --bg: #f8f7f4; --surface: #ffffff; --border: #e8e5dc;
+  --text: #18181b; --muted: #71717a; --dim: #a1a1aa;
+  --green: #16a34a; --green-bg: #f0fdf4;
+  --yellow: #d97706;
+  --radius: 14px; --radius-sm: 8px;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.6; }
+a { text-decoration: none; color: inherit; }
+
+/* ── RESPONSIVE UTILS ── */
+@media (max-width: 768px) {
+  .hide-mobile { display: none !important; }
+  .mobile-full { width: 100% !important; }
+}
+
+/* ── NAV ── */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(248,247,244,0.92); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px; height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo { font-size: 18px; font-weight: 900; letter-spacing: -0.5px; }
+.nav-logo em { font-style: normal; color: var(--indigo); }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-link { font-size: 13px; font-weight: 500; color: var(--muted); cursor: pointer; transition: color .2s; }
+.nav-link:hover { color: var(--text); }
+.nav-ctas { display: flex; gap: 8px; align-items: center; }
+.btn-ghost { padding: 7px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; border: 1.5px solid var(--border); background: transparent; color: var(--text); cursor: pointer; font-family: inherit; transition: all .2s; }
+.btn-ghost:hover { border-color: var(--indigo); color: var(--indigo); }
+.btn-primary { padding: 8px 18px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 700; border: none; background: var(--indigo); color: #fff; cursor: pointer; font-family: inherit; transition: background .2s; }
+.btn-primary:hover { background: #3730a3; }
+
+/* hamburger */
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; }
+.hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: all .3s; }
+@media (max-width: 768px) {
+  .nav { padding: 0 20px; }
+  .nav-links, .nav-ctas .btn-ghost { display: none; }
+  .hamburger { display: flex; }
+  .nav-ctas { gap: 6px; }
+  .btn-primary { padding: 7px 14px; font-size: 12px; }
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(145deg, var(--indigo-dark) 0%, var(--indigo-mid) 45%, #4338ca 80%, #5b21b6 100%);
+  padding: 88px 40px 96px; text-align: center; position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0; opacity: 0.04;
+  background-image: radial-gradient(circle, #fff 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.hero-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 14px; border-radius: 20px;
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);
+  font-size: 12px; font-weight: 600; color: #c4b5fd; margin-bottom: 22px;
+  letter-spacing: 0.3px;
+}
+.hero h1 {
+  font-size: clamp(30px, 5vw, 50px); font-weight: 900;
+  letter-spacing: -1.5px; line-height: 1.12; color: #fff; margin-bottom: 18px;
+}
+.hero h1 mark { background: none; color: #a5b4fc; }
+.hero-sub { font-size: clamp(14px, 2vw, 17px); color: rgba(255,255,255,0.65); line-height: 1.65; margin-bottom: 40px; }
+
+/* AI Chat box */
+.ai-box {
+  max-width: 540px; margin: 0 auto;
+  background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 20px; padding: 18px; backdrop-filter: blur(16px);
+}
+.ai-box-label {
+  font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.5);
+  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.ai-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; display: inline-block; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.chat-msgs { max-height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 9px; margin-bottom: 12px; }
+.bubble { padding: 9px 13px; border-radius: 12px; font-size: 13px; line-height: 1.5; max-width: 88%; }
+.bubble.ai { background: rgba(255,255,255,0.1); color: #e0e7ff; align-self: flex-start; border-bottom-left-radius: 3px; }
+.bubble.user { background: var(--indigo); color: #fff; align-self: flex-end; border-bottom-right-radius: 3px; }
+.ai-input-row { display: flex; gap: 8px; }
+.ai-input {
+  flex: 1; padding: 10px 14px; border-radius: 10px; border: none;
+  background: rgba(255,255,255,0.09); color: #fff; font-size: 13px;
+  font-family: inherit; outline: none; min-width: 0;
+}
+.ai-input::placeholder { color: rgba(255,255,255,0.35); }
+.ai-send {
+  padding: 10px 16px; border-radius: 10px; border: none;
+  background: var(--violet); color: #fff; font-size: 13px; font-weight: 700;
+  cursor: pointer; font-family: inherit; white-space: nowrap; transition: background .2s;
+}
+.ai-send:hover { background: #6d28d9; }
+
+@media (max-width: 768px) {
+  .hero { padding: 56px 20px 64px; }
+  .ai-box { padding: 14px; }
+}
+
+/* ── STATS ── */
+.stats {
+  background: var(--surface); border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  display: flex; justify-content: center; gap: 0;
+}
+.stat { padding: 20px 40px; text-align: center; border-right: 1px solid var(--border); }
+.stat:last-child { border-right: none; }
+.stat-n { font-size: 26px; font-weight: 900; letter-spacing: -1px; color: var(--text); }
+.stat-l { font-size: 12px; color: var(--muted); margin-top: 2px; }
+@media (max-width: 768px) {
+  .stats { padding: 0; flex-wrap: wrap; }
+  .stat { padding: 16px 20px; flex: 1 1 50%; border-right: none; border-bottom: 1px solid var(--border); }
+  .stat:nth-child(odd) { border-right: 1px solid var(--border); }
+}
+
+/* ── SECTION WRAPPER ── */
+.section { padding: 72px 40px; max-width: 1100px; margin: 0 auto; }
+.section-center { text-align: center; }
+.eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--indigo); margin-bottom: 10px; }
+.section-title { font-size: clamp(22px, 3.5vw, 34px); font-weight: 900; letter-spacing: -0.8px; line-height: 1.2; margin-bottom: 12px; }
+.section-sub { font-size: 15px; color: var(--muted); max-width: 480px; margin: 0 auto 48px; line-height: 1.65; }
+@media (max-width: 768px) {
+  .section { padding: 48px 20px; }
+}
+
+/* ── HOW IT WORKS ── */
+.how-bg { background: var(--surface); }
+.how-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+.how-steps::before {
+  content: ''; position: absolute; top: 28px; left: 10%; right: 10%; height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--border) 20%, var(--border) 80%, transparent);
+}
+.how-step { text-align: center; padding: 0 20px; position: relative; z-index: 1; }
+.how-num {
+  width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--border);
+  background: var(--bg); display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 18px; font-size: 20px; font-weight: 900; color: var(--indigo);
+  position: relative; z-index: 2;
+}
+.how-title { font-size: 14px; font-weight: 700; margin-bottom: 7px; }
+.how-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+@media (max-width: 768px) {
+  .how-steps { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .how-steps::before { display: none; }
+  .how-num { width: 44px; height: 44px; font-size: 16px; }
+}
+
+/* ── TEACHERS ── */
+.teachers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.tc {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px; cursor: pointer; transition: all .2s;
+}
+.tc:hover { border-color: var(--indigo); transform: translateY(-3px); box-shadow: 0 10px 28px rgba(67,56,202,0.1); }
+.tc-top { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 14px; }
+.tc-av { width: 50px; height: 50px; border-radius: 12px; background: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; border: 1px solid var(--border); }
+.tc-name { font-size: 14px; font-weight: 800; }
+.tc-title { font-size: 11px; color: var(--muted); margin-top: 3px; }
+.tc-rating { font-size: 12px; font-weight: 700; color: var(--yellow); margin-top: 4px; }
+.tc-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 13px; }
+.tc-tag { font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 5px; background: #eef2ff; color: var(--indigo); }
+.tc-bottom { display: flex; align-items: center; justify-content: space-between; }
+.tc-price { font-size: 15px; font-weight: 900; color: var(--text); }
+.tc-price span { font-size: 11px; font-weight: 400; color: var(--muted); }
+.tc-slots { font-size: 11px; color: var(--green); font-weight: 600; }
+.tc-btn {
+  width: 100%; margin-top: 14px; padding: 10px;
+  border-radius: 9px; border: 1.5px solid var(--indigo);
+  background: transparent; color: var(--indigo); font-size: 13px; font-weight: 700;
+  cursor: pointer; font-family: inherit; transition: all .2s;
+}
+.tc-btn:hover { background: var(--indigo); color: #fff; }
+@media (max-width: 768px) {
+  .teachers-grid { grid-template-columns: 1fr; }
+}
+
+/* ── WHY ── */
+.why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.why-item {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 22px 20px;
+}
+.why-icon { font-size: 26px; margin-bottom: 12px; }
+.why-title { font-size: 14px; font-weight: 800; margin-bottom: 7px; }
+.why-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+@media (max-width: 768px) {
+  .why-grid { grid-template-columns: 1fr; gap: 10px; }
+}
+
+/* ── TESTIMONIALS ── */
+.testi-bg { background: var(--surface); }
+.testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.testi {
+  background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px; display: flex; flex-direction: column; gap: 12px;
+}
+.testi-stars { color: var(--yellow); font-size: 13px; }
+.testi-text { font-size: 13px; color: var(--text); line-height: 1.65; flex: 1; font-style: italic; }
+.testi-author { display: flex; align-items: center; gap: 9px; }
+.testi-av { width: 34px; height: 34px; border-radius: 50%; background: #eef2ff; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.testi-name { font-size: 13px; font-weight: 700; }
+.testi-meta { font-size: 11px; color: var(--muted); }
+@media (max-width: 768px) {
+  .testi-grid { grid-template-columns: 1fr; }
+}
+
+/* ── CTA SECTION ── */
+.cta-section {
+  background: linear-gradient(135deg, var(--indigo-dark), var(--indigo));
+  padding: 80px 40px; text-align: center;
+}
+.cta-section h2 { font-size: clamp(24px, 3.5vw, 38px); font-weight: 900; color: #fff; letter-spacing: -1px; margin-bottom: 12px; }
+.cta-section p { font-size: 15px; color: rgba(255,255,255,0.65); margin-bottom: 32px; max-width: 400px; margin-left: auto; margin-right: auto; }
+.cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.btn-white { padding: 13px 28px; border-radius: var(--radius-sm); background: #fff; color: var(--indigo); font-size: 15px; font-weight: 800; cursor: pointer; font-family: inherit; border: none; transition: all .2s; }
+.btn-white:hover { background: #e0e7ff; }
+.btn-outline-white { padding: 12px 28px; border-radius: var(--radius-sm); background: transparent; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; border: 1.5px solid rgba(255,255,255,0.35); transition: all .2s; }
+.btn-outline-white:hover { background: rgba(255,255,255,0.08); }
+@media (max-width: 768px) {
+  .cta-section { padding: 56px 20px; }
+  .btn-white, .btn-outline-white { width: 100%; max-width: 300px; }
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--indigo-dark); color: rgba(255,255,255,0.5);
+  padding: 40px; display: flex; align-items: center; justify-content: space-between;
+  font-size: 12px;
+}
+.footer-logo { font-size: 15px; font-weight: 900; color: #fff; }
+.footer-logo em { font-style: normal; color: var(--violet-light); }
+@media (max-width: 768px) {
+  footer { flex-direction: column; gap: 12px; text-align: center; padding: 28px 20px; }
+}
+
+/* ── MOBILE NAV DRAWER ── */
+.nav-drawer {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.5); flex-direction: column; align-items: flex-end;
+}
+.nav-drawer.open { display: flex; }
+.drawer-panel {
+  width: 260px; height: 100%; background: var(--surface);
+  padding: 24px 20px; display: flex; flex-direction: column; gap: 6px;
+}
+.drawer-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+.drawer-logo { font-size: 16px; font-weight: 900; }
+.drawer-logo em { font-style: normal; color: var(--indigo); }
+.drawer-close { font-size: 22px; cursor: pointer; color: var(--muted); }
+.drawer-link { padding: 11px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; color: var(--text); cursor: pointer; transition: background .15s; }
+.drawer-link:hover { background: var(--bg); }
+.drawer-divider { height: 1px; background: var(--border); margin: 8px 0; }
+.drawer-btn { padding: 12px; border-radius: 9px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; text-align: center; }
+.drawer-btn.primary { background: var(--indigo); color: #fff; border: none; }
+.drawer-btn.ghost { background: transparent; border: 1.5px solid var(--border); color: var(--text); }
+</style>
+</head>
+<body>
+
+<!-- NAV DRAWER (mobile) -->
+<div class="nav-drawer" id="drawer" onclick="closeDrawer(event)">
+  <div class="drawer-panel">
+    <div class="drawer-header">
+      <div class="drawer-logo">LMS<em>mini</em></div>
+      <div class="drawer-close" onclick="toggleDrawer()">✕</div>
+    </div>
+    <div class="drawer-link" onclick="scrollTo('#how')">Cách hoạt động</div>
+    <div class="drawer-link" onclick="scrollTo('#teachers')">Giáo viên</div>
+    <div class="drawer-link" onclick="scrollTo('#why')">Tại sao LMSmini</div>
+    <div class="drawer-divider"></div>
+    <button class="drawer-btn ghost" onclick="goLogin()">GV đăng nhập</button>
+    <button class="drawer-btn primary" style="margin-top:8px;">Tìm GV ngay</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">LMS<em>mini</em></div>
+  <div class="nav-links">
+    <span class="nav-link" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">Cách hoạt động</span>
+    <span class="nav-link" onclick="document.getElementById('teachers').scrollIntoView({behavior:'smooth'})">Giáo viên</span>
+    <span class="nav-link" onclick="document.getElementById('why').scrollIntoView({behavior:'smooth'})">Tại sao LMSmini</span>
+  </div>
+  <div class="nav-ctas">
+    <button class="btn-ghost hide-mobile" onclick="goLogin()">GV đăng nhập</button>
+    <button class="btn-primary" onclick="document.getElementById('hero-chat').focus()">Tìm GV ngay</button>
+    <div class="hamburger" onclick="toggleDrawer()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge"><span class="ai-dot"></span> AI Matching · Kết nối trong 10 giây</div>
+    <h1>Tìm giáo viên tiếng Anh<br><mark>đúng với bạn nhất</mark></h1>
+    <p class="hero-sub">Mô tả mục tiêu và lịch học của bạn — AI sẽ tìm giáo viên phù hợp nhất, không cần lọc tay.</p>
+
+    <div class="ai-box">
+      <div class="ai-box-label"><span class="ai-dot"></span> LMSmini AI đang trực tuyến</div>
+      <div class="chat-msgs" id="heroChat">
+        <div class="bubble ai">Xin chào! Bạn muốn học tiếng Anh với mục tiêu gì? Mình sẽ tìm giáo viên phù hợp nhất cho bạn 😊</div>
+      </div>
+      <div class="ai-input-row">
+        <input class="ai-input" id="hero-chat" placeholder="VD: Mình muốn thi IELTS 6.5 trong 3 tháng..." onkeydown="if(event.key==='Enter')sendHeroChat()">
+        <button class="ai-send" onclick="sendHeroChat()">Tìm →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="stat-n">120+</div><div class="stat-l">Giáo viên chất lượng</div></div>
+  <div class="stat"><div class="stat-n">2.400+</div><div class="stat-l">Học viên đã học</div></div>
+  <div class="stat"><div class="stat-n">★ 4.8</div><div class="stat-l">Đánh giá trung bình</div></div>
+  <div class="stat"><div class="stat-n">98%</div><div class="stat-l">Hài lòng sau khoá</div></div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="how-bg" id="how">
+  <div class="section section-center">
+    <div class="eyebrow">Cách hoạt động</div>
+    <h2 class="section-title">Từ tìm GV đến bắt đầu học — 4 bước</h2>
+    <p class="section-sub">Không cần tự lọc hàng chục hồ sơ. AI làm hết cho bạn.</p>
+    <div class="how-steps">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <div class="how-title">Chat với AI</div>
+        <div class="how-desc">Kể mục tiêu, ngân sách, lịch rảnh trong 1 phút.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <div class="how-title">Nhận gợi ý GV</div>
+        <div class="how-desc">AI match 2–3 giáo viên phù hợp nhất với bạn.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <div class="how-title">Học thử miễn phí</div>
+        <div class="how-desc">Đặt buổi học thử 30 phút — không tốn đồng nào.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">4</div>
+        <div class="how-title">Bắt đầu học</div>
+        <div class="how-desc">Thanh toán và nhận lịch học trong 5 phút.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURED TEACHERS -->
+<div id="teachers">
+  <div class="section">
+    <div class="eyebrow">Giáo viên nổi bật</div>
+    <h2 class="section-title" style="margin-bottom:8px;">Được phụ huynh tin chọn</h2>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:32px;">Chọn lọc dựa trên kết quả thật từ học viên.</p>
+    <div class="teachers-grid">
+      <div class="tc">
+        <div class="tc-top">
+          <div class="tc-av">👨‍🏫</div>
+          <div>
+            <div class="tc-name">Thầy Nguyễn Quốc Minh</div>
+            <div class="tc-title">8 năm · Cựu GV IDP Education</div>
+            <div class="tc-rating">★★★★★ 4.9 <span style="color:var(--muted);font-weight:400;font-size:11px;">(47 đánh giá)</span></div>
+          </div>
+        </div>
+        <div class="tc-tags"><span class="tc-tag">IELTS</span><span class="tc-tag">Business</span><span class="tc-tag">Online</span></div>
+        <div class="tc-bottom">
+          <div class="tc-price">3.500.000đ <span>/ tháng</span></div>
+          <div class="tc-slots">● 3 slot trống</div>
+        </div>
+        <button class="tc-btn">Xem profile →</button>
+      </div>
+      <div class="tc">
+        <div class="tc-top">
+          <div class="tc-av">👩‍🏫</div>
+          <div>
+            <div class="tc-name">Cô Trần Phương Lan</div>
+            <div class="tc-title">5 năm · IELTS 8.0</div>
+            <div class="tc-rating">★★★★★ 4.8 <span style="color:var(--muted);font-weight:400;font-size:11px;">(32 đánh giá)</span></div>
+          </div>
+        </div>
+        <div class="tc-tags"><span class="tc-tag">Trẻ em</span><span class="tc-tag">Giao tiếp</span><span class="tc-tag">Online</span></div>
+        <div class="tc-bottom">
+          <div class="tc-price">2.800.000đ <span>/ tháng</span></div>
+          <div class="tc-slots">● 5 slot trống</div>
+        </div>
+        <button class="tc-btn">Xem profile →</button>
+      </div>
+      <div class="tc">
+        <div class="tc-top">
+          <div class="tc-av">👨‍🏫</div>
+          <div>
+            <div class="tc-name">Thầy Lê Hoàng Nam</div>
+            <div class="tc-title">6 năm · MBA Úc</div>
+            <div class="tc-rating">★★★★½ 4.7 <span style="color:var(--muted);font-weight:400;font-size:11px;">(28 đánh giá)</span></div>
+          </div>
+        </div>
+        <div class="tc-tags"><span class="tc-tag">Business</span><span class="tc-tag">TOEIC</span><span class="tc-tag">Online</span></div>
+        <div class="tc-bottom">
+          <div class="tc-price">3.200.000đ <span>/ tháng</span></div>
+          <div class="tc-slots">● 2 slot trống</div>
+        </div>
+        <button class="tc-btn">Xem profile →</button>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:28px;">
+      <button class="btn-ghost" style="font-size:14px;padding:10px 28px;">Xem tất cả 120+ giáo viên →</button>
+    </div>
+  </div>
+</div>
+
+<!-- WHY LMSMINI -->
+<div id="why" style="background:var(--surface);">
+  <div class="section section-center">
+    <div class="eyebrow">Tại sao LMSmini</div>
+    <h2 class="section-title">Không phải trung tâm. Không phải gia sư ngẫu nhiên.</h2>
+    <p class="section-sub">Chỉ những giáo viên đã được xác minh, có kết quả thật, và được AI match đúng với nhu cầu của bạn.</p>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-icon">🤖</div>
+        <div class="why-title">AI Match cá nhân hoá</div>
+        <div class="why-desc">Không phải tìm ngẫu nhiên — AI phân tích mục tiêu, ngân sách, lịch rảnh để tìm GV phù hợp nhất trong 10 giây.</div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">✅</div>
+        <div class="why-title">GV đã được xác minh</div>
+        <div class="why-desc">Mọi giáo viên đều được LMSmini xem xét hồ sơ, chứng chỉ, và kết quả học viên thực tế trước khi hiện trên platform.</div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🛡️</div>
+        <div class="why-title">Học thử, không thích hoàn tiền</div>
+        <div class="why-desc">Buổi học thử đầu tiên miễn phí 30 phút. Nếu không hài lòng sau buổi học đầu trả phí — hoàn tiền 100%.</div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">📊</div>
+        <div class="why-title">Theo dõi tiến độ minh bạch</div>
+        <div class="why-desc">Dashboard phụ huynh theo dõi buổi học, bài tập, và tiến độ của con sau mỗi tuần.</div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">💬</div>
+        <div class="why-title">Kết nối trực tiếp qua Zalo</div>
+        <div class="why-desc">Liên lạc thẳng với GV qua Zalo — không qua trung gian, không mất thêm phí booking.</div>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">💳</div>
+        <div class="why-title">Thanh toán an toàn</div>
+        <div class="why-desc">Qua PayOS — uy tín, có xác nhận thanh toán, tự động gửi lịch học ngay sau khi thành công.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="testi-bg">
+  <div class="section section-center">
+    <div class="eyebrow">Học viên nói gì</div>
+    <h2 class="section-title">Kết quả thật, từ người thật</h2>
+    <p class="section-sub" style="margin-bottom:36px;">Không phải lời hứa — đây là kết quả của học viên đã học qua LMSmini.</p>
+    <div class="testi-grid">
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Sau 3 tháng với thầy Minh, mình từ 5.5 lên 7.0 IELTS. Vượt kỳ vọng ban đầu rất nhiều. AI match đúng thầy dạy intensive Writing — đúng điểm yếu của mình luôn."</div>
+        <div class="testi-author">
+          <div class="testi-av">👩</div>
+          <div><div class="testi-name">Nguyễn Thị Mai</div><div class="testi-meta">IELTS 7.0 · Đi du học Úc</div></div>
+        </div>
+      </div>
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Mình thử nhiều nơi trước đó nhưng không match được thầy phù hợp. LMSmini chat với AI 5 phút là có ngay 3 gợi ý, chọn thầy Nam và học Business English rất hiệu quả."</div>
+        <div class="testi-author">
+          <div class="testi-av">👦</div>
+          <div><div class="testi-name">Trần Văn Hùng</div><div class="testi-meta">Business English · Làm cho Grab HCM</div></div>
+        </div>
+      </div>
+      <div class="testi">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"Tìm GV cho con học từ lớp 3. Mình mô tả lịch và độ tuổi, AI gợi ý cô Lan — con thích học lắm, không còn cảnh bắt ép ngồi vào bàn nữa."</div>
+        <div class="testi-author">
+          <div class="testi-av">👩</div>
+          <div><div class="testi-name">Phạm Ngọc Hà</div><div class="testi-meta">Phụ huynh · Con 8 tuổi</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>Sẵn sàng tìm giáo viên phù hợp?</h2>
+  <p>Chat với AI ngay — miễn phí, không cần đăng ký, kết quả trong 10 giây.</p>
+  <div class="cta-btns">
+    <button class="btn-white" onclick="document.getElementById('hero-chat').focus();window.scrollTo({top:0,behavior:'smooth'})">🤖 Chat với AI ngay</button>
+    <button class="btn-outline-white" onclick="goLogin()">Tôi là giáo viên →</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">LMS<em>mini</em></div>
+  <div>© 2026 LMSmini · Nền tảng kết nối GV tiếng Anh freelancer tại Việt Nam</div>
+  <div style="display:flex;gap:16px;">
+    <span style="cursor:pointer;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Điều khoản</span>
+    <span style="cursor:pointer;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Bảo mật</span>
+    <span style="cursor:pointer;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Liên hệ</span>
+  </div>
+</footer>
+
+<script>
+// Nav drawer
+function toggleDrawer() {
+  document.getElementById('drawer').classList.toggle('open');
+}
+function closeDrawer(e) {
+  if (e.target === document.getElementById('drawer')) toggleDrawer();
+}
+function scrollTo(sel) {
+  document.querySelector(sel).scrollIntoView({behavior:'smooth'});
+  toggleDrawer();
+}
+function goLogin() {
+    window.open('./dashboard.html', '_self')
+}
+
+// Hero chat
+const replies = [
+  "Mục tiêu IELTS 6.5 rất rõ ràng! Bạn hiện tại đang ở band bao nhiêu, và ngân sách/tháng của bạn khoảng bao nhiêu ạ?",
+  "Tuyệt! Mình tìm thấy 3 giáo viên phù hợp với bạn — đang chuyển sang trang danh sách nhé... 🎯"
+];
+let heroStep = 0;
+function sendHeroChat() {
+  const inp = document.getElementById('hero-chat');
+  const val = inp.value.trim();
+  if (!val) return;
+  const chat = document.getElementById('heroChat');
+  chat.innerHTML += `<div class="bubble user">${val}</div>`;
+  inp.value = '';
+  chat.scrollTop = chat.scrollHeight;
+  setTimeout(() => {
+    const r = replies[Math.min(heroStep, replies.length - 1)];
+    chat.innerHTML += `<div class="bubble ai">${r}</div>`;
+    heroStep++;
+    chat.scrollTop = chat.scrollHeight;
+  }, 700);
+}
+</script>
+</body>
+</html>

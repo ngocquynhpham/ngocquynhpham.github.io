@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="./favicon.svg" type="image/svg+xml">
+<title>LMSmini — Giáo Viên Dashboard</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f5f4f0; --surface: #fff; --surface2: #eeede8; --border: #e0ded6;
+  --sidebar: #16162a; --sidebar2: #1f1f38; --sidebar-border: #2a2a45;
+  --accent: #4f46e5; --accent-light: #eef2ff; --accent-mid: #6366f1;
+  --violet: #a78bfa;
+  --text: #1a1916; --muted: #78776e; --dim: #b0afa8;
+  --green: #16a34a; --green-bg: #dcfce7;
+  --yellow: #d97706; --yellow-bg: #fef3c7;
+  --red: #dc2626; --red-bg: #fee2e2;
+  --radius: 14px; --radius-sm: 9px;
+}
+
+/* ── RESET ── */
+body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); font-size: 13px; overflow: hidden; height: 100dvh; }
+button { font-family: inherit; cursor: pointer; }
+
+/* ── LAYOUT ── */
+.app { display: flex; height: 100dvh; overflow: hidden; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 216px; flex-shrink: 0; background: var(--sidebar);
+  display: flex; flex-direction: column;
+  border-right: 1px solid var(--sidebar-border);
+  transition: transform .3s ease;
+  z-index: 50;
+}
+.sb-head { padding: 16px 14px; border-bottom: 1px solid var(--sidebar-border); }
+.sb-logo { font-size: 16px; font-weight: 900; color: #fff; letter-spacing: -0.3px; }
+.sb-logo em { font-style: normal; color: var(--violet); }
+.sb-user {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 12px; padding: 8px 10px;
+  background: var(--sidebar2); border-radius: 10px; cursor: pointer;
+}
+.sb-av { width: 28px; height: 28px; border-radius: 7px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.sb-name { font-size: 12px; color: #e0e0f0; font-weight: 600; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sb-tier { font-size: 10px; padding: 1px 6px; border-radius: 4px; background: #5b4fcf44; color: var(--violet); font-weight: 700; flex-shrink: 0; }
+
+.sb-nav { flex: 1; padding: 8px; overflow-y: auto; }
+.sb-section { font-size: 10px; font-weight: 700; color: #4a4a68; text-transform: uppercase; letter-spacing: 1px; padding: 10px 6px 5px; }
+.sb-item {
+  display: flex; align-items: center; gap: 9px;
+  padding: 9px 10px; border-radius: 9px; cursor: pointer;
+  margin-bottom: 2px; color: #8888aa; font-size: 12px; font-weight: 500;
+  transition: all .15s;
+}
+.sb-item:hover { background: var(--sidebar2); color: #c8c8e8; }
+.sb-item.active { background: #2d2d50; color: #fff; }
+.sb-icon { font-size: 14px; width: 18px; text-align: center; flex-shrink: 0; }
+.sb-badge { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 10px; background: var(--red); color: #fff; margin-left: auto; }
+.sb-bottom { padding: 8px; border-top: 1px solid var(--sidebar-border); }
+
+/* ── MAIN ── */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+
+/* ── TOPBAR ── */
+.topbar {
+  height: 52px; padding: 0 20px; background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0; gap: 10px;
+}
+.topbar-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.hamburger-btn {
+  display: none; width: 34px; height: 34px; border: 1px solid var(--border);
+  border-radius: 8px; background: transparent; align-items: center; justify-content: center;
+  font-size: 16px; flex-shrink: 0;
+}
+.topbar-title { font-size: 15px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.topbar-right { display: flex; gap: 8px; flex-shrink: 0; align-items: center; }
+.btn { padding: 7px 13px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; border: 1px solid var(--border); background: var(--surface); color: var(--muted); transition: all .2s; }
+.btn:hover:not(.primary) { border-color: var(--accent); color: var(--accent); }
+.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.btn.primary:hover { background: var(--accent-mid); }
+.btn.sm { padding: 5px 10px; font-size: 11px; }
+.notif-btn {
+  width: 34px; height: 34px; border-radius: 9px; border: 1px solid var(--border);
+  background: var(--surface); display: flex; align-items: center; justify-content: center;
+  font-size: 15px; position: relative; cursor: pointer;
+}
+.notif-dot { position: absolute; top: 6px; right: 6px; width: 7px; height: 7px; border-radius: 50%; background: var(--red); border: 1.5px solid var(--surface); }
+
+/* ── CONTENT ── */
+.content { flex: 1; overflow-y: auto; padding: 20px; }
+.page { display: none; }
+.page.active { display: block; }
+
+/* ── CARDS ── */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 14px; }
+.card-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; color: var(--text); margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
+.card-link { font-size: 11px; color: var(--accent); font-weight: 600; cursor: pointer; text-transform: none; letter-spacing: 0; }
+
+/* ── STATS ── */
+.stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+.stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; }
+.stat-label { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
+.stat-val { font-size: 26px; font-weight: 900; margin: 6px 0 4px; letter-spacing: -1px; }
+.stat-chip { font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 6px; display: inline-flex; align-items: center; gap: 3px; }
+.chip-up { background: var(--green-bg); color: var(--green); }
+.chip-neutral { background: var(--surface2); color: var(--muted); }
+
+/* ── TWO COL ── */
+.two-col { display: grid; grid-template-columns: 1fr 300px; gap: 14px; margin-bottom: 14px; }
+
+/* Pipeline */
+.pipeline-cols { display: flex; gap: 8px; }
+.p-col { flex: 1; }
+.p-col-label { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 7px; display: flex; align-items: center; gap: 5px; }
+.p-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.lead-mini { background: var(--surface2); border: 1px solid var(--border); border-radius: 9px; padding: 8px 10px; margin-bottom: 5px; cursor: pointer; font-size: 12px; transition: border-color .15s; }
+.lead-mini:hover { border-color: var(--accent); }
+.lm-name { font-weight: 600; }
+.lm-goal { color: var(--muted); font-size: 11px; margin-top: 1px; }
+.lm-score { display: inline-block; margin-top: 4px; font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 5px; }
+
+/* Alerts */
+.alert-item { display: flex; align-items: flex-start; gap: 9px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+.alert-item:last-child { border-bottom: none; padding-bottom: 0; }
+.alert-action { font-size: 11px; color: var(--accent); font-weight: 600; cursor: pointer; padding: 3px 8px; border-radius: 6px; border: 1px solid var(--accent-light); background: var(--accent-light); white-space: nowrap; flex-shrink: 0; }
+
+/* Rev chart */
+.rev-bars { display: flex; align-items: flex-end; gap: 6px; height: 70px; margin-bottom: 8px; }
+.rev-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.rev-bar { width: 100%; border-radius: 4px 4px 0 0; background: var(--accent-light); }
+.rev-bar.cur { background: var(--accent); }
+.rev-bar-lbl { font-size: 9px; color: var(--dim); }
+
+/* ── LEADS ── */
+.leads-layout { display: grid; grid-template-columns: 1fr 340px; gap: 14px; height: calc(100dvh - 100px); }
+.leads-left { overflow-y: auto; }
+.lead-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 14px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 10px;
+  margin-bottom: 6px; cursor: pointer; transition: border-color .15s;
+}
+.lead-row:hover, .lead-row.sel { border-color: var(--accent); }
+.lead-row.sel { background: var(--accent-light); }
+.lr-av { width: 36px; height: 36px; border-radius: 9px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.lr-name { font-size: 13px; font-weight: 600; }
+.lr-meta { font-size: 11px; color: var(--muted); margin-top: 1px; }
+.stage-pill { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 5px; display: inline-block; margin-top: 3px; }
+.tag-high { background: var(--green-bg); color: var(--green); }
+.tag-nurture { background: var(--yellow-bg); color: var(--yellow); }
+.tag-closer { background: var(--red-bg); color: var(--red); }
+.tag-onboard { background: var(--accent-light); color: var(--accent); }
+.lead-detail { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); display: flex; flex-direction: column; overflow: hidden; position: sticky; top: 0; max-height: calc(100dvh - 108px); }
+.ld-head { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+.ld-av { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.ld-tabs { display: flex; border-bottom: 1px solid var(--border); padding: 0 16px; }
+.ld-tab { padding: 9px 12px; font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all .15s; }
+.ld-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+.ld-body { flex: 1; overflow-y: auto; padding: 14px 16px; }
+.chat-mini { display: flex; flex-direction: column; gap: 9px; }
+.cm { display: flex; gap: 7px; }
+.cm.user { flex-direction: row-reverse; }
+.cm-bubble { padding: 8px 11px; border-radius: 10px; font-size: 12px; line-height: 1.5; max-width: 82%; }
+.cm.bot .cm-bubble { background: var(--surface2); border: 1px solid var(--border); }
+.cm.user .cm-bubble { background: var(--accent); color: #fff; }
+.cm-tag { font-size: 10px; color: var(--muted); margin-bottom: 2px; }
+.info-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+.info-row:last-child { border-bottom: none; }
+
+/* ── HỌC VIÊN ── */
+.hv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.hv-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; }
+.hv-top { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.hv-av { width: 40px; height: 40px; border-radius: 10px; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.hv-status { margin-left: auto; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; }
+.s-active { background: var(--green-bg); color: var(--green); }
+.s-risk { background: var(--red-bg); color: var(--red); }
+.s-done { background: var(--surface2); color: var(--muted); }
+.pb-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-bottom: 5px; }
+.pb-track { height: 6px; background: var(--surface2); border-radius: 3px; overflow: hidden; }
+.pb-fill { height: 100%; border-radius: 3px; }
+
+/* ── DOANH THU ── */
+.inv-table { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.inv-header { display: grid; grid-template-columns: 2fr 1.5fr 1fr 1fr 70px; gap: 10px; padding: 10px 16px; background: var(--surface2); border-bottom: 1px solid var(--border); font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; }
+.inv-row { display: grid; grid-template-columns: 2fr 1.5fr 1fr 1fr 70px; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--border); align-items: center; cursor: pointer; transition: background .15s; }
+.inv-row:hover { background: var(--accent-light); }
+.inv-row:last-child { border-bottom: none; }
+.i-status { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; }
+.paid { background: var(--green-bg); color: var(--green); }
+.pending { background: var(--yellow-bg); color: var(--yellow); }
+.sent { background: var(--accent-light); color: var(--accent); }
+
+/* ── TẠO PHIẾU ── */
+.steps-bar { display: flex; align-items: center; margin-bottom: 22px; }
+.step { display: flex; align-items: center; gap: 7px; }
+.step-num { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; border: 2px solid var(--border); background: var(--surface); color: var(--muted); flex-shrink: 0; transition: all .3s; }
+.step-num.active { border-color: var(--accent); background: var(--accent); color: #fff; }
+.step-num.done { border-color: var(--green); background: var(--green); color: #fff; }
+.step-lbl { font-size: 12px; font-weight: 600; color: var(--muted); white-space: nowrap; }
+.step-lbl.active { color: var(--accent); }
+.step-lbl.done { color: var(--green); }
+.step-line { flex: 1; height: 1.5px; background: var(--border); margin: 0 8px; min-width: 12px; transition: background .3s; }
+.step-line.done { background: var(--green); }
+.form-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 14px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-group { display: flex; flex-direction: column; gap: 4px; }
+.form-group.full { grid-column: 1 / -1; }
+.f-label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; }
+.f-input { padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 9px; font-size: 13px; font-family: inherit; color: var(--text); background: var(--bg); outline: none; transition: border-color .2s; }
+.f-input:focus { border-color: var(--accent); background: var(--surface); }
+.f-select { padding: 9px 12px; border: 1.5px solid var(--border); border-radius: 9px; font-size: 13px; font-family: inherit; color: var(--text); background: var(--bg); outline: none; cursor: pointer; }
+.course-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.cc { border: 2px solid var(--border); border-radius: 12px; padding: 14px; cursor: pointer; transition: all .2s; }
+.cc:hover { border-color: var(--accent); }
+.cc.sel { border-color: var(--accent); background: var(--accent-light); }
+.cc-price { font-size: 14px; font-weight: 900; color: var(--accent); margin: 4px 0; }
+.cc-meta { font-size: 11px; color: var(--muted); }
+.preview-split { display: grid; grid-template-columns: 1fr 280px; gap: 18px; }
+.preview-card { background: var(--surface); border: 1.5px solid var(--accent); border-radius: var(--radius); padding: 20px; }
+.link-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+.share-btn { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border-radius: 10px; border: 1.5px solid var(--border); cursor: pointer; font-size: 13px; font-weight: 600; background: var(--surface); margin-bottom: 8px; transition: all .2s; }
+.share-btn:hover { border-color: var(--accent); }
+.share-btn.zalo { background: #0068ff; border-color: #0068ff; color: #fff; }
+
+/* ── LỊCH DẠY ── */
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+.cal-day-label { font-size: 11px; font-weight: 700; color: var(--muted); text-align: center; margin-bottom: 8px; }
+.cal-event { background: var(--accent-light); border: 1px solid #c7d2fe; border-radius: 8px; padding: 8px 7px; font-size: 11px; margin-bottom: 5px; }
+.cal-event.green { background: var(--green-bg); border-color: #bbf7d0; }
+
+/* ── HỒ SƠ GV ── */
+.gv-grid { display: grid; grid-template-columns: 1fr 260px; gap: 14px; }
+.profile-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; margin-bottom: 12px; }
+.ps-title { font-size: 13px; font-weight: 700; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
+.ps-edit { font-size: 11px; color: var(--accent); font-weight: 600; cursor: pointer; }
+.tag-cloud { display: flex; gap: 6px; flex-wrap: wrap; }
+.tag-pill { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 6px; background: var(--accent-light); color: var(--accent); border: 1px solid #c7d2fe; }
+.url-box { display: flex; align-items: center; gap: 8px; padding: 9px 12px; background: var(--surface2); border: 1px solid var(--border); border-radius: 9px; font-size: 12px; }
+.url-text { flex: 1; color: var(--accent); font-family: monospace; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+
+/* ── GIÁO TRÌNH ── */
+.gt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.gt-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; cursor: pointer; transition: all .2s; }
+.gt-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.gt-card.dashed { border-style: dashed; display: flex; align-items: center; justify-content: center; flex-direction: column; min-height: 120px; }
+.gt-week { background: var(--surface2); border-radius: 9px; padding: 10px 12px; margin-bottom: 6px; font-size: 12px; }
+
+/* ── SETTINGS ── */
+.divider { height: 1px; background: var(--border); margin: 14px 0; }
+
+/* ── MOBILE OVERLAY ── */
+.sidebar-overlay {
+  display: none; position: fixed; inset: 0; z-index: 40;
+  background: rgba(0,0,0,0.45);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .two-col { grid-template-columns: 1fr; }
+  .hv-grid { grid-template-columns: repeat(2, 1fr); }
+  .inv-header, .inv-row { grid-template-columns: 1.5fr 1fr 1fr 60px; }
+  .inv-header > :nth-child(2), .inv-row > :nth-child(2) { display: none; }
+  .preview-split { grid-template-columns: 1fr; }
+  .gv-grid { grid-template-columns: 1fr; }
+  .gt-grid { grid-template-columns: repeat(2, 1fr); }
+  .course-cards { grid-template-columns: 1fr 1fr; }
+  .cal-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0;
+    transform: translateX(-100%); z-index: 50;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay.open { display: block; }
+  .hamburger-btn { display: flex !important; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .hv-grid { grid-template-columns: 1fr; }
+  .leads-layout { grid-template-columns: 1fr; height: auto; }
+  .lead-detail { display: none; position: fixed; inset: 0; z-index: 60; border-radius: 0; max-height: 100dvh; }
+  .lead-detail.show { display: flex; }
+  .form-grid { grid-template-columns: 1fr; }
+  .course-cards { grid-template-columns: 1fr; }
+  .inv-header { display: none; }
+  .inv-row { grid-template-columns: 1fr auto; gap: 8px; }
+  .inv-row > :nth-child(2), .inv-row > :nth-child(3) { display: none; }
+  .cal-grid { grid-template-columns: repeat(3, 1fr); }
+  .gt-grid { grid-template-columns: 1fr; }
+  .steps-bar .step-lbl { display: none; }
+}
+
+@media (max-width: 480px) {
+  .content { padding: 14px; }
+  .stats-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-val { font-size: 20px; }
+  .cal-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen" style="position:fixed;inset:0;z-index:200;background:var(--sidebar);display:flex;align-items:center;justify-content:center;padding:20px;">
+  <div style="width:100%;max-width:360px;background:#1f1f38;border:1px solid var(--sidebar-border);border-radius:20px;padding:clamp(24px,5vw,40px) clamp(20px,5vw,36px);">
+    <div style="font-size:20px;font-weight:900;color:#fff;margin-bottom:4px;">LMS<span style="color:var(--violet);">mini</span></div>
+    <div style="font-size:12px;color:#6b6b90;margin-bottom:6px;">Dành cho Giáo viên</div>
+    <div style="display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px;background:#5b4fcf22;color:var(--violet);border:1px solid #5b4fcf44;margin-bottom:22px;">🎓 Teacher Portal</div>
+    <div style="font-size:11px;font-weight:600;color:#9898b8;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Email</div>
+    <input style="width:100%;padding:10px 14px;background:#16162a;border:1px solid #3a3a58;border-radius:10px;color:#fff;font-size:13px;outline:none;margin-bottom:12px;font-family:inherit;" value="thay.minh@lmsmini.vn" placeholder="email@lmsmini.vn">
+    <div style="font-size:11px;font-weight:600;color:#9898b8;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Mật khẩu</div>
+    <input type="password" style="width:100%;padding:10px 14px;background:#16162a;border:1px solid #3a3a58;border-radius:10px;color:#fff;font-size:13px;outline:none;margin-bottom:16px;font-family:inherit;" value="12345678">
+    <button onclick="login()" style="width:100%;padding:12px;background:#5b4fcf;border:none;border-radius:10px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">Đăng nhập →</button>
+    <div style="margin-top:16px;padding-top:14px;border-top:1px solid #2a2a45;">
+      <div style="font-size:11px;color:#6b6b90;margin-bottom:8px;">Demo nhanh:</div>
+      <div onclick="loginAs('Thầy Minh','👨‍🏫','PRO')" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:background .15s;" onmouseover="this.style.background='#2a2a45'" onmouseout="this.style.background=''">
+        <div style="width:28px;height:28px;border-radius:7px;background:#5b4fcf22;display:flex;align-items:center;justify-content:center;font-size:14px;">👨‍🏫</div>
+        <div><div style="font-size:12px;color:#d0d0e8;font-weight:500;">Thầy Minh <span style="font-size:10px;background:#5b4fcf22;color:var(--violet);padding:1px 6px;border-radius:4px;">PRO</span></div><div style="font-size:10px;color:#6b6b90;">IELTS & Business English</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SIDEBAR OVERLAY (mobile) -->
+<div class="sidebar-overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<!-- APP -->
+<div class="app" id="app" style="display:none;">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar" id="sidebar">
+    <div class="sb-head">
+      <div class="sb-logo">LMS<em>mini</em></div>
+      <div class="sb-user">
+        <div class="sb-av" id="sbAv">👨‍🏫</div>
+        <div class="sb-name" id="sbName">Thầy Minh</div>
+        <div class="sb-tier" id="sbTier">PRO</div>
+      </div>
+    </div>
+    <div class="sb-nav">
+      <div class="sb-section">Tổng quan</div>
+      <div class="sb-item active" onclick="nav('dashboard',this)"><span class="sb-icon">📊</span> Dashboard</div>
+      <div class="sb-item" onclick="nav('leads',this)"><span class="sb-icon">👥</span> Leads & Chat <span class="sb-badge">3</span></div>
+      <div class="sb-item" onclick="nav('hocvien',this)"><span class="sb-icon">🎓</span> Học Viên</div>
+      <div class="sb-item" onclick="nav('doanhthu',this)"><span class="sb-icon">💰</span> Doanh Thu</div>
+      <div class="sb-item" onclick="nav('lichday',this)"><span class="sb-icon">📅</span> Lịch Dạy</div>
+      <div class="sb-section">Tài liệu</div>
+      <div class="sb-item" onclick="nav('giaotrinh',this)"><span class="sb-icon">📚</span> Giáo Trình</div>
+      <div class="sb-section">Tài khoản</div>
+      <div class="sb-item" onclick="nav('profile_gv',this)"><span class="sb-icon">👤</span> Hồ sơ GV</div>
+      <div class="sb-item" onclick="nav('settings',this)"><span class="sb-icon">⚙️</span> Cài đặt</div>
+      <div class="sb-item" onclick="window.open('./landingpage.html', '_self')"><span class="sb-icon">←</span> Về trang chủ</div>
+    </div>
+    <div class="sb-bottom">
+      <div class="sb-item" onclick="logout()"><span class="sb-icon">🚪</span> Đăng xuất</div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-left">
+        <button class="hamburger-btn" onclick="toggleSidebar()">☰</button>
+        <div class="topbar-title" id="pageTitle">Dashboard</div>
+      </div>
+      <div class="topbar-right">
+        <div class="notif-btn"><div class="notif-dot"></div>🔔</div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ── DASHBOARD ── -->
+      <div class="page active" id="page-dashboard">
+        <div style="margin-bottom:18px;">
+          <div style="font-size:18px;font-weight:900;letter-spacing:-0.4px;">Chào buổi sáng, Thầy Minh 👋</div>
+          <div style="font-size:13px;color:var(--muted);margin-top:3px;">Hôm nay có 3 lead mới và 1 học viên cần chú ý.</div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-label">Doanh thu tháng</div><div class="stat-val">21.5M</div><span class="stat-chip chip-up">↑ 18%</span></div>
+          <div class="stat-card"><div class="stat-label">Lead mới tuần</div><div class="stat-val">12</div><span class="stat-chip chip-up">↑ 4</span></div>
+          <div class="stat-card"><div class="stat-label">Học viên đang học</div><div class="stat-val">8</div><span class="stat-chip chip-neutral">2 sắp xong</span></div>
+          <div class="stat-card"><div class="stat-label">Tỉ lệ chốt</div><div class="stat-val">64%</div><span class="stat-chip chip-up">↑ 8%</span></div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Lead Pipeline <span class="card-link" onclick="nav('leads',document.querySelector('[onclick*=leads]'))">Xem tất cả →</span></div>
+            <div class="pipeline-cols">
+              <div class="p-col">
+                <div class="p-col-label"><div class="p-dot" style="background:#5b4fcf;"></div>Profiler</div>
+                <div class="lead-mini"><div class="lm-name">Nguyễn Minh Anh</div><div class="lm-goal">IELTS 6.5 · 3T</div><div class="lm-score" style="background:#eef2ff;color:var(--accent);">85đ</div></div>
+                <div class="lead-mini"><div class="lm-name">Trần Thị Hoà</div><div class="lm-goal">Giao tiếp đi làm</div><div class="lm-score" style="background:#eef2ff;color:var(--accent);">60đ</div></div>
+              </div>
+              <div class="p-col">
+                <div class="p-col-label"><div class="p-dot" style="background:#d97706;"></div>Nurturer</div>
+                <div class="lead-mini"><div class="lm-name">Lê Văn Đức</div><div class="lm-goal">Du học Úc</div><div class="lm-score" style="background:var(--yellow-bg);color:var(--yellow);">55đ</div></div>
+              </div>
+              <div class="p-col">
+                <div class="p-col-label"><div class="p-dot" style="background:#dc2626;"></div>Closer</div>
+                <div class="lead-mini"><div class="lm-name">Phạm Thu Hương</div><div class="lm-goal">Hỏi học phí 🔥</div><div class="lm-score" style="background:var(--red-bg);color:var(--red);">92đ</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Cần xử lý</div>
+            <div class="alert-item"><span style="font-size:15px;">🔥</span><div style="flex:1"><div style="font-size:12px;"><strong>Phạm Thu Hương</strong> hỏi học phí</div><div style="font-size:10px;color:var(--dim);margin-top:2px;">5 phút trước</div></div><div class="alert-action" onclick="nav('leads',document.querySelector('[onclick*=leads]'))">Xem</div></div>
+            <div class="alert-item"><span style="font-size:15px;">⚠️</span><div style="flex:1"><div style="font-size:12px;"><strong>Hoàng Bảo</strong> vắng 2 buổi</div><div style="font-size:10px;color:var(--dim);margin-top:2px;">2 giờ trước</div></div><div class="alert-action">Nhắn</div></div>
+            <div class="alert-item"><span style="font-size:15px;">🎉</span><div style="flex:1"><div style="font-size:12px;"><strong>Nguyễn Minh Anh</strong> vừa thanh toán</div><div style="font-size:10px;color:var(--dim);margin-top:2px;">8:23 sáng</div></div><div class="alert-action">Xem</div></div>
+          </div>
+        </div>
+        <div class="card" style="max-width:420px;">
+          <div class="card-title">Doanh thu 6 tháng</div>
+          <div class="rev-bars">
+            <div class="rev-bar-wrap"><div class="rev-bar" style="height:38px;"></div><div class="rev-bar-lbl">T1</div></div>
+            <div class="rev-bar-wrap"><div class="rev-bar" style="height:46px;"></div><div class="rev-bar-lbl">T2</div></div>
+            <div class="rev-bar-wrap"><div class="rev-bar" style="height:34px;"></div><div class="rev-bar-lbl">T3</div></div>
+            <div class="rev-bar-wrap"><div class="rev-bar" style="height:52px;"></div><div class="rev-bar-lbl">T4</div></div>
+            <div class="rev-bar-wrap"><div class="rev-bar" style="height:42px;"></div><div class="rev-bar-lbl">T5</div></div>
+            <div class="rev-bar-wrap"><div class="rev-bar cur" style="height:68px;"></div><div class="rev-bar-lbl" style="color:var(--accent);font-weight:700;">T6</div></div>
+          </div>
+          <div style="font-size:18px;font-weight:900;">21.500.000đ</div>
+          <div style="font-size:11px;color:var(--muted);">Tháng 6 · tăng 18% so với tháng 5</div>
+        </div>
+      </div>
+
+      <!-- ── LEADS ── -->
+      <div class="page" id="page-leads">
+        <div class="leads-layout">
+          <div class="leads-left">
+            <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;">
+              <button class="btn" style="background:var(--accent);color:#fff;border-color:var(--accent);">Tất cả (12)</button>
+              <button class="btn">🔥 High (3)</button>
+              <button class="btn">Nurture (6)</button>
+            </div>
+            <div class="lead-row sel" onclick="selLead(this,'ld-chat')"><div class="lr-av">👩</div><div style="flex:1"><div class="lr-name">Phạm Thu Hương</div><div class="lr-meta">Zalo · IELTS 7.0 · 2 tháng</div><span class="stage-pill tag-closer">Closer 🔥</span></div><div style="text-align:right"><div class="lm-score tag-high" style="border-radius:6px;">92đ</div><div style="font-size:10px;color:var(--dim);margin-top:4px;">5p trước</div></div></div>
+            <div class="lead-row" onclick="selLead(this,'ld-chat')"><div class="lr-av">👦</div><div style="flex:1"><div class="lr-name">Nguyễn Minh Anh</div><div class="lr-meta">FB · IELTS 6.5 · 3 tháng</div><span class="stage-pill tag-onboard">Onboarding ✅</span></div><div style="text-align:right"><div class="lm-score tag-high" style="border-radius:6px;">85đ</div></div></div>
+            <div class="lead-row" onclick="selLead(this,'ld-chat')"><div class="lr-av">👩</div><div style="flex:1"><div class="lr-name">Trần Thị Hoà</div><div class="lr-meta">Zalo · Giao tiếp đi làm</div><span class="stage-pill tag-nurture">Nurturer · Ngày 3</span></div><div style="text-align:right"><div class="lm-score" style="border-radius:6px;background:var(--yellow-bg);color:var(--yellow);">60đ</div></div></div>
+          </div>
+          <div class="lead-detail" id="leadDetail">
+            <div class="ld-head">
+              <div class="ld-av">👩</div>
+              <div style="flex:1"><div style="font-size:14px;font-weight:700;">Phạm Thu Hương</div><div style="font-size:11px;color:var(--muted);">Zalo · 92đ · High Intent 🔥</div></div>
+              <button class="btn sm" style="display:none;" id="closeDetail" onclick="closeLeadDetail()">✕</button>
+              <button class="btn primary sm">Vào chat</button>
+            </div>
+            <div class="ld-tabs">
+              <div class="ld-tab active" onclick="ldTab(this,'ld-chat')">Chat AI</div>
+              <div class="ld-tab" onclick="ldTab(this,'ld-profile')">Hồ sơ</div>
+              <div class="ld-tab" onclick="ldTab(this,'ld-phieu')">Phiếu HF</div>
+            </div>
+            <div class="ld-body">
+              <div id="ld-chat" class="chat-mini">
+                <div class="cm bot"><div><div class="cm-tag">🤖 Profiler · 08:14</div><div class="cm-bubble">Chào chị Hương! Mình là trợ lý thầy Minh. Chị đang học với mục tiêu gì ạ?</div></div></div>
+                <div class="cm user"><div><div class="cm-bubble">Mình cần IELTS 7.0 trong 2 tháng cho hồ sơ visa</div></div></div>
+                <div class="cm bot"><div><div class="cm-tag">🤖 Closer · 08:18</div><div class="cm-bubble">Timeline gấp! Thầy Minh có lộ trình Writing Intensive 8 tuần. Chị muốn biết học phí không?</div></div></div>
+                <div class="cm user"><div><div class="cm-bubble">Học phí bao nhiêu vậy?</div></div></div>
+                <div class="cm bot"><div><div class="cm-tag">🤖 Closer · 08:19</div><div class="cm-bubble">IELTS Intensive 1-1 là 4.200.000đ/tháng (3 buổi/tuần, 90 phút) 😊</div></div></div>
+              </div>
+              <div id="ld-profile" style="display:none;">
+                <div class="info-row"><span style="color:var(--muted);">Mục tiêu</span><span style="font-weight:600;">IELTS 7.0</span></div>
+                <div class="info-row"><span style="color:var(--muted);">Trình độ</span><span style="font-weight:600;">Band 6.0</span></div>
+                <div class="info-row"><span style="color:var(--muted);">Timeline</span><span style="font-weight:600;">2 tháng ⚡</span></div>
+                <div class="info-row"><span style="color:var(--muted);">Lead score</span><span style="font-weight:600;color:var(--green);">92/100 🔥</span></div>
+                <div style="margin-top:10px;padding:10px 12px;background:var(--accent-light);border-radius:9px;font-size:12px;color:var(--accent);line-height:1.6;"><strong>💡 Talking points:</strong><br>· Nhấn vào visa deadline<br>· Writing gap 6.0→7.0 cần intensive<br>· Offer thử 1 buổi Writing miễn phí</div>
+              </div>
+              <div id="ld-phieu" style="display:none;text-align:center;padding:20px 0;">
+                <div style="font-size:32px;margin-bottom:8px;">📄</div>
+                <div style="font-weight:700;margin-bottom:4px;">Chưa gửi phiếu</div>
+                <div style="font-size:12px;color:var(--muted);margin-bottom:14px;">AI đang xử lý objection</div>
+                <button class="btn primary" style="width:100%;" onclick="nav('create',null)">Tạo & Gửi phiếu ngay</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── HỌC VIÊN ── -->
+      <div class="page" id="page-hocvien">
+        <div style="margin-bottom: 12px;">
+            <!-- <button class="btn primary" id="topBtn" onclick="handleTopBtn()">+ Tạo phiếu</button> -->
+            <button class="btn primary">+ Thêm học viên</button>
+        </div>
+        <div class="hv-grid">
+          <div class="hv-card"><div class="hv-top"><div class="hv-av">👦</div><div><div style="font-size:14px;font-weight:700;">Nguyễn Minh Anh</div><div style="font-size:11px;color:var(--muted);">IELTS · Tháng 1/3</div></div><div class="hv-status s-active">Đang học</div></div><div style="margin-bottom:8px;"><div class="pb-label"><span>Tiến độ</span><span>33%</span></div><div class="pb-track"><div class="pb-fill" style="width:33%;background:var(--accent);"></div></div></div><div style="display:flex;gap:12px;font-size:11px;color:var(--muted);"><span>Buổi: <strong>4/12</strong></span><span>Band: <strong>5.5</strong></span></div></div>
+          <div class="hv-card"><div class="hv-top"><div class="hv-av">👩</div><div><div style="font-size:14px;font-weight:700;">Hoàng Ngọc Bảo</div><div style="font-size:11px;color:var(--muted);">Business · Tháng 2/2</div></div><div class="hv-status s-risk">⚠️ Dropout</div></div><div style="margin-bottom:8px;"><div class="pb-label"><span>Tiến độ</span><span>75%</span></div><div class="pb-track"><div class="pb-fill" style="width:75%;background:var(--yellow);"></div></div></div><div style="display:flex;gap:12px;font-size:11px;color:var(--muted);"><span>Buổi: <strong>9/12</strong></span><span>Vắng: <strong style="color:var(--red);">2</strong></span></div></div>
+          <div class="hv-card"><div class="hv-top"><div class="hv-av">👧</div><div><div style="font-size:14px;font-weight:700;">Trần Khánh Linh</div><div style="font-size:11px;color:var(--muted);">IELTS · Tháng 3/3</div></div><div class="hv-status s-done">Sắp xong</div></div><div style="margin-bottom:8px;"><div class="pb-label"><span>Tiến độ</span><span>90%</span></div><div class="pb-track"><div class="pb-fill" style="width:90%;background:var(--green);"></div></div></div><div style="display:flex;gap:12px;font-size:11px;color:var(--muted);"><span>Buổi: <strong>11/12</strong></span><span>Band: <strong style="color:var(--green);">6.5 ✅</strong></span></div></div>
+        </div>
+        
+      </div>
+
+      <!-- ── DOANH THU ── -->
+      <div class="page" id="page-doanhthu">
+        <div style="margin-bottom: 12px;">
+            <button class="btn primary" id="topBtn" onclick="handleTopBtn()">+ Tạo phiếu</button>
+        </div>
+        <div class="stats-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px;">
+          <div class="stat-card"><div class="stat-label">Đã thu tháng này</div><div class="stat-val" style="color:var(--green);">21.5M</div><span class="stat-chip chip-up">↑ 18%</span></div>
+          <div class="stat-card"><div class="stat-label">Chờ thanh toán</div><div class="stat-val" style="color:var(--yellow);">7M</div><span class="stat-chip chip-neutral">2 phiếu</span></div>
+          <div class="stat-card"><div class="stat-label">Tỉ lệ thanh toán</div><div class="stat-val">75%</div><span class="stat-chip chip-up">↑ tốt</span></div>
+        </div>
+        <div class="inv-table">
+          <div class="inv-header"><span>Học viên</span><span>Khoá học</span><span>Số tiền</span><span>Trạng thái</span><span>Link</span></div>
+          <div class="inv-row"><div><div style="font-weight:600;">Phạm Thu Hương</div><div style="font-size:11px;color:var(--muted);">#PH-2026-0042</div></div><div style="font-size:12px;color:var(--muted);">IELTS Intensive</div><div style="font-weight:700;">4.000.000đ</div><div><span class="i-status sent">📤 Đã gửi</span></div><div style="font-size:11px;color:var(--accent);cursor:pointer;">Xem →</div></div>
+          <div class="inv-row"><div><div style="font-weight:600;">Nguyễn Minh Anh</div><div style="font-size:11px;color:var(--muted);">#PH-2026-0041</div></div><div style="font-size:12px;color:var(--muted);">IELTS Intensive</div><div style="font-weight:700;">3.500.000đ</div><div><span class="i-status paid">✅ Đã TT</span></div><div style="font-size:11px;color:var(--accent);cursor:pointer;">Xem →</div></div>
+          <div class="inv-row"><div><div style="font-weight:600;">Hoàng Ngọc Bảo</div><div style="font-size:11px;color:var(--muted);">#PH-2026-0040</div></div><div style="font-size:12px;color:var(--muted);">Business English</div><div style="font-weight:700;">3.500.000đ</div><div><span class="i-status pending">⏳ Chờ TT</span></div><div style="font-size:11px;color:var(--accent);cursor:pointer;">Nhắc →</div></div>
+        </div>
+      </div>
+      
+      <!-- ── TẠO PHIẾU ── -->
+      <div class="page" id="page-create">
+        <div class="steps-bar" id="stepsBar">
+          <div class="step"><div class="step-num active" id="sn1">1</div><div class="step-lbl active" id="sl1">Học viên</div></div>
+          <div class="step-line" id="ln1"></div>
+          <div class="step"><div class="step-num" id="sn2">2</div><div class="step-lbl" id="sl2">Khoá học</div></div>
+          <div class="step-line" id="ln2"></div>
+          <div class="step"><div class="step-num" id="sn3">3</div><div class="step-lbl" id="sl3">Tuỳ chỉnh</div></div>
+          <div class="step-line" id="ln3"></div>
+          <div class="step"><div class="step-num" id="sn4">4</div><div class="step-lbl" id="sl4">Gửi</div></div>
+        </div>
+        <div id="inv-s1">
+          <div class="form-card"><div style="font-size:14px;font-weight:700;margin-bottom:16px;">👤 Thông tin học viên</div>
+            <div class="form-grid">
+              <div class="form-group"><label class="f-label">Tên học viên *</label><input class="f-input" value="Phạm Thu Hương"></div>
+              <div class="form-group"><label class="f-label">Số điện thoại / Zalo *</label><input class="f-input" value="0912 345 678"></div>
+              <div class="form-group"><label class="f-label">Kênh liên hệ</label><select class="f-select"><option>📱 Zalo</option><option>💬 Messenger</option></select></div>
+              <div class="form-group"><label class="f-label">Chọn từ lead có sẵn</label><select class="f-select"><option selected>Phạm Thu Hương (92đ 🔥)</option><option>Nguyễn Minh Anh (85đ)</option></select></div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;"><button class="btn primary" onclick="goStep(2)">Tiếp theo →</button></div>
+        </div>
+        <div id="inv-s2" style="display:none;">
+          <div class="form-card"><div style="font-size:14px;font-weight:700;margin-bottom:16px;">📚 Chọn khoá học</div>
+            <div class="course-cards">
+              <div class="cc sel" onclick="selCC(this)"><div style="font-size:20px;margin-bottom:6px;">🎯</div><div style="font-weight:700;">IELTS Intensive</div><div class="cc-price">4.200.000đ</div><div class="cc-meta">12 buổi · 90 phút</div></div>
+              <div class="cc" onclick="selCC(this)"><div style="font-size:20px;margin-bottom:6px;">💼</div><div style="font-weight:700;">Business English</div><div class="cc-price">3.500.000đ</div><div class="cc-meta">12 buổi · 60 phút</div></div>
+              <div class="cc" onclick="selCC(this)"><div style="font-size:20px;margin-bottom:6px;">🗣️</div><div style="font-weight:700;">Giao tiếp cơ bản</div><div class="cc-price">2.800.000đ</div><div class="cc-meta">8 buổi · 60 phút</div></div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;"><button class="btn" onclick="goStep(1)">← Quay lại</button><button class="btn primary" onclick="goStep(3)">Tiếp theo →</button></div>
+        </div>
+        <div id="inv-s3" style="display:none;">
+          <div class="form-card"><div style="font-size:14px;font-weight:700;margin-bottom:16px;">⚙️ Tuỳ chỉnh</div>
+            <div class="form-grid">
+              <div class="form-group"><label class="f-label">Học phí gốc</label><input class="f-input" value="4.200.000đ" readonly style="color:var(--muted);"></div>
+              <div class="form-group"><label class="f-label">Giảm giá</label><input class="f-input" value="200.000đ"></div>
+              <div class="form-group"><label class="f-label">Ngày bắt đầu</label><input class="f-input" type="date" value="2026-06-28"></div>
+              <div class="form-group"><label class="f-label">Hạn thanh toán</label><input class="f-input" type="date" value="2026-06-26"></div>
+            </div>
+            <div style="margin-top:14px;background:var(--accent-light);border-radius:9px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;">
+              <span style="color:var(--muted);">Tổng thanh toán</span>
+              <span style="font-size:18px;font-weight:900;color:var(--accent);">4.000.000đ</span>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;"><button class="btn" onclick="goStep(2)">← Quay lại</button><button class="btn primary" onclick="goStep(4)">Xem trước →</button></div>
+        </div>
+        <div id="inv-s4" style="display:none;">
+          <div class="preview-split">
+            <div class="preview-card">
+              <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;">📄 Phiếu · #PH-2026-0043</div>
+              <div style="font-size:18px;font-weight:800;margin-bottom:4px;">Phạm Thu Hương</div>
+              <div style="font-size:12px;color:var(--muted);margin-bottom:14px;">IELTS Intensive · IELTS-INT-01</div>
+              <div class="info-row"><span style="color:var(--muted);">Học phí</span><span>4.200.000đ</span></div>
+              <div class="info-row"><span style="color:var(--muted);">Ưu đãi</span><span style="color:var(--green);">- 200.000đ</span></div>
+              <div class="info-row"><span style="color:var(--muted);">Tổng</span><span style="font-size:16px;font-weight:900;color:var(--accent);">4.000.000đ</span></div>
+              <div style="margin-top:10px;padding:9px 12px;background:var(--yellow-bg);border-radius:9px;font-size:12px;color:var(--yellow);">⏰ Hạn: 26/06/2026</div>
+              <div style="margin-top:8px;background:var(--bg);border:1px dashed var(--border);border-radius:9px;padding:12px;text-align:center;font-size:11px;color:var(--muted);">▦ QR PayOS tự generate khi publish</div>
+            </div>
+            <div>
+              <div class="link-box" style="margin-bottom:10px;">
+                <div style="font-size:12px;font-weight:700;margin-bottom:8px;">🔗 Link phiếu</div>
+                <div style="display:flex;gap:6px;margin-bottom:10px;"><input style="flex:1;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:11px;font-family:monospace;color:var(--accent);background:var(--accent-light);outline:none;min-width:0;" value="lmsmini.vn/phieu/PH-2026-0043" readonly><button class="btn sm">Copy</button></div>
+                <div class="share-btn zalo" onclick="this.style.background='#16a34a';this.style.borderColor='#16a34a';this.querySelector('div>div:first-child').textContent='✓ Đã gửi!'"><span style="font-size:18px;">💬</span><div><div>Gửi qua Zalo</div><div style="font-size:10px;opacity:0.8;">Tự động kèm tin nhắn</div></div></div>
+                <div class="share-btn"><span style="font-size:16px;">🔗</span><div>Copy link</div></div>
+              </div>
+              <div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px;font-size:11px;color:var(--muted);line-height:1.8;">✓ Tracking khi PH mở link<br>✓ Auto-confirm PayOS<br>✓ Alert thầy ngay lập tức</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:14px;"><button class="btn" onclick="goStep(3)">← Quay lại</button><button class="btn primary" onclick="publishInv(this)">🚀 Publish & Gửi Zalo</button></div>
+        </div>
+        <div id="inv-ok" style="display:none;text-align:center;padding:40px 0;">
+          <div style="font-size:48px;margin-bottom:12px;">🎉</div>
+          <div style="font-size:18px;font-weight:900;margin-bottom:4px;">Phiếu đã gửi!</div>
+          <div style="font-size:13px;color:var(--muted);margin-bottom:20px;">Link đã gửi qua Zalo cho Phạm Thu Hương.</div>
+          <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;"><button class="btn" onclick="nav('doanhthu',document.querySelector('[onclick*=doanhthu]'))">Xem danh sách</button><button class="btn primary" onclick="resetInv()">+ Tạo phiếu mới</button></div>
+        </div>
+      </div>
+
+      <!-- ── LỊCH DẠY ── -->
+      <div class="page" id="page-lichday">
+        <div style="margin-bottom: 12px;">
+            <!-- <button class="btn primary" id="topBtn" onclick="handleTopBtn()">+ Tạo phiếu</button> -->
+            <button class="btn primary">+ Thêm lịch dạy</button>
+        </div>
+        <div class="card">
+          <div class="card-title">Tuần 23/06 — 29/06/2026</div>
+          <div class="cal-grid">
+            <div><div class="cal-day-label">T2<br>23/06</div><div class="cal-event"><strong>Minh Anh</strong><br>19:00-20:30<br><span style="color:var(--accent);">IELTS</span></div></div>
+            <div><div class="cal-day-label">T3<br>24/06</div></div>
+            <div><div class="cal-day-label">T4<br>25/06</div><div class="cal-event"><strong>Minh Anh</strong><br>19:00-20:30<br><span style="color:var(--accent);">IELTS</span></div><div class="cal-event green"><strong>Khánh Linh</strong><br>21:00-22:00</div></div>
+            <div><div class="cal-day-label">T5<br>26/06</div></div>
+            <div><div class="cal-day-label">T6<br>27/06</div><div class="cal-event"><strong>Minh Anh</strong><br>19:00-20:30</div></div>
+            <div><div class="cal-day-label">T7<br>28/06</div></div>
+            <div><div class="cal-day-label">CN<br>29/06</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── GIÁO TRÌNH ── -->
+      <div class="page" id="page-giaotrinh">
+        <div class="gt-grid">
+          <div class="gt-card">
+            <div style="font-size:24px;margin-bottom:10px;">🎯</div>
+            <div style="font-weight:800;font-size:14px;margin-bottom:4px;">IELTS Intensive 1-1</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:14px;">12 buổi · 4 tuần · 3 module</div>
+            <div class="gt-week"><strong>Tuần 1:</strong> Writing Task 1 & 2 — cấu trúc, coherence</div>
+            <div class="gt-week"><strong>Tuần 2:</strong> Reading strategies — skimming, scanning</div>
+            <div class="gt-week"><strong>Tuần 3:</strong> Speaking Part 1-3 + mock sessions</div>
+            <div class="gt-week"><strong>Tuần 4:</strong> Full mock test + review tổng thể</div>
+            <button class="btn" style="width:100%;margin-top:12px;">Chỉnh sửa →</button>
+          </div>
+          <div class="gt-card">
+            <div style="font-size:24px;margin-bottom:10px;">💼</div>
+            <div style="font-weight:800;font-size:14px;margin-bottom:4px;">Business English 1-1</div>
+            <div style="font-size:12px;color:var(--muted);margin-bottom:14px;">12 buổi · 4 tuần · 3 module</div>
+            <div class="gt-week"><strong>Tuần 1:</strong> Business vocab & email writing</div>
+            <div class="gt-week"><strong>Tuần 2:</strong> Meeting & presentation skills</div>
+            <div class="gt-week"><strong>Tuần 3:</strong> Negotiation & networking language</div>
+            <div class="gt-week"><strong>Tuần 4:</strong> Mock interview + review</div>
+            <button class="btn" style="width:100%;margin-top:12px;">Chỉnh sửa →</button>
+          </div>
+          <div class="gt-card dashed" onclick="">
+            <div style="font-size:28px;margin-bottom:8px;">+</div>
+            <div style="font-size:13px;color:var(--muted);">Thêm giáo trình mới</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── HỒ SƠ GV ── -->
+      <div class="page" id="page-profile_gv">
+        <div class="gv-grid">
+          <div>
+            <div class="profile-section">
+              <div class="ps-title">🌐 URL Profile Public <span class="ps-edit">Chỉnh sửa</span></div>
+              <div class="url-box"><span class="url-text">lmsmini.vn/giao-vien/thay-minh</span><button class="btn sm">Copy</button><button class="btn primary sm">Xem →</button></div>
+            </div>
+            <div class="profile-section">
+              <div class="ps-title">👤 Thông tin cơ bản <span class="ps-edit">Chỉnh sửa</span></div>
+              <div class="form-grid">
+                <div class="form-group"><label class="f-label">Tên hiển thị</label><input class="f-input" value="Thầy Nguyễn Quốc Minh"></div>
+                <div class="form-group"><label class="f-label">Slug URL</label><input class="f-input" value="thay-minh"></div>
+                <div class="form-group full"><label class="f-label">Bio</label><textarea class="f-input" style="resize:none;" rows="3">8 năm dạy IELTS và Business English. Cựu GV IDP. Đã giúp 200+ học viên đạt band 6.5-8.0.</textarea></div>
+              </div>
+            </div>
+            <div class="profile-section">
+              <div class="ps-title">🏷️ Chuyên môn <span class="ps-edit">Chỉnh sửa</span></div>
+              <div class="tag-cloud"><span class="tag-pill">IELTS</span><span class="tag-pill">Business English</span><span class="tag-pill">Writing</span><span class="tag-pill">Speaking</span><span class="tag-pill" style="background:var(--surface2);color:var(--muted);border-color:var(--border);">+ Thêm</span></div>
+            </div>
+          </div>
+          <div>
+            <div class="profile-section">
+              <div class="ps-title">📊 Stats profile</div>
+              <div class="info-row"><span style="color:var(--muted);">Lượt xem</span><span style="font-weight:600;">234 / tháng</span></div>
+              <div class="info-row"><span style="color:var(--muted);">Lượt liên hệ</span><span style="font-weight:600;">28 / tháng</span></div>
+              <div class="info-row"><span style="color:var(--muted);">Rating</span><span style="font-weight:600;">★ 4.9</span></div>
+              <div class="info-row"><span style="color:var(--muted);">Đánh giá</span><span style="font-weight:600;">47</span></div>
+            </div>
+            <div class="profile-section">
+              <div class="ps-title">💰 Tier hiện tại</div>
+              <div style="background:linear-gradient(135deg,#5b4fcf,#7c6fdf);border-radius:12px;padding:14px;color:#fff;text-align:center;">
+                <div style="font-size:20px;font-weight:900;">PRO</div>
+                <div style="font-size:12px;opacity:0.8;margin-top:2px;">299.000đ / tháng</div>
+                <div style="font-size:11px;margin-top:8px;opacity:0.7;">Gia hạn: 23/07/2026</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CÀI ĐẶT ── -->
+      <div class="page" id="page-settings">
+        <div style="max-width:480px;">
+          <div class="card">
+            <div class="card-title">Khoá học & Học phí</div>
+            <div class="info-row"><span style="color:var(--muted);">IELTS Intensive 1-1</span><span style="font-weight:700;">4.200.000đ/tháng</span></div>
+            <div class="info-row"><span style="color:var(--muted);">Business English 1-1</span><span style="font-weight:700;">3.500.000đ/tháng</span></div>
+            <div class="info-row"><span style="color:var(--muted);">Giao tiếp cơ bản</span><span style="font-weight:700;">2.800.000đ/tháng</span></div>
+            <button class="btn" style="margin-top:12px;">+ Thêm khoá học</button>
+          </div>
+          <div class="card">
+            <div class="card-title">Kết nối kênh</div>
+            <div class="info-row"><span style="color:var(--muted);">Zalo OA</span><span style="font-weight:600;color:var(--green);">✓ Đã kết nối</span></div>
+            <div class="info-row"><span style="color:var(--muted);">Facebook Page</span><span style="font-weight:600;color:var(--green);">✓ Đã kết nối</span></div>
+            <div class="info-row"><span style="color:var(--muted);">PayOS</span><span style="font-weight:600;color:var(--green);">✓ Đã kết nối</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /app -->
+
+<script>
+// ── AUTH ──
+function login() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'flex';
+}
+function loginAs(name, av, tier) {
+  document.getElementById('sbName').textContent = name;
+  document.getElementById('sbAv').textContent = av;
+  document.getElementById('sbTier').textContent = tier;
+  login();
+}
+function logout() {
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('loginScreen').style.display = 'flex';
+}
+
+// ── SIDEBAR (mobile) ──
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+// ── NAV ──
+const pageTitles = { dashboard:'Dashboard', leads:'Leads & Chat', hocvien:'Học Viên', doanhthu:'Doanh Thu', create:'Tạo phiếu học phí', lichday:'Lịch Dạy', giaotrinh:'Giáo Trình', profile_gv:'Hồ sơ GV', settings:'Cài đặt' };
+const topBtnLabels = { dashboard:'+ Tạo phiếu', leads:'+ Thêm lead', hocvien:'+ Thêm HV', doanhthu:'+ Tạo phiếu', create:'← Danh sách', lichday:'+ Thêm lịch', giaotrinh:'+ Giáo trình mới', profile_gv:'Xem profile', settings:'Lưu' };
+
+function nav(name, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
+  const pg = document.getElementById('page-' + name);
+  if (pg) pg.classList.add('active');
+  if (el) el.classList.add('active');
+  document.getElementById('pageTitle').textContent = pageTitles[name] || name;
+  const topBtn = document.getElementById('topBtn');
+  if (topBtn) topBtn.textContent = topBtnLabels[name] || 'Action';
+  closeSidebar();
+}
+
+function handleTopBtn() { nav('create', null); }
+
+// ── LEADS ──
+function selLead(el, tab) {
+  document.querySelectorAll('.lead-row').forEach(r => r.classList.remove('sel'));
+  el.classList.add('sel');
+  const det = document.getElementById('leadDetail');
+  det.classList.add('show');
+  document.getElementById('closeDetail').style.display = 'flex';
+  ldTab(document.querySelector('.ld-tab.active') || document.querySelector('.ld-tab'), tab);
+}
+function closeLeadDetail() {
+  document.getElementById('leadDetail').classList.remove('show');
+}
+function ldTab(el, tab) {
+  document.querySelectorAll('.ld-tab').forEach(t => t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  document.getElementById('ld-chat').style.display = tab === 'ld-chat' ? 'flex' : 'none';
+  document.getElementById('ld-profile').style.display = tab === 'ld-profile' ? 'block' : 'none';
+  document.getElementById('ld-phieu').style.display = tab === 'ld-phieu' ? 'block' : 'none';
+  if (tab === 'ld-chat') document.getElementById('ld-chat').style.flexDirection = 'column';
+}
+
+// ── INVOICE STEPS ──
+function goStep(n) {
+  for (let i = 1; i <= 4; i++) {
+    const s = document.getElementById('inv-s' + i);
+    if (s) s.style.display = i === n ? 'block' : 'none';
+    const sn = document.getElementById('sn' + i), sl = document.getElementById('sl' + i);
+    if (sn) { sn.className = 'step-num' + (i < n ? ' done' : i === n ? ' active' : ''); sn.textContent = i < n ? '✓' : i; }
+    if (sl) { sl.className = 'step-lbl' + (i < n ? ' done' : i === n ? ' active' : ''); }
+    if (i < 4) { const ln = document.getElementById('ln' + i); if (ln) ln.className = 'step-line' + (i < n ? ' done' : ''); }
+  }
+  document.getElementById('inv-ok').style.display = 'none';
+}
+function selCC(el) { document.querySelectorAll('.cc').forEach(c => c.classList.remove('sel')); el.classList.add('sel'); }
+function publishInv(btn) {
+  btn.textContent = '⏳ Đang gửi...'; btn.disabled = true;
+  setTimeout(() => {
+    for (let i = 1; i <= 4; i++) { const s = document.getElementById('inv-s' + i); if (s) s.style.display = 'none'; }
+    document.getElementById('inv-ok').style.display = 'block';
+    document.getElementById('stepsBar').style.opacity = '0.4';
+    btn.disabled = false;
+  }, 1400);
+}
+function resetInv() { document.getElementById('stepsBar').style.opacity = '1'; document.getElementById('inv-ok').style.display = 'none'; goStep(1); }
+</script>
+</body>
+</html>
