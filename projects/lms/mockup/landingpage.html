@@ -249,8 +249,18 @@ footer {
 }
 .footer-logo { font-size: 15px; font-weight: 900; color: #fff; }
 .footer-logo em { font-style: normal; color: var(--violet-light); }
+.portfolio-credit {
+  background: #0f0d24; border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 14px 40px; text-align: center; font-size: 12px;
+}
+.portfolio-credit a {
+  color: rgba(255,255,255,0.45); text-decoration: none; transition: color .2s;
+}
+.portfolio-credit a:hover { color: rgba(255,255,255,0.85); }
+.portfolio-credit em { font-style: normal; color: var(--violet-light); }
 @media (max-width: 768px) {
   footer { flex-direction: column; gap: 12px; text-align: center; padding: 28px 20px; }
+  .portfolio-credit { padding: 12px 20px; }
 }
 
 /* ── MOBILE NAV DRAWER ── */
@@ -527,6 +537,12 @@ footer {
     <span style="cursor:pointer;transition:color .2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color=''">Liên hệ</span>
   </div>
 </footer>
+
+<div class="portfolio-credit">
+  <a href="https://ngocquynhpham.github.io" target="_blank" rel="noopener noreferrer">
+    Xem thêm các dự án của Quỳnh — <em>ngocquynhpham.github.io</em>
+  </a>
+</div>
 
 <script>
 // Nav drawer
