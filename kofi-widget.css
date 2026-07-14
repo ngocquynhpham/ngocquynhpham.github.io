@@ -1,0 +1,24 @@
+/* Ko-fi floating widget — pin to bottom-right */
+.floatingchat-container-wrap,
+.floatingchat-container-wrap-mobi {
+  left: unset !important;
+  right: 16px !important;
+}
+
+.floating-chat-kofi-popup-iframe,
+.floating-chat-kofi-popup-iframe-mobi {
+  left: unset !important;
+  right: 16px !important;
+}
+
+@media only screen and (max-width: 999px) {
+  .floatingchat-container-wrap-mobi {
+    width: 58px !important;
+    max-width: 58px !important;
+    right: 12px !important;
+  }
+
+  .floatingchat-container-mobi {
+    width: 58px !important;
+  }
+}
