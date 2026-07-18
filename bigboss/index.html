@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bùi Bảo Nhân - Senior Business Analyst</title>
+  <meta name="description" content="Senior Business Analyst, 10+ năm kinh nghiệm HRM · CRM · PropTech — requirement, BPMN, BRD/FRD và UAT.">
+  <meta property="og:title" content="Bùi Bảo Nhân — Senior Business Analyst">
+  <meta property="og:description" content="Portfolio cá nhân — HRM · CRM · PropTech.">
+  <meta property="og:image" content="assets/og-image.png">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/myprofile.css">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+          document.documentElement.classList.add("dark");
+        } else {
+          document.documentElement.classList.remove("dark");
+        }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body class="antialiased">
+  <header class="ref-header smooth-transition">
+    <nav class="ref-nav" aria-label="Main">
+      <a class="ref-brand" href="#home">
+        <span class="ref-brand-avatar" aria-hidden="true">BN</span>
+        <span class="ref-brand-text">
+          <span class="ref-brand-name" data-brand-name>Bùi Bảo Nhân</span>
+          <span class="ref-brand-role" data-brand-role>Senior Business Analyst</span>
+        </span>
+      </a>
+      <div class="ref-nav-center">
+        <ul id="nav-links"></ul>
+      </div>
+      <div class="ref-nav-actions">
+        <div class="ref-lang-theme">
+          <button type="button" id="lang-btn" aria-label="Switch language">EN</button>
+          <span class="ref-lang-divider" aria-hidden="true"></span>
+          <button type="button" id="theme-btn" aria-label="Toggle theme"><i id="theme-icon" class="fas fa-moon"></i></button>
+        </div>
+        <button type="button" class="ref-menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false"><i class="fas fa-bars"></i></button>
+      </div>
+    </nav>
+  </header>
+
+  <button type="button" id="menu-overlay" class="mobile-menu-overlay mobile-menu-overlay--closed" aria-label="Close menu"></button>
+  <nav id="mobile-menu-panel" class="mobile-menu-panel mobile-menu-panel--closed" aria-label="Mobile navigation">
+    <div class="mobile-menu-head">
+      <span>Menu</span>
+      <button type="button" id="menu-close" class="ref-menu-btn" aria-label="Close menu"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="mobile-menu-links" id="mobile-menu"></div>
+  </nav>
+
+  <main id="main">
+    <section id="home" class="hero-section">
+      <canvas class="hero-neural-canvas" id="neural-canvas" aria-hidden="true"></canvas>
+      <div class="hero-section__grid" aria-hidden="true"></div>
+      <div class="hero-section__glow" aria-hidden="true"></div>
+      <div class="hero-inner fade-in container">
+        <div class="hero-availability mb-8">
+          <span class="hero-availability__dot" aria-hidden="true"></span>
+          <span data-availability>Available for new opportunities</span>
+        </div>
+        <p class="hero-greeting" data-greeting>Hello, I'm</p>
+        <h1 class="hero-name" data-hero-name>Bùi Bảo Nhân</h1>
+        <p class="hero-role">
+          <span class="hero-role__title" data-hero-title>Senior Business Analyst</span>
+          <span class="hero-role-dot">•</span>
+          <span data-hero-years>10+ years</span>
+        </p>
+        <p class="hero-desc" data-hero-desc></p>
+        <div class="hero-actions">
+          <a class="hero-btn-primary" data-btn-cv href="#"><i class="fas fa-download" aria-hidden="true"></i><span>Download CV</span></a>
+          <a class="hero-btn-secondary" data-btn-contact href="#contact"><i class="fas fa-envelope" aria-hidden="true"></i><span>Contact Me</span></a>
+        </div>
+        <p class="hero-location">
+          <svg
+            class="hero-location__icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          <span data-hero-location>Ho Chi Minh City, Vietnam</span>
+        </p>
+        <div class="hero-stats" id="hero-stats"></div>
+      </div>
+    </section>
+
+    <section id="about" class="about-section py-20">
+      <div class="container container--5xl">
+        <div class="slide-up reveal section-head-center">
+          <span class="about-badge" data-about-badge># ABOUT</span>
+          <h2 class="about-headline" data-about-headline></h2>
+        </div>
+        <div class="about-grid">
+          <div class="slide-up reveal about-copy">
+            <p data-about-d1></p>
+            <p data-about-d2></p>
+            <p data-about-d3></p>
+          </div>
+          <div class="about-highlights-wrap slide-up reveal" id="about-highlights"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="skills-section py-20">
+      <div class="container container--5xl">
+        <div class="slide-up reveal section-head-center">
+          <span class="skills-badge" data-skills-badge><i class="fas fa-wand-magic-sparkles" aria-hidden="true"></i> SKILLS</span>
+          <h2 class="skills-headline" data-skills-headline></h2>
+          <p class="skills-subtitle" data-skills-sub></p>
+        </div>
+        <div class="skills-cards-grid" id="skills-grid"></div>
+        <h3 class="skills-soft-title" data-soft-title>Soft Skills</h3>
+        <div class="skills-cards-grid" id="soft-skills"></div>
+      </div>
+    </section>
+
+    <section id="strengths" class="strengths-section py-20">
+      <div class="container container--5xl">
+        <div class="slide-up reveal section-head-center">
+          <span class="strengths-badge" data-strengths-badge># STRENGTHS</span>
+          <h2 class="strengths-headline" data-strengths-headline></h2>
+        </div>
+        <div class="slide-up reveal strengths-panel">
+          <div class="strengths-grid" id="strengths-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="experience-section py-20">
+      <div class="container container--6xl">
+        <div class="slide-up reveal section-head-center">
+          <span class="experience-badge" data-exp-badge><i class="fas fa-wand-magic-sparkles" aria-hidden="true"></i> EXPERIENCE</span>
+          <h2 class="experience-headline" data-exp-headline></h2>
+        </div>
+        <div class="experience-timeline" id="experience-list">
+          <div class="experience-timeline__line" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="education-languages" class="edu-lang-section py-20">
+      <div class="container container--4xl">
+        <div class="edu-lang-grid">
+          <div class="slide-up reveal edu-lang-card" id="education-card"></div>
+          <div class="slide-up reveal edu-lang-card" id="languages-card"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="personal-project" class="personal-project-section">
+      <div class="personal-project-section__grid" aria-hidden="true"></div>
+      <div class="personal-project-section__glow" aria-hidden="true"></div>
+      <div class="container container--6xl personal-project__inner">
+        <div class="slide-up reveal personal-project__intro">
+          <span class="personal-project-badge" data-pp-badge>Case study</span>
+          <h2 class="personal-project-brand" data-pp-brand>PropOps Blueprint</h2>
+          <p class="personal-project-title" data-pp-title></p>
+          <p class="personal-project-desc" data-pp-desc></p>
+          <div class="personal-project-techs" id="pp-tags"></div>
+          <a class="personal-project-cta" data-pp-cta href="#">View case study <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
+        </div>
+      </div>
+      <div class="slide-up reveal personal-project-banner-wrap">
+        <a
+          class="personal-project-banner-link"
+          id="pp-banner"
+          href="#"
+          data-pp-banner-link
+          aria-label="Case study — Thắng Lợi Group digital products"
+        >
+          <img
+            class="personal-project-banner"
+            src="assets/case-study.png"
+            alt="Sơ đồ hệ sinh thái sản phẩm số Thắng Lợi Group: HRM, Goal & Task, Asset, Document, E-Signature, Call Center & CRM, Digital Library và các sản phẩm nội bộ khác"
+            width="2048"
+            height="1536"
+          />
+        </a>
+      </div>
+    </section>
+
+    <section id="selected-work" class="projects-section py-20">
+      <div class="container container--6xl">
+        <div class="slide-up reveal section-head-center">
+          <span class="projects-badge" data-projects-badge>🚀 PROJECTS</span>
+          <h2 class="projects-headline" data-projects-headline></h2>
+          <p class="projects-subtitle" data-projects-sub></p>
+        </div>
+        <div class="slide-up reveal">
+          <div class="projects-toolbar">
+            <div class="projects-filters" id="filter-chips" role="group" aria-label="Filters"></div>
+          </div>
+          <div class="projects-grid" id="projects-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact-section py-20">
+      <div class="container container--5xl">
+        <div class="slide-up reveal section-head-center">
+          <span class="contact-badge" data-contact-badge># CONTACT</span>
+          <h2 class="contact-headline" data-contact-headline></h2>
+          <p class="contact-subtitle" data-contact-sub></p>
+        </div>
+        <div class="contact-grid">
+          <div class="slide-up reveal contact-list" id="contact-list"></div>
+          <div class="slide-up reveal contact-form-panel">
+            <form id="contact-form" novalidate>
+              <div class="contact-form-row">
+                <div>
+                  <label for="name" class="contact-field-label">Name</label>
+                  <input class="contact-field-input" id="name" name="name" autocomplete="name" required>
+                </div>
+                <div>
+                  <label for="email" class="contact-field-label">Email</label>
+                  <input class="contact-field-input" id="email" name="email" type="email" autocomplete="email" required>
+                </div>
+              </div>
+              <div>
+                <label for="message" class="contact-field-label">Message</label>
+                <textarea class="contact-field-input" id="message" name="message" rows="6" required></textarea>
+              </div>
+              <button type="submit" class="contact-submit-btn" id="submit-btn">Send message</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container container--6xl">
+      <div class="site-footer__main">
+        <div class="site-footer__brand">
+          <a href="#home" class="site-footer__logo" aria-label="Home">BN</a>
+          <h2 class="site-footer__name" data-footer-name>Bùi Bảo Nhân</h2>
+          <p class="site-footer__role" data-footer-role>Senior Business Analyst</p>
+          <p class="site-footer__desc" data-footer-desc></p>
+        </div>
+        <div>
+          <p class="site-footer__label" data-footer-nav-label>Điều hướng</p>
+          <ul class="footer-nav-grid" id="footer-nav"></ul>
+        </div>
+        <div>
+          <p class="site-footer__label" data-footer-connect-label>Kết nối</p>
+          <div class="site-footer__social" id="footer-social"></div>
+          <a href="#contact" class="site-footer__cta" data-footer-cta>Liên hệ <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+      </div>
+      <div class="site-footer__bottom">
+        <p data-copyright></p>
+        <a href="#home" class="site-footer__back-top" data-back-top>Về đầu trang <i class="fas fa-arrow-up" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true" hidden>
+    <i class="fas fa-bolt toast__icon" aria-hidden="true"></i>
+    <p class="toast__message" id="toast-message"></p>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
