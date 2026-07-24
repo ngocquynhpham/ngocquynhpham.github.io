@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vụ án Gia đình Manson (1969) — Visualizing Historical</title>
+  <meta name="description" content="Bối cảnh, số liệu, dòng thời gian và tác động của vụ thảm sát Cielo Drive & LaBianca (8-10/08/1969), Los Angeles — vụ án 'Gia đình Manson'.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Ngọc Quỳnh Phạm">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="canonical" href="https://ngocquynhpham.github.io/projects/visualizing-historical/manson-tate-1969.html">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./favicon.svg">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Visualizing Historical">
+  <meta property="og:locale" content="vi_VN">
+  <meta property="og:url" content="https://ngocquynhpham.github.io/projects/visualizing-historical/manson-tate-1969.html">
+  <meta property="og:title" content="Vụ án Gia đình Manson (1969) — Visualizing Historical">
+  <meta property="og:description" content="Bối cảnh, số liệu, dòng thời gian và tác động của vụ thảm sát Cielo Drive & LaBianca, 8-10/08/1969, Los Angeles.">
+  <meta name="keywords" content="Charles Manson, Sharon Tate, LaBianca, 1969, Cielo Drive, Helter Skelter, true crime, lịch sử Hoa Kỳ">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Vụ án Gia đình Manson (1969) — Visualizing Historical">
+  <meta name="twitter:description" content="Bối cảnh, số liệu, dòng thời gian và tác động của vụ thảm sát Cielo Drive & LaBianca, 8-10/08/1969.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0f172a;
+      color: #f1f5f9;
+    }
+
+    .timeline-line::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      width: 2px;
+      height: 100%;
+      background: #475569;
+      transform: translateX(-50%);
+    }
+
+    .infographic-card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .infographic-card:hover {
+      border-color: #d97706;
+      transform: translateY(-5px);
+    }
+
+    .accent-amber { color: #d97706; }
+    .bg-amber-custom { background-color: #d97706; }
+
+    .impact-card {
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .impact-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.45);
+      border-color: rgba(148, 163, 184, 0.45);
+    }
+
+    @media (max-width: 768px) {
+      .timeline-line::before {
+        left: 20px;
+      }
+    }
+
+    .fade-in { animation: fadeIn 0.5s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Nav -->
+  <nav class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur border-b border-slate-700/80">
+    <div class="max-w-5xl mx-auto px-4 sm:px-8 h-14 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="home.html" class="flex items-center gap-2 text-slate-200 hover:text-amber-400 transition-colors">
+          <div class="w-7 h-7 rounded-lg bg-amber-600 flex items-center justify-center">
+            <i class="fa-solid fa-landmark text-white text-xs"></i>
+          </div>
+          <span class="font-semibold text-sm">Visualizing Historical</span>
+        </a>
+        <span class="text-slate-600 hidden sm:inline">/</span>
+        <span class="text-slate-500 text-xs hidden sm:inline">Gia đình Manson 1969</span>
+      </div>
+      <a href="home.html" class="text-xs text-slate-400 hover:text-amber-400 transition-colors flex items-center gap-1">
+        <i class="fa-solid fa-arrow-left text-[10px]"></i> Mục lục
+      </a>
+    </div>
+  </nav>
+
+  <main class="flex-1 max-w-5xl mx-auto w-full p-4 md:p-8 pb-16">
+
+    <!-- Header -->
+    <header class="text-center mb-16 fade-in">
+      <p class="text-xs uppercase tracking-widest text-slate-500 mb-3">Sự kiện lịch sử</p>
+      <h1 class="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight">VỤ ÁN <span class="accent-amber">GIA ĐÌNH MANSON</span></h1>
+      <p class="text-lg md:text-xl text-slate-400 font-light italic">8 – 10 tháng 8 năm 1969 | Los Angeles, California, Hoa Kỳ</p>
+      <div class="w-24 h-1 bg-amber-custom mx-auto mt-6"></div>
+      <div class="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-600 bg-slate-800/50 text-slate-300 text-xs">
+        <i class="fa-solid fa-scale-balanced accent-amber"></i>
+        Thảm sát Cielo Drive & LaBianca — "Helter Skelter"
+      </div>
+    </header>
+
+    <!-- Bối cảnh -->
+    <section class="mb-12 md:mb-16 fade-in" style="animation-delay: 0.05s">
+      <div class="infographic-card p-6 rounded-2xl">
+        <h2 class="text-2xl font-bold mb-4 flex items-center">
+          <svg class="w-6 h-6 mr-2 accent-amber shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+          Bối cảnh
+        </h2>
+        <div class="text-slate-300 leading-relaxed text-sm space-y-4">
+          <p>
+            Cuối thập niên 1960, <strong class="text-white">Charles Manson</strong> lập ra giáo phái "Gia đình Manson" tại
+            nông trại bỏ hoang <strong class="text-white">Spahn Ranch</strong>, thu hút hàng chục tín đồ trẻ tuổi giữa làn sóng
+            phản văn hoá và bất ổn xã hội của nước Mỹ thời bấy giờ.
+          </p>
+          <p>
+            Manson từng nuôi mộng trở thành ca sĩ nhưng bị nhà sản xuất âm nhạc <strong class="text-white">Terry Melcher</strong>
+            từ chối thu âm. Đêm 8/8/1969, ông ra lệnh cho 4 tín đồ đột nhập ngôi nhà từng thuộc về Melcher trên đường
+            <strong class="text-white">Cielo Drive</strong> — nhưng không biết rằng căn nhà lúc đó đã được đạo diễn
+            <strong class="text-white">Roman Polanski</strong> và vợ, nữ diễn viên <strong class="text-white">Sharon Tate</strong>
+            (đang mang thai gần đủ tháng), thuê ở.
+          </p>
+          <p>
+            Đêm hôm sau, nhóm của Manson tiếp tục tấn công nhà của cặp vợ chồng chủ siêu thị
+            <strong class="text-white">Leno và Rosemary LaBianca</strong> ở khu Los Feliz. Vụ án chỉ được phá gần 4 tháng sau đó,
+            khi một thành viên khoe khoang với bạn tù.
+          </p>
+          <div class="rounded-xl border border-amber-500/40 bg-amber-950/40 p-4 text-amber-100/90 text-xs leading-relaxed">
+            <i class="fa-solid fa-circle-info mr-1 accent-amber"></i>
+            <strong>Đáng chú ý:</strong> Manson gần như không trực tiếp ra tay trong đêm giết Sharon Tate — ông bị kết án
+            với tư cách chủ mưu, một tiền lệ pháp lý quan trọng về trách nhiệm gián tiếp (vicarious liability) vẫn được
+            nhắc đến trong ngành luật hình sự Mỹ.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Số liệu đáng chú ý -->
+    <section class="mb-12 md:mb-16 fade-in" style="animation-delay: 0.08s">
+      <div class="infographic-card p-6 rounded-2xl">
+        <h2 class="text-2xl font-bold mb-4 flex items-center">
+          <svg class="w-6 h-6 mr-2 accent-amber shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+          Số liệu đáng chú ý
+        </h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          <div class="p-4 bg-slate-800/80 rounded-lg">
+            <span class="text-3xl font-bold accent-amber">7</span>
+            <p class="text-xs uppercase text-slate-400 mt-1">Nạn nhân thiệt mạng</p>
+            <p class="text-[10px] text-slate-500 mt-1">5 tại Cielo Drive + 2 tại nhà LaBianca</p>
+          </div>
+          <div class="p-4 bg-slate-800/80 rounded-lg">
+            <span class="text-3xl font-bold text-slate-100">2 đêm</span>
+            <p class="text-xs uppercase text-slate-400 mt-1">Liên tiếp gây án</p>
+            <p class="text-[10px] text-slate-500 mt-1">8/8 và 9/8/1969</p>
+          </div>
+          <div class="p-4 bg-slate-800/80 rounded-lg">
+            <span class="text-3xl font-bold text-slate-100">~4</span>
+            <p class="text-xs uppercase text-slate-400 mt-1">Tháng đến khi bị bắt</p>
+            <p class="text-[10px] text-slate-500 mt-1">8/1969 → 12/1969</p>
+          </div>
+          <div class="p-4 bg-slate-800/80 rounded-lg">
+            <span class="text-3xl font-bold accent-amber">9</span>
+            <p class="text-xs uppercase text-slate-400 mt-1">Tội danh giết người</p>
+            <p class="text-[10px] text-slate-500 mt-1">Manson bị kết án</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chi tiết số liệu -->
+    <section class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-16 fade-in" style="animation-delay: 0.1s">
+      <div class="infographic-card rounded-2xl p-5">
+        <div class="flex items-center gap-2 mb-3">
+          <i class="fa-solid fa-knife text-slate-500 text-xs"></i>
+          <span class="text-sm font-semibold text-slate-200">Hung khí sử dụng</span>
+        </div>
+        <ul class="text-xs text-slate-400 space-y-1">
+          <li>• Dao (hung khí chính, gây phần lớn thương vong)</li>
+          <li>• Súng lục .22 (bắn Steven Parent, Voytek Frykowski)</li>
+          <li>• Dây thừng để trói nạn nhân</li>
+        </ul>
+      </div>
+      <div class="infographic-card rounded-2xl p-5">
+        <div class="flex items-center gap-2 mb-3">
+          <i class="fa-solid fa-users text-slate-500 text-xs"></i>
+          <span class="text-sm font-semibold text-slate-200">Thủ phạm</span>
+        </div>
+        <div class="text-xs text-slate-400 space-y-1">
+          <p><strong class="text-slate-200">Charles Manson</strong> — chủ mưu, giáo chủ</p>
+          <p><strong class="text-slate-200">Tex Watson, Susan Atkins, Patricia Krenwinkel, Linda Kasabian</strong> — đêm Cielo Drive</p>
+          <p class="text-slate-500">+ Leslie Van Houten, Steve Grogan — đêm LaBianca</p>
+        </div>
+      </div>
+      <div class="infographic-card rounded-2xl p-5">
+        <div class="flex items-center gap-2 mb-3">
+          <i class="fa-solid fa-map-location-dot text-slate-500 text-xs"></i>
+          <span class="text-sm font-semibold text-slate-200">Địa điểm</span>
+        </div>
+        <div class="text-xs text-slate-400 space-y-1">
+          <p><strong class="text-slate-200">10050 Cielo Drive</strong>, Benedict Canyon</p>
+          <p><strong class="text-slate-200">Nhà LaBianca</strong>, Los Feliz</p>
+          <p>Cả hai thuộc khu vực Los Angeles, California</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline -->
+    <h2 class="text-2xl md:text-3xl font-bold text-center mb-12 uppercase tracking-widest text-slate-100 fade-in">Dòng thời gian</h2>
+    <div class="relative timeline-line mb-20 fade-in" style="animation-delay: 0.15s">
+
+      <div class="mb-12 flex flex-col md:flex-row md:justify-between items-center w-full gap-4 md:gap-0">
+        <div class="hidden md:block w-5/12"></div>
+        <div class="z-20 flex items-center order-1 bg-slate-500 shadow-xl w-8 h-8 rounded-full shrink-0">
+          <span class="mx-auto font-semibold text-lg text-white">1</span>
+        </div>
+        <div class="order-1 infographic-card rounded-xl w-full md:w-5/12 px-6 py-4">
+          <h3 class="mb-1 font-bold accent-amber text-xl">1967 – 1969</h3>
+          <p class="text-sm leading-snug tracking-wide text-slate-300 font-semibold">Hình thành "Gia đình Manson"</p>
+          <p class="text-sm leading-snug tracking-wide text-slate-400 mt-2">
+            Charles Manson quy tụ hàng chục tín đồ trẻ tuổi tại nông trại Spahn Ranch, xây dựng hệ tư tưởng ngày tận thế
+            mang tên "Helter Skelter" — tiên đoán một cuộc chiến chủng tộc sắp xảy ra.
+          </p>
+        </div>
+      </div>
+
+      <div class="mb-12 flex flex-col md:flex-row-reverse md:justify-between items-center w-full gap-4 md:gap-0">
+        <div class="hidden md:block w-5/12"></div>
+        <div class="z-20 flex items-center order-1 bg-amber-custom shadow-xl w-8 h-8 rounded-full shrink-0">
+          <span class="mx-auto font-semibold text-lg text-white">2</span>
+        </div>
+        <div class="order-1 infographic-card rounded-xl w-full md:w-5/12 px-6 py-4">
+          <h3 class="mb-1 font-bold accent-amber text-xl">Đêm 8/8/1969</h3>
+          <p class="text-sm leading-snug tracking-wide text-slate-300 font-semibold">Đột nhập Cielo Drive</p>
+          <p class="text-sm leading-snug tracking-wide text-slate-400 mt-2">
+            Manson chỉ đạo Tex Watson, Susan Atkins, Patricia Krenwinkel và Linda Kasabian đến biệt thự 10050 Cielo Drive,
+            ra lệnh "giết hết mọi người trong nhà". Steven Parent, 18 tuổi, là nạn nhân đầu tiên — bị bắn khi đang rời khỏi khu nhà.
+          </p>
+        </div>
+      </div>
+
+      <div class="mb-12 flex flex-col md:flex-row md:justify-between items-center w-full gap-4 md:gap-0">
+        <div class="hidden md:block w-5/12"></div>
+        <div class="z-20 flex items-center order-1 bg-amber-custom shadow-xl w-8 h-8 rounded-full shrink-0">
+          <span class="mx-auto font-semibold text-lg text-white">3</span>
+        </div>
+        <div class="order-1 infographic-card rounded-xl w-full md:w-5/12 px-6 py-4">
+          <h3 class="mb-1 font-bold accent-amber text-xl">Rạng sáng 9/8/1969</h3>
+          <p class="text-sm leading-snug tracking-wide text-slate-300 font-bold uppercase">Thảm sát trong biệt thự</p>
+          <p class="text-sm leading-snug tracking-wide text-slate-400 mt-2">
+            Nhóm khống chế và trói 4 nạn nhân còn lại: <strong class="text-slate-200">Sharon Tate</strong>, nhà tạo mẫu tóc
+            <strong class="text-slate-200"> Jay Sebring</strong>, nhà văn <strong class="text-slate-200">Wojciech Frykowski</strong>
+            và bạn gái ông <strong class="text-slate-200">Abigail Folger</strong>. Tate van xin được sống để sinh con nhưng
+            không được chấp nhận, bị đâm <strong class="accent-amber">16 nhát dao</strong>.
+          </p>
+        </div>
+      </div>
+
+      <div class="mb-12 flex flex-col md:flex-row-reverse md:justify-between items-center w-full gap-4 md:gap-0">
+        <div class="hidden md:block w-5/12"></div>
+        <div class="z-20 flex items-center order-1 bg-slate-500 shadow-xl w-8 h-8 rounded-full shrink-0">
+          <span class="mx-auto font-semibold text-lg text-white">4</span>
+        </div>
+        <div class="order-1 infographic-card rounded-xl w-full md:w-5/12 px-6 py-4">
+          <h3 class="mb-1 font-bold accent-amber text-xl">Sáng 9/8/1969</h3>
+          <p class="text-sm leading-snug tracking-wide text-slate-300 font-semibold">Phát hiện thi thể</p>
+          <p class="text-sm leading-snug tracking-wide text-slate-400 mt-2">
+            Người giúp việc <strong class="text-slate-200">Winifred Chapman</strong> đến nhà lúc 8 giờ sáng, phát hiện cổng
+            mở bất thường và các thi thể trên bãi cỏ trước nhà. Tin tức chấn động lan khắp Hollywood trong ngày.
+          </p>
+        </div>
+      </div>
+
+      <div class="mb-12 flex flex-col md:flex-row md:justify-between items-center w-full gap-4 md:gap-0">
+        <div class="hidden md:block w-5/12"></div>
+        <div class="z-20 flex items-center order-1 bg-amber-custom shadow-xl w-8 h-8 rounded-full shrink-0">
+          <span class="mx-auto font-semibold text-lg text-white">5</span>
+        </div>
+        <div class="order-1 infographic-card rounded-xl w-full md:w-5/12 px-6 py-4">
+          <h3 class="mb-1 font-bold accent-amber text-xl">Đêm 9/8/1969</h3>
+          <p class="text-sm leading-snug tracking-wide text-slate-300 font-semibold">Thảm sát nhà LaBianca</p>
+          <p class="text-sm leading-snug tracking-wide text-slate-400 mt-2">
+            Manson cùng nhóm tín đồ (lần này gồm cả Leslie Van Houten) đến nhà vợ chồng chủ siêu thị
+            <strong class="text-slate-200">Leno và Rosemary LaBianca</strong> ở Los Feliz, đâm chết cả hai với tổng cộng
+            <strong class="accent-amber">67 vết thương</strong>. Ngôi nhà được chọn vì nằm gần một địa điểm tiệc tùng mà
+            Manson từng ghé qua.
+          </p>
+        </div>
+      </div>
+
+      <div class="mb-12 flex flex-col md:flex-row-reverse md:justify-between items-center w-full gap-4 md:gap-0">
+        <div class="hidden md:block w-5/12"></div>
+        <div class="z-20 flex items-center order-1 bg-amber-600 shadow-xl w-8 h-8 rounded-full shrink-0">
+          <span class="mx-auto font-semibold text-lg text-white">6</span>
+        </div>
+        <div class="order-1 infographic-card rounded-xl w-full md:w-5/12 px-6 py-4">
+          <h3 class="mb-1 font-bold accent-amber text-xl">Tháng 11/1969</h3>
+          <p class="text-sm leading-snug tracking-wide text-slate-300 font-semibold">Manh mối phá án</p>
+          <p class="text-sm leading-snug tracking-wide text-slate-400 mt-2">
+            Susan Atkins, đang bị giam vì một tội danh không liên quan, khoe khoang với bạn tù về vụ giết Sharon Tate —
+            đầu mối then chốt giúp cảnh sát kết nối hai vụ án tưởng chừng không liên quan.
+          </p>
+        </div>
+      </div>
+
+      <div class="mb-12 flex flex-col md:flex-row md:justify-between items-center w-full gap-4 md:gap-0">
+        <div class="hidden md:block w-5/12"></div>
+        <div class="z-20 flex items-center order-1 bg-amber-600 shadow-xl w-8 h-8 rounded-full shrink-0">
+          <span class="mx-auto font-semibold text-lg text-white">7</span>
+        </div>
+        <div class="order-1 infographic-card rounded-xl w-full md:w-5/12 px-6 py-4">
+          <h3 class="mb-1 font-bold accent-amber text-xl">Tháng 12/1969</h3>
+          <p class="text-sm leading-snug tracking-wide text-slate-300 font-semibold">Bắt giữ</p>
+          <p class="text-sm leading-snug tracking-wide text-slate-400 mt-2">
+            Charles Manson và các thành viên chủ chốt của "Gia đình" bị bắt giữ và chính thức bị truy tố cho cả hai vụ
+            thảm sát.
+          </p>
+        </div>
+      </div>
+
+      <div class="mb-12 flex flex-col md:flex-row-reverse md:justify-between items-center w-full gap-4 md:gap-0">
+        <div class="hidden md:block w-5/12"></div>
+        <div class="z-20 flex items-center order-1 bg-slate-500 shadow-xl w-8 h-8 rounded-full shrink-0">
+          <span class="mx-auto font-semibold text-lg text-white">8</span>
+        </div>
+        <div class="order-1 infographic-card rounded-xl w-full md:w-5/12 px-6 py-4">
+          <h3 class="mb-1 font-bold accent-amber text-xl">6/1970 – 1/1971</h3>
+          <p class="text-sm leading-snug tracking-wide text-slate-300 font-semibold">Xét xử & kết án</p>
+          <p class="text-sm leading-snug tracking-wide text-slate-400 mt-2">
+            Phiên toà tại Los Angeles trở nên hỗn loạn với ca hát, cười cợt và khắc chữ X lên trán. Công tố viên
+            <strong class="text-slate-200"> Vincent Bugliosi</strong> chứng minh Manson là chủ mưu dù không trực tiếp
+            giết ai. Cả nhóm bị kết án tử hình, sau giảm xuống chung thân khi California tạm bãi bỏ án tử hình năm 1972.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tác động -->
+    <section class="mb-16 fade-in" style="animation-delay: 0.2s">
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-10 md:mb-12 uppercase tracking-wide text-slate-100">Tác động</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+        <article class="impact-card rounded-2xl p-6 md:p-7 border border-slate-400/25 border-l-4 border-l-amber-400 bg-slate-600/25 shadow-lg shadow-slate-900/20">
+          <h4 class="font-bold mb-3 text-white text-lg">Tư pháp & luật hình sự</h4>
+          <ul class="text-sm text-slate-200/95 space-y-2.5 leading-relaxed">
+            <li>• Xác lập nguyên tắc <strong class="text-white font-semibold">trách nhiệm của kẻ chủ mưu</strong> dù không trực tiếp ra tay</li>
+            <li>• Bản án tử hình được đổi thành chung thân sau khi California tạm ngưng án tử hình (1972)</li>
+            <li>• Nhiều thành viên bị từ chối tạm tha hàng chục lần trong suốt nhiều thập kỷ</li>
+          </ul>
+        </article>
+        <article class="impact-card rounded-2xl p-6 md:p-7 border border-slate-400/25 border-l-4 border-l-blue-400 bg-slate-600/25 shadow-lg shadow-slate-900/20">
+          <h4 class="font-bold mb-3 text-white text-lg">An ninh người nổi tiếng</h4>
+          <ul class="text-sm text-slate-200/95 space-y-2.5 leading-relaxed">
+            <li>• Vụ án chấm dứt cảm giác an toàn của giới thượng lưu Hollywood cuối thập niên 1960</li>
+            <li>• Thúc đẩy việc thuê vệ sĩ, lắp đặt hệ thống an ninh tại các khu biệt thự</li>
+            <li>• Thường được xem là dấu mốc kết thúc tinh thần lạc quan của thời kỳ "Summer of Love"</li>
+          </ul>
+        </article>
+        <article class="impact-card rounded-2xl p-6 md:p-7 border border-slate-400/25 border-l-4 border-l-violet-400 bg-slate-600/25 shadow-lg shadow-slate-900/20">
+          <h4 class="font-bold mb-3 text-white text-lg">Tâm lý học tội phạm</h4>
+          <ul class="text-sm text-slate-200/95 space-y-2.5 leading-relaxed">
+            <li>• Manson được FBI phỏng vấn trực tiếp để phát triển kỹ thuật <strong class="text-white font-semibold">lập hồ sơ tội phạm (profiling)</strong></li>
+            <li>• Trở thành ca nghiên cứu kinh điển về <strong class="text-white font-semibold">tâm lý học giáo phái (cult psychology)</strong> và thao túng tâm lý</li>
+            <li>• Đánh giá tâm lý pháp y (Rorschach, MMPI-2, PCL-R) được thực hiện trong tù năm 1997</li>
+          </ul>
+        </article>
+        <article class="impact-card rounded-2xl p-6 md:p-7 border border-slate-400/25 border-l-4 border-l-emerald-400 bg-slate-600/25 shadow-lg shadow-slate-900/20">
+          <h4 class="font-bold mb-3 text-white text-lg">Nguy cơ cực đoan hoá</h4>
+          <ul class="text-sm text-slate-200/95 space-y-2.5 leading-relaxed">
+            <li>• Manson trở thành biểu tượng được một số nhóm cực hữu tôn sùng nhiều năm sau</li>
+            <li>• Đệ tử Lynette "Squeaky" Fromme ám sát hụt Tổng thống Gerald Ford năm 1975</li>
+            <li>• Vụ án minh hoạ cho cách một hệ tư tưởng ngày tận thế có thể dẫn dắt hành vi bạo lực tập thể</li>
+          </ul>
+        </article>
+        <article class="impact-card rounded-2xl p-6 md:p-7 border border-slate-400/25 border-l-4 border-l-sky-400 bg-slate-600/25 shadow-lg shadow-slate-900/20 md:col-span-2">
+          <h4 class="font-bold mb-4 text-white text-lg flex items-center gap-2">
+            <i class="fa-solid fa-tv text-sky-300 text-base"></i>
+            Truyền thông & Văn hoá đại chúng
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
+            <ul class="text-sm text-slate-200/95 space-y-2.5 leading-relaxed">
+              <li>• <strong class="text-white font-semibold">"Helter Skelter"</strong> (1974) của công tố viên Vincent Bugliosi trở thành sách true-crime bán chạy hàng đầu mọi thời đại</li>
+              <li>• Định hình cả thể loại <strong class="text-white font-semibold">true crime</strong> hiện đại — sách, podcast, phim tài liệu</li>
+              <li>• Một số ban nhạc rock nhắc đến Manson như biểu tượng phản văn hoá cực đoan, gây nhiều tranh cãi</li>
+            </ul>
+            <ul class="text-sm text-slate-200/95 space-y-2.5 leading-relaxed">
+              <li>• <strong class="text-white font-semibold">"Once Upon a Time in Hollywood"</strong> (2019) của Quentin Tarantino, ra mắt đúng 50 năm sau vụ án</li>
+              <li>• Series <strong class="text-white font-semibold">"Mindhunter"</strong> (Netflix) lấy cảm hứng từ các cuộc phỏng vấn tội phạm học với Manson</li>
+              <li>• Charles Manson qua đời trong tù ngày 19/11/2017, ở tuổi 83, vì nguyên nhân tự nhiên</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Nạn nhân -->
+    <section class="mb-16 fade-in" style="animation-delay: 0.25s">
+      <h2 class="text-xl md:text-2xl font-bold mb-6 flex items-center gap-2 text-slate-100">
+        <svg class="w-6 h-6 accent-amber shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
+        Tưởng nhớ — 7 nạn nhân
+      </h2>
+      <div class="infographic-card rounded-2xl p-6 sm:p-8">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm text-slate-300">
+          <div><strong class="text-slate-100">Sharon Tate</strong>, 26 <span class="text-slate-500">— nữ diễn viên</span></div>
+          <div><strong class="text-slate-100">Jay Sebring</strong>, 35 <span class="text-slate-500">— nhà tạo mẫu tóc</span></div>
+          <div><strong class="text-slate-100">Abigail Folger</strong>, 25</div>
+          <div><strong class="text-slate-100">Wojciech Frykowski</strong>, 32 <span class="text-slate-500">— nhà văn</span></div>
+          <div><strong class="text-slate-100">Steven Parent</strong>, 18</div>
+          <div><strong class="text-slate-100">Leno LaBianca</strong>, 44 <span class="text-slate-500">— chủ siêu thị</span></div>
+          <div class="sm:col-span-3"><strong class="text-slate-100">Rosemary LaBianca</strong>, 38</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Nguồn -->
+    <section class="fade-in mb-8" style="animation-delay: 0.3s">
+      <h2 class="text-xl font-bold mb-4 text-slate-100">Nguồn tham khảo</h2>
+      <div class="infographic-card rounded-2xl p-6 text-sm text-slate-400 space-y-3">
+        <p><i class="fa-solid fa-globe mr-2 text-slate-500"></i>
+          Wikipedia tiếng Việt — Charles Manson
+        </p>
+        <p><i class="fa-solid fa-globe mr-2 text-slate-500"></i>
+          Báo Công an Nhân dân — Hồ sơ vụ án Charles Manson
+        </p>
+        <p><i class="fa-solid fa-globe mr-2 text-slate-500"></i>
+          Kenh14, Znews, CAND, Đời sống Pháp luật — các bài viết tổng hợp về vụ án
+        </p>
+        <p><i class="fa-solid fa-book mr-2 accent-amber"></i>
+          <strong class="text-slate-200">Helter Skelter</strong> — Vincent Bugliosi & Curt Gentry (1974)
+        </p>
+      </div>
+    </section>
+
+    <!-- Conclusion -->
+    <footer class="text-center p-8 bg-slate-900 rounded-3xl border border-slate-700 fade-in" style="animation-delay: 0.35s">
+      <p class="text-slate-400 mb-4 italic">
+        Visualizing Historical — ghi chép &amp; trực quan hoá sự kiện lịch sử.
+      </p>
+      <p class="text-sm font-semibold text-slate-300">by Ngọc Quỳnh Phạm</p>
+    </footer>
+
+  </main>
+
+  <script>
+    document.querySelectorAll('.infographic-card').forEach(function (card) {
+      card.addEventListener('mouseenter', function () {
+        card.style.borderColor = '#d97706';
+      });
+      card.addEventListener('mouseleave', function () {
+        card.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+      });
+    });
+  </script>
+</body>
+</html>

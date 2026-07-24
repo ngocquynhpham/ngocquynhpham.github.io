@@ -358,7 +358,7 @@
         $('modal-event-json').textContent = jsonTemplateEvent(null);
         $('modal-event-title').textContent = 'Thêm sự kiện';
         $('modal-event-hint').textContent =
-          'Dán object vào mảng "events" trong data/registry.json. bookIds có thể để [] nếu chưa gắn sách.';
+          'Dán object vào mảng "events" trong data/registry.json. Để trống bookIds nếu sự kiện không gắn sách.';
         openModal('modal-add-event');
       });
     $('modal-add-book-close') &&
