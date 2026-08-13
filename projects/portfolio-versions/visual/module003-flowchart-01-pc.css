@@ -1,0 +1,225 @@
+.m-flowchart-01-module001 {
+    position: relative;
+    z-index: 1;
+    background-color: var(--dynamiccolor_background_primary_100);
+    padding: 160px 0;
+}
+
+.m-flowchart-01-module001__container {
+    width: 100%;
+    max-width: 1792px;
+    padding: 0 16px;
+    margin: 0 auto;
+}
+
+.m-flowchart-01-module001__content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+}
+
+.m-flowchart-01-module001__headline {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+            writing-mode: sideways-rl;
+    width: calc(100% - 65.9090909091%);
+    max-height: 1520px;
+    overflow: hidden;
+}
+
+.m-flowchart-01-module001__english-title {
+    color: var(--dynamiccolor_text_primary);
+    font-family: var(--font-secondary);
+    font-size: 108px;
+    font-weight: 900;
+    line-height: 1.4;
+}
+
+.m-flowchart-01-module001__sub {
+    color: var(--dynamiccolor_text_primary);
+    font-family: var(--font-primary);
+    font-size: 44px;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 3.52px;
+    margin-right: -25px;
+}
+
+.m-flowchart-01-module001__list {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-flex: 0;
+        -ms-flex: none;
+            flex: none;
+    width: 65.9090909091%;
+}
+
+.m-flowchart-01-module001__item {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    gap: 80px;
+    padding-bottom: 80px;
+}
+.m-flowchart-01-module001__item:last-child{
+    padding-bottom: 0;
+}
+.m-flowchart-01-module001__item::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 160px;
+    -webkit-mask-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDIgODIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjAwMDA2IDFMMS4wMDAwNiA4MSIgc3Ryb2tlPSIjQ0JGQjQ1IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWRhc2hhcnJheT0iNiA2Ii8+Cjwvc3ZnPgo=');
+    mask-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMiIgaGVpZ2h0PSI4MiIgdmlld0JveD0iMCAwIDIgODIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xLjAwMDA2IDFMMS4wMDAwNiA4MSIgc3Ryb2tlPSIjQ0JGQjQ1IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWRhc2hhcnJheT0iNiA2Ii8+Cjwvc3ZnPgo=');
+    width: 2px;
+    height: 100%;
+    z-index: -1;
+    background-color: var(--dynamiccolor_theme_primary_100);
+}
+
+.m-flowchart-01-module001__item:last-child::after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 151px;
+    width: 20px;
+    height: 2px;
+    border-radius: 80px;
+    background-color: var(--icon_secondary);
+
+}
+.m-flowchart-01-module001__text-number {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-flex: 0;
+        -ms-flex: none;
+            flex: none;
+    color: var(--dynamiccolor_theme_primary_100);
+    font-family: var(--font-secondary);
+    font-size: 50px;
+    font-weight: 900;
+    line-height: 1.4;
+    text-align: center;
+    width: 320px;
+    height: 320px;
+    border-radius: 320px;
+    overflow: hidden;
+    padding: 20px;
+    border: 2px solid var(--icon_secondary);
+    background-color: var(--dynamiccolor_background_primary_100);
+}
+
+.m-flowchart-01-module001__wrap-item {
+    padding-top: 42px;
+}
+
+.m-flowchart-01-module001__item-title {
+    color: var(--dynamiccolor_text_primary);
+    font-family: var(--font-primary);
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1.6;
+    letter-spacing: 2.56px;
+
+}
+
+.m-flowchart-01-module001__item-info {
+    color: var(--dynamiccolor_text_primary);
+    font-family: var(--font-primary);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 1.28px;
+    margin-top: 20px;
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+    .m-flowchart-01-module001 {
+        padding: 80px 0;
+    }
+
+    .m-flowchart-01-module001__container {
+        padding: 0 32px;
+    }
+
+    .m-flowchart-01-module001__content {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        gap: 60px;
+    }
+
+    .m-flowchart-01-module001__headline {
+        width: 100%;
+        -webkit-writing-mode: unset;
+            -ms-writing-mode: unset;
+                writing-mode: unset;
+        -webkit-box-align: start;
+            -ms-flex-align: start;
+                align-items: flex-start;
+        margin-bottom: 40px;
+    }
+
+    .m-flowchart-01-module001__english-title {
+        font-size: 72px;
+        line-height: 1.2;
+    }
+
+    .m-flowchart-01-module001__sub {
+        font-size: 32px;
+        letter-spacing: 2px;
+    }
+
+    .m-flowchart-01-module001__list {
+        width: 100%; 
+    }
+
+    .m-flowchart-01-module001__item {
+        gap: 40px;
+        padding-bottom: 60px;
+        -webkit-box-align: start;
+            -ms-flex-align: start;
+                align-items: flex-start;
+    }
+
+    .m-flowchart-01-module001__item::before {
+        top: 60px;
+        left: 100px;
+    }
+
+    .m-flowchart-01-module001__text-number {
+        width: 200px;
+        height: 200px;
+        border-radius: 200px;
+        font-size: 40px;
+    }
+
+    .m-flowchart-01-module001__item-title {
+        font-size: 24px;
+        letter-spacing: 1.5px;
+    }
+
+    .m-flowchart-01-module001__item-info {
+        font-size: 15px;
+    }
+}
