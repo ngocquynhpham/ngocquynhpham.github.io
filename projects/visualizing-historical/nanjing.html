@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thảm sát Nam Kinh (Nanjing Massacre) — Kho lưu trữ lịch sử</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="description" content="Ghi chép cá nhân về Thảm sát Nam Kinh, hoặc Nanjing Massacre, bao gồm bối cảnh, diễn biến, bằng chứng lịch sử và cách hiểu đúng về con số tử vong." />
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --panel: #ffffff;
+      --ink: #0f172a;
+      --muted: #475569;
+      --line: #e2e8f0;
+      --soft: #f1f5f9;
+      --accent: #1f2937;
+      --accent-2: #7c3aed;
+      --warning: #a16207;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(255,255,255,0.9);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .topbar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+    }
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #111827, #374151);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-size: 0.9rem;
+    }
+    .nav-link {
+      color: var(--muted);
+      font-size: 0.82rem;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: white;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+    .hero {
+      background: linear-gradient(135deg, #ffffff, #f8fafc);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: 0 18px 40px -30px rgba(15, 23, 42, 0.35);
+    }
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 3vw, 3rem);
+      line-height: 1.15;
+      letter-spacing: -0.04em;
+    }
+    .subtitle {
+      color: var(--muted);
+      margin-top: 12px;
+      font-size: 1.02rem;
+    }
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .chip {
+      display: inline-block;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 600;
+    }
+
+    .content {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: minmax(0, 2.2fr) minmax(240px, 0.8fr);
+      gap: 24px;
+    }
+    .main-col,
+    .side-col {
+      display: grid;
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 22px 24px;
+      box-shadow: 0 12px 28px -24px rgba(15,23,42,0.35);
+    }
+    .card h2 {
+      margin: 0 0 14px;
+      font-size: 1.2rem;
+      line-height: 1.3;
+    }
+    p, li {
+      color: var(--ink);
+      font-size: 0.99rem;
+    }
+    .lead {
+      font-size: 1.02rem;
+    }
+    .quote {
+      margin: 18px 0;
+      padding: 14px 16px;
+      border-left: 4px solid var(--accent-2);
+      background: #faf5ff;
+      border-radius: 10px;
+      color: var(--ink);
+      font-weight: 600;
+    }
+    .section-kicker {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    ul {
+      margin: 10px 0 0 18px;
+      padding: 0;
+    }
+    li + li { margin-top: 8px; }
+    strong { color: #111827; }
+
+    .note {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-left: 4px solid var(--warning);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: #7c2d12;
+      font-weight: 600;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .stat {
+      background: linear-gradient(180deg, #ffffff, #f8fafc);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px 12px;
+      min-height: fit-content;
+    }
+    .stat .num {
+      display: block;
+      font-size: 1.3rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--ink);
+    }
+    .stat .label {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      background: white;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+    }
+    th, td {
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      font-size: 0.92rem;
+    }
+    th {
+      background: #f8fafc;
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    tr:last-child td { border-bottom: none; }
+
+    .side-box {
+      background: #fff7ed;
+      color: var(--ink);
+      border-radius: 18px;
+      padding: 18px 18px;
+      border: 1px solid #fed7aa;
+      min-height: fit-content;
+      height: fit-content;
+    }
+    .side-box h3 {
+      margin: 0 0 14px;
+      font-size: 1rem;
+      color: var(--ink);
+    }
+    .side-box ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--ink);
+    }
+    .side-box li { font-size: 0.9rem; }
+
+    .footer {
+      margin-top: 32px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 800px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+      .hero { padding: 22px 18px; }
+      .page { padding-left: 16px; padding-right: 16px; }
+      .topbar-inner { padding-left: 16px; padding-right: 16px; }
+      .stat-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-mark">H</div>
+        <span>Kho lưu trữ lịch sử</span>
+      </div>
+      <a class="nav-link" href="home.html">← Quay lại danh sách</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <div class="eyebrow">Sự kiện lịch sử</div>
+      <h1>Thảm sát Nam Kinh (Nanjing Massacre)</h1>
+      <p class="subtitle">Tháng 12/1937 — Nam Kinh, Trung Quốc</p>
+      <div class="meta-row">
+        <span class="chip">Chiến tranh Trung–Nhật</span>
+        <span class="chip">Tội ác chiến tranh</span>
+        <span class="chip">Nạn nhân dân thường</span>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="main-col">
+        <article class="card">
+          <div class="section-kicker">1. Tóm tắt</div>
+          <p class="lead">
+            <strong>Thảm sát Nam Kinh</strong> (Nanjing Massacre / Nanking Massacre) không chỉ là một sự kiện thảm khốc trong một đêm hay một ngày. Nó là một chuỗi tội ác chiến tranh kéo dài trong nhiều tuần sau khi quân đội Đế quốc Nhật Bản chiếm Nam Kinh vào tháng 12/1937.
+          </p>
+          <p>
+            Sau khi thành phố thất thủ, quân Nhật tiến hành giết hại dân thường, hành quyết tù binh, cưỡng hiếp phụ nữ, cướp bóc, phá hủy tài sản và đốt cháy cơ sở dân sự. Đây là một trong những biểu tượng lớn nhất của bạo lực chiến tranh trong giai đoạn mở rộng xâm lược của Nhật Bản ở Trung Quốc.
+          </p>
+          <div class="stat-grid" style="margin-top:16px;">
+            <div class="stat">
+              <span class="num">13/12/1937</span>
+              <span class="label">Nam Kinh thất thủ</span>
+            </div>
+            <div class="stat">
+              <span class="num">Nhiều tuần</span>
+              <span class="label">Bạo lực tiếp diễn</span>
+            </div>
+            <div class="stat">
+              <span class="num">300.000</span>
+              <span class="label">Con số thường nhắc</span>
+            </div>
+            <div class="stat">
+              <span class="num">Khu An toàn</span>
+              <span class="label">Nhiều tổ chức cứu trợ</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="section-kicker">2. Bối cảnh</div>
+          <p>
+            Nhật Bản đã mở rộng quyền kiểm soát ở Đông Bắc Trung Quốc từ năm 1931. Năm 1937, chiến tranh Trung–Nhật lần thứ hai bùng nổ trên quy mô lớn. Sau các trận đánh ở miền Đông Trung Quốc, quân Nhật chiếm Thượng Hải rồi tiến về Nam Kinh.
+          </p>
+          <p>
+            Nam Kinh khi đó là thủ đô của Chính phủ Quốc dân Trung Quốc, nên việc thành phố rơi vào tay quân Nhật có ý nghĩa quân sự và biểu tượng rất lớn. Sự thất thủ của Nam Kinh không chỉ đánh dấu một bước tiến quân của Nhật, mà còn đặt cả thành phố trước một áp lực bạo lực dữ dội trong những tuần sau đó.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="section-kicker">3. Quân Nhật tiến vào Nam Kinh</div>
+          <p>
+            Sau thất bại của Trung Quốc tại Thượng Hải, quân Nhật tiến nhanh về Nam Kinh. Khi thành phố thất thủ ngày <strong>13/12/1937</strong>, các đơn vị quân sự Nhật bắt đầu triển khai tấn công, quản thúc, truy bắt và cướp phá trong phạm vi rộng. Bạo lực không dừng lại ngay sau khi thành phố sụp đổ; nó tiếp diễn trong nhiều tuần, biến Nam Kinh thành một trong những nơi ám ảnh nhất của chiến tranh ở châu Á.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="section-kicker">4. Điều gì đã xảy ra?</div>
+
+          <h2>4.1. Hành quyết tù binh</h2>
+          <p>
+            Một trong những vấn đề nghiêm trọng nhất là việc quân Nhật giết các binh sĩ Trung Quốc đã đầu hàng hoặc bị bắt. Nhiều vụ hành quyết diễn ra tập thể, và có rất nhiều người bị giết ngay sau khi đã mất khả năng chống cự hoặc bị bắt làm tù binh.
+          </p>
+          <div class="quote">
+            Đây không chỉ là thương vong của chiến đấu. Nhiều người bị giết sau khi đã mất khả năng chiến đấu hoặc đã bị bắt.
+          </div>
+
+          <h2>4.2. Giết dân thường</h2>
+          <p>
+            Dân thường cũng trở thành nạn nhân. Một vấn đề khiến thống kê khó khăn là nhiều nam giới bị nghi là binh lính dù thực chất là dân thường, hoặc bị bắt vì có liên quan đến quân đội theo cách hiểu sai. Hồ sơ thời chiến không hoàn chỉnh, nhiều thi thể được chôn tập thể hoặc bị xử lý bằng cách không rõ ràng. Chính vì thế, sự ra đời của con số dưới mức 300.000 không đồng nghĩa với việc phủ nhận các vụ giết người hàng loạt.
+          </p>
+
+          <h2>4.3. Cưỡng hiếp</h2>
+          <p>
+            Cưỡng hiếp xảy ra trên diện rộng và không chỉ giới hạn ở một nhóm đối tượng. Nạn nhân gồm phụ nữ, trẻ em gái và phụ nữ lớn tuổi; nhiều người sau đó bị giết hoặc biến mất. Đây là điểm quan trọng: Nanjing Massacre không phải chỉ là “một cuộc thảm sát” theo nghĩa hẹp, mà là nhiều tội ác chiến tranh cùng lúc: giết người, hành quyết, cưỡng hiếp, tra tấn, cướp bóc và đốt phá.
+          </p>
+
+          <h2>4.4. Cướp bóc và đốt phá</h2>
+          <p>
+            Nhà cửa, cửa hàng và tài sản bị cướp phá. Một số khu vực bị đốt. Hậu quả không chỉ là số người chết, mà còn là sự hủy hoại cơ sở sinh sống, gia đình tan vỡ, chấn thương tâm lý và di dời dân cư trên quy mô lớn.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="section-kicker">5. Khu An toàn Nam Kinh</div>
+          <p>
+            Một nhóm người nước ngoài ở Nam Kinh thành lập <strong>Khu An toàn Nam Kinh</strong> (Nanjing Safety Zone) với mục đích tạo một khu vực tương đối an toàn cho dân thường. Những người tham gia chủ yếu là nhà truyền giáo, giáo viên, doanh nhân và nhân viên cứu trợ, họ cố gắng bảo vệ cư dân và ghi lại những gì đang xảy ra.
+          </p>
+
+          <h2>5.1. John Rabe</h2>
+          <p>
+            <strong>John Rabe</strong> là một doanh nhân người Đức ở Nam Kinh và là một trong những người tham gia tổ chức Khu An toàn. Ông viết nhật ký và thư từ mô tả những gì xảy ra; những ghi chép này trở thành nguồn tư liệu quan trọng cho việc hiểu sự kiện.
+          </p>
+
+          <h2>5.2. Minnie Vautrin</h2>
+          <p>
+            <strong>Minnie Vautrin</strong> là một nhà giáo dục người Mỹ. Bà đóng vai trò quan trọng trong việc bảo vệ phụ nữ và trẻ em trong Khu An toàn và ghi lại tình hình trong thời kỳ đó bằng những lời kể, báo cáo và quan sát cá nhân.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="section-kicker">6. Có bao nhiêu người chết?</div>
+          <p>
+            Đây là phần cần đặc biệt cẩn thận. Không có một con số duy nhất được mọi nhà nghiên cứu chấp nhận, và chính sự không thống nhất đó lại cho thấy đây là một sự kiện có tính quy mô, độ phức tạp và nhiều tầng bậc khác nhau.
+          </p>
+          <div class="stat-grid">
+            <div class="stat">
+              <span class="num">300.000</span>
+              <span class="label">Con số thường được nêu</span>
+            </div>
+            <div class="stat">
+              <span class="num">300.000+</span>
+              <span class="label">Tù binh & dân thường</span>
+            </div>
+            <div class="stat">
+              <span class="num">Nhiều ước tính</span>
+              <span class="label">Thấp hơn nhưng vẫn rất lớn</span>
+            </div>
+            <div class="stat">
+              <span class="num">Không đồng nhất</span>
+              <span class="label">Do phương pháp tính khác nhau</span>
+            </div>
+          </div>
+          <p style="margin-top: 14px;">
+            Một số nghiên cứu đưa ra con số thấp hơn đáng kể. Nguyên nhân gồm khác biệt về phạm vi địa lý, khoảng thời gian được tính, có tính tù binh hay không, có tính những người chết sau đó hay không, và cách xác định nạn nhân. Tuy nhiên, cách nào đi nữa, điều quan trọng là: sự thật về giết người hàng loạt, cưỡng hiếp, hành quyết và cướp bóc đã được nhiều nguồn độc lập chứng minh.
+          </p>
+          <div class="note">
+            Tranh luận về con số không đồng nghĩa với phủ nhận việc thảm sát xảy ra. Việc quân Nhật giết người hàng loạt, hành quyết tù binh, cưỡng hiếp và cướp bóc được chứng minh bằng nhiều loại nguồn độc lập.
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="section-kicker">7. Bằng chứng lịch sử</div>
+          <ul>
+            <li><strong>Nhật ký:</strong> của người nước ngoài sống tại Nam Kinh ghi lại các sự kiện từng ngày và cho thấy mức độ bạo lực tăng lên nhanh chóng sau khi thành phố thất thủ.</li>
+            <li><strong>Thư từ:</strong> gửi ra nước ngoài mô tả tình trạng thành phố, dân cư, các vụ bạo lực và nỗ lực cứu hộ trong khu vực an toàn.</li>
+            <li><strong>Ảnh:</strong> hình ảnh đương thời về thi thể, thành phố bị phá hủy, người tị nạn và hậu quả sau vụ thảm sát.</li>
+            <li><strong>Lời chứng:</strong> từ người sống sót, người chứng kiến và cựu quân nhân, rất quan trọng trong việc tái dựng sự kiện theo chiều sâu.</li>
+            <li><strong>Hồ sơ xét xử:</strong> các vụ xét xử tội phạm chiến tranh sau Thế chiến II cho thấy không chỉ đơn vị cụ thể, mà cả hệ thống quân sự và quan hệ chỉ huy đều cần được xem xét.</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <div class="section-kicker">8. Xét xử sau chiến tranh</div>
+          <p>
+            Sau khi Nhật Bản đầu hàng năm 1945, các phiên tòa tội phạm chiến tranh được tổ chức. Một cơ chế quan trọng là <strong>International Military Tribunal for the Far East</strong> (Tokyo Trial), hay thường gọi là Tòa án Quân sự Quốc tế Viễn Đông. Ngoài ra, các phiên tòa ở Trung Quốc cũng xét xử một số quân nhân Nhật liên quan đến tội ác tại Nam Kinh.
+          </p>
+          <p>
+            Cần phân biệt giữa người trực tiếp thực hiện, sĩ quan chỉ huy, người ra lệnh và trách nhiệm của hệ thống quân sự. Không phải mọi cá nhân đều có cùng mức độ trách nhiệm, nhưng không thể xem đây là một vụ giết chóc riêng lẻ của một nhóm nhỏ mà không có cấu trúc tổ chức và quyền lực phía sau.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="section-kicker">9. Vì sao Nanjing Massacre vẫn nhạy cảm?</div>
+          <p>
+            Nam Kinh trở thành biểu tượng của chiến tranh xâm lược, chủ nghĩa quân phiệt Nhật và tội ác đối với dân thường Trung Quốc. Vấn đề vẫn xuất hiện trong giáo dục lịch sử, sách giáo khoa, bảo tàng, chính trị, quan hệ ngoại giao và tranh luận về tưởng niệm chiến tranh. Sự nhạy cảm không chỉ nằm ở số người chết, mà còn ở cách một quốc gia và cộng đồng người sống sau đó xử lý ký ức cùng những hậu quả mang tính toàn cầu.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="section-kicker">10. Một hiểu lầm cần tránh</div>
+          <p>
+            Không nên nói: “Người Nhật đã làm điều này”. Cách nói chính xác hơn là: “Quân đội Đế quốc Nhật Bản đã thực hiện...” Cần phân biệt giữa Đế quốc Nhật Bản thời chiến và Nhật Bản hiện đại sau năm 1945; đồng thời phân biệt quân đội Đế quốc Nhật Bản với toàn bộ người Nhật. Việc làm rõ sự phân biệt này rất quan trọng trong nghiên cứu lịch sử và trong việc tránh hình thành những khái niệm quá giản lược.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="section-kicker">11. Timeline</div>
+          <table>
+            <thead>
+              <tr>
+                <th>Thời gian</th>
+                <th>Sự kiện</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>1931</td><td>Nhật chiếm Mãn Châu</td></tr>
+              <tr><td>7/1937</td><td>Chiến tranh Trung–Nhật lần thứ hai mở rộng</td></tr>
+              <tr><td>11/1937</td><td>Quân Nhật chiếm Thượng Hải</td></tr>
+              <tr><td>12/1937</td><td>Quân Nhật tiến đến Nam Kinh</td></tr>
+              <tr><td>13/12/1937</td><td>Nam Kinh thất thủ</td></tr>
+              <tr><td>12/1937 – đầu 1938</td><td>Giết người, cưỡng hiếp, hành quyết, cướp bóc và đốt phá</td></tr>
+              <tr><td>1945</td><td>Nhật đầu hàng</td></tr>
+              <tr><td>1946–1948</td><td>Tokyo Trial</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="card">
+          <div class="section-kicker">12. Cách nhớ trong 10 giây</div>
+          <div class="quote">
+            Nanjing Massacre = quân đội Đế quốc Nhật Bản chiếm Nam Kinh năm 1937 → sau đó xảy ra nhiều tuần giết người hàng loạt, hành quyết tù binh, cưỡng hiếp, cướp bóc và đốt phá đối với người Trung Quốc.
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="section-kicker">13. Nguồn tham khảo</div>
+          <ul>
+            <li><a href="https://sfi.usc.edu/" target="_blank" rel="noopener noreferrer">USC Shoah Foundation — Nanjing Massacre collection</a></li>
+            <li><a href="https://www.archives.gov/" target="_blank" rel="noopener noreferrer">U.S. National Archives — Japanese war crimes records</a></li>
+            <li><a href="https://en.wikipedia.org/wiki/International_Military_Tribunal_for_the_Far_East" target="_blank" rel="noopener noreferrer">International Military Tribunal for the Far East</a></li>
+            <li><a href="https://www.britannica.com/event/Nanjing-Massacre" target="_blank" rel="noopener noreferrer">Encyclopedia Britannica — Nanjing Massacre</a></li>
+            <li><a href="https://www.youtube.com/results?search_query=nanjing+massacre" target="_blank" rel="noopener noreferrer">Các tài liệu và video giảng giải về Nanjing Massacre</a></li>
+          </ul>
+        </article>
+      </div>
+
+      <aside class="side-col">
+        <div class="side-box">
+          <h3>Điểm nhấn</h3>
+          <ul>
+            <li>Nam Kinh thất thủ ngày 13/12/1937.</li>
+            <li>Thảm sát kéo dài nhiều tuần, không phải một sự kiện ngắn.</li>
+            <li>Không chỉ giết người; còn có cưỡng hiếp, tra tấn, cướp bóc và đốt phá.</li>
+            <li>Con số tử vong vẫn tranh luận, nhưng không phủ nhận sự thật tội ác.</li>
+          </ul>
+        </div>
+
+        <div class="card" style="min-height: fit-content; height: fit-content;">
+          <div class="section-kicker">Ghi chú</div>
+          <p>
+            Nghiên cứu lịch sử cần đối chiếu nhiều nguồn: tư liệu sơ cấp, hồ sơ xét xử, nhật ký và nghiên cứu học thuật. Các con số tử vong khác nhau giữa các nghiên cứu là điều bình thường, nhưng điều này không làm giảm tính xác thực của sự kiện.
+          </p>
+        </div>
+      </aside>
+    </section>
+
+    <div class="footer">
+      Visualizing Historical — ghi chép và lưu trữ sự kiện lịch sử cá nhân.
+    </div>
+  </main>
+</body>
+</html>
