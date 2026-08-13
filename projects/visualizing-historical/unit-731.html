@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Đơn vị 731 — Unit 731 (Tóm tắt & phân tích)</title>
+	<meta name="robots" content="noindex, nofollow">
+	<meta name="description" content="Tổng hợp ghi chép về Unit 731: bối cảnh, hoạt động, thí nghiệm trên người, hậu quả và nguồn tham khảo.">
+		<style>
+		:root {
+			--bg: #f8fafc;
+			--panel: #ffffff;
+			--ink: #0f172a;
+			--muted: #475569;
+			--line: #e2e8f0;
+			--soft: #f1f5f9;
+			--accent: #1f2937;
+			--accent-2: #7c3aed;
+			--warning: #a16207;
+		}
+
+		* { box-sizing: border-box; }
+		html { scroll-behavior: smooth; }
+		body {
+			margin: 0;
+			font-family: "Segoe UI", Arial, sans-serif;
+			background: var(--bg);
+			color: var(--ink);
+			line-height: 1.7;
+		}
+		a { color: inherit; text-decoration: none; }
+
+		.topbar {
+			position: sticky;
+			top: 0;
+			z-index: 20;
+			background: rgba(255,255,255,0.9);
+			border-bottom: 1px solid var(--line);
+			backdrop-filter: blur(8px);
+		}
+		.topbar-inner {
+			max-width: 1100px;
+			margin: 0 auto;
+			padding: 14px 20px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 12px;
+		}
+		.brand {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			font-weight: 700;
+		}
+		.brand-mark {
+			width: 36px;
+			height: 36px;
+			border-radius: 10px;
+			background: linear-gradient(135deg, #111827, #374151);
+			color: white;
+			display: grid;
+			place-items: center;
+			font-size: 0.9rem;
+		}
+
+		.page {
+			max-width: 1100px;
+			margin: 0 auto;
+			padding: 32px 20px 60px;
+		}
+		.hero {
+			background: linear-gradient(135deg, #ffffff, #f8fafc);
+			border: 1px solid var(--line);
+			border-radius: 22px;
+			padding: 28px;
+			box-shadow: 0 18px 40px -30px rgba(15, 23, 42, 0.35);
+		}
+		.eyebrow {
+			display: inline-block;
+			font-size: 0.72rem;
+			font-weight: 700;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			color: var(--muted);
+			margin-bottom: 12px;
+		}
+		h1 {
+			margin: 0;
+			font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+			line-height: 1.15;
+		}
+		.subtitle {
+			color: var(--muted);
+			margin-top: 10px;
+		}
+		.meta-row {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+			margin-top: 18px;
+		}
+		.chip {
+			display: inline-block;
+			padding: 8px 12px;
+			border-radius: 999px;
+			background: #f8fafc;
+			border: 1px solid var(--line);
+			color: var(--muted);
+			font-size: 0.76rem;
+			font-weight: 600;
+		}
+
+		.content {
+			margin-top: 28px;
+			display: grid;
+			grid-template-columns: minmax(0, 2.2fr) minmax(240px, 0.8fr);
+			gap: 24px;
+		}
+		.main-col,
+		.side-col {
+			display: grid;
+			gap: 22px;
+			align-items: start;
+		}
+
+		.card {
+			background: var(--panel);
+			border: 1px solid var(--line);
+			border-radius: 20px;
+			padding: 22px 24px;
+			height: auto;
+			box-shadow: 0 12px 28px -24px rgba(15,23,42,0.35);
+		}
+		.card h2 { margin: 0 0 14px; font-size: 1.2rem; line-height: 1.3; }
+		p, li { color: var(--ink); font-size: 0.99rem; }
+		.lead { font-size: 1.02rem; }
+		.quote {
+			margin: 18px 0;
+			padding: 14px 16px;
+			border-left: 4px solid var(--accent-2);
+			background: #faf5ff;
+			border-radius: 10px;
+			color: var(--ink);
+			font-weight: 600;
+		}
+
+		.section-kicker {
+			font-size: 0.72rem;
+			letter-spacing: 0.08em;
+			text-transform: uppercase;
+			color: var(--muted);
+			font-weight: 700;
+			margin-bottom: 10px;
+		}
+
+		ul { margin: 10px 0 0 18px; padding: 0; }
+		li + li { margin-top: 8px; }
+		strong { color: #111827; }
+
+		.note {
+			background: #fff7ed;
+			border: 1px solid #fed7aa;
+			border-left: 4px solid var(--warning);
+			border-radius: 10px;
+			padding: 12px 14px;
+			color: #7c2d12;
+			font-weight: 600;
+		}
+
+		.stat-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
+			gap: 12px;
+			margin-top: 8px;
+			align-items: stretch;
+			grid-auto-rows: minmax(48px, auto);
+		}
+		.stat {
+			background: linear-gradient(180deg, #ffffff, #f8fafc);
+			border: 1px solid var(--line);
+			border-radius: 14px;
+			padding: 10px 10px;
+			min-height: 48px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+			word-break: break-word;
+		}
+		.stat .num {
+			display: block;
+			font-size: 1rem;
+			font-weight: 800;
+			letter-spacing: -0.02em;
+			color: var(--ink);
+			line-height: 1.05;
+			white-space: normal;
+		}
+		.stat .label {
+			display: block;
+			font-size: 0.68rem;
+			color: var(--muted);
+			margin-top: 6px;
+			text-transform: uppercase;
+			letter-spacing: 0.06em;
+		}
+
+		table { width: 100%; border-collapse: collapse; margin-top: 12px; background: white; overflow: hidden; border-radius: 12px; border: 1px solid var(--line); }
+		th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 0.92rem; }
+		th { background: #f8fafc; color: var(--muted); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; }
+
+		.side-box { background: #fff7ed; color: var(--ink); border-radius: 18px; padding: 18px 18px; border: 1px solid #fed7aa; min-height: 0; height: auto; }
+		.side-box h3 { margin: 0 0 14px; font-size: 1rem; color: var(--ink); }
+		.side-box ul { margin: 0; padding-left: 18px; color: var(--ink); }
+		.side-box li { font-size: 0.9rem; }
+
+		.footer { margin-top: 32px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; }
+
+		@media (max-width: 800px) {
+			.content { grid-template-columns: 1fr; }
+			.hero { padding: 22px 18px; }
+			.page { padding-left: 16px; padding-right: 16px; }
+			.topbar-inner { padding-left: 16px; padding-right: 16px; }
+			.stat-grid { grid-template-columns: 1fr; }
+		}
+	</style>
+</head>
+<body>
+	<header class="topbar">
+		<div class="topbar-inner">
+			<div class="brand">
+				<div class="brand-mark">U7</div>
+				<span>Visualizing Historical — Unit 731</span>
+			</div>
+			<a class="nav-link" href="home.html">← Quay lại danh sách</a>
+		</div>
+	</header>
+
+	<main class="page">
+		<section class="hero">
+			<div class="eyebrow">Nghiên cứu lịch sử</div>
+			<h1>Đơn vị 731 (Unit 731)</h1>
+			<p class="subtitle">Chương trình nghiên cứu chiến tranh sinh học của Quân đội Đế quốc Nhật Bản — hoạt động chủ yếu tại Mãn Châu, 1930s–1945.</p>
+			<div class="meta-row">
+				<span class="chip">Pingfang, Mãn Châu</span>
+				<span class="chip">Chiến tranh sinh học</span>
+				<span class="chip">Thí nghiệm trên người</span>
+			</div>
+		</section>
+
+		<section class="content">
+			<div class="main-col">
+				<article class="card">
+					<div class="section-kicker">1. Tóm tắt mở rộng</div>
+					<p class="lead"><strong>Unit 731</strong> là tên gọi quen thuộc cho một tổ chức bí mật của Quân đội Đế quốc Nhật Bản chuyên nghiên cứu và phát triển vũ khí sinh học, đồng thời tiến hành các thí nghiệm y-sinh trên người. Hoạt động chính được đặt tại Pingfang (Bình Phòng), gần Cáp Nhĩ Tân, trong khu vực Mãn Châu.</p>
+					<p>Ngoài thử nghiệm các tác nhân bệnh lý như dịch hạch, than, tả và đậu mùa, chương trình còn bao gồm thử nghiệm trên tù nhân (không tình nguyện), nghiên cứu cách phát tán tác nhân, và thử nghiệm môi trường nhằm mục đích quân sự. Nhiều nạn nhân bị thương nặng hoặc tử vong; những người sống sót thường gặp di chứng lâu dài về sức khỏe thể chất lẫn tâm lý.</p>
+				</article>
+
+				<article class="card">
+					<h2>2. Bối cảnh và cơ cấu</h2>
+					<p>Sau khi Nhật Bản chiếm Mãn Châu (1931) và lập Mãn Châu Quốc (1932), khu vực này trở thành nơi thuận tiện cho các hoạt động quân sự và nghiên cứu bí mật. Shirō Ishii, một bác sĩ quân y, là người lãnh đạo và vận hành một mạng lưới phòng thí nghiệm, cơ sở nuôi động vật và xưởng sản xuất cho nghiên cứu sinh học.</p>
+					<p>Cơ sở Pingfang là một khu phức hợp lớn: phòng thí nghiệm, xưởng sản xuất, khu giam giữ, khu nuôi động vật thí nghiệm và các công trình hỗ trợ quân sự.</p>
+				</article>
+
+				<article class="card">
+					<h2>3. Thí nghiệm trên người — chi tiết</h2>
+					<p>Thí nghiệm được tiến hành nhằm mục tiêu khoa học và quân sự: hiểu diễn tiến bệnh, xác định liều lây nhiễm, kiểm tra phương pháp điều trị, và khảo sát khả năng phát tán trong các điều kiện khác nhau (môi trường, nhiệt độ, dinh dưỡng).</p>
+					<p>Đối tượng là tù nhân — phần lớn không tình nguyện, không được thông báo rủi ro và không có quyền từ chối. Các phương pháp được ghi nhận trong hồ sơ và lời khai bao gồm lây nhiễm trực tiếp bằng mầm bệnh, thử nghiệm độc tố, các thí nghiệm về bỏng, đóng băng (frostbite) và các thủ thuật y tế để quan sát tiến trình bệnh. Một số nguồn học thuật và lời khai mô tả việc phẫu thuật khảo sát (vivisection) và lấy mẫu mà không có gây mê.</p>
+					<p>Do tính chất phạm pháp và mang tính tội ác chiến tranh, nhiều nạn nhân bị giết để che giấu bằng chứng; hồ sơ hậu chiến cho thấy một phần tài liệu bị tiêu hủy khi quân Nhật rút lui. Khi nghiên cứu, nên tiếp cận các nguồn sơ cấp (lời khai, hồ sơ lưu trữ) cùng phân tích học thuật để tránh hiểu sai hoặc phóng đại không có bằng chứng.</p>
+				</article>
+
+				<article class="card">
+					<h2>4. Chiến tranh sinh học ngoài thực địa</h2>
+					<p>Bên cạnh thí nghiệm tại cơ sở, có bằng chứng về việc thử nghiệm phát tán tác nhân trên thực địa nhằm quan sát hiệu ứng trên dân cư và môi trường: thả động vật nhiễm bệnh, rải tác nhân qua phương tiện vận tải, và các hoạt động bí mật khác. Hậu quả là các đợt dịch, tử vong dân sự và tác động y tế cộng đồng.</p>
+				</article>
+
+				<article class="card">
+					<h2>5. Hậu quả và di chứng</h2>
+					<p>Hậu quả bao gồm số người chết trực tiếp trong phòng thí nghiệm, những trường hợp mắc bệnh do các đợt phát tán, di chứng y tế kéo dài, và sang chấn xã hội rộng hơn. Ngoài nạn nhân trực tiếp, các cộng đồng gần đó chịu ảnh hưởng về an ninh y tế, kinh tế và tâm lý.</p>
+				</article>
+
+				<article class="card">
+					<h2>6. Di sản pháp lý và chính trị</h2>
+					<p>Sau chiến tranh, một số tài liệu bị phá hủy và nhiều nhân sự không bị truy tố tại Tokyo Trial. Hồ sơ giải mật của Mỹ cho thấy có trường hợp các nhà nghiên cứu được đổi bằng thông tin kỹ thuật, dẫn tới tranh luận về đạo đức và chính trị hậu chiến.</p>
+				</article>
+
+				<article class="card">
+					<h2>7. Timeline tóm tắt</h2>
+					<pre>
+1931  - Nhật chiếm Mãn Châu
+1932  - Thành lập Mãn Châu Quốc; các chương trình quân sự phát triển
+Giữa 1930s - Unit 731 phát triển tại Pingfang
+1937  - Chiến tranh Trung–Nhật mở rộng
+1930s–1945 - Thí nghiệm người và phát triển tác nhân sinh học
+8/1945 - Nhật đầu hàng; cơ sở bị phá hủy
+Sau 1945 - Điều tra, tài liệu giải mật và tranh luận lịch sử
+					</pre>
+				</article>
+
+				<article class="card">
+					<h2>9. Bằng chứng và nguồn học thuật</h2>
+					<p>Dưới đây là một số nguồn sơ cấp và công trình học thuật đáng tham khảo để nghiên cứu chi tiết và kiểm chứng sự kiện. Nên ưu tiên tài liệu lưu trữ, lời khai và công trình chuyên khảo đã được bình duyệt.</p>
+					<ul>
+						<li><a href="https://www.archives.gov/" target="_blank" rel="noopener noreferrer">U.S. National Archives</a> — hồ sơ điều tra, tài liệu tình báo và bằng chứng liên quan.</li>
+						<li><a href="https://www.history.navy.mil/research/library/online-reading-room/title-list-alphabetically/j/japanese-bio-warfare.html" target="_blank" rel="noopener noreferrer">U.S. Naval History — Japanese biological warfare</a> — phân tích lịch sử và tài liệu tham khảo.</li>
+						<li><a href="https://www.nationalww2museum.org/" target="_blank" rel="noopener noreferrer">National WWII Museum</a> — tài liệu nền về chiến tranh và tội ác chiến tranh.</li>
+						<li><a href="https://en.wikipedia.org/wiki/Factories_of_Death" target="_blank" rel="noopener noreferrer">Sheldon H. Harris, Factories of Death (1989)</a> — khảo cứu kinh điển tổng hợp nhiều nguồn lưu trữ.</li>
+						<li><a href="https://en.wikipedia.org/wiki/Unit_731_Testimony" target="_blank" rel="noopener noreferrer">Hal Gold, Unit 731 Testimony (1996)</a> — tuyển chọn lời khai và chứng cứ từ nhân chứng.</li>
+						<li><a href="https://en.wikipedia.org/wiki/A_Plague_upon_Humanity" target="_blank" rel="noopener noreferrer">Daniel Barenblatt, A Plague upon Humanity (2004)</a> — nghiên cứu chuyên sâu về chương trình sinh học của Nhật.</li>
+						<li><a href="https://en.wikipedia.org/wiki/Unit_731" target="_blank" rel="noopener noreferrer">Wikipedia — Unit 731</a> (tổng quan, dùng làm đầu mối tham chiếu nhanh; kiểm chứng nguồn khi trích dẫn).</li>
+						<li>Unit 731 Museum (Harbin) — di tích và một số tài liệu trưng bày (tham khảo tại chỗ hoặc qua nguồn lưu trữ chính thức).</li>
+					</ul>
+					<div class="note" style="margin-top:12px">Lưu ý: một số liên kết là trang tổng quan (encyclopedia) — khi cần trích dẫn học thuật, hãy dùng sách, bài báo và hồ sơ lưu trữ gốc.</div>
+				</article>
+
+				<article class="card">
+					<h2>10. Dữ liệu, Mỹ thu thập và tranh luận đạo đức (tóm tắt)</h2>
+					<p>Sau chiến tranh, các cơ quan Mỹ (bao gồm Fort Detrick và các đơn vị tình báo) đã điều tra Unit 731 và thu thập hồ sơ, báo cáo kỹ thuật, và lời khai. Một phần tài liệu được giải mật cho thấy Mỹ quan tâm tới anthrax, plague, glanders và các báo cáo thí nghiệm trên người.</p>
+					<ul>
+						<li><strong>Mỹ thu thập:</strong> hồ sơ kỹ thuật, báo cáo giải mã, lời khai cựu nhân viên, báo cáo thí nghiệm (anthrax, plague, glanders).</li>
+						<li><strong>Mục tiêu:</strong> đánh giá năng lực chiến tranh sinh học, khả năng sản xuất và phương thức phát tán; không đơn thuần là tìm kiếm thuốc hoặc vaccine cho dân sự.</li>
+						<li><strong>Tranh luận đạo đức:</strong> việc sử dụng dữ liệu thu được từ thí nghiệm vô nhân đạo gây tranh cãi — có bằng chứng Mỹ cân nhắc không truy tố đổi lấy thông tin, nhưng cơ chế và văn bản chính thức phức tạp.</li>
+						<li><strong>Giá trị khoa học:</strong> nhiều nghiên cứu cho rằng dữ liệu Nhật không hoàn hảo (khó tái lập, thiếu kiểm soát), nên giá trị thực tế có thể bị phóng đại.</li>
+					</ul>
+					<p class="note" style="margin-top:12px">Đọc thêm: <a href="https://www.archives.gov/iwg/japanese-war-crimes/select-documents.pdf" target="_blank" rel="noopener noreferrer">U.S. National Archives — select documents</a>, <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11616637/" target="_blank" rel="noopener noreferrer">PubMed Central review</a>, Sheldon H. Harris, Hal Gold, Daniel Barenblatt.</p>
+				</article>
+
+			</div>
+
+			<aside class="side-col">
+				<div class="side-box card">
+					<h3>Điểm nhấn</h3>
+					<p><strong>Unit 731</strong> là chương trình nghiên cứu chiến tranh sinh học của Quân đội Đế quốc Nhật Bản với quy mô và mức độ bí mật lớn; tù nhân bị lạm dụng để thử nghiệm; hậu quả kéo dài cả về sức khỏe và ký ức xã hội.</p>
+				</div>
+
+				<div class="card">
+					<h3>Thống kê tóm tắt</h3>
+					<div class="stat-grid">
+						<div class="stat"><span class="num">1932–1945</span><span class="label">Năm hoạt động</span></div>
+						<div class="stat"><span class="num">Pingfang</span><span class="label">Cơ sở chính</span></div>
+						<div class="stat"><span class="num">Hàng nghìn+</span><span class="label">Nạn nhân trực tiếp*</span></div>
+						<div class="stat"><span class="num">Nhiều</span><span class="label">Tài liệu giải mật</span></div>
+					</div>
+					<p style="margin-top:10px;color:var(--muted);font-size:0.9rem">*Con số không đồng nhất giữa các nguồn; ghi chú trong tài liệu tham khảo.</p>
+				</div>
+
+				<div class="side-box">
+					<h3>Ghi chú nghiên cứu</h3>
+					<p>Tiếp cận đa nguồn: hồ sơ quân sự, lời khai nhân chứng, tài liệu giải mật và nghiên cứu học thuật. Tôn trọng nạn nhân khi trích dẫn.</p>
+				</div>
+			</aside>
+		</section>
+
+		<div class="footer">Visualizing Historical — nội dung tổng hợp cho mục nghiên cứu lịch sử; trích nguồn khi tham khảo.</div>
+	</main>
+</body>
+</html>
+
