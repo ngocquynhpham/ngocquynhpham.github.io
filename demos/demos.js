@@ -41,8 +41,8 @@
       cat: "tools",
     },
     {
-      title: "Happy.Stu wedding",
-      desc: "Happy.Stu gallery landing: chapters on philosophy and aesthetics, filterable templates, contact form. Quiet-luxury typography and max-width layout.",
+      title: "Happy.Stu",
+      desc: "We make happiness",
       href: "https://happy.id.vn/",
       cat: "landing",
     },
