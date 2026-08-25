@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 56" role="img" aria-label="Pearson">
+  <rect width="200" height="56" rx="8" fill="#fff"/>
+  <circle cx="28" cy="28" r="10" fill="#007fa3"/>
+  <circle cx="48" cy="28" r="10" fill="#007fa3" opacity=".65"/>
+  <text x="118" y="36" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#007fa3">Pearson</text>
+</svg>

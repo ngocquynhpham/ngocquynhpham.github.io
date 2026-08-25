@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 56" role="img" aria-label="Oxford">
+  <rect width="220" height="56" rx="8" fill="#fff"/>
+  <text x="110" y="24" text-anchor="middle" font-family="Georgia, serif" font-size="11" font-weight="600" fill="#002147" letter-spacing="1">OXFORD</text>
+  <text x="110" y="42" text-anchor="middle" font-family="Georgia, serif" font-size="16" font-weight="700" fill="#002147">University Press</text>
+</svg>
