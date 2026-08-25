@@ -12,9 +12,15 @@
     },
     {
       title: "Wiki Economics",
-      desc: "Wiki Economics: a collection of economic concepts and theories explained in a simple and easy-to-understand way.",
+      desc: "Client project for a Senior BA: a browsable wiki of economic concepts and theories in plain language — structured articles for quick ESG/econ reference, static hosting.",
       href: "https://wiki.esg-tech.io.vn/",
       cat: "economic",
+    },
+    {
+      title: "Portfolio BA",
+      desc: "Client portfolio for role Senior Business Analyst (10+ yrs): about, skills, strengths, experience, PropOps case study, and contact — static GitHub Pages.",
+      href: "https://baonhantk.github.io/",
+      cat: "portfolio",
     },
     {
       title: "QR",
@@ -29,20 +35,14 @@
       cat: "tools",
     },
     {
-      title: "Visualizing Historical",
-      desc: "Mini project: historical events from reading notes — registry in JSON, filterable index, infographic detail pages (e.g. Columbine, Virginia Tech). Vietnamese, static site + Tailwind.",
-      href: "../projects/visualizing-historical/home.html",
-      cat: "research",
-    },
-    {
       title: "Transform Lab",
       desc: "Multi-format transformer: HTML, Markdown, JSON, LaTeX, SCSS, SVG, and more.",
       href: "../projects/tools/transform-lab.html",
       cat: "tools",
     },
     {
-      title: "Happy.Stu wedding",
-      desc: "Happy.Stu gallery landing: chapters on philosophy and aesthetics, filterable templates, contact form. Quiet-luxury typography and max-width layout.",
+      title: "Happy.Stu",
+      desc: "We make happiness",
       href: "https://happy.id.vn/",
       cat: "landing",
     },
@@ -197,7 +197,6 @@
       href: "../projects/google/gemini-certified-educator.html",
       cat: "research",
     },
-    
     {
       title: "Portfolio 01",
       desc: "Portfolio 01",
