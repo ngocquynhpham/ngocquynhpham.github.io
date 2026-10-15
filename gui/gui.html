@@ -1,0 +1,2971 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>GUI Design System</title>
+<meta name="description" content="Design tokens, components, and guidelines for desktop GUI apps that configure HID devices." />
+<link rel="icon" href="https://placehold.co/32x32/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20G" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+<style>
+:root {
+  --bg: hsl(220, 13%, 9%);
+  --bg2: hsl(220, 10%, 12%);
+  --bg3: hsl(220, 12%, 16%);
+  --border: hsla(0, 0%, 100%, 0.08);
+  --fg: hsl(0, 0%, 96%);
+  --fg2: hsl(0, 0%, 65%);
+  --fg3: hsl(0, 0%, 48%);
+  --accent: hsl(155, 100%, 65%);
+  --accent-bg: hsla(155, 100%, 65%, 0.12);
+  --status-connected: hsl(152, 60%, 48%);
+  --status-updating: hsl(38, 92%, 55%);
+  --status-error: hsl(4, 72%, 58%);
+  --sidebar-w: 268px; --radius: 8px;
+  --font-sans: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --bg: #f4f6f8; --bg2: #ffffff; --bg3: #e8ecf0; --border: #d0d7de;
+  --fg: #121212; --fg2: #424a53; --fg3: #656d76;
+  --accent: hsl(155, 70%, 32%);
+  --accent-bg: hsla(155, 100%, 65%, 0.14);
+  color-scheme: light;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { font-family: var(--font-sans); background: var(--bg); color: var(--fg); font-size: 14px; line-height: 1.6; display: flex; flex-direction: column; min-height: 100%; }
+.mono { font-family: var(--font-mono); font-size: 12px; }
+.topbar {
+  position: sticky; top: 0; z-index: 100; background: var(--bg2);
+  border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px;
+  padding: 10px 16px; flex-wrap: wrap;
+}
+.topbar-title { font-size: 15px; font-weight: 700; flex: 1; min-width: 200px; }
+.topbar-title span { color: var(--accent); }
+.topbar-badge { font-size: 11px; font-weight: 600; color: var(--fg2); background: var(--bg3); border: 1px solid var(--border); padding: 2px 8px; border-radius: 20px; }
+.topbar-link { font-size: 12px; color: var(--fg3); text-decoration: none; }
+.topbar-link:hover { color: var(--accent); }
+.theme-btn, .plat-btn {
+  background: var(--bg3); border: 1px solid var(--border); color: var(--fg2);
+  border-radius: 6px; padding: 4px 10px; font-size: 12px; cursor: pointer; font-family: var(--font-sans);
+}
+.plat-btn.active { background: var(--accent); border-color: var(--accent); color: hsl(0, 0%, 7%); }
+.menu-btn { display: none; background: none; border: none; color: var(--fg2); cursor: pointer; font-size: 20px; }
+.layout { display: flex; flex: 1; min-height: 0; }
+.sidebar {
+  width: var(--sidebar-w); min-width: var(--sidebar-w); background: var(--bg2);
+  border-right: 1px solid var(--border); overflow-y: auto; padding: 12px 0 32px;
+  position: sticky; top: 49px; height: calc(100vh - 49px);
+}
+.nav-section-label { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--fg3); padding: 8px 16px 4px; }
+.nav-item {
+  display: flex; align-items: center; gap: 8px; padding: 6px 16px; font-size: 13px; font-weight: 500;
+  color: var(--fg2); cursor: pointer; border-left: 2px solid transparent; transition: all .12s; user-select: none;
+}
+.nav-item:hover { background: var(--bg3); color: var(--fg); }
+.nav-item.active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-bg); }
+.nav-item.hidden { display: none; }
+.nav-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--fg3); flex-shrink: 0; }
+.nav-item.active .nav-dot { background: var(--accent); }
+.main { flex: 1; min-width: 0; overflow-y: auto; padding: 28px 28px 48px; }
+.panel { display: none; max-width: 100%; }
+.panel:not(.panel--doc) { max-width: 920px; }
+.panel.active { display: block; }
+.panel--doc .doc-layout { display: grid; grid-template-columns: minmax(0, 1fr) 180px; gap: 32px; align-items: start; }
+.doc-body { min-width: 0; max-width: 720px; }
+.doc-h3 { font-size: 17px; font-weight: 700; margin: 28px 0 12px; padding-top: 8px; scroll-margin-top: 64px; }
+.doc-h4 { font-size: 14px; font-weight: 600; margin: 16px 0 8px; }
+.doc-p, .doc-list { color: var(--fg2); font-size: 13.5px; line-height: 1.65; }
+.doc-table-wrap { overflow-x: auto; margin: 12px 0 18px; border: 1px solid var(--border); border-radius: var(--radius); }
+.doc-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.doc-table th { text-align: left; padding: 10px 12px; background: var(--bg3); color: var(--fg); font-weight: 600; border-bottom: 1px solid var(--border); }
+.doc-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--fg2); vertical-align: top; line-height: 1.5; }
+.doc-table tr:last-child td { border-bottom: none; }
+.doc-p { margin: 0 0 12px; }
+.doc-list { margin: 0 0 14px; padding-left: 20px; }
+.doc-numbered { list-style: none; margin: 0 0 18px; padding: 0; display: flex; flex-direction: column; gap: 20px; }
+.doc-numbered-item { display: flex; gap: 10px; align-items: flex-start; }
+.doc-numbered-idx { font-size: 15px; font-weight: 700; min-width: 1.5em; }
+.doc-numbered-title { display: block; font-size: 15px; font-weight: 700; margin: 0 0 4px; }
+.doc-numbered-desc { margin: 0; font-size: 13.5px; color: var(--fg2); }
+.pillar-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px; margin-bottom: 20px; }
+.pillar { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; font-size: 12.5px; color: var(--fg2); }
+.pillar strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin-bottom: 4px; }
+.doc-toc { position: sticky; top: 64px; display: flex; max-height: calc(100vh - 80px); }
+.doc-toc-rail { width: 2px; background: var(--border); margin-right: 12px; position: relative; min-height: 120px; }
+.doc-toc-marker { position: absolute; left: 0; width: 2px; height: 22px; background: var(--accent); transition: transform .2s; }
+.doc-toc-link { display: block; font-size: 13px; color: var(--fg3); text-decoration: none; padding: 5px 0; }
+.doc-toc-link.active { color: var(--fg); font-weight: 600; }
+.panel-header { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+.panel-header h2 { font-size: 22px; font-weight: 700; margin: 0 0 6px; }
+.panel-desc { color: var(--fg2); font-size: 13.5px; margin: 0; max-width: 640px; }
+.card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 16px; }
+.card-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--fg3); margin-bottom: 10px; }
+.bullet-list { margin: 0; padding-left: 18px; color: var(--fg2); font-size: 13.5px; line-height: 1.7; }
+.figure-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.figure { margin: 0; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.figure img { display: block; width: 100%; aspect-ratio: 16/9; object-fit: contain; background: var(--bg3); }
+.figure figcaption { font-size: 11px; color: var(--fg3); padding: 8px 10px; border-top: 1px solid var(--border); }
+.live-demos { padding: 14px; background: var(--bg3); border-radius: var(--radius); border: 1px solid var(--border); margin: 12px 0 18px; }
+.live-demos--stack { display: flex; flex-direction: column; gap: 12px; }
+.demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.demo-row--slider { gap: 12px; }
+.gui-btn { font-family: var(--font-sans); font-size: 13px; font-weight: 600; border-radius: var(--radius); padding: 8px 14px; cursor: pointer; border: 1px solid transparent; }
+.gui-btn--primary { background: var(--accent); color: hsl(0, 0%, 7%); }
+.gui-btn--outline { background: transparent; border-color: var(--border); color: var(--fg); }
+.gui-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border); background: var(--bg2); }
+.gui-badge__dot { width: 8px; height: 8px; border-radius: 50%; }
+.gui-badge--connected .gui-badge__dot { background: var(--status-connected); }
+.gui-badge--updating .gui-badge__dot { background: var(--status-updating); }
+.gui-badge--error .gui-badge__dot { background: var(--status-error); }
+.gui-battery { font-size: 12px; color: var(--fg2); }
+.gui-label { font-size: 12px; color: var(--fg2); min-width: 2.5rem; }
+.gui-value { font-size: 12px; color: var(--accent); min-width: 3rem; }
+.gui-slider { flex: 1; min-width: 120px; max-width: 280px; accent-color: var(--accent); }
+.gui-switch { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; }
+.gui-switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+.gui-switch__track {
+  width: 36px; height: 20px; border-radius: 999px; background: var(--border); position: relative; transition: background .15s;
+}
+.gui-switch__track::after {
+  content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: #fff; transition: transform .15s;
+}
+.gui-switch input:checked + .gui-switch__track { background: var(--accent); }
+.gui-switch input:checked + .gui-switch__track::after { transform: translateX(16px); }
+.cs-mock[data-product-theme="gaming-razer"] { --accent: #00ff00; --gui-primary: #00ff00; --cs-bg-0: #111111; --cs-bg-1: #1f1f1f; }
+.cs-mock[data-product-theme="gaming-logitech"] { --accent: #0099ff; --gui-primary: #0099ff; --cs-bg-0: #111111; --cs-bg-1: #1f1f1f; }
+.cs-mock { background: var(--cs-bg-0, var(--bg)); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px; position: relative; }
+.cs-mock__banner { display: none; background: hsla(4, 72%, 58%, 0.15); color: var(--status-error); border: 1px solid var(--status-error); padding: 8px 12px; border-radius: 6px; margin-bottom: 10px; font-size: 12px; font-weight: 600; }
+.cs-mock.is-disconnected .cs-mock__banner { display: block; }
+.cs-mock.is-disconnected .cs-mock__viz { opacity: 0.5; pointer-events: none; }
+.cs-mock.is-disconnected .cs-dpi-slider { opacity: 0.45; pointer-events: none; }
+.cs-mock-toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+.cs-mock-hint { font-size: 11px; color: var(--fg3); }
+.cs-mock__grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; }
+@media (max-width: 720px) { .cs-mock__grid { grid-template-columns: 1fr; } }
+.cs-mock__panel { background: var(--cs-bg-1, var(--bg2)); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px; }
+.cs-mock__title { margin: 0 0 8px; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--fg3); }
+.cs-mock__cards { display: flex; flex-direction: column; gap: 8px; }
+.cs-device-card { display: grid; grid-template-columns: auto 1fr; gap: 4px 8px; align-items: center; padding: 10px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg3); text-align: left; cursor: pointer; color: inherit; font: inherit; }
+.cs-device-card--active { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.cs-device-card__icon { grid-row: span 2; font-size: 22px; }
+.cs-device-card__name { font-weight: 600; font-size: 13px; }
+.cs-device-card__badge { grid-column: 2; justify-self: start; }
+.cs-battery--ok { color: var(--status-connected); }
+.cs-battery--low { color: var(--status-error); }
+.cs-mock__detail { display: grid; grid-template-columns: 88px 1fr; grid-template-rows: auto auto; gap: 8px; }
+.cs-mock__nav { display: flex; flex-direction: column; gap: 4px; grid-row: span 2; }
+.cs-mock__nav-item { font-size: 11px; padding: 6px 8px; border-radius: 4px; color: var(--fg2); }
+.cs-mock__nav-item--on { background: var(--accent-bg); color: var(--accent); font-weight: 600; }
+.cs-mock__viz { display: flex; align-items: center; justify-content: center; min-height: 100px; background: var(--bg3); border-radius: 6px; transition: opacity .2s; }
+.cs-mouse { position: relative; width: 56px; height: 88px; }
+.cs-mouse__body { position: absolute; inset: 8px 4px; background: var(--border); border-radius: 28px 28px 20px 20px; }
+.cs-mouse__btn { position: absolute; z-index: 1; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--accent); background: var(--bg2); color: var(--fg); font-size: 9px; font-weight: 700; cursor: pointer; }
+.cs-mouse__btn:hover { background: var(--accent-bg); }
+.cs-mouse__btn--l { top: 18px; left: 6px; }
+.cs-mouse__btn--r { top: 18px; right: 6px; }
+.cs-mouse__btn--s1 { bottom: 22px; left: 50%; transform: translateX(-50%); }
+.cs-mock__controls { grid-column: 2; }
+.cs-dpi-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+.cs-dpi-label { font-size: 12px; color: var(--fg2); }
+.cs-dpi-value { font-size: 24px; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+.cs-dpi-slider { width: 100%; accent-color: var(--accent); }
+.cs-save { font-size: 12px; color: var(--status-connected); }
+.cs-mock--swatch { display: flex; gap: 8px; padding: 12px; }
+.cs-swatch { flex: 1; height: 48px; border-radius: 6px; display: flex; align-items: flex-end; padding: 6px; font-size: 10px; }
+.cs-swatch--bg0 { background: #111; color: #888; }
+.cs-swatch--bg1 { background: #1f1f1f; color: #888; border: 1px solid #333; }
+.cs-swatch--accent { background: var(--accent); color: #111; font-weight: 600; }
+.vg-layers { display: flex; flex-direction: column; gap: 6px; margin: 0 0 16px; }
+.vg-layer { border-radius: var(--radius); border: 1px solid var(--border); padding: 12px 14px; background: var(--bg2); }
+.vg-layer--hw { border-left: 3px solid var(--fg3); }
+.vg-layer--gui { border-left: 3px solid var(--accent); background: var(--accent-bg); }
+.vg-layer--ds { border-left: 3px solid var(--status-connected); }
+.vg-layer__tag { display: block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--accent); margin-bottom: 4px; }
+.vg-layer--hw .vg-layer__tag { color: var(--fg3); }
+.vg-layer--ds .vg-layer__tag { color: var(--status-connected); }
+.vg-layer__desc { font-size: 13px; color: var(--fg2); line-height: 1.5; }
+.vg-layer__arrow { text-align: center; font-size: 12px; color: var(--fg3); padding: 2px 0; }
+.vg-layer__arrow--thin { font-size: 11px; }
+.vg-tabs { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+.vg-tab { font-family: var(--font-sans); font-size: 12px; font-weight: 600; padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg3); color: var(--fg2); cursor: pointer; }
+.vg-tab.active { background: var(--accent); border-color: var(--accent); color: hsl(0, 0%, 7%); }
+.vg-card { margin-bottom: 16px; }
+.vg-foot { margin: 10px 0 0; font-size: 12.5px; }
+.vg-screen-title { margin: 0 0 10px; font-size: 13px; color: var(--fg2); }
+.vg-dash-cards { display: flex; flex-direction: column; gap: 8px; }
+.vg-dash-card { display: flex; align-items: center; gap: 10px; padding: 12px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--bg3); }
+.vg-dash-card--on { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.vg-dash-card__emoji { font-size: 28px; }
+.vg-dash-card__meta { display: block; font-size: 11px; color: var(--fg3); margin-top: 2px; }
+.app-win { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: #111; box-shadow: var(--gui-shadow-panel, 0 8px 32px rgba(0,0,0,.4)); }
+.app-win[data-product-theme="gaming-razer"] { --accent: #00ff00; }
+.app-win__titlebar { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: #1a1a1a; border-bottom: 1px solid #333; font-size: 12px; }
+.app-win__dots { display: flex; gap: 4px; }
+.app-win__dots i { width: 8px; height: 8px; border-radius: 50%; background: #444; display: block; }
+.app-win__dots i:first-child { background: #ff5f57; }
+.app-win__dots i:nth-child(2) { background: #febc2e; }
+.app-win__dots i:nth-child(3) { background: #28c840; }
+.app-win__name { color: #aaa; }
+.app-win__spacer { flex: 1; }
+.app-win__zone--header { padding: 8px 12px; background: #151515; border-bottom: 1px solid #2a2a2a; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.app-win__profile { font-size: 11px; color: #9cf; }
+.app-win__body { min-height: 220px; padding: 12px; background: #111; }
+.app-win__body--detail { display: flex; gap: 10px; min-height: 260px; }
+.app-win__sidebar { width: 100px; flex-shrink: 0; background: #1f1f1f; border-radius: 6px; padding: 8px; }
+.app-win__nav { list-style: none; margin: 8px 0 0; padding: 0; font-size: 11px; color: #888; }
+.app-win__nav li { padding: 5px 6px; border-radius: 4px; margin-bottom: 2px; }
+.app-win__nav li.on { background: rgba(0,255,0,.12); color: #0f0; font-weight: 600; }
+.app-win__main { flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.app-win__viz { position: relative; flex: 1; min-height: 120px; background: #1a1a1a; border-radius: 6px; display: flex; align-items: center; justify-content: center; border: 1px dashed #333; }
+.app-win__controls { background: #1f1f1f; border-radius: 6px; padding: 10px; }
+.zone-pill { display: inline-block; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; color: var(--accent); background: rgba(0,0,0,.35); padding: 3px 8px; border-radius: 4px; border: 1px solid #333; }
+.zone-pill--sm { font-size: 9px; margin-left: auto; white-space: nowrap; }
+.zone-pill--float { position: absolute; top: 8px; left: 8px; z-index: 2; color: #9cf; }
+.cs-mouse--lg { transform: scale(1.15); }
+.hw-lab-hint { margin: 0 0 12px; padding: 8px 12px; background: var(--accent-bg); border-radius: var(--radius); border-left: 3px solid var(--accent); }
+.hw-lab-card { max-width: none; }
+.hw-lab-intro { margin-top: 0; }
+.hw-lab { position: relative; border-radius: 10px; overflow: hidden; background: #111; border: 1px solid #333; font-size: 13px; }
+.hw-lab[data-product-theme="gaming-razer"] { --accent: #00ff00; --status-connected: #3ddc84; --status-error: #ff6b6b; --status-updating: #ffb020; }
+.hw-lab__titlebar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 8px 12px; background: #1a1a1a; border-bottom: 1px solid #333; }
+.hw-lab__appname { color: #aaa; font-size: 12px; }
+.hw-lab__profile { font-size: 11px; background: #252525; color: #eee; border: 1px solid #444; border-radius: 4px; padding: 4px 8px; }
+.hw-lab__battery { font-size: 12px; margin-left: auto; }
+.hw-lab__signal { font-size: 11px; color: #888; }
+.hw-lab__toolbar { display: flex; flex-wrap: wrap; gap: 6px; padding: 8px 12px; background: #151515; border-bottom: 1px solid #2a2a2a; }
+.hw-lab__banner { margin: 0; padding: 10px 12px; background: rgba(255,80,80,.12); color: #ff8a8a; font-size: 12px; font-weight: 600; border-bottom: 1px solid #522; }
+.hw-lab__shell { display: grid; grid-template-columns: 140px 1fr 240px; min-height: 340px; }
+@media (max-width: 900px) { .hw-lab__shell { grid-template-columns: 1fr; } .hw-lab__nav { flex-direction: row !important; flex-wrap: wrap; } }
+.hw-lab__nav { display: flex; flex-direction: column; gap: 2px; padding: 8px; background: #1f1f1f; border-right: 1px solid #333; }
+.hw-nav-item { text-align: left; font: inherit; font-size: 11px; padding: 8px 10px; border: none; border-radius: 4px; background: transparent; color: #aaa; cursor: pointer; }
+.hw-nav-item--on { background: rgba(0,255,0,.12); color: #0f0; font-weight: 600; }
+.hw-nav-item:disabled { opacity: .4; cursor: not-allowed; }
+.hw-lab__center { padding: 10px; display: flex; flex-direction: column; gap: 8px; min-width: 0; transition: opacity .2s; }
+.hw-lab--dim .hw-lab__center { opacity: 0.45; }
+.hw-lab__canvas-hint { margin: 0; font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: .05em; }
+.hw-device-map { position: relative; width: 100%; max-width: 280px; margin: 0 auto; aspect-ratio: 0.55; background: #1a1a1a; border-radius: 12px; border: 1px dashed #444; }
+.hw-mouse-body { position: absolute; inset: 12% 18% 8% 18%; background: #2a2a2a; border-radius: 40% 40% 45% 45%; box-shadow: inset 0 0 20px #111; }
+.hw-mouse-led { position: absolute; inset: 12% 18% 8% 18%; border-radius: 40% 40% 45% 45%; opacity: 0.35; pointer-events: none; mix-blend-mode: screen; transition: background .15s; }
+.hw-mouse-led--wave { animation: hw-wave 2s ease-in-out infinite; }
+@keyframes hw-wave { 0%,100% { opacity: 0.25; } 50% { opacity: 0.7; } }
+.hw-hotspot { position: absolute; left: var(--hx); top: var(--hy); width: 28px; height: 28px; margin: -14px 0 0 -14px; border-radius: 50%; border: 2px solid #666; background: #111; color: #ccc; font-size: 10px; font-weight: 700; cursor: pointer; z-index: 2; transition: border-color .12s, box-shadow .12s, transform .08s; }
+.hw-hotspot:hover { border-color: var(--accent); box-shadow: 0 0 12px rgba(0,255,0,.35); }
+.hw-hotspot--selected { border-color: var(--accent); background: rgba(0,255,0,.15); color: #fff; box-shadow: 0 0 0 2px rgba(0,255,0,.4); }
+.hw-hotspot:disabled { cursor: not-allowed; opacity: .5; }
+.hw-lab__log { font-size: 10px; color: #6a6; background: #0a0a0a; padding: 6px 8px; border-radius: 4px; border: 1px solid #222; }
+.hw-lab__panel { padding: 10px; background: #1f1f1f; border-left: 1px solid #333; overflow-y: auto; }
+.hw-panel__title { margin: 0 0 10px; font-size: 12px; font-weight: 600; color: #eee; }
+.hw-panel__hint { font-size: 11px; color: #888; margin: 0 0 8px; }
+.hw-field { display: block; font-size: 11px; color: #aaa; margin-bottom: 10px; }
+.hw-field select, .hw-field input[type="number"] { display: block; width: 100%; margin-top: 4px; padding: 6px 8px; background: #111; border: 1px solid #444; border-radius: 4px; color: #eee; font: inherit; }
+.hw-dpi-display { display: flex; align-items: baseline; gap: 6px; margin-bottom: 8px; }
+.hw-dpi-num { font-size: 28px; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+.hw-dpi-unit { font-size: 12px; color: #888; }
+.hw-dpi-range { width: 100%; margin-bottom: 8px; accent-color: var(--accent); }
+.hw-presets { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.hw-presets .gui-btn { padding: 4px 10px; font-size: 11px; }
+.hw-zones { border: none; margin: 0 0 10px; padding: 0; }
+.hw-zones legend { font-size: 10px; color: #888; margin-bottom: 6px; }
+.hw-zones label { display: block; font-size: 11px; color: #ccc; margin-bottom: 4px; }
+.hw-macro-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.hw-macro-list { margin: 0 0 10px; padding-left: 18px; font-size: 11px; color: #bbb; max-height: 120px; overflow-y: auto; }
+.hw-macro-delay { color: #888; }
+.hw-apply-btn { width: 100%; margin-top: 6px; }
+.hw-save-feedback { display: block; font-size: 11px; margin-top: 8px; min-height: 1.2em; }
+.hw-save-feedback.is-saving { color: #ffb020; }
+.hw-save-feedback.is-ok { color: var(--status-connected); }
+.hw-lab--firmware .hw-lab__shell { pointer-events: none; opacity: 0.5; }
+.hw-lab__fw-overlay { position: absolute; inset: 0; background: rgba(0,0,0,.85); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 20; padding: 24px; }
+.hw-lab__fw-overlay[hidden] { display: none !important; }
+.hw-fw-title { color: #fff; font-weight: 700; margin: 0 0 12px; }
+.hw-fw-bar { width: min(320px, 90%); height: 8px; background: #333; border-radius: 4px; overflow: hidden; }
+.hw-fw-fill { height: 100%; width: 0; background: var(--accent); transition: width .1s linear; }
+.hw-fw-warn { color: #ff8a8a; font-size: 12px; margin-top: 12px; }
+@media (max-width: 960px) { .panel--doc .doc-layout { grid-template-columns: 1fr; } .doc-toc { display: none; } }
+@media (max-width: 680px) {
+  .sidebar { display: none; position: fixed; top: 49px; left: 0; bottom: 0; z-index: 200; width: 280px; box-shadow: 4px 0 24px rgba(0,0,0,.3); }
+  .sidebar.open { display: block; }
+  .menu-btn { display: block; }
+  .main { padding: 20px 16px 40px; }
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <button class="menu-btn" onclick="toggleMenu()" aria-label="Menu">☰</button>
+  <div class="topbar-title"><span>GUI</span> Design System</div>
+  <span class="topbar-badge">HID utility apps</span>
+  <a class="topbar-link" href="../brands/brands.html">Quinn TV ↗</a>
+  <button type="button" class="plat-btn active" data-plat="all" onclick="setPlatform('all')">All</button>
+  <button type="button" class="plat-btn" data-plat="shell" onclick="setPlatform('shell')">Shell</button>
+  <button type="button" class="plat-btn" data-plat="controls" onclick="setPlatform('controls')">Controls</button>
+  <button type="button" class="plat-btn" data-plat="device" onclick="setPlatform('device')">Device</button>
+  <button class="theme-btn" onclick="toggleTheme()">Theme</button>
+</div>
+<div class="layout">
+  <nav class="sidebar" id="sidebar"><div class="nav-section">
+      <div class="nav-section-label">Start</div>
+      <div class="nav-item" onclick="show('visual-guide')" data-panel="visual-guide" data-platform="all">
+        <span class="nav-dot"></span>Hình dung GUI
+      </div><div class="nav-item" onclick="show('hw-lab')" data-panel="hw-lab" data-platform="device">
+        <span class="nav-dot"></span>Hardware Lab (live)
+      </div><div class="nav-item" onclick="show('overview')" data-panel="overview" data-platform="all">
+        <span class="nav-dot"></span>Overview
+      </div><div class="nav-item" onclick="show('layout')" data-panel="layout" data-platform="shell">
+        <span class="nav-dot"></span>App shell layout
+      </div><div class="nav-item" onclick="show('changelog')" data-panel="changelog" data-platform="all">
+        <span class="nav-dot"></span>Changelog
+      </div>
+    </div><div class="nav-section">
+      <div class="nav-section-label">Kiến trúc · HID GUI</div>
+      <div class="nav-item" onclick="show('arch-layout')" data-panel="arch-layout" data-platform="shell">
+        <span class="nav-dot"></span>Layout &amp; IA
+      </div><div class="nav-item" onclick="show('arch-library')" data-panel="arch-library" data-platform="all">
+        <span class="nav-dot"></span>Thư viện component HID
+      </div><div class="nav-item" onclick="show('arch-device-states')" data-panel="arch-device-states" data-platform="device">
+        <span class="nav-dot"></span>Trạng thái thiết bị
+      </div><div class="nav-item" onclick="show('arch-ux')" data-panel="arch-ux" data-platform="all">
+        <span class="nav-dot"></span>Nguyên tắc UX
+      </div><div class="nav-item" onclick="show('arch-product')" data-panel="arch-product" data-platform="all">
+        <span class="nav-dot"></span>Nền tảng &amp; đối tượng
+      </div>
+    </div><div class="nav-section">
+      <div class="nav-section-label">1 · Design tokens</div>
+      <div class="nav-item" onclick="show('f-color')" data-panel="f-color" data-platform="all">
+        <span class="nav-dot"></span>Color
+      </div><div class="nav-item" onclick="show('f-type')" data-panel="f-type" data-platform="all">
+        <span class="nav-dot"></span>Typography
+      </div><div class="nav-item" onclick="show('f-spacing')" data-panel="f-spacing" data-platform="all">
+        <span class="nav-dot"></span>Spacing &amp; grid
+      </div>
+    </div><div class="nav-section">
+      <div class="nav-section-label">2 · Components · Shell</div>
+      <div class="nav-item" onclick="show('c-nav')" data-panel="c-nav" data-platform="shell">
+        <span class="nav-dot"></span>Sidebar navigation
+      </div><div class="nav-item" onclick="show('c-header')" data-panel="c-header" data-platform="shell">
+        <span class="nav-dot"></span>Device header
+      </div><div class="nav-item" onclick="show('c-connection')" data-panel="c-connection" data-platform="device">
+        <span class="nav-dot"></span>Connection badge
+      </div><div class="nav-item" onclick="show('c-battery')" data-panel="c-battery" data-platform="device">
+        <span class="nav-dot"></span>Battery widget
+      </div><div class="nav-item" onclick="show('c-toast')" data-panel="c-toast" data-platform="shell">
+        <span class="nav-dot"></span>Toast
+      </div><div class="nav-item" onclick="show('c-modal')" data-panel="c-modal" data-platform="shell">
+        <span class="nav-dot"></span>Modal &amp; dialog
+      </div>
+    </div><div class="nav-section">
+      <div class="nav-section-label">2 · Components · Controls</div>
+      <div class="nav-item" onclick="show('c-buttons')" data-panel="c-buttons" data-platform="controls">
+        <span class="nav-dot"></span>Buttons
+      </div><div class="nav-item" onclick="show('c-slider')" data-panel="c-slider" data-platform="controls">
+        <span class="nav-dot"></span>Slider
+      </div><div class="nav-item" onclick="show('c-switch')" data-panel="c-switch" data-platform="controls">
+        <span class="nav-dot"></span>Toggle switch
+      </div><div class="nav-item" onclick="show('c-dropdown')" data-panel="c-dropdown" data-platform="controls">
+        <span class="nav-dot"></span>Dropdown
+      </div><div class="nav-item" onclick="show('c-tabs')" data-panel="c-tabs" data-platform="controls">
+        <span class="nav-dot"></span>Tabs
+      </div><div class="nav-item" onclick="show('c-loading')" data-panel="c-loading" data-platform="controls">
+        <span class="nav-dot"></span>Progress &amp; loading
+      </div>
+    </div><div class="nav-section">
+      <div class="nav-section-label">2 · Components · Device</div>
+      <div class="nav-item" onclick="show('c-visualizer')" data-panel="c-visualizer" data-platform="device">
+        <span class="nav-dot"></span>Device visualizer
+      </div><div class="nav-item" onclick="show('c-keycap')" data-panel="c-keycap" data-platform="device">
+        <span class="nav-dot"></span>Key / button cell
+      </div><div class="nav-item" onclick="show('c-firmware')" data-panel="c-firmware" data-platform="device">
+        <span class="nav-dot"></span>Firmware banner
+      </div><div class="nav-item" onclick="show('c-macro')" data-panel="c-macro" data-platform="device">
+        <span class="nav-dot"></span>Macro recorder
+      </div><div class="nav-item" onclick="show('c-color-led')" data-panel="c-color-led" data-platform="device">
+        <span class="nav-dot"></span>Color picker &amp; LED zone
+      </div>
+    </div><div class="nav-section">
+      <div class="nav-section-label">3 · Guidelines</div>
+      <div class="nav-item" onclick="show('g-states')" data-panel="g-states" data-platform="all">
+        <span class="nav-dot"></span>Interaction states
+      </div><div class="nav-item" onclick="show('g-errors')" data-panel="g-errors" data-platform="all">
+        <span class="nav-dot"></span>Error &amp; disconnect
+      </div><div class="nav-item" onclick="show('g-apply')" data-panel="g-apply" data-platform="all">
+        <span class="nav-dot"></span>Apply to device
+      </div><div class="nav-item" onclick="show('g-a11y')" data-panel="g-a11y" data-platform="all">
+        <span class="nav-dot"></span>Accessibility
+      </div>
+    </div><div class="nav-section">
+      <div class="nav-section-label">Case study · Synapse / G Hub</div>
+      <div class="nav-item" onclick="show('cs-overview')" data-panel="cs-overview" data-platform="all">
+        <span class="nav-dot"></span>GUI vs Design System
+      </div><div class="nav-item" onclick="show('cs-screens')" data-panel="cs-screens" data-platform="shell">
+        <span class="nav-dot"></span>On-screen layout
+      </div><div class="nav-item" onclick="show('cs-tokens')" data-panel="cs-tokens" data-platform="all">
+        <span class="nav-dot"></span>Visual tokens (example)
+      </div><div class="nav-item" onclick="show('cs-hardware')" data-panel="cs-hardware" data-platform="device">
+        <span class="nav-dot"></span>Hardware components
+      </div><div class="nav-item" onclick="show('cs-states')" data-panel="cs-states" data-platform="all">
+        <span class="nav-dot"></span>Connection &amp; save states
+      </div><div class="nav-item" onclick="show('cs-demo')" data-panel="cs-demo" data-platform="all">
+        <span class="nav-dot"></span>Interactive mock
+      </div>
+    </div></nav>
+  <main class="main"><section class="panel" id="panel-visual-guide" data-platform="all">
+  <header class="panel-header">
+    <h2>Hình dung GUI</h2>
+    <p class="panel-desc">GUI = cả cửa sổ desktop (layout), không phải từng widget lẻ. Hướng dẫn trực quan tiếng Việt + mock hai màn Dashboard / Cấu hình chuột.</p>
+  </header>
+  <div class="card">
+  <div class="card-title">Vì sao GUI khó hình dung hơn component?</div>
+  <p class="doc-p">Component docs (nút, slider…) giống <strong>ảnh từng chiếc ghế</strong>. GUI là <strong>ground plan phòng khách</strong> — bạn cần thấy ghế đặt ở đâu, cửa ở đâu, TV ở đâu cùng lúc.</p>
+</div>
+<div class="vg-layers" aria-label="Ba tầng: phần cứng, GUI, Design System">
+  <div class="vg-layer vg-layer--hw">
+    <span class="vg-layer__tag">Phần cứng HID</span>
+    <span class="vg-layer__desc">Chuột, bàn phím — bạn cầm trên tay</span>
+  </div>
+  <div class="vg-layer__arrow" aria-hidden="true">↕ cắm USB / wireless</div>
+  <div class="vg-layer vg-layer--gui">
+    <span class="vg-layer__tag">GUI (cửa sổ app)</span>
+    <span class="vg-layer__desc">Synapse / G Hub — <strong>một màn hình desktop</strong> gồm menu + hình thiết bị + slider</span>
+  </div>
+  <div class="vg-layer__arrow vg-layer__arrow--thin" aria-hidden="true">bên trong GUI, ghép từ</div>
+  <div class="vg-layer vg-layer--ds">
+    <span class="vg-layer__tag">Design System</span>
+    <span class="vg-layer__desc">Nút, slider, badge pin — <strong>từng mảnh</strong> bạn đã tưởng tượng được (kể cả ảnh placeholder)</span>
+  </div>
+</div>
+<div class="card vg-card">
+  <div class="card-title">Cửa sổ app (GUI) — bấm đổi màn hình</div>
+  <div class="vg-tabs" role="tablist">
+    <button type="button" class="vg-tab active" data-app-view="dashboard" onclick="setAppPreviewView('dashboard')" role="tab" aria-selected="true">① Dashboard</button>
+    <button type="button" class="vg-tab" data-app-view="detail" onclick="setAppPreviewView('detail')" role="tab" aria-selected="false">② Cấu hình chuột</button>
+  </div>
+  <div class="app-win" data-product-theme="gaming-razer">
+    <div class="app-win__titlebar">
+      <span class="app-win__dots"><i></i><i></i><i></i></span>
+      <span class="app-win__name">Device Utility · demo</span>
+      <span class="app-win__spacer"></span>
+      <span class="gui-badge gui-badge--connected"><span class="gui-badge__dot"></span>Đã kết nối</span>
+    </div>
+    <div class="app-preview" data-view="dashboard">
+      <div class="app-win__zone app-win__zone--header">
+        <span class="zone-pill">Profile Management — preset theo game / app</span>
+        <span class="app-win__profile mono">Profile: FPS ▾</span>
+      </div>
+      <div class="app-win__body app-win__body--dash">
+        <p class="vg-screen-title">Danh sách thiết bị đang cắm</p>
+        <div class="vg-dash-cards">
+          <div class="vg-dash-card vg-dash-card--on">
+            <span class="vg-dash-card__emoji">🖱</span>
+            <div>
+              <strong>Chuột Pro X</strong>
+              <span class="vg-dash-card__meta">USB · 🔋 78%</span>
+            </div>
+            <span class="zone-pill zone-pill--sm">Bấm vào → màn ②</span>
+          </div>
+          <div class="vg-dash-card">
+            <span class="vg-dash-card__emoji">⌨</span>
+            <div>
+              <strong>Bàn phím K</strong>
+              <span class="vg-dash-card__meta">2.4G · 🔋 12%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="app-preview" data-view="detail" hidden>
+      <div class="app-win__body app-win__body--detail">
+        <aside class="app-win__sidebar">
+          <span class="zone-pill">Menu trái</span>
+          <ul class="app-win__nav">
+            <li class="on">Hiệu năng</li>
+            <li>Đèn LED</li>
+            <li>Gán nút</li>
+            <li>Macro</li>
+          </ul>
+        </aside>
+        <div class="app-win__main">
+          <div class="app-win__viz">
+            <span class="zone-pill zone-pill--float">Giữa — hình chuột (bấm nút L/R/S)</span>
+            <div class="cs-mouse cs-mouse--lg">
+              <button type="button" class="cs-mouse__btn cs-mouse__btn--l">L</button>
+              <button type="button" class="cs-mouse__btn cs-mouse__btn--r">R</button>
+              <button type="button" class="cs-mouse__btn cs-mouse__btn--s1">S</button>
+              <span class="cs-mouse__body"></span>
+            </div>
+          </div>
+          <div class="app-win__controls">
+            <span class="zone-pill">Dưới — slider DPI, toggle…</span>
+            <div class="cs-dpi-row"><span class="cs-dpi-label">DPI</span><span class="cs-dpi-value">1600</span></div>
+            <input type="range" class="gui-slider cs-dpi-slider" min="100" max="16000" step="50" value="1600" aria-label="DPI" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="doc-p vg-foot">Placeholder ảnh spec = <em>một component</em>. GUI = <em>toàn bộ khung cửa sổ</em> xếp các component vào đúng chỗ.</p>
+</div>
+<div class="card">
+  <div class="card-title">Checklist — nhìn app thật (Synapse / G Hub)</div>
+  <ul class="bullet-list">
+    <li><strong>Dashboard</strong>: chỉ thấy thẻ thiết bị — chưa có slider DPI.</li>
+    <li><strong>Sau khi bấm chuột</strong>: menu trái + hình chuột giữa + chỉnh số dưới — đó mới là layout GUI điển hình.</li>
+    <li><strong>Design System</strong> không thay thế GUI — nó quy định slider/nút <em>trông và hoạt động thế nào</em> khi được đặt vào layout đó.</li>
+  </ul>
+</div>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Ba tầng: phần cứng HID → GUI (app) → Design System (mảnh ghép)</li><li>Mock có nhãn vùng: menu trái, hình thiết bị, slider dưới</li><li>Bấm tab ① / ② trên mock để đổi màn hình</li></ul>
+  </div>
+  <div class="figure-grid"></div>
+</section>
+<section class="panel" id="panel-hw-lab" data-platform="device">
+  <header class="panel-header">
+    <h2>Hardware Lab (live)</h2>
+    <p class="panel-desc">Sandbox runtime như GUI dev ship: Device Map hotspots, DPI (bước 50), LED multi-zone, macro steps, pin/signal, overlay firmware + disconnect.</p>
+  </header>
+  <div class="card hw-lab-card">
+  <div class="card-title">Hardware Lab · mô phỏng runtime (như Synapse / G Hub)</div>
+  <p class="doc-p hw-lab-intro">Chọn vùng trên chuột, chỉnh DPI, LED, macro. Dùng toolbar để mô phỏng mất kết nối / pin yếu / đang flash firmware.</p>
+  <div id="hw-lab" class="hw-lab" data-product-theme="gaming-razer">
+    <header class="hw-lab__titlebar">
+      <span class="app-win__dots"><i></i><i></i><i></i></span>
+      <span class="hw-lab__appname">HID Config · prototype</span>
+      <select class="hw-lab__profile" id="hw-profile" aria-label="Profile">
+        <option>Desktop</option>
+        <option selected>FPS</option>
+        <option>MOBA</option>
+      </select>
+      <span class="hw-lab__status" id="hw-status-badge"></span>
+      <span class="hw-lab__battery" id="hw-battery" aria-live="polite"></span>
+      <span class="hw-lab__signal mono" id="hw-signal">2.4G · ▂▄▆</span>
+    </header>
+    <div class="hw-lab__toolbar">
+      <button type="button" class="gui-btn gui-btn--outline hw-tb-btn" onclick="hwSimulate('connected')">● Connected</button>
+      <button type="button" class="gui-btn gui-btn--outline hw-tb-btn" onclick="hwSimulate('disconnect')">Disconnect</button>
+      <button type="button" class="gui-btn gui-btn--outline hw-tb-btn" onclick="hwSimulate('sleep')">Sleep</button>
+      <button type="button" class="gui-btn gui-btn--outline hw-tb-btn" onclick="hwSimulate('firmware')">Firmware 0→100%</button>
+      <button type="button" class="gui-btn gui-btn--outline hw-tb-btn" onclick="hwSimulate('lowbat')">Pin yếu</button>
+    </div>
+    <div class="hw-lab__banner" id="hw-banner" role="alert" hidden></div>
+    <div class="hw-lab__shell">
+      <nav class="hw-lab__nav" aria-label="Configuration">
+        <button type="button" class="hw-nav-item hw-nav-item--on" data-hw-tab="buttons" onclick="hwSwitchTab('buttons')">Buttons / Remap</button>
+        <button type="button" class="hw-nav-item" data-hw-tab="performance" onclick="hwSwitchTab('performance')">Performance</button>
+        <button type="button" class="hw-nav-item" data-hw-tab="lighting" onclick="hwSwitchTab('lighting')">Lighting</button>
+        <button type="button" class="hw-nav-item" data-hw-tab="macro" onclick="hwSwitchTab('macro')">Macro</button>
+      </nav>
+      <div class="hw-lab__center">
+        <div class="hw-lab__canvas-wrap" id="hw-canvas-wrap">
+          <p class="hw-lab__canvas-hint">Interactive Device Map — hotspot khớp nút vật lý</p>
+          <div class="hw-device-map" id="hw-device-map" role="application" aria-label="Mouse map">
+            <div class="hw-mouse-led" id="hw-mouse-led" aria-hidden="true"></div>
+            <div class="hw-mouse-body"></div>
+            <button type="button" class="hw-hotspot hw-hotspot--l" data-btn="L" style="--hx:18%;--hy:22%" onclick="hwSelectButton('L')" title="Left click">L</button>
+            <button type="button" class="hw-hotspot hw-hotspot--r" data-btn="R" style="--hx:72%;--hy:22%" onclick="hwSelectButton('R')" title="Right click">R</button>
+            <button type="button" class="hw-hotspot hw-hotspot--m" data-btn="M" style="--hx:45%;--hy:18%" onclick="hwSelectButton('M')" title="Middle">M</button>
+            <button type="button" class="hw-hotspot hw-hotspot--s1" data-btn="S1" style="--hx:8%;--hy:55%" onclick="hwSelectButton('S1')" title="Side 1">S1</button>
+            <button type="button" class="hw-hotspot hw-hotspot--s2" data-btn="S2" style="--hx:8%;--hy:72%" onclick="hwSelectButton('S2')" title="Side 2">S2</button>
+          </div>
+        </div>
+        <div class="hw-lab__log mono" id="hw-device-log" aria-live="polite">HID report: idle</div>
+      </div>
+      <aside class="hw-lab__panel" id="hw-panel">
+        <div class="hw-panel" data-hw-panel="buttons">
+          <h4 class="hw-panel__title">Gán chức năng · <span id="hw-sel-label">—</span></h4>
+          <label class="hw-field">Action
+            <select id="hw-action" disabled onchange="hwAssignAction(this.value)">
+              <option value="default">Default click</option>
+              <option value="back">Back</option>
+              <option value="forward">Forward</option>
+              <option value="dpi">DPI cycle</option>
+              <option value="macro">Macro slot 1</option>
+            </select>
+          </label>
+          <p class="hw-panel__hint" id="hw-assign-hint">Chọn hotspot trên chuột.</p>
+          <button type="button" class="gui-btn gui-btn--primary hw-apply-btn" id="hw-apply-remap" disabled onclick="hwApplyRemap()">Apply to device</button>
+          <span class="hw-save-feedback" id="hw-remap-save"></span>
+        </div>
+        <div class="hw-panel" data-hw-panel="performance" hidden>
+          <h4 class="hw-panel__title">DPI / Sensitivity</h4>
+          <div class="hw-dpi-display"><span class="hw-dpi-num" id="hw-dpi-num">1600</span><span class="hw-dpi-unit">DPI</span></div>
+          <input type="range" class="gui-slider hw-dpi-range" id="hw-dpi-range" min="100" max="16000" step="50" value="1600" oninput="hwDpiFromSlider(this.value)" aria-label="DPI slider" />
+          <label class="hw-field">Exact value
+            <input type="number" class="hw-dpi-input" id="hw-dpi-input" min="100" max="16000" step="50" value="1600" onchange="hwDpiFromInput(this.value)" />
+          </label>
+          <div class="hw-presets">
+            <button type="button" class="gui-btn gui-btn--outline" onclick="hwDpiPreset(400)">400</button>
+            <button type="button" class="gui-btn gui-btn--outline" onclick="hwDpiPreset(800)">800</button>
+            <button type="button" class="gui-btn gui-btn--outline" onclick="hwDpiPreset(1600)">1600</button>
+            <button type="button" class="gui-btn gui-btn--outline" onclick="hwDpiPreset(3200)">3200</button>
+          </div>
+          <span class="hw-save-feedback" id="hw-dpi-save"></span>
+        </div>
+        <div class="hw-panel" data-hw-panel="lighting" hidden>
+          <h4 class="hw-panel__title">Color · LED zones</h4>
+          <label class="hw-field">Màu accent
+            <input type="color" id="hw-led-color" value="#00ff00" oninput="hwLedPreview(this.value)" />
+          </label>
+          <fieldset class="hw-zones">
+            <legend>Multi-zone</legend>
+            <label><input type="checkbox" checked onchange="hwLedZone('body', this.checked)" /> Thân chuột</label>
+            <label><input type="checkbox" onchange="hwLedZone('wheel', this.checked)" /> Vòng scroll</label>
+            <label><input type="checkbox" onchange="hwLedZone('logo', this.checked)" /> Logo</label>
+          </fieldset>
+          <label class="hw-field">Effect
+            <select id="hw-led-fx" onchange="hwLedFx(this.value)">
+              <option value="static">Static</option>
+              <option value="breathing">Breathing</option>
+              <option value="wave">Wave</option>
+            </select>
+          </label>
+          <button type="button" class="gui-btn gui-btn--primary" id="hw-led-apply" onclick="hwLedApply()">Sync to device</button>
+          <span class="hw-save-feedback" id="hw-led-save"></span>
+        </div>
+        <div class="hw-panel" data-hw-panel="macro" hidden>
+          <h4 class="hw-panel__title">Macro recorder</h4>
+          <div class="hw-macro-actions">
+            <button type="button" class="gui-btn gui-btn--primary" id="hw-rec-btn" onclick="hwToggleRecord()">● Record</button>
+            <button type="button" class="gui-btn gui-btn--outline" onclick="hwAddMacroStep()">+ Add step</button>
+            <button type="button" class="gui-btn gui-btn--outline" onclick="hwClearMacro()">Clear</button>
+          </div>
+          <ol class="hw-macro-list" id="hw-macro-list"></ol>
+          <button type="button" class="gui-btn gui-btn--outline" onclick="hwAssignMacroToSelection()">Gán macro → nút đang chọn</button>
+        </div>
+      </aside>
+    </div>
+    <div class="hw-lab__fw-overlay" id="hw-fw-overlay" hidden>
+      <p class="hw-fw-title">Firmware update</p>
+      <div class="hw-fw-bar"><div class="hw-fw-fill" id="hw-fw-fill"></div></div>
+      <p class="hw-fw-warn">Không rút dây hoặc tắt thiết bị.</p>
+    </div>
+  </div>
+</div>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Buttons: hotspot → action → Apply · log HID report</li><li>Performance / Lighting / Macro — tab trái; canvas giữa luôn là device map</li><li>Toolbar: Connected · Disconnect · Sleep · Firmware · Pin yếu</li></ul>
+  </div>
+  <div class="figure-grid"></div>
+</section>
+<section class="panel" id="panel-overview" data-platform="all">
+  <header class="panel-header">
+    <h2>Overview</h2>
+    <p class="panel-desc">GUI Design System — tokens, components, and behavior guidelines for desktop utility apps that configure Human Interface Devices (keyboards, mice, controllers). Dark-first shells (Electron, WPF, Qt). Complements Quinn TV docs in brands/.</p>
+  </header>
+  <div class="card vg-card">
+  <div class="card-title">Cửa sổ app (GUI) — bấm đổi màn hình</div>
+  <div class="vg-tabs" role="tablist">
+    <button type="button" class="vg-tab active" data-app-view="dashboard" onclick="setAppPreviewView('dashboard')" role="tab" aria-selected="true">① Dashboard</button>
+    <button type="button" class="vg-tab" data-app-view="detail" onclick="setAppPreviewView('detail')" role="tab" aria-selected="false">② Cấu hình chuột</button>
+  </div>
+  <div class="app-win" data-product-theme="gaming-razer">
+    <div class="app-win__titlebar">
+      <span class="app-win__dots"><i></i><i></i><i></i></span>
+      <span class="app-win__name">Device Utility · demo</span>
+      <span class="app-win__spacer"></span>
+      <span class="gui-badge gui-badge--connected"><span class="gui-badge__dot"></span>Đã kết nối</span>
+    </div>
+    <div class="app-preview" data-view="dashboard">
+      <div class="app-win__zone app-win__zone--header">
+        <span class="zone-pill">Profile Management — preset theo game / app</span>
+        <span class="app-win__profile mono">Profile: FPS ▾</span>
+      </div>
+      <div class="app-win__body app-win__body--dash">
+        <p class="vg-screen-title">Danh sách thiết bị đang cắm</p>
+        <div class="vg-dash-cards">
+          <div class="vg-dash-card vg-dash-card--on">
+            <span class="vg-dash-card__emoji">🖱</span>
+            <div>
+              <strong>Chuột Pro X</strong>
+              <span class="vg-dash-card__meta">USB · 🔋 78%</span>
+            </div>
+            <span class="zone-pill zone-pill--sm">Bấm vào → màn ②</span>
+          </div>
+          <div class="vg-dash-card">
+            <span class="vg-dash-card__emoji">⌨</span>
+            <div>
+              <strong>Bàn phím K</strong>
+              <span class="vg-dash-card__meta">2.4G · 🔋 12%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="app-preview" data-view="detail" hidden>
+      <div class="app-win__body app-win__body--detail">
+        <aside class="app-win__sidebar">
+          <span class="zone-pill">Menu trái</span>
+          <ul class="app-win__nav">
+            <li class="on">Hiệu năng</li>
+            <li>Đèn LED</li>
+            <li>Gán nút</li>
+            <li>Macro</li>
+          </ul>
+        </aside>
+        <div class="app-win__main">
+          <div class="app-win__viz">
+            <span class="zone-pill zone-pill--float">Giữa — hình chuột (bấm nút L/R/S)</span>
+            <div class="cs-mouse cs-mouse--lg">
+              <button type="button" class="cs-mouse__btn cs-mouse__btn--l">L</button>
+              <button type="button" class="cs-mouse__btn cs-mouse__btn--r">R</button>
+              <button type="button" class="cs-mouse__btn cs-mouse__btn--s1">S</button>
+              <span class="cs-mouse__body"></span>
+            </div>
+          </div>
+          <div class="app-win__controls">
+            <span class="zone-pill">Dưới — slider DPI, toggle…</span>
+            <div class="cs-dpi-row"><span class="cs-dpi-label">DPI</span><span class="cs-dpi-value">1600</span></div>
+            <input type="range" class="gui-slider cs-dpi-slider" min="100" max="16000" step="50" value="1600" aria-label="DPI" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="doc-p vg-foot">Placeholder ảnh spec = <em>một component</em>. GUI = <em>toàn bộ khung cửa sổ</em> xếp các component vào đúng chỗ.</p>
+</div>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Design tokens — brand, semantic device status, spacing</li><li>Component library — controls, status, device visualizer</li><li>Case study — Synapse / G Hub pattern + interactive mock</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20App%20shell" alt="" loading="lazy" />
+  <figcaption>Sidebar + header + canvas</figcaption>
+</figure>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Device%20utility" alt="" loading="lazy" />
+  <figcaption>Configurator layout</figcaption>
+</figure></div>
+</section>
+<section class="panel" id="panel-layout" data-platform="shell">
+  <header class="panel-header">
+    <h2>App shell layout</h2>
+    <p class="panel-desc">Standard three-zone layout for device utilities: header (device + status), sidebar (capabilities), main (visualizer + settings).</p>
+  </header>
+  <div class="card vg-card">
+  <div class="card-title">Cửa sổ app (GUI) — bấm đổi màn hình</div>
+  <div class="vg-tabs" role="tablist">
+    <button type="button" class="vg-tab active" data-app-view="dashboard" onclick="setAppPreviewView('dashboard')" role="tab" aria-selected="true">① Dashboard</button>
+    <button type="button" class="vg-tab" data-app-view="detail" onclick="setAppPreviewView('detail')" role="tab" aria-selected="false">② Cấu hình chuột</button>
+  </div>
+  <div class="app-win" data-product-theme="gaming-razer">
+    <div class="app-win__titlebar">
+      <span class="app-win__dots"><i></i><i></i><i></i></span>
+      <span class="app-win__name">Device Utility · demo</span>
+      <span class="app-win__spacer"></span>
+      <span class="gui-badge gui-badge--connected"><span class="gui-badge__dot"></span>Đã kết nối</span>
+    </div>
+    <div class="app-preview" data-view="dashboard">
+      <div class="app-win__zone app-win__zone--header">
+        <span class="zone-pill">Profile Management — preset theo game / app</span>
+        <span class="app-win__profile mono">Profile: FPS ▾</span>
+      </div>
+      <div class="app-win__body app-win__body--dash">
+        <p class="vg-screen-title">Danh sách thiết bị đang cắm</p>
+        <div class="vg-dash-cards">
+          <div class="vg-dash-card vg-dash-card--on">
+            <span class="vg-dash-card__emoji">🖱</span>
+            <div>
+              <strong>Chuột Pro X</strong>
+              <span class="vg-dash-card__meta">USB · 🔋 78%</span>
+            </div>
+            <span class="zone-pill zone-pill--sm">Bấm vào → màn ②</span>
+          </div>
+          <div class="vg-dash-card">
+            <span class="vg-dash-card__emoji">⌨</span>
+            <div>
+              <strong>Bàn phím K</strong>
+              <span class="vg-dash-card__meta">2.4G · 🔋 12%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="app-preview" data-view="detail" hidden>
+      <div class="app-win__body app-win__body--detail">
+        <aside class="app-win__sidebar">
+          <span class="zone-pill">Menu trái</span>
+          <ul class="app-win__nav">
+            <li class="on">Hiệu năng</li>
+            <li>Đèn LED</li>
+            <li>Gán nút</li>
+            <li>Macro</li>
+          </ul>
+        </aside>
+        <div class="app-win__main">
+          <div class="app-win__viz">
+            <span class="zone-pill zone-pill--float">Giữa — hình chuột (bấm nút L/R/S)</span>
+            <div class="cs-mouse cs-mouse--lg">
+              <button type="button" class="cs-mouse__btn cs-mouse__btn--l">L</button>
+              <button type="button" class="cs-mouse__btn cs-mouse__btn--r">R</button>
+              <button type="button" class="cs-mouse__btn cs-mouse__btn--s1">S</button>
+              <span class="cs-mouse__body"></span>
+            </div>
+          </div>
+          <div class="app-win__controls">
+            <span class="zone-pill">Dưới — slider DPI, toggle…</span>
+            <div class="cs-dpi-row"><span class="cs-dpi-label">DPI</span><span class="cs-dpi-value">1600</span></div>
+            <input type="range" class="gui-slider cs-dpi-slider" min="100" max="16000" step="50" value="1600" aria-label="DPI" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="doc-p vg-foot">Placeholder ảnh spec = <em>một component</em>. GUI = <em>toàn bộ khung cửa sổ</em> xếp các component vào đúng chỗ.</p>
+</div>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Header: device picker, connection badge, battery</li><li>Sidebar: Lighting, Performance, Macros, Settings</li><li>Main: visualizer top, detail controls below</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Shell%20wireframe" alt="" loading="lazy" />
+  <figcaption>Zones</figcaption>
+</figure></div>
+</section>
+<section class="panel" id="panel-changelog" data-platform="all">
+  <header class="panel-header">
+    <h2>Changelog</h2>
+    <p class="panel-desc">GUI DS v0.4 — Kiến trúc HID GUI (Layout/IA, thư viện, trạng thái, UX).</p>
+  </header>
+  
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>v0.4 — Architecture section (VN) + macro / LED components</li><li>v0.3 — Synapse case study + visual guide</li><li>Import gui/tokens.css in Electron or WPF host</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Roadmap" alt="" loading="lazy" />
+  <figcaption>Previews → Figma</figcaption>
+</figure></div>
+</section>
+<section class="panel panel--doc" id="panel-arch-layout" data-platform="shell">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Layout &amp; IA</h2>
+        <p class="panel-desc">Ba vùng: Device Canvas (giữa), Configuration Sidebar (Remap / Performance / Lighting), Profile Management (top bar). Mục tiêu: cấu hình &amp; cá nhân hóa thiết bị trực quan.</p>
+      </header>
+      <div class="card vg-card">
+  <div class="card-title">Cửa sổ app (GUI) — bấm đổi màn hình</div>
+  <div class="vg-tabs" role="tablist">
+    <button type="button" class="vg-tab active" data-app-view="dashboard" onclick="setAppPreviewView('dashboard')" role="tab" aria-selected="true">① Dashboard</button>
+    <button type="button" class="vg-tab" data-app-view="detail" onclick="setAppPreviewView('detail')" role="tab" aria-selected="false">② Cấu hình chuột</button>
+  </div>
+  <div class="app-win" data-product-theme="gaming-razer">
+    <div class="app-win__titlebar">
+      <span class="app-win__dots"><i></i><i></i><i></i></span>
+      <span class="app-win__name">Device Utility · demo</span>
+      <span class="app-win__spacer"></span>
+      <span class="gui-badge gui-badge--connected"><span class="gui-badge__dot"></span>Đã kết nối</span>
+    </div>
+    <div class="app-preview" data-view="dashboard">
+      <div class="app-win__zone app-win__zone--header">
+        <span class="zone-pill">Profile Management — preset theo game / app</span>
+        <span class="app-win__profile mono">Profile: FPS ▾</span>
+      </div>
+      <div class="app-win__body app-win__body--dash">
+        <p class="vg-screen-title">Danh sách thiết bị đang cắm</p>
+        <div class="vg-dash-cards">
+          <div class="vg-dash-card vg-dash-card--on">
+            <span class="vg-dash-card__emoji">🖱</span>
+            <div>
+              <strong>Chuột Pro X</strong>
+              <span class="vg-dash-card__meta">USB · 🔋 78%</span>
+            </div>
+            <span class="zone-pill zone-pill--sm">Bấm vào → màn ②</span>
+          </div>
+          <div class="vg-dash-card">
+            <span class="vg-dash-card__emoji">⌨</span>
+            <div>
+              <strong>Bàn phím K</strong>
+              <span class="vg-dash-card__meta">2.4G · 🔋 12%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="app-preview" data-view="detail" hidden>
+      <div class="app-win__body app-win__body--detail">
+        <aside class="app-win__sidebar">
+          <span class="zone-pill">Menu trái</span>
+          <ul class="app-win__nav">
+            <li class="on">Hiệu năng</li>
+            <li>Đèn LED</li>
+            <li>Gán nút</li>
+            <li>Macro</li>
+          </ul>
+        </aside>
+        <div class="app-win__main">
+          <div class="app-win__viz">
+            <span class="zone-pill zone-pill--float">Giữa — hình chuột (bấm nút L/R/S)</span>
+            <div class="cs-mouse cs-mouse--lg">
+              <button type="button" class="cs-mouse__btn cs-mouse__btn--l">L</button>
+              <button type="button" class="cs-mouse__btn cs-mouse__btn--r">R</button>
+              <button type="button" class="cs-mouse__btn cs-mouse__btn--s1">S</button>
+              <span class="cs-mouse__body"></span>
+            </div>
+          </div>
+          <div class="app-win__controls">
+            <span class="zone-pill">Dưới — slider DPI, toggle…</span>
+            <div class="cs-dpi-row"><span class="cs-dpi-label">DPI</span><span class="cs-dpi-value">1600</span></div>
+            <input type="range" class="gui-slider cs-dpi-slider" min="100" max="16000" step="50" value="1600" aria-label="DPI" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="doc-p vg-foot">Placeholder ảnh spec = <em>một component</em>. GUI = <em>toàn bộ khung cửa sổ</em> xếp các component vào đúng chỗ.</p>
+</div>
+      <div class="pillar-grid"><div class="pillar"><strong>Device Canvas</strong><span>Trung tâm — hình 2D/3D, click nút vật lý → mở cấu hình.</span></div><div class="pillar"><strong>Config sidebar</strong><span>Cây danh mục — Remap, Performance, Lighting…</span></div><div class="pillar"><strong>Profile top bar</strong><span>Hồ sơ theo game / app / tác vụ.</span></div></div>
+      <article class="doc-section" id="sec-arch-layout-zones" data-doc-section>
+        <h3 class="doc-h3">Ba phân vùng cốt lõi</h3>
+        <ol class="doc-numbered"><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">1.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Device Canvas (Bảng điều khiển thiết bị)</strong>
+              <p class="doc-numbered-desc">Khu vực trung tâm. Hiển thị thiết bị trực quan; click hotspot = chọn nút/phím để remap hoặc đổi LED vùng đó.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">2.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Configuration Sidebar (Cây danh mục cấu hình)</strong>
+              <p class="doc-numbered-desc">Trái hoặc phải: Manipulate/Remap · Performance/Tuning (DPI, polling) · Lighting/Effects · Macro · Firmware.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">3.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Profile Management (Thanh trên)</strong>
+              <p class="doc-numbered-desc">Dropdown hoặc tab profile — lưu bộ preset cho từng game, phần mềm, hoặc “Desktop / Travel”.</p>
+            </div>
+          </li></ol>
+<p class="doc-p">Dashboard (danh sách thiết bị) là màn trước khi vào ba vùng trên — chỉ chọn thiết bị, chưa phải full canvas.</p>
+      </article>
+<article class="doc-section" id="sec-arch-layout-ia" data-doc-section>
+        <h3 class="doc-h3">Information Architecture (IA)</h3>
+        <ul class="doc-list"><li>Cấp 1: Thiết bị (chuột A, bàn phím B)</li><li>Cấp 2: Nhóm chức năng (sidebar)</li><li>Cấp 3: Chi tiết (canvas + panel slider/input bên dưới hoặc bên phải)</li><li>Profile xuyên suốt cấp 2–3 — đổi profile không đổi cấu trúc IA</li></ul>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-arch-layout"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-arch-layout-zones" data-toc-href="#sec-arch-layout-zones">Ba phân vùng cốt lõi</a><a class="doc-toc-link" href="#sec-arch-layout-ia" data-toc-href="#sec-arch-layout-ia">Information Architecture (IA)</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-arch-library" data-platform="all">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Thư viện component HID</h2>
+        <p class="panel-desc">Device map, macro recorder, slider+DPI, color/LED zone, battery &amp; signal — tương tác phần mềm ↔ phần cứng.</p>
+      </header>
+      <div class="card hw-lab-link-card">
+  <div class="card-title">Interactive build</div>
+  <p class="doc-p" style="margin:0 0 10px">Component này chạy trong <strong>Hardware Lab</strong> — bấm để mở sandbox.</p>
+  <button type="button" class="gui-btn gui-btn--primary" onclick="show('hw-lab')">Mở Hardware Lab →</button>
+</div>
+      <div class="pillar-grid"><div class="pillar"><strong>Software ↔ hardware</strong><span>Mỗi component có hành vi ghi xuống HID/firmware.</span></div><div class="pillar"><strong>Tokens</strong><span>Hotspot, delay ms, semantic pin/warning — không hard-code.</span></div><div class="pillar"><strong>Realtime</strong><span>LED preview và trạng thái kết nối đồng bộ thiết bị.</span></div></div>
+      <article class="doc-section" id="sec-arch-library-library" data-doc-section>
+        <h3 class="doc-h3">Thư viện thành phần GUI HID</h3>
+        <div class="doc-table-wrap"><table class="doc-table"><thead><tr><th>Thành phần UI</th><th>Chức năng</th><th>Design tokens / lưu ý</th></tr></thead><tbody><tr><td>Interactive Device Map</td><td>Mô phỏng thiết bị; click hotspot = cấu hình nút/phím/zone</td><td>Hotspot khớp vị trí vật lý; hover/active rõ; sync list cho a11y</td></tr><tr><td>Macro Recorder</td><td>Ghi chuỗi thao tác chuột/bàn phím</td><td>Timeline hoặc step list; chỉnh delay (ms); token spacing bước</td></tr><tr><td>Slider + numeric input</td><td>DPI, sensitivity, polling, debounce</td><td>Slider + ô số chính xác; steps (50 DPI); tabular nums</td></tr><tr><td>Color Picker &amp; LED zone</td><td>RGB, hiệu ứng, multi-zone</td><td>Chọn nhiều vùng; preview realtime lên canvas/map</td></tr><tr><td>Battery &amp; signal</td><td>Pin, sạc, sóng BT/2.4G</td><td>Icon động; % hoặc cường độ; semantic warning/error</td></tr></tbody></table></div>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-arch-library"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-arch-library-library" data-toc-href="#sec-arch-library-library">Thư viện thành phần GUI HID</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-arch-device-states" data-platform="device">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Trạng thái thiết bị</h2>
+        <p class="panel-desc">Connected, disconnected/sleep, firmware updating, error/low battery — realtime sync lên GUI.</p>
+      </header>
+      <div class="card"><div class="card-title">Trạng thái (demo)</div><div class="live-demos">
+      <span class="gui-badge gui-badge--connected"><span class="gui-badge__dot"></span>Connected</span>
+      <span class="gui-badge gui-badge--updating"><span class="gui-badge__dot"></span>Firmware 42%</span>
+      <span class="gui-badge gui-badge--error"><span class="gui-badge__dot"></span>Disconnected</span>
+    </div><p class="doc-p vg-foot">Updating = khóa slider; disconnected = grey-out canvas (xem Case study mock).</p></div>
+      <div class="pillar-grid"><div class="pillar"><strong>Realtime sync</strong><span>GUI phản ánh trạng thái vật lý — không “giả connected”.</span></div><div class="pillar"><strong>Safe modes</strong><span>Firmware update khóa toàn bộ tùy chỉnh.</span></div><div class="pillar"><strong>Copy</strong><span>Thông báo rõ: kết nối, đánh thức, không rút dây.</span></div></div>
+      <article class="doc-section" id="sec-arch-device-states-states" data-doc-section>
+        <h3 class="doc-h3">Trạng thái thiết bị trong GUI</h3>
+        <ol class="doc-numbered"><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">1.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Connected (Đã kết nối)</strong>
+              <p class="doc-numbered-desc">Giao diện đầy đủ độ sáng; mọi control ghi được (trừ khi firmware quá cũ).</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">2.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Disconnected / Sleeping</strong>
+              <p class="doc-numbered-desc">Grey-out vùng cấu hình phần cứng; banner “Kết nối thiết bị” hoặc “Nhấn phím bất kỳ để đánh thức”.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">3.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Firmware updating</strong>
+              <p class="doc-numbered-desc">Khóa customization; progress %; cảnh báo không rút dây / không tắt thiết bị — modal hoặc full-width banner.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">4.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Error / Low battery</strong>
+              <p class="doc-numbered-desc">Cảnh báo đỏ/vàng góc dễ thấy; pin yếu ≤15% gợi ý sạc; lỗi link tới retry/diagnostics.</p>
+            </div>
+          </li></ol>
+      </article>
+<article class="doc-section" id="sec-arch-device-states-ui-mapping" data-doc-section>
+        <h3 class="doc-h3">Ánh xạ lên component DS</h3>
+        <ul class="doc-list"><li>Connected → Connection badge success + canvas opacity 100%</li><li>Sleep → badge idle + canvas read-only</li><li>Updating → badge updating + global overlay + progress component</li><li>Low battery → Battery widget error + optional toast</li></ul>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-arch-device-states"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-arch-device-states-states" data-toc-href="#sec-arch-device-states-states">Trạng thái thiết bị trong GUI</a><a class="doc-toc-link" href="#sec-arch-device-states-ui-mapping" data-toc-href="#sec-arch-device-states-ui-mapping">Ánh xạ lên component DS</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-arch-ux" data-platform="all">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Nguyên tắc UX</h2>
+        <p class="panel-desc">Zero perceived latency, tooltip giải thích thuật ngữ, dark mode mặc định.</p>
+      </header>
+      
+      <div class="pillar-grid"><div class="pillar"><strong>Zero perceived latency</strong><span>Đổi LED/nút → thiết bị đổi ngay hoặc nút Apply rõ + onboard memory.</span></div><div class="pillar"><strong>Plain language</strong><span>Tooltip giải thích polling, debounce — không chỉ thuật ngữ thô.</span></div><div class="pillar"><strong>Dark default</strong><span>Nền tối, RGB và accent nổi; tránh chói khi dùng lâu.</span></div></div>
+      <article class="doc-section" id="sec-arch-ux-latency" data-doc-section>
+        <h3 class="doc-h3">Độ trễ cảm nhận bằng 0</h3>
+        <ul class="doc-list"><li>Lighting: stream preview tới device khi có bandwidth; nếu không — spinner ngắn rồi apply</li><li>Remap/DPI: debounce ghi firmware; hiển thị “Đang lưu…” trên đúng control</li><li>Nút “Apply to onboard memory” tách biệt với “Save profile on PC”</li></ul>
+      </article>
+<article class="doc-section" id="sec-arch-ux-jargon" data-doc-section>
+        <h3 class="doc-h3">Đơn giản hóa thuật ngữ</h3>
+        <p class="doc-p">Ví dụ tooltip: Polling rate — “Tốc độ báo vị trí chuột; cao hơn = mượt hơn, có thể tốn pin hơn.”</p>
+<p class="doc-p">Debounce time — “Bỏ qua rung phím/nút trong X ms — hữu ích cho switch cơ.”</p>
+      </article>
+<article class="doc-section" id="sec-arch-ux-dark" data-doc-section>
+        <h3 class="doc-h3">Dark mode mặc định</h3>
+        <p class="doc-p">Token nền #111 / panel #1F1F; chữ primary/secondary; accent chỉ trên control active và hotspot selected. Light mode optional cho văn phòng / y tế.</p>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-arch-ux"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-arch-ux-latency" data-toc-href="#sec-arch-ux-latency">Độ trễ cảm nhận bằng 0</a><a class="doc-toc-link" href="#sec-arch-ux-jargon" data-toc-href="#sec-arch-ux-jargon">Đơn giản hóa thuật ngữ</a><a class="doc-toc-link" href="#sec-arch-ux-dark" data-toc-href="#sec-arch-ux-dark">Dark mode mặc định</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel" id="panel-arch-product" data-platform="all">
+  <header class="panel-header">
+    <h2>Nền tảng &amp; đối tượng</h2>
+    <p class="panel-desc">Design System giữ nguyên component; shell và copy thay theo sản phẩm — chọn dimension khi implement.</p>
+  </header>
+  
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Windows / macOS desktop (Synapse, G Hub) — layout 3 vùng, chuột + bàn phím</li><li>Mobile BLE companion — dashboard + ít slider, pin/signal quan trọng hơn</li><li>Embedded touch trên thiết bị — canvas = chính mặt thiết bị, sidebar thu gọn</li><li>Gamer vs văn phòng vs công nghiệp/y tế — jargon tooltips bật mức “pro” hoặc “plain”</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Product%20matrix" alt="" loading="lazy" />
+  <figcaption>Platform × audience</figcaption>
+</figure></div>
+</section>
+<section class="panel" id="panel-f-color" data-platform="all">
+  <header class="panel-header">
+    <h2>Color</h2>
+    <p class="panel-desc">Primary brand, neutral surfaces (dark-first), and semantic colors tied to device state. Gaming utilities often fix #111111 / #1F1F1F — see Case study tokens.</p>
+  </header>
+  
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Primary — brand accent (slider thumb, active nav)</li><li>Connected / updating / error / warning</li><li>Optional data-product-theme for Razer / Logitech accents</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Semantic%20status" alt="" loading="lazy" />
+  <figcaption>Connected · Error</figcaption>
+</figure>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Dark%20surfaces" alt="" loading="lazy" />
+  <figcaption>Utility chrome</figcaption>
+</figure></div>
+</section>
+<section class="panel" id="panel-f-type" data-platform="all">
+  <header class="panel-header">
+    <h2>Typography</h2>
+    <p class="panel-desc">Inter, Segoe UI, or Roboto — clear hierarchy for dense settings. Tabular figures for DPI and polling values.</p>
+  </header>
+  
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Title / section / body / caption / mono data</li><li>11–14px body in sidebars</li><li>16–20px panel titles</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Type%20roles" alt="" loading="lazy" />
+  <figcaption>Utility density</figcaption>
+</figure></div>
+</section>
+<section class="panel" id="panel-f-spacing" data-platform="all">
+  <header class="panel-header">
+    <h2>Spacing &amp; grid</h2>
+    <p class="panel-desc">4px base, 8px rhythm — consistent padding in sidebar rows and control groups.</p>
+  </header>
+  
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>4, 8, 12, 16, 24, 32</li><li>Align labels to 8px grid</li><li>Min 12px between unrelated groups</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Spacing%20scale" alt="" loading="lazy" />
+  <figcaption>8px grid</figcaption>
+</figure></div>
+</section>
+<section class="panel panel--doc" id="panel-c-nav" data-platform="shell">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Sidebar navigation</h2>
+        <p class="panel-desc">Capability-based sections; icon + label; active state matches device context.</p>
+      </header>
+      
+      <div class="pillar-grid"><div class="pillar"><strong>Anatomy</strong><span>Structure for dense desktop utility layouts.</span></div><div class="pillar"><strong>States</strong><span>Include disconnected / pending device states when writes are involved.</span></div><div class="pillar"><strong>Usage</strong><span>When to use in device configuration flows.</span></div></div>
+      <article class="doc-section" id="sec-c-nav-anatomy" data-doc-section>
+        <h3 class="doc-h3">Anatomy</h3>
+        <p class="doc-p">Sidebar navigation: parts and spacing. Align with foundation 8px grid.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Sidebar%20navigation%20anatomy" alt="" loading="lazy" />
+  <figcaption>Sidebar navigation anatomy</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-nav-states" data-doc-section>
+        <h3 class="doc-h3">States</h3>
+        <ol class="doc-numbered"><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">1.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Default</strong>
+              <p class="doc-numbered-desc">Interactive.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">2.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Hover / focus</strong>
+              <p class="doc-numbered-desc">Desktop pointer and keyboard.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">3.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Disabled</strong>
+              <p class="doc-numbered-desc">Device offline or read-only mode.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">4.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Loading</strong>
+              <p class="doc-numbered-desc">Waiting on device or driver.</p>
+            </div>
+          </li></ol>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Sidebar%20navigation%20states" alt="" loading="lazy" />
+  <figcaption>Sidebar navigation states</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-nav-usage" data-doc-section>
+        <h3 class="doc-h3">Usage</h3>
+        <p class="doc-p">Capability-based sections; icon + label; active state matches device context.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Sidebar%20navigation%20usage" alt="" loading="lazy" />
+  <figcaption>Sidebar navigation usage</figcaption>
+</figure>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-c-nav"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-c-nav-anatomy" data-toc-href="#sec-c-nav-anatomy">Anatomy</a><a class="doc-toc-link" href="#sec-c-nav-states" data-toc-href="#sec-c-nav-states">States</a><a class="doc-toc-link" href="#sec-c-nav-usage" data-toc-href="#sec-c-nav-usage">Usage</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-c-header" data-platform="shell">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Device header</h2>
+        <p class="panel-desc">Product name, profile dropdown, connection badge, battery widget.</p>
+      </header>
+      
+      <div class="pillar-grid"><div class="pillar"><strong>Anatomy</strong><span>Structure for dense desktop utility layouts.</span></div><div class="pillar"><strong>States</strong><span>Include disconnected / pending device states when writes are involved.</span></div><div class="pillar"><strong>Usage</strong><span>When to use in device configuration flows.</span></div></div>
+      <article class="doc-section" id="sec-c-header-anatomy" data-doc-section>
+        <h3 class="doc-h3">Anatomy</h3>
+        <p class="doc-p">Device header: parts and spacing. Align with foundation 8px grid.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Device%20header%20anatomy" alt="" loading="lazy" />
+  <figcaption>Device header anatomy</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-header-states" data-doc-section>
+        <h3 class="doc-h3">States</h3>
+        <ol class="doc-numbered"><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">1.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Default</strong>
+              <p class="doc-numbered-desc">Interactive.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">2.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Hover / focus</strong>
+              <p class="doc-numbered-desc">Desktop pointer and keyboard.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">3.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Disabled</strong>
+              <p class="doc-numbered-desc">Device offline or read-only mode.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">4.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Loading</strong>
+              <p class="doc-numbered-desc">Waiting on device or driver.</p>
+            </div>
+          </li></ol>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Device%20header%20states" alt="" loading="lazy" />
+  <figcaption>Device header states</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-header-usage" data-doc-section>
+        <h3 class="doc-h3">Usage</h3>
+        <p class="doc-p">Product name, profile dropdown, connection badge, battery widget.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Device%20header%20usage" alt="" loading="lazy" />
+  <figcaption>Device header usage</figcaption>
+</figure>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-c-header"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-c-header-anatomy" data-toc-href="#sec-c-header-anatomy">Anatomy</a><a class="doc-toc-link" href="#sec-c-header-states" data-toc-href="#sec-c-header-states">States</a><a class="doc-toc-link" href="#sec-c-header-usage" data-toc-href="#sec-c-header-usage">Usage</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-c-connection" data-platform="device">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Connection badge</h2>
+        <p class="panel-desc">Live transport status in the header — connected, updating firmware, disconnected.</p>
+      </header>
+      <div class="card hw-lab-link-card">
+  <div class="card-title">Interactive build</div>
+  <p class="doc-p" style="margin:0 0 10px">Component này chạy trong <strong>Hardware Lab</strong> — bấm để mở sandbox.</p>
+  <button type="button" class="gui-btn gui-btn--primary" onclick="show('hw-lab')">Mở Hardware Lab →</button>
+</div>
+      <div class="pillar-grid"><div class="pillar"><strong>Truth</strong><span>Reflect real transport state (USB, dongle, BLE), not last known.</span></div><div class="pillar"><strong>Color</strong><span>Semantic tokens: connected, updating, error, idle.</span></div><div class="pillar"><strong>Action</strong><span>Click opens troubleshoot or pair flow when error.</span></div></div>
+      <article class="doc-section" id="sec-c-connection-anatomy" data-doc-section>
+        <h3 class="doc-h3">Anatomy</h3>
+        <ol class="doc-list"><li>Status dot or icon</li><li>Short label (“Connected”, “Updating…”, “Disconnected”)</li><li>Optional chevron</li></ol>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Connection%20badge" alt="" loading="lazy" />
+  <figcaption>Connection badge</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-connection-states" data-doc-section>
+        <h3 class="doc-h3">States</h3>
+        <ol class="doc-numbered"><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">1.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Connected</strong>
+              <p class="doc-numbered-desc">Semantic success — device ready for read/write.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">2.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Updating</strong>
+              <p class="doc-numbered-desc">Warning / pulse — block conflicting settings.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">3.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Disconnected</strong>
+              <p class="doc-numbered-desc">Error — show banner + disable write controls.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">4.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Sleep</strong>
+              <p class="doc-numbered-desc">Neutral — wake on input, read-only profile.</p>
+            </div>
+          </li></ol>
+      </article>
+<article class="doc-section" id="sec-c-connection-usage" data-doc-section>
+        <h3 class="doc-h3">Usage</h3>
+        <p class="doc-p">Always visible in app header next to device selector. Never rely on badge alone for critical errors — pair with inline banner.</p>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-c-connection"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-c-connection-anatomy" data-toc-href="#sec-c-connection-anatomy">Anatomy</a><a class="doc-toc-link" href="#sec-c-connection-states" data-toc-href="#sec-c-connection-states">States</a><a class="doc-toc-link" href="#sec-c-connection-usage" data-toc-href="#sec-c-connection-usage">Usage</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-c-battery" data-platform="device">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Battery widget</h2>
+        <p class="panel-desc">Percent + charging state for wireless HID; warn below 15%.</p>
+      </header>
+      <div class="card hw-lab-link-card">
+  <div class="card-title">Interactive build</div>
+  <p class="doc-p" style="margin:0 0 10px">Component này chạy trong <strong>Hardware Lab</strong> — bấm để mở sandbox.</p>
+  <button type="button" class="gui-btn gui-btn--primary" onclick="show('hw-lab')">Mở Hardware Lab →</button>
+</div>
+      <div class="pillar-grid"><div class="pillar"><strong>Anatomy</strong><span>Structure for dense desktop utility layouts.</span></div><div class="pillar"><strong>States</strong><span>Include disconnected / pending device states when writes are involved.</span></div><div class="pillar"><strong>Usage</strong><span>When to use in device configuration flows.</span></div></div>
+      <article class="doc-section" id="sec-c-battery-anatomy" data-doc-section>
+        <h3 class="doc-h3">Anatomy</h3>
+        <p class="doc-p">Battery widget: parts and spacing. Align with foundation 8px grid.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Battery%20widget%20anatomy" alt="" loading="lazy" />
+  <figcaption>Battery widget anatomy</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-battery-states" data-doc-section>
+        <h3 class="doc-h3">States</h3>
+        <ol class="doc-numbered"><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">1.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Default</strong>
+              <p class="doc-numbered-desc">Interactive.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">2.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Hover / focus</strong>
+              <p class="doc-numbered-desc">Desktop pointer and keyboard.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">3.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Disabled</strong>
+              <p class="doc-numbered-desc">Device offline or read-only mode.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">4.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Loading</strong>
+              <p class="doc-numbered-desc">Waiting on device or driver.</p>
+            </div>
+          </li></ol>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Battery%20widget%20states" alt="" loading="lazy" />
+  <figcaption>Battery widget states</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-battery-usage" data-doc-section>
+        <h3 class="doc-h3">Usage</h3>
+        <p class="doc-p">Percent + charging state for wireless HID; warn below 15%.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Battery%20widget%20usage" alt="" loading="lazy" />
+  <figcaption>Battery widget usage</figcaption>
+</figure>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-c-battery"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-c-battery-anatomy" data-toc-href="#sec-c-battery-anatomy">Anatomy</a><a class="doc-toc-link" href="#sec-c-battery-states" data-toc-href="#sec-c-battery-states">States</a><a class="doc-toc-link" href="#sec-c-battery-usage" data-toc-href="#sec-c-battery-usage">Usage</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-c-toast" data-platform="shell">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Toast</h2>
+        <p class="panel-desc">Non-blocking feedback — profile saved, minor retry.</p>
+      </header>
+      
+      <div class="pillar-grid"><div class="pillar"><strong>Anatomy</strong><span>Structure for dense desktop utility layouts.</span></div><div class="pillar"><strong>States</strong><span>Include disconnected / pending device states when writes are involved.</span></div><div class="pillar"><strong>Usage</strong><span>When to use in device configuration flows.</span></div></div>
+      <article class="doc-section" id="sec-c-toast-anatomy" data-doc-section>
+        <h3 class="doc-h3">Anatomy</h3>
+        <p class="doc-p">Toast: parts and spacing. Align with foundation 8px grid.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Toast%20anatomy" alt="" loading="lazy" />
+  <figcaption>Toast anatomy</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-toast-states" data-doc-section>
+        <h3 class="doc-h3">States</h3>
+        <ol class="doc-numbered"><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">1.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Default</strong>
+              <p class="doc-numbered-desc">Interactive.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">2.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Hover / focus</strong>
+              <p class="doc-numbered-desc">Desktop pointer and keyboard.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">3.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Disabled</strong>
+              <p class="doc-numbered-desc">Device offline or read-only mode.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">4.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Loading</strong>
+              <p class="doc-numbered-desc">Waiting on device or driver.</p>
+            </div>
+          </li></ol>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Toast%20states" alt="" loading="lazy" />
+  <figcaption>Toast states</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-toast-usage" data-doc-section>
+        <h3 class="doc-h3">Usage</h3>
+        <p class="doc-p">Non-blocking feedback — profile saved, minor retry.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Toast%20usage" alt="" loading="lazy" />
+  <figcaption>Toast usage</figcaption>
+</figure>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-c-toast"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-c-toast-anatomy" data-toc-href="#sec-c-toast-anatomy">Anatomy</a><a class="doc-toc-link" href="#sec-c-toast-states" data-toc-href="#sec-c-toast-states">States</a><a class="doc-toc-link" href="#sec-c-toast-usage" data-toc-href="#sec-c-toast-usage">Usage</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-c-modal" data-platform="shell">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Modal &amp; dialog</h2>
+        <p class="panel-desc">Destructive reset, firmware failure, incompatible device.</p>
+      </header>
+      
+      <div class="pillar-grid"><div class="pillar"><strong>Anatomy</strong><span>Structure for dense desktop utility layouts.</span></div><div class="pillar"><strong>States</strong><span>Include disconnected / pending device states when writes are involved.</span></div><div class="pillar"><strong>Usage</strong><span>When to use in device configuration flows.</span></div></div>
+      <article class="doc-section" id="sec-c-modal-anatomy" data-doc-section>
+        <h3 class="doc-h3">Anatomy</h3>
+        <p class="doc-p">Modal &amp; dialog: parts and spacing. Align with foundation 8px grid.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Modal%20%26%20dialog%20anatomy" alt="" loading="lazy" />
+  <figcaption>Modal &amp; dialog anatomy</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-modal-states" data-doc-section>
+        <h3 class="doc-h3">States</h3>
+        <ol class="doc-numbered"><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">1.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Default</strong>
+              <p class="doc-numbered-desc">Interactive.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">2.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Hover / focus</strong>
+              <p class="doc-numbered-desc">Desktop pointer and keyboard.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">3.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Disabled</strong>
+              <p class="doc-numbered-desc">Device offline or read-only mode.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">4.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Loading</strong>
+              <p class="doc-numbered-desc">Waiting on device or driver.</p>
+            </div>
+          </li></ol>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Modal%20%26%20dialog%20states" alt="" loading="lazy" />
+  <figcaption>Modal &amp; dialog states</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-modal-usage" data-doc-section>
+        <h3 class="doc-h3">Usage</h3>
+        <p class="doc-p">Destructive reset, firmware failure, incompatible device.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Modal%20%26%20dialog%20usage" alt="" loading="lazy" />
+  <figcaption>Modal &amp; dialog usage</figcaption>
+</figure>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-c-modal"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-c-modal-anatomy" data-toc-href="#sec-c-modal-anatomy">Anatomy</a><a class="doc-toc-link" href="#sec-c-modal-states" data-toc-href="#sec-c-modal-states">States</a><a class="doc-toc-link" href="#sec-c-modal-usage" data-toc-href="#sec-c-modal-usage">Usage</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-c-buttons" data-platform="controls">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Buttons</h2>
+        <p class="panel-desc">Apply to device, save profile, revert.</p>
+      </header>
+      <div class="card">
+  <div class="card-title">Live preview (gui/tokens.css)</div>
+  <div class="live-demos live-demos--stack">
+    <div class="demo-row">
+      <span class="gui-badge gui-badge--connected"><span class="gui-badge__dot"></span>Connected</span>
+      <span class="gui-badge gui-badge--updating"><span class="gui-badge__dot"></span>Updating…</span>
+      <span class="gui-badge gui-badge--error"><span class="gui-badge__dot"></span>Disconnected</span>
+      <span class="gui-battery" aria-label="Battery 78%">🔋 78%</span>
+    </div>
+    <div class="demo-row">
+      <button type="button" class="gui-btn gui-btn--primary">Apply to device</button>
+      <button type="button" class="gui-btn gui-btn--outline">Revert</button>
+      <label class="gui-switch"><input type="checkbox" checked /><span class="gui-switch__track"></span>Wireless</label>
+    </div>
+    <div class="demo-row demo-row--slider">
+      <span class="gui-label">DPI</span>
+      <input type="range" class="gui-slider" min="400" max="3200" value="1600" aria-label="DPI" />
+      <span class="gui-value mono">1600</span>
+    </div>
+  </div>
+</div>
+      <div class="pillar-grid"><div class="pillar"><strong>Hierarchy</strong><span>Apply to device, Save profile, Revert — never three primaries on one panel.</span></div><div class="pillar"><strong>Feedback</strong><span>Loading while writing firmware; disabled when device disconnected.</span></div><div class="pillar"><strong>Labels</strong><span>Verb-first, no jargon unless the audience expects it (DPI, polling rate).</span></div></div>
+      <article class="doc-section" id="sec-c-buttons-anatomy" data-doc-section>
+        <h3 class="doc-h3">Anatomy</h3>
+        <p class="doc-p">Desktop targets: minimum 32×32 px hit area; prefer 36 px height for dense settings panels.</p>
+<ol class="doc-list"><li>Container</li><li>Label</li><li>Optional leading icon</li><li>Optional loading indicator</li></ol>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Button%20anatomy" alt="" loading="lazy" />
+  <figcaption>Button anatomy</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-buttons-states" data-doc-section>
+        <h3 class="doc-h3">States</h3>
+        <ol class="doc-numbered"><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">1.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Default</strong>
+              <p class="doc-numbered-desc">Ready for input.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">2.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Hover</strong>
+              <p class="doc-numbered-desc">Pointer highlight on desktop shell.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">3.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Active</strong>
+              <p class="doc-numbered-desc">Mouse down / pressed.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">4.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Focus-visible</strong>
+              <p class="doc-numbered-desc">Keyboard navigation in utility apps.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">5.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Disabled</strong>
+              <p class="doc-numbered-desc">Device offline or setting not applicable — show reason in helper text.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">6.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Loading</strong>
+              <p class="doc-numbered-desc">“Applying…” — block duplicate writes to device.</p>
+            </div>
+          </li></ol>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Button%20states" alt="" loading="lazy" />
+  <figcaption>Button states</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-buttons-usage" data-doc-section>
+        <h3 class="doc-h3">Usage</h3>
+        <ul class="doc-list"><li>Primary: “Apply to device” — one per settings surface.</li><li>Destructive: “Reset to factory” — confirm modal + semantic error color.</li><li>Ghost: “Learn more” for firmware / driver help links.</li></ul>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Button%20usage" alt="" loading="lazy" />
+  <figcaption>Button usage</figcaption>
+</figure>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-c-buttons"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-c-buttons-anatomy" data-toc-href="#sec-c-buttons-anatomy">Anatomy</a><a class="doc-toc-link" href="#sec-c-buttons-states" data-toc-href="#sec-c-buttons-states">States</a><a class="doc-toc-link" href="#sec-c-buttons-usage" data-toc-href="#sec-c-buttons-usage">Usage</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-c-slider" data-platform="controls">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Slider</h2>
+        <p class="panel-desc">DPI, brightness, polling rate, deadzone.</p>
+      </header>
+      <div class="card hw-lab-link-card">
+  <div class="card-title">Interactive build</div>
+  <p class="doc-p" style="margin:0 0 10px">Component này chạy trong <strong>Hardware Lab</strong> — bấm để mở sandbox.</p>
+  <button type="button" class="gui-btn gui-btn--primary" onclick="show('hw-lab')">Mở Hardware Lab →</button>
+</div>
+      <div class="pillar-grid"><div class="pillar"><strong>Value</strong><span>Show live numeric readout (DPI, brightness %, polling Hz).</span></div><div class="pillar"><strong>Range</strong><span>Clamp to hardware limits; snap optional steps.</span></div><div class="pillar"><strong>Commit</strong><span>Debounce rapid drags before sending HID reports.</span></div></div>
+      <article class="doc-section" id="sec-c-slider-anatomy" data-doc-section>
+        <h3 class="doc-h3">Anatomy</h3>
+        <p class="doc-p">Track, fill, thumb, optional tick marks, value label aligned end or above.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Slider%20anatomy" alt="" loading="lazy" />
+  <figcaption>Slider anatomy</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-slider-states" data-doc-section>
+        <h3 class="doc-h3">States</h3>
+        <ol class="doc-numbered"><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">1.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Default</strong>
+              <p class="doc-numbered-desc">Draggable when device connected.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">2.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Dragging</strong>
+              <p class="doc-numbered-desc">Thumb enlarged slightly; value updates live.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">3.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Disabled</strong>
+              <p class="doc-numbered-desc">Device asleep or wired-only mode blocking wireless brightness.</p>
+            </div>
+          </li></ol>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Slider%20states" alt="" loading="lazy" />
+  <figcaption>Slider states</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-slider-usage" data-doc-section>
+        <h3 class="doc-h3">Usage</h3>
+        <ul class="doc-list"><li>DPI, LED brightness, audio sidetone, analog deadzone.</li><li>Pair with Reset default link when profile allows.</li><li>Do not use slider for binary options — use Switch.</li></ul>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-c-slider"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-c-slider-anatomy" data-toc-href="#sec-c-slider-anatomy">Anatomy</a><a class="doc-toc-link" href="#sec-c-slider-states" data-toc-href="#sec-c-slider-states">States</a><a class="doc-toc-link" href="#sec-c-slider-usage" data-toc-href="#sec-c-slider-usage">Usage</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-c-switch" data-platform="controls">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Toggle switch</h2>
+        <p class="panel-desc">Wireless, RGB sync, game mode.</p>
+      </header>
+      
+      <div class="pillar-grid"><div class="pillar"><strong>Immediate</strong><span>Toggle applies on change unless marked “Requires Apply”.</span></div><div class="pillar"><strong>Label</strong><span>State + function: “Wireless mode”, not only “On”.</span></div><div class="pillar"><strong>Safety</strong><span>Risky toggles (macro, overclock) need confirmation.</span></div></div>
+      <article class="doc-section" id="sec-c-switch-anatomy" data-doc-section>
+        <h3 class="doc-h3">Anatomy</h3>
+        <p class="doc-p">Switch control + label (right or left per layout grid). Helper text for side effects.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Switch%20anatomy" alt="" loading="lazy" />
+  <figcaption>Switch anatomy</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-switch-states" data-doc-section>
+        <h3 class="doc-h3">States</h3>
+        <ol class="doc-numbered"><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">1.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Off / On</strong>
+              <p class="doc-numbered-desc">Clear contrast on dark utility backgrounds.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">2.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Disabled</strong>
+              <p class="doc-numbered-desc">Firmware too old — link to update.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">3.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Pending</strong>
+              <p class="doc-numbered-desc">Waiting for device ACK after toggle.</p>
+            </div>
+          </li></ol>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Switch%20states" alt="" loading="lazy" />
+  <figcaption>Switch states</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-switch-usage" data-doc-section>
+        <h3 class="doc-h3">Usage</h3>
+        <ul class="doc-list"><li>Wireless on/off</li><li>RGB sync</li><li>Game mode</li><li>Noise cancellation</li></ul>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-c-switch"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-c-switch-anatomy" data-toc-href="#sec-c-switch-anatomy">Anatomy</a><a class="doc-toc-link" href="#sec-c-switch-states" data-toc-href="#sec-c-switch-states">States</a><a class="doc-toc-link" href="#sec-c-switch-usage" data-toc-href="#sec-c-switch-usage">Usage</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-c-dropdown" data-platform="controls">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Dropdown</h2>
+        <p class="panel-desc">LED effects, profile slot, layout preset.</p>
+      </header>
+      
+      <div class="pillar-grid"><div class="pillar"><strong>Anatomy</strong><span>Structure for dense desktop utility layouts.</span></div><div class="pillar"><strong>States</strong><span>Include disconnected / pending device states when writes are involved.</span></div><div class="pillar"><strong>Usage</strong><span>When to use in device configuration flows.</span></div></div>
+      <article class="doc-section" id="sec-c-dropdown-anatomy" data-doc-section>
+        <h3 class="doc-h3">Anatomy</h3>
+        <p class="doc-p">Dropdown: parts and spacing. Align with foundation 8px grid.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Dropdown%20anatomy" alt="" loading="lazy" />
+  <figcaption>Dropdown anatomy</figcaption>
+</figure>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Dropdown%20spec" alt="" loading="lazy" />
+  <figcaption>Dropdown spec</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-dropdown-states" data-doc-section>
+        <h3 class="doc-h3">States</h3>
+        <ol class="doc-numbered"><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">1.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Default</strong>
+              <p class="doc-numbered-desc">Interactive.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">2.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Hover / focus</strong>
+              <p class="doc-numbered-desc">Desktop pointer and keyboard.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">3.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Disabled</strong>
+              <p class="doc-numbered-desc">Device offline or read-only mode.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">4.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Loading</strong>
+              <p class="doc-numbered-desc">Waiting on device or driver.</p>
+            </div>
+          </li></ol>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Dropdown%20states" alt="" loading="lazy" />
+  <figcaption>Dropdown states</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-dropdown-usage" data-doc-section>
+        <h3 class="doc-h3">Usage</h3>
+        <p class="doc-p">LED effects, profile slot, layout preset.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Dropdown%20usage" alt="" loading="lazy" />
+  <figcaption>Dropdown usage</figcaption>
+</figure>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-c-dropdown"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-c-dropdown-anatomy" data-toc-href="#sec-c-dropdown-anatomy">Anatomy</a><a class="doc-toc-link" href="#sec-c-dropdown-states" data-toc-href="#sec-c-dropdown-states">States</a><a class="doc-toc-link" href="#sec-c-dropdown-usage" data-toc-href="#sec-c-dropdown-usage">Usage</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-c-tabs" data-platform="controls">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Tabs</h2>
+        <p class="panel-desc">Sub-sections within Lighting or Performance.</p>
+      </header>
+      
+      <div class="pillar-grid"><div class="pillar"><strong>Anatomy</strong><span>Structure for dense desktop utility layouts.</span></div><div class="pillar"><strong>States</strong><span>Include disconnected / pending device states when writes are involved.</span></div><div class="pillar"><strong>Usage</strong><span>When to use in device configuration flows.</span></div></div>
+      <article class="doc-section" id="sec-c-tabs-anatomy" data-doc-section>
+        <h3 class="doc-h3">Anatomy</h3>
+        <p class="doc-p">Tabs: parts and spacing. Align with foundation 8px grid.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Tabs%20anatomy" alt="" loading="lazy" />
+  <figcaption>Tabs anatomy</figcaption>
+</figure>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Tabs%20spec" alt="" loading="lazy" />
+  <figcaption>Tabs spec</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-tabs-states" data-doc-section>
+        <h3 class="doc-h3">States</h3>
+        <ol class="doc-numbered"><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">1.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Default</strong>
+              <p class="doc-numbered-desc">Interactive.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">2.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Hover / focus</strong>
+              <p class="doc-numbered-desc">Desktop pointer and keyboard.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">3.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Disabled</strong>
+              <p class="doc-numbered-desc">Device offline or read-only mode.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">4.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Loading</strong>
+              <p class="doc-numbered-desc">Waiting on device or driver.</p>
+            </div>
+          </li></ol>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Tabs%20states" alt="" loading="lazy" />
+  <figcaption>Tabs states</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-tabs-usage" data-doc-section>
+        <h3 class="doc-h3">Usage</h3>
+        <p class="doc-p">Sub-sections within Lighting or Performance.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Tabs%20usage" alt="" loading="lazy" />
+  <figcaption>Tabs usage</figcaption>
+</figure>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-c-tabs"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-c-tabs-anatomy" data-toc-href="#sec-c-tabs-anatomy">Anatomy</a><a class="doc-toc-link" href="#sec-c-tabs-states" data-toc-href="#sec-c-tabs-states">States</a><a class="doc-toc-link" href="#sec-c-tabs-usage" data-toc-href="#sec-c-tabs-usage">Usage</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-c-loading" data-platform="controls">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Progress &amp; loading</h2>
+        <p class="panel-desc">Firmware flash, syncing profile to device.</p>
+      </header>
+      
+      <div class="pillar-grid"><div class="pillar"><strong>Anatomy</strong><span>Structure for dense desktop utility layouts.</span></div><div class="pillar"><strong>States</strong><span>Include disconnected / pending device states when writes are involved.</span></div><div class="pillar"><strong>Usage</strong><span>When to use in device configuration flows.</span></div></div>
+      <article class="doc-section" id="sec-c-loading-anatomy" data-doc-section>
+        <h3 class="doc-h3">Anatomy</h3>
+        <p class="doc-p">Progress &amp; loading: parts and spacing. Align with foundation 8px grid.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Progress%20%26%20loading%20anatomy" alt="" loading="lazy" />
+  <figcaption>Progress &amp; loading anatomy</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-loading-states" data-doc-section>
+        <h3 class="doc-h3">States</h3>
+        <ol class="doc-numbered"><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">1.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Default</strong>
+              <p class="doc-numbered-desc">Interactive.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">2.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Hover / focus</strong>
+              <p class="doc-numbered-desc">Desktop pointer and keyboard.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">3.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Disabled</strong>
+              <p class="doc-numbered-desc">Device offline or read-only mode.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">4.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Loading</strong>
+              <p class="doc-numbered-desc">Waiting on device or driver.</p>
+            </div>
+          </li></ol>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Progress%20%26%20loading%20states" alt="" loading="lazy" />
+  <figcaption>Progress &amp; loading states</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-loading-usage" data-doc-section>
+        <h3 class="doc-h3">Usage</h3>
+        <p class="doc-p">Firmware flash, syncing profile to device.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Progress%20%26%20loading%20usage" alt="" loading="lazy" />
+  <figcaption>Progress &amp; loading usage</figcaption>
+</figure>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-c-loading"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-c-loading-anatomy" data-toc-href="#sec-c-loading-anatomy">Anatomy</a><a class="doc-toc-link" href="#sec-c-loading-states" data-toc-href="#sec-c-loading-states">States</a><a class="doc-toc-link" href="#sec-c-loading-usage" data-toc-href="#sec-c-loading-usage">Usage</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-c-visualizer" data-platform="device">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Device visualizer</h2>
+        <p class="panel-desc">2D/3D map of hardware — click keys for remap or per-key RGB.</p>
+      </header>
+      <div class="card hw-lab-link-card">
+  <div class="card-title">Interactive build</div>
+  <p class="doc-p" style="margin:0 0 10px">Component này chạy trong <strong>Hardware Lab</strong> — bấm để mở sandbox.</p>
+  <button type="button" class="gui-btn gui-btn--primary" onclick="show('hw-lab')">Mở Hardware Lab →</button>
+</div>
+      <div class="pillar-grid"><div class="pillar"><strong>Mapping</strong><span>1:1 layout of keys / buttons on hardware.</span></div><div class="pillar"><strong>Selection</strong><span>Click key → assign macro, color, or DPI zone.</span></div><div class="pillar"><strong>Performance</strong><span>2D SVG first; 3D only when it aids understanding.</span></div></div>
+      <article class="doc-section" id="sec-c-visualizer-anatomy" data-doc-section>
+        <h3 class="doc-h3">Anatomy</h3>
+        <ol class="doc-list"><li>Device canvas</li><li>Interactive regions (keys, zones)</li><li>Legend / layer switch (FN layer)</li><li>Zoom for compact keyboards</li></ol>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Device%20visualizer" alt="" loading="lazy" />
+  <figcaption>Device visualizer</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-visualizer-states" data-doc-section>
+        <h3 class="doc-h3">States</h3>
+        <ol class="doc-numbered"><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">1.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Default</strong>
+              <p class="doc-numbered-desc">Neutral key caps.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">2.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Selected</strong>
+              <p class="doc-numbered-desc">Accent outline on active key.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">3.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Assigned</strong>
+              <p class="doc-numbered-desc">Dot or tint when remapped / lit.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">4.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Disabled</strong>
+              <p class="doc-numbered-desc">Dim entire canvas when disconnected.</p>
+            </div>
+          </li></ol>
+      </article>
+<article class="doc-section" id="sec-c-visualizer-usage" data-doc-section>
+        <h3 class="doc-h3">Usage</h3>
+        <ul class="doc-list"><li>Remap, per-key RGB, gaming mode exclusions.</li><li>Sync selection with sidebar list for accessibility.</li><li>Support keyboard navigation across keys where possible.</li></ul>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-c-visualizer"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-c-visualizer-anatomy" data-toc-href="#sec-c-visualizer-anatomy">Anatomy</a><a class="doc-toc-link" href="#sec-c-visualizer-states" data-toc-href="#sec-c-visualizer-states">States</a><a class="doc-toc-link" href="#sec-c-visualizer-usage" data-toc-href="#sec-c-visualizer-usage">Usage</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-c-keycap" data-platform="device">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Key / button cell</h2>
+        <p class="panel-desc">Atomic interactive region on the visualizer canvas.</p>
+      </header>
+      
+      <div class="pillar-grid"><div class="pillar"><strong>Anatomy</strong><span>Structure for dense desktop utility layouts.</span></div><div class="pillar"><strong>States</strong><span>Include disconnected / pending device states when writes are involved.</span></div><div class="pillar"><strong>Usage</strong><span>When to use in device configuration flows.</span></div></div>
+      <article class="doc-section" id="sec-c-keycap-anatomy" data-doc-section>
+        <h3 class="doc-h3">Anatomy</h3>
+        <p class="doc-p">Key / button cell: parts and spacing. Align with foundation 8px grid.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Key%20%2F%20button%20cell%20anatomy" alt="" loading="lazy" />
+  <figcaption>Key / button cell anatomy</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-keycap-states" data-doc-section>
+        <h3 class="doc-h3">States</h3>
+        <ol class="doc-numbered"><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">1.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Default</strong>
+              <p class="doc-numbered-desc">Interactive.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">2.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Hover / focus</strong>
+              <p class="doc-numbered-desc">Desktop pointer and keyboard.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">3.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Disabled</strong>
+              <p class="doc-numbered-desc">Device offline or read-only mode.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">4.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Loading</strong>
+              <p class="doc-numbered-desc">Waiting on device or driver.</p>
+            </div>
+          </li></ol>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Key%20%2F%20button%20cell%20states" alt="" loading="lazy" />
+  <figcaption>Key / button cell states</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-keycap-usage" data-doc-section>
+        <h3 class="doc-h3">Usage</h3>
+        <p class="doc-p">Atomic interactive region on the visualizer canvas.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Key%20%2F%20button%20cell%20usage" alt="" loading="lazy" />
+  <figcaption>Key / button cell usage</figcaption>
+</figure>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-c-keycap"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-c-keycap-anatomy" data-toc-href="#sec-c-keycap-anatomy">Anatomy</a><a class="doc-toc-link" href="#sec-c-keycap-states" data-toc-href="#sec-c-keycap-states">States</a><a class="doc-toc-link" href="#sec-c-keycap-usage" data-toc-href="#sec-c-keycap-usage">Usage</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-c-firmware" data-platform="device">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Firmware banner</h2>
+        <p class="panel-desc">Inline update available — version, size, CTA.</p>
+      </header>
+      
+      <div class="pillar-grid"><div class="pillar"><strong>Anatomy</strong><span>Structure for dense desktop utility layouts.</span></div><div class="pillar"><strong>States</strong><span>Include disconnected / pending device states when writes are involved.</span></div><div class="pillar"><strong>Usage</strong><span>When to use in device configuration flows.</span></div></div>
+      <article class="doc-section" id="sec-c-firmware-anatomy" data-doc-section>
+        <h3 class="doc-h3">Anatomy</h3>
+        <p class="doc-p">Firmware banner: parts and spacing. Align with foundation 8px grid.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Firmware%20banner%20anatomy" alt="" loading="lazy" />
+  <figcaption>Firmware banner anatomy</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-firmware-states" data-doc-section>
+        <h3 class="doc-h3">States</h3>
+        <ol class="doc-numbered"><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">1.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Default</strong>
+              <p class="doc-numbered-desc">Interactive.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">2.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Hover / focus</strong>
+              <p class="doc-numbered-desc">Desktop pointer and keyboard.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">3.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Disabled</strong>
+              <p class="doc-numbered-desc">Device offline or read-only mode.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">4.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Loading</strong>
+              <p class="doc-numbered-desc">Waiting on device or driver.</p>
+            </div>
+          </li></ol>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Firmware%20banner%20states" alt="" loading="lazy" />
+  <figcaption>Firmware banner states</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-firmware-usage" data-doc-section>
+        <h3 class="doc-h3">Usage</h3>
+        <p class="doc-p">Inline update available — version, size, CTA.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Firmware%20banner%20usage" alt="" loading="lazy" />
+  <figcaption>Firmware banner usage</figcaption>
+</figure>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-c-firmware"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-c-firmware-anatomy" data-toc-href="#sec-c-firmware-anatomy">Anatomy</a><a class="doc-toc-link" href="#sec-c-firmware-states" data-toc-href="#sec-c-firmware-states">States</a><a class="doc-toc-link" href="#sec-c-firmware-usage" data-toc-href="#sec-c-firmware-usage">Usage</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-c-macro" data-platform="device">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Macro recorder</h2>
+        <p class="panel-desc">Timeline / step list, delay ms, assign to button on canvas.</p>
+      </header>
+      <div class="card hw-lab-link-card">
+  <div class="card-title">Interactive build</div>
+  <p class="doc-p" style="margin:0 0 10px">Component này chạy trong <strong>Hardware Lab</strong> — bấm để mở sandbox.</p>
+  <button type="button" class="gui-btn gui-btn--primary" onclick="show('hw-lab')">Mở Hardware Lab →</button>
+</div>
+      <div class="pillar-grid"><div class="pillar"><strong>Record</strong><span>Capture clicks, keys, delays between steps.</span></div><div class="pillar"><strong>Edit</strong><span>Step list with ms delay per row.</span></div><div class="pillar"><strong>Assign</strong><span>Bind finished macro to device button via canvas.</span></div></div>
+      <article class="doc-section" id="sec-c-macro-anatomy" data-doc-section>
+        <h3 class="doc-h3">Anatomy</h3>
+        <ol class="doc-list"><li>Record control</li><li>Timeline / step list</li><li>Delay editor (ms)</li><li>Save to profile / assign to button</li></ol>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Macro%20timeline" alt="" loading="lazy" />
+  <figcaption>Macro timeline</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-macro-usage" data-doc-section>
+        <h3 class="doc-h3">Usage</h3>
+        <ul class="doc-list"><li>Show recording indicator on device header</li><li>Cap max steps; warn before overwrite onboard slot</li><li>Disabled while firmware updating</li></ul>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-c-macro"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-c-macro-anatomy" data-toc-href="#sec-c-macro-anatomy">Anatomy</a><a class="doc-toc-link" href="#sec-c-macro-usage" data-toc-href="#sec-c-macro-usage">Usage</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-c-color-led" data-platform="device">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Color picker &amp; LED zone</h2>
+        <p class="panel-desc">Multi-zone selection, effects, realtime preview.</p>
+      </header>
+      <div class="card hw-lab-link-card">
+  <div class="card-title">Interactive build</div>
+  <p class="doc-p" style="margin:0 0 10px">Component này chạy trong <strong>Hardware Lab</strong> — bấm để mở sandbox.</p>
+  <button type="button" class="gui-btn gui-btn--primary" onclick="show('hw-lab')">Mở Hardware Lab →</button>
+</div>
+      <div class="pillar-grid"><div class="pillar"><strong>Zones</strong><span>Multi-select regions on device map.</span></div><div class="pillar"><strong>Picker</strong><span>HSV/RGB + presets + effect dropdown.</span></div><div class="pillar"><strong>Preview</strong><span>Realtime sync to hardware when linked.</span></div></div>
+      <article class="doc-section" id="sec-c-color-led-anatomy" data-doc-section>
+        <h3 class="doc-h3">Anatomy</h3>
+        <ol class="doc-list"><li>Zone list or lasso on canvas</li><li>Color picker</li><li>Effect (static, wave, breathing…)</li><li>Brightness slider</li></ol>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20LED%20zones" alt="" loading="lazy" />
+  <figcaption>LED zones</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-c-color-led-usage" data-doc-section>
+        <h3 class="doc-h3">Usage</h3>
+        <ul class="doc-list"><li>Selected zones use accent outline token</li><li>Effect changes debounced to avoid USB flood</li><li>Show “preview unavailable” when disconnected</li></ul>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-c-color-led"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-c-color-led-anatomy" data-toc-href="#sec-c-color-led-anatomy">Anatomy</a><a class="doc-toc-link" href="#sec-c-color-led-usage" data-toc-href="#sec-c-color-led-usage">Usage</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel" id="panel-g-states" data-platform="all">
+  <header class="panel-header">
+    <h2>Interaction states</h2>
+    <p class="panel-desc">How controls look across default, hover, active, focus-visible, disabled, loading, and device-pending.</p>
+  </header>
+  
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Never remove focus ring on desktop utilities</li><li>Disabled = lower contrast + no pointer events</li><li>Loading blocks duplicate device writes</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20State%20matrix" alt="" loading="lazy" />
+  <figcaption>Controls</figcaption>
+</figure></div>
+</section>
+<section class="panel panel--doc" id="panel-g-errors" data-platform="all">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Error &amp; disconnect</h2>
+        <p class="panel-desc">Behavior when the HID link drops or firmware fails — banners, modals, toasts.</p>
+      </header>
+      
+      <div class="pillar-grid"><div class="pillar"><strong>Predictable</strong><span>Same disconnect pattern everywhere in the app.</span></div><div class="pillar"><strong>Recoverable</strong><span>Tell user what to do: replug, wake device, retry pairing.</span></div><div class="pillar"><strong>Non-destructive</strong><span>Keep unsaved profile locally until user discards.</span></div></div>
+      <article class="doc-section" id="sec-g-errors-disconnect" data-doc-section>
+        <h3 class="doc-h3">Device disconnected</h3>
+        <p class="doc-p">When the HID device is unplugged or link lost mid-session:</p>
+<ol class="doc-list"><li>Show sticky banner below header — semantic error background.</li><li>Disable Apply, sliders, and visualizer writes; allow export profile.</li><li>Toast optional for transient blips (&lt;2s); banner for sustained loss.</li></ol>
+      </article>
+<article class="doc-section" id="sec-g-errors-firmware" data-doc-section>
+        <h3 class="doc-h3">Firmware &amp; errors</h3>
+        <ul class="doc-list"><li>Modal for failed flash — do not close silently.</li><li>Progress component with cancel only when safe.</li><li>Log link for support (copy diagnostics).</li></ul>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Error%20modal" alt="" loading="lazy" />
+  <figcaption>Error modal</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-g-errors-toast" data-doc-section>
+        <h3 class="doc-h3">Toast vs modal</h3>
+        <p class="doc-p">Toast: profile saved, minor retry success. Modal: data loss, firmware failure, incompatible device.</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Toast" alt="" loading="lazy" />
+  <figcaption>Toast</figcaption>
+</figure>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-g-errors"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-g-errors-disconnect" data-toc-href="#sec-g-errors-disconnect">Device disconnected</a><a class="doc-toc-link" href="#sec-g-errors-firmware" data-toc-href="#sec-g-errors-firmware">Firmware &amp; errors</a><a class="doc-toc-link" href="#sec-g-errors-toast" data-toc-href="#sec-g-errors-toast">Toast vs modal</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel" id="panel-g-apply" data-platform="all">
+  <header class="panel-header">
+    <h2>Apply to device</h2>
+    <p class="panel-desc">When settings commit immediately vs explicit Apply — consistent copy and undo.</p>
+  </header>
+  
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Immediate: low-risk toggles with fast ACK</li><li>Explicit Apply: macro tables, lighting zones</li><li>Revert restores last synced profile</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Apply%20flow" alt="" loading="lazy" />
+  <figcaption>Sync</figcaption>
+</figure></div>
+</section>
+<section class="panel" id="panel-g-a11y" data-platform="all">
+  <header class="panel-header">
+    <h2>Accessibility</h2>
+    <p class="panel-desc">Keyboard path through sidebar and visualizer; ARIA on custom sliders; don’t rely on color alone for connection status.</p>
+  </header>
+  
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Name + role on icon buttons</li><li>Live regions for connect/disconnect</li><li>Contrast on dark surfaces</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20A11y" alt="" loading="lazy" />
+  <figcaption>Checklist</figcaption>
+</figure></div>
+</section>
+<section class="panel panel--doc" id="panel-cs-overview" data-platform="all">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>GUI vs Design System</h2>
+        <p class="panel-desc">Reference pattern from Razer Synapse and Logitech G Hub — classic HID configuration GUIs. Educational; not affiliated with either brand.</p>
+      </header>
+      
+      <div class="pillar-grid"><div class="pillar"><strong>GUI</strong><span>The finished app users open — dashboard, device detail, sliders, device image.</span></div><div class="pillar"><strong>Design System</strong><span>Tokens, hardware components, and state rules engineers reuse on every screen.</span></div><div class="pillar"><strong>Reference</strong><span>Synapse &amp; G Hub patterns — not a copy of either brand.</span></div></div>
+      <article class="doc-section" id="sec-cs-overview-gui-house" data-doc-section>
+        <h3 class="doc-h3">GUI vs Design System</h3>
+        <p class="doc-p">GUI is the house users live in. The Design System is the blueprint, standard bricks, and paint rules so every floor uses the same materials.</p>
+<ul class="doc-list"><li>Same DPI slider on Performance tab and onboard memory tab</li><li>Same disconnect banner everywhere — not one screen custom-hacked</li><li>Accent only on active controls and selected device regions</li></ul>
+      </article>
+<article class="doc-section" id="sec-cs-overview-screens" data-doc-section>
+        <h3 class="doc-h3">Two primary screens</h3>
+        <h4 class="doc-h4">Dashboard (home)</h4>
+<p class="doc-p">Lists HID devices currently attached: product image, name, connection type, battery %. Click a tile to open configuration.</p>
+<h4 class="doc-h4">Device detail</h4>
+<p class="doc-p">Left: capability menu (Performance, Lighting, Buttons, Macros). Center: interactive device image. Bottom or right: sliders and toggles for the active section.</p>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-cs-overview"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-cs-overview-gui-house" data-toc-href="#sec-cs-overview-gui-house">GUI vs Design System</a><a class="doc-toc-link" href="#sec-cs-overview-screens" data-toc-href="#sec-cs-overview-screens">Two primary screens</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-cs-screens" data-platform="shell">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>On-screen layout</h2>
+        <p class="panel-desc">Dashboard device grid and detail view — Performance, Lighting, Buttons, visualizer, DPI slider.</p>
+      </header>
+      
+      <div class="pillar-grid"><div class="pillar"><strong>Dashboard</strong><span>All devices at a glance — mouse + keyboard + % battery.</span></div><div class="pillar"><strong>Detail</strong><span>One device, deep settings — visualizer + controls.</span></div><div class="pillar"><strong>Zones</strong><span>Fixed regions so users never hunt for status or save.</span></div></div>
+      <article class="doc-section" id="sec-cs-screens-dashboard" data-doc-section>
+        <h3 class="doc-h3">Dashboard layout</h3>
+        <ol class="doc-list"><li>Global header — app name, profile, settings</li><li>Grid of device cards — hero image, name, badge, battery</li><li>Empty state when no HID device detected — pair / plug in CTA</li></ol>
+      </article>
+<article class="doc-section" id="sec-cs-screens-detail" data-doc-section>
+        <h3 class="doc-h3">Mouse configuration (example)</h3>
+        <p class="doc-p">User clicked the mouse card. Typical Synapse / G Hub structure:</p>
+<ol class="doc-numbered"><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">1.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">1. Sidebar</strong>
+              <p class="doc-numbered-desc">Performance · Lighting · Buttons · Power · Firmware</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">2.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">2. Visualizer</strong>
+              <p class="doc-numbered-desc">Top-down mouse render — click Left / Right / Side buttons to remap.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">3.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">3. Controls</strong>
+              <p class="doc-numbered-desc">DPI slider 100–16000, polling rate dropdown, surface tuning.</p>
+            </div>
+          </li></ol>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-cs-screens"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-cs-screens-dashboard" data-toc-href="#sec-cs-screens-dashboard">Dashboard layout</a><a class="doc-toc-link" href="#sec-cs-screens-detail" data-toc-href="#sec-cs-screens-detail">Mouse configuration (example)</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-cs-tokens" data-platform="all">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Visual tokens (example)</h2>
+        <p class="panel-desc">Dark shell #111 / #1F1F, accent for active controls, typography for DPI numerals vs 12px body.</p>
+      </header>
+      <div class="card"><div class="card-title">Token preview · gaming-razer</div>
+    <div class="cs-mock cs-mock--swatch" data-product-theme="gaming-razer">
+      <div class="cs-swatch cs-swatch--bg0"><span class="mono">#111 bg-0</span></div>
+      <div class="cs-swatch cs-swatch--bg1"><span class="mono">#1F1F bg-1</span></div>
+      <div class="cs-swatch cs-swatch--accent"><span class="mono">accent</span></div>
+    </div></div>
+      <div class="pillar-grid"><div class="pillar"><strong>Dark shell</strong><span>#111111 canvas, #1F1F1F panels — LED previews pop.</span></div><div class="pillar"><strong>Accent</strong><span>Brand green/blue on thumbs, toggles, selected anchors only.</span></div><div class="pillar"><strong>Type</strong><span>Big bold DPI numerals; 12px regular helper copy.</span></div></div>
+      <article class="doc-section" id="sec-cs-tokens-color" data-doc-section>
+        <h3 class="doc-h3">Color tokens (gaming utility)</h3>
+        <ul class="doc-list"><li>--gui-bg-0: #111111 — main window background</li><li>--gui-bg-1: #1F1F1F — cards, sidebar, control panels</li><li>Accent — product theme (e.g. Razer #00FF00, Logitech blue); map to --gui-primary</li><li>Semantic: connected green, error red, updating amber</li></ul>
+<p class="doc-p">Use data-product-theme=&quot;gaming-razer&quot; | &quot;gaming-logitech&quot; on the app root to swap accent without forked components.</p>
+      </article>
+<article class="doc-section" id="sec-cs-tokens-type" data-doc-section>
+        <h3 class="doc-h3">Typography tokens</h3>
+        <ul class="doc-list"><li>DPI / polling value — Inter 24px Bold, tabular nums</li><li>Section title — 14–16px Semibold</li><li>Feature description — 12px Regular, secondary text color</li><li>Legal / firmware notes — 11px caption</li></ul>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-cs-tokens"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-cs-tokens-color" data-toc-href="#sec-cs-tokens-color">Color tokens (gaming utility)</a><a class="doc-toc-link" href="#sec-cs-tokens-type" data-toc-href="#sec-cs-tokens-type">Typography tokens</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-cs-hardware" data-platform="device">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Hardware components</h2>
+        <p class="panel-desc">DPI slider steps, device image mapper anchors, four-state battery indicator.</p>
+      </header>
+      
+      <div class="pillar-grid"><div class="pillar"><strong>DPI slider</strong><span>Stepped ticks (e.g. 50 DPI), live value, debounced device write.</span></div><div class="pillar"><strong>Device mapper</strong><span>Anchor points on PNG/SVG — hover glow, click to assign.</span></div><div class="pillar"><strong>Battery</strong><span>Full · low · charging · unknown — four visual states.</span></div></div>
+      <article class="doc-section" id="sec-cs-hardware-dpi" data-doc-section>
+        <h3 class="doc-h3">DPI slider</h3>
+        <p class="doc-p">Not a generic range input: snap to allowed steps, show min/max labels, optional stage presets (400 / 800 / 1600).</p>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20DPI%20slider" alt="" loading="lazy" />
+  <figcaption>DPI slider</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-cs-hardware-mapper" data-doc-section>
+        <h3 class="doc-h3">Device image mapper</h3>
+        <ol class="doc-list"><li>Asset layer — device photo or illustrated silhouette</li><li>Hit regions — % bounding boxes or SVG paths per button</li><li>Hover — accent outline; selected — filled accent ring</li><li>Sync — list view highlights same button for keyboard users</li></ol>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Device%20visualizer" alt="" loading="lazy" />
+  <figcaption>Device visualizer</figcaption>
+</figure>
+      </article>
+<article class="doc-section" id="sec-cs-hardware-battery" data-doc-section>
+        <h3 class="doc-h3">Battery indicator</h3>
+        <ol class="doc-numbered"><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">1.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Full</strong>
+              <p class="doc-numbered-desc">Green fill, ≥20% or charging complete.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">2.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Low</strong>
+              <p class="doc-numbered-desc">Red, ≤15% — optional toast.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">3.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Charging</strong>
+              <p class="doc-numbered-desc">Lightning icon overlay.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">4.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Unknown</strong>
+              <p class="doc-numbered-desc">Gray — wired-only or missing telemetry.</p>
+            </div>
+          </li></ol>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-cs-hardware"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-cs-hardware-dpi" data-toc-href="#sec-cs-hardware-dpi">DPI slider</a><a class="doc-toc-link" href="#sec-cs-hardware-mapper" data-toc-href="#sec-cs-hardware-mapper">Device image mapper</a><a class="doc-toc-link" href="#sec-cs-hardware-battery" data-toc-href="#sec-cs-hardware-battery">Battery indicator</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel panel--doc" id="panel-cs-states" data-platform="all">
+  <div class="doc-layout">
+    <div class="doc-body">
+      <header class="panel-header">
+        <h2>Connection &amp; save states</h2>
+        <p class="panel-desc">Connected vs disconnected (opacity, disabled controls, banner). Spinner → checkmark when writing to device.</p>
+      </header>
+      
+      <div class="pillar-grid"><div class="pillar"><strong>Connected</strong><span>Sharp device art, controls enabled.</span></div><div class="pillar"><strong>Disconnected</strong><span>50% opacity, controls disabled, red banner copy.</span></div><div class="pillar"><strong>Saving</strong><span>Spinner on control → success checkmark on device ACK.</span></div></div>
+      <article class="doc-section" id="sec-cs-states-device" data-doc-section>
+        <h3 class="doc-h3">Device connection states</h3>
+        <ol class="doc-numbered"><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">1.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Connected</strong>
+              <p class="doc-numbered-desc">Image full opacity; Performance / Lighting editable.</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">2.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Disconnected</strong>
+              <p class="doc-numbered-desc">Image opacity 50%; sliders disabled; label: “Connect your device” (localized).</p>
+            </div>
+          </li><li class="doc-numbered-item">
+            <span class="doc-numbered-idx">3.</span>
+            <div class="doc-numbered-body">
+              <strong class="doc-numbered-title">Sleep / idle</strong>
+              <p class="doc-numbered-desc">Read-only profile; wake on first input.</p>
+            </div>
+          </li></ol>
+      </article>
+<article class="doc-section" id="sec-cs-states-save" data-doc-section>
+        <h3 class="doc-h3">Saving configuration</h3>
+        <p class="doc-p">When DPI or remap changes, show inline spinner on the control (or row), then green check + “Saved to device memory” — not a blocking modal for success.</p>
+<ul class="doc-list"><li>Failure: keep spinner → error icon + retry</li><li>Debounce rapid slider drags before HID write storm</li><li>Disable Apply while a write is in flight</li></ul>
+      </article>
+    </div>
+    <aside class="doc-toc" aria-label="On this page">
+      <div class="doc-toc-rail"><div class="doc-toc-marker" id="toc-marker-cs-states"></div></div>
+      <div class="doc-toc-inner">
+        <div class="doc-toc-title">On this page</div>
+        <a class="doc-toc-link" href="#sec-cs-states-device" data-toc-href="#sec-cs-states-device">Device connection states</a><a class="doc-toc-link" href="#sec-cs-states-save" data-toc-href="#sec-cs-states-save">Saving configuration</a>
+      </div>
+    </aside>
+  </div>
+</section>
+<section class="panel" id="panel-cs-demo" data-platform="all">
+  <header class="panel-header">
+    <h2>Interactive mock</h2>
+    <p class="panel-desc">Mini dashboard + mouse Performance panel. Use “Simulate unplug” to validate disconnect rules from the case study.</p>
+  </header>
+  <div class="card">
+  <div class="card-title">Interactive mock · Dashboard + mouse detail</div>
+  <p class="doc-p" style="margin-top:0">Toggle disconnect to see Design System rules: dim device, lock sliders, show banner.</p>
+  <div class="cs-mock-toolbar">
+    <button type="button" class="gui-btn gui-btn--outline cs-mock-btn" onclick="toggleSynapseDisconnect()">Simulate unplug</button>
+    <span class="cs-mock-hint mono">data-product-theme=&quot;gaming-razer&quot;</span>
+  </div>
+  <div class="cs-mock" id="synapse-mock" data-product-theme="gaming-razer">
+    <div class="cs-mock__banner" role="alert">Connect your device to change settings.</div>
+    <div class="cs-mock__grid">
+      <section class="cs-mock__panel" aria-label="Dashboard">
+        <h4 class="cs-mock__title">Dashboard</h4>
+        <div class="cs-mock__cards">
+          <button type="button" class="cs-device-card cs-device-card--active" aria-pressed="true">
+            <span class="cs-device-card__icon">🖱</span>
+            <span class="cs-device-card__name">Pro Mouse X</span>
+            <span class="gui-badge gui-badge--connected cs-device-card__badge"><span class="gui-badge__dot"></span>USB</span>
+            <span class="gui-battery cs-battery--ok">🔋 78%</span>
+          </button>
+          <div class="cs-device-card">
+            <span class="cs-device-card__icon">⌨</span>
+            <span class="cs-device-card__name">Mechanical K</span>
+            <span class="gui-badge gui-badge--connected cs-device-card__badge"><span class="gui-badge__dot"></span>2.4G</span>
+            <span class="gui-battery cs-battery--low">🔋 12%</span>
+          </div>
+        </div>
+      </section>
+      <section class="cs-mock__panel cs-mock__panel--detail" aria-label="Device detail">
+        <h4 class="cs-mock__title">Performance · Mouse</h4>
+        <div class="cs-mock__detail">
+          <nav class="cs-mock__nav">
+            <span class="cs-mock__nav-item cs-mock__nav-item--on">Performance</span>
+            <span class="cs-mock__nav-item">Lighting</span>
+            <span class="cs-mock__nav-item">Buttons</span>
+          </nav>
+          <div class="cs-mock__viz">
+            <div class="cs-mouse">
+              <button type="button" class="cs-mouse__btn cs-mouse__btn--l" title="Left click">L</button>
+              <button type="button" class="cs-mouse__btn cs-mouse__btn--r" title="Right click">R</button>
+              <button type="button" class="cs-mouse__btn cs-mouse__btn--s1" title="Side">S1</button>
+              <span class="cs-mouse__body"></span>
+            </div>
+          </div>
+          <div class="cs-mock__controls">
+            <div class="cs-dpi-row">
+              <span class="cs-dpi-label">DPI</span>
+              <span class="cs-dpi-value">1600</span>
+            </div>
+            <input type="range" class="gui-slider cs-dpi-slider" min="100" max="16000" step="50" value="1600" aria-label="DPI" />
+            <div class="cs-save-row">
+              <span class="cs-save cs-save--ok" aria-live="polite">✓ Saved to device memory</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Dashboard cards — battery + transport badge</li><li>Detail — nav, mouse hit targets, DPI slider</li><li>Disconnect — banner, dim visualizer, lock slider</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/0d1117/58d68d/png?text=GUI%20DS%20%C2%B7%20Case%20study%20mock" alt="" loading="lazy" />
+  <figcaption>Wireframe</figcaption>
+</figure></div>
+</section></main>
+</div>
+<script>
+function toggleTheme() {
+  const root = document.documentElement;
+  const cur = root.getAttribute('data-theme');
+  const next = cur === 'light' ? '' : 'light';
+  if (next) root.setAttribute('data-theme', next); else root.removeAttribute('data-theme');
+  try { localStorage.setItem('gui-theme', next || 'dark'); } catch (e) {}
+}
+try {
+  const t = localStorage.getItem('gui-theme');
+  if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
+} catch (e) {}
+
+function toggleSynapseDisconnect() {
+  const el = document.getElementById('synapse-mock');
+  if (el) el.classList.toggle('is-disconnected');
+}
+function setAppPreviewView(view) {
+  document.querySelectorAll('.app-preview').forEach(function (el) {
+    el.hidden = el.getAttribute('data-view') !== view;
+  });
+  document.querySelectorAll('[data-app-view]').forEach(function (btn) {
+    var on = btn.getAttribute('data-app-view') === view;
+    btn.classList.toggle('active', on);
+    btn.setAttribute('aria-selected', on ? 'true' : 'false');
+  });
+}
+function toggleMenu() { document.getElementById('sidebar').classList.toggle('open'); }
+document.addEventListener('click', e => {
+  const sb = document.getElementById('sidebar');
+  if (sb.classList.contains('open') && !sb.contains(e.target) && !e.target.closest('.menu-btn')) sb.classList.remove('open');
+});
+
+function setPlatform(p) {
+  document.querySelectorAll('.plat-btn').forEach(b => b.classList.toggle('active', b.dataset.plat === p));
+  document.querySelectorAll('[data-platform]').forEach(el => {
+    const plat = el.getAttribute('data-platform');
+    const show = p === 'all' || plat === 'all' || plat === p;
+    el.classList.toggle('hidden', !show);
+    if (el.classList.contains('panel') && !show) el.classList.remove('active');
+  });
+  if (!document.querySelector('.nav-item.active:not(.hidden)')) show('overview');
+  try { localStorage.setItem('gui-plat', p); } catch (e) {}
+}
+
+let docObserver = null;
+function initDocToc(panelEl) {
+  if (docObserver) { docObserver.disconnect(); docObserver = null; }
+  if (!panelEl || !panelEl.classList.contains('panel--doc')) return;
+  const sections = panelEl.querySelectorAll('[data-doc-section]');
+  const links = panelEl.querySelectorAll('.doc-toc-link');
+  const marker = panelEl.querySelector('.doc-toc-marker');
+  const rail = panelEl.querySelector('.doc-toc-rail');
+  function moveMarker(link) {
+    if (!marker || !rail || !link) return;
+    const y = link.getBoundingClientRect().top - rail.getBoundingClientRect().top + (link.getBoundingClientRect().height - 22) / 2;
+    marker.style.transform = 'translateY(' + Math.max(0, y) + 'px)';
+  }
+  links.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.getElementById(link.getAttribute('data-toc-href').slice(1));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+  docObserver = new IntersectionObserver(entries => {
+    const visible = entries.filter(en => en.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (!visible) return;
+    const id = visible.target.id;
+    links.forEach(l => {
+      const on = l.getAttribute('data-toc-href') === '#' + id;
+      l.classList.toggle('active', on);
+      if (on) moveMarker(l);
+    });
+  }, { root: document.querySelector('.main'), rootMargin: '-20% 0px -55% 0px', threshold: [0, 0.25, 0.5] });
+  sections.forEach(sec => docObserver.observe(sec));
+  if (links[0]) { links[0].classList.add('active'); moveMarker(links[0]); }
+}
+
+function show(id) {
+  const panel = document.getElementById('panel-' + id);
+  if (!panel || panel.classList.contains('hidden')) return;
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  panel.classList.add('active');
+  const nav = document.querySelector('.nav-item[data-panel="' + id + '"]');
+  if (nav) nav.classList.add('active');
+  document.getElementById('sidebar').classList.remove('open');
+  document.querySelector('.main').scrollTop = 0;
+  requestAnimationFrame(() => initDocToc(panel));
+  if (id === 'hw-lab' && typeof hwLabInit === 'function') hwLabInit();
+  try { localStorage.setItem('gui-panel', id); } catch (e) {}
+}
+
+
+var hwState = {
+  mode: 'connected',
+  selected: null,
+  bindings: { L: 'default', R: 'default', M: 'default', S1: 'default', S2: 'default' },
+  dpi: 1600,
+  ledColor: '#00ff00',
+  ledZones: { body: true, wheel: false, logo: false },
+  ledFx: 'static',
+  macroSteps: [],
+  recording: false,
+  battery: 78,
+  fwTimer: null
+};
+
+function hwSnapDpi(v) {
+  v = Math.max(100, Math.min(16000, Number(v) || 1600));
+  return Math.round(v / 50) * 50;
+}
+
+function hwLocked() {
+  return hwState.mode === 'disconnect' || hwState.mode === 'sleep' || hwState.mode === 'firmware';
+}
+
+function hwRenderStatus() {
+  var badge = document.getElementById('hw-status-badge');
+  var bat = document.getElementById('hw-battery');
+  var banner = document.getElementById('hw-banner');
+  var lab = document.getElementById('hw-lab');
+  var wrap = document.getElementById('hw-canvas-wrap');
+  if (!badge || !lab) return;
+
+  lab.classList.remove('hw-lab--disconnect', 'hw-lab--sleep', 'hw-lab--firmware', 'hw-lab--lowbat');
+  wrap && wrap.classList.toggle('hw-lab--dim', hwState.mode === 'disconnect' || hwState.mode === 'sleep');
+
+  if (hwState.mode === 'connected' || hwState.mode === 'lowbat') {
+    badge.className = 'gui-badge gui-badge--connected hw-lab__status';
+    badge.innerHTML = '<span class="gui-badge__dot"></span>Connected';
+    banner.hidden = true;
+  } else if (hwState.mode === 'disconnect') {
+    badge.className = 'gui-badge gui-badge--error hw-lab__status';
+    badge.innerHTML = '<span class="gui-badge__dot"></span>Disconnected';
+    banner.hidden = false;
+    banner.textContent = 'Vui lòng kết nối thiết bị để thay đổi cấu hình.';
+    lab.classList.add('hw-lab--disconnect');
+  } else if (hwState.mode === 'sleep') {
+    badge.className = 'gui-badge gui-badge--connected hw-lab__status';
+    badge.innerHTML = '<span class="gui-badge__dot"></span>Sleep';
+    banner.hidden = false;
+    banner.textContent = 'Nhấn phím bất kỳ trên thiết bị để đánh thức.';
+    lab.classList.add('hw-lab--sleep');
+  } else if (hwState.mode === 'firmware') {
+    badge.className = 'gui-badge gui-badge--updating hw-lab__status';
+    badge.innerHTML = '<span class="gui-badge__dot"></span>Updating…';
+    banner.hidden = true;
+    lab.classList.add('hw-lab--firmware');
+  }
+
+  if (hwState.mode === 'lowbat') lab.classList.add('hw-lab--lowbat');
+
+  var pct = hwState.battery;
+  var batClass = pct <= 15 ? 'cs-battery--low' : 'cs-battery--ok';
+  var icon = pct <= 15 ? '⚠' : '🔋';
+  bat.className = 'hw-lab__battery gui-battery ' + batClass;
+  bat.textContent = icon + ' ' + pct + '%' + (pct <= 15 ? ' · Sạc ngay' : '');
+
+  hwSyncControlDisabled();
+}
+
+function hwSyncControlDisabled() {
+  var lock = hwLocked();
+  document.querySelectorAll('#hw-lab input, #hw-lab select, #hw-lab .hw-hotspot, #hw-lab .hw-nav-item, #hw-lab .gui-btn').forEach(function (el) {
+    if (el.closest('.hw-lab__toolbar')) return;
+    if (el.id === 'hw-fw-overlay') return;
+    el.disabled = lock && !el.classList.contains('hw-tb-btn');
+  });
+  var ov = document.getElementById('hw-fw-overlay');
+  if (ov) ov.hidden = hwState.mode !== 'firmware';
+}
+
+function hwSimulate(kind) {
+  if (hwState.fwTimer) { clearInterval(hwState.fwTimer); hwState.fwTimer = null; }
+  if (kind === 'firmware') {
+    hwState.mode = 'firmware';
+    hwRenderStatus();
+    var fill = document.getElementById('hw-fw-fill');
+    var p = 0;
+    if (fill) fill.style.width = '0%';
+    hwState.fwTimer = setInterval(function () {
+      p += 4;
+      if (fill) fill.style.width = p + '%';
+      if (p >= 100) {
+        clearInterval(hwState.fwTimer);
+        hwState.fwTimer = null;
+        hwState.mode = 'connected';
+        hwRenderStatus();
+        hwLog('Firmware OK · device rebooted');
+      }
+    }, 120);
+    return;
+  }
+  if (kind === 'lowbat') { hwState.mode = 'lowbat'; hwState.battery = 12; hwRenderStatus(); return; }
+  if (kind === 'disconnect') { hwState.mode = 'disconnect'; hwRenderStatus(); hwLog('Transport lost'); return; }
+  if (kind === 'sleep') { hwState.mode = 'sleep'; hwRenderStatus(); return; }
+  hwState.mode = 'connected';
+  if (hwState.battery < 20) hwState.battery = 78;
+  hwRenderStatus();
+  hwLog('Link up · ready');
+}
+
+function hwLog(msg) {
+  var el = document.getElementById('hw-device-log');
+  if (el) el.textContent = 'HID report: ' + msg;
+}
+
+function hwSwitchTab(tab) {
+  document.querySelectorAll('.hw-nav-item').forEach(function (b) {
+    b.classList.toggle('hw-nav-item--on', b.getAttribute('data-hw-tab') === tab);
+  });
+  document.querySelectorAll('.hw-panel').forEach(function (p) {
+    p.hidden = p.getAttribute('data-hw-panel') !== tab;
+  });
+}
+
+function hwSelectButton(id) {
+  if (hwLocked()) return;
+  hwState.selected = id;
+  document.querySelectorAll('.hw-hotspot').forEach(function (h) {
+    h.classList.toggle('hw-hotspot--selected', h.getAttribute('data-btn') === id);
+  });
+  var label = document.getElementById('hw-sel-label');
+  var sel = document.getElementById('hw-action');
+  var apply = document.getElementById('hw-apply-remap');
+  if (label) label.textContent = id;
+  if (sel) { sel.disabled = false; sel.value = hwState.bindings[id] || 'default'; }
+  if (apply) apply.disabled = false;
+  var hint = document.getElementById('hw-assign-hint');
+  if (hint) hint.textContent = 'Chỉnh action rồi Apply — ghi xuống onboard memory.';
+  hwLog('SELECT btn=' + id);
+}
+
+function hwAssignAction(val) {
+  if (!hwState.selected) return;
+  hwState.bindings[hwState.selected] = val;
+}
+
+function hwApplyRemap() {
+  if (!hwState.selected || hwLocked()) return;
+  var fb = document.getElementById('hw-remap-save');
+  if (fb) { fb.textContent = 'Đang ghi…'; fb.className = 'hw-save-feedback is-saving'; }
+  setTimeout(function () {
+    if (fb) { fb.textContent = '✓ Đã lưu vào bộ nhớ thiết bị · ' + hwState.selected + ' → ' + hwState.bindings[hwState.selected]; fb.className = 'hw-save-feedback is-ok'; }
+    hwLog('SET_BINDING ' + hwState.selected + '=' + hwState.bindings[hwState.selected]);
+  }, 550);
+}
+
+function hwDpiFromSlider(v) { hwSetDpi(hwSnapDpi(v)); }
+function hwDpiFromInput(v) { hwSetDpi(hwSnapDpi(v)); }
+function hwDpiPreset(v) { hwSetDpi(hwSnapDpi(v)); }
+
+function hwSetDpi(v) {
+  if (hwLocked()) return;
+  hwState.dpi = hwSnapDpi(v);
+  var num = document.getElementById('hw-dpi-num');
+  var range = document.getElementById('hw-dpi-range');
+  var input = document.getElementById('hw-dpi-input');
+  if (num) num.textContent = hwState.dpi;
+  if (range) range.value = hwState.dpi;
+  if (input) input.value = hwState.dpi;
+  var fb = document.getElementById('hw-dpi-save');
+  if (fb) { fb.textContent = 'Đang sync DPI…'; fb.className = 'hw-save-feedback is-saving'; }
+  clearTimeout(hwState._dpiT);
+  hwState._dpiT = setTimeout(function () {
+    if (fb) { fb.textContent = '✓ DPI ' + hwState.dpi + ' · onboard updated'; fb.className = 'hw-save-feedback is-ok'; }
+    hwLog('SET_DPI ' + hwState.dpi);
+  }, 400);
+}
+
+function hwLedPreview(hex) {
+  hwState.ledColor = hex;
+  hwApplyLedGlow();
+}
+
+function hwLedZone(zone, on) {
+  hwState.ledZones[zone] = on;
+  hwApplyLedGlow();
+}
+
+function hwLedFx(fx) { hwState.ledFx = fx; hwLog('LED_FX ' + fx); }
+
+function hwApplyLedGlow() {
+  var el = document.getElementById('hw-mouse-led');
+  if (!el || !hwState.ledZones.body) { if (el) el.style.opacity = '0'; return; }
+  el.style.background = hwState.ledColor;
+  el.style.opacity = hwState.ledFx === 'breathing' ? '0.85' : '1';
+  el.classList.toggle('hw-mouse-led--wave', hwState.ledFx === 'wave');
+}
+
+function hwLedApply() {
+  if (hwLocked()) return;
+  var fb = document.getElementById('hw-led-save');
+  if (fb) { fb.textContent = 'Realtime preview → device…'; fb.className = 'hw-save-feedback is-saving'; }
+  setTimeout(function () {
+    if (fb) { fb.textContent = '✓ LED zones synced'; fb.className = 'hw-save-feedback is-ok'; }
+    hwLog('SET_LED ' + hwState.ledColor);
+  }, 500);
+}
+
+function hwToggleRecord() {
+  if (hwLocked()) return;
+  hwState.recording = !hwState.recording;
+  var btn = document.getElementById('hw-rec-btn');
+  if (btn) btn.textContent = hwState.recording ? '■ Stop' : '● Record';
+  if (hwState.recording) hwLog('MACRO_REC start');
+  else hwLog('MACRO_REC stop · ' + hwState.macroSteps.length + ' steps');
+}
+
+function hwRenderMacro() {
+  var list = document.getElementById('hw-macro-list');
+  if (!list) return;
+  list.innerHTML = hwState.macroSteps.map(function (s, i) {
+    return '<li><span class="hw-macro-idx">' + (i + 1) + '.</span> ' + s.action + ' <span class="hw-macro-delay">' + s.delay + 'ms</span></li>';
+  }).join('');
+}
+
+function hwAddMacroStep() {
+  if (hwLocked()) return;
+  var n = hwState.macroSteps.length + 1;
+  hwState.macroSteps.push({ action: 'Click L @ (' + (120 + n * 8) + ',' + (200 + n * 3) + ')', delay: 50 + n * 15 });
+  hwRenderMacro();
+  if (hwState.recording) hwLog('MACRO step added');
+}
+
+function hwClearMacro() {
+  hwState.macroSteps = [];
+  hwRenderMacro();
+}
+
+function hwAssignMacroToSelection() {
+  if (!hwState.selected || hwLocked()) return;
+  hwState.bindings[hwState.selected] = 'macro';
+  var sel = document.getElementById('hw-action');
+  if (sel) sel.value = 'macro';
+  hwLog('BIND macro → ' + hwState.selected);
+}
+
+function hwLabInit() {
+  hwRenderStatus();
+  hwApplyLedGlow();
+  hwRenderMacro();
+  hwLog('ready · click hotspot');
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  if (document.getElementById('hw-lab')) hwLabInit();
+});
+
+
+try {
+  const sp = localStorage.getItem('gui-plat');
+  if (sp) setPlatform(sp);
+  else setPlatform('all');
+  const saved = localStorage.getItem('gui-panel');
+  if (saved && document.getElementById('panel-' + saved)) show(saved);
+  else show('hw-lab');
+} catch (e) { show('hw-lab'); }
+</script>
+</body>
+</html>
