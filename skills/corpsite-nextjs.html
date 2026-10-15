@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Next.js Corp Site Playbook</title>
+<title>ngocquynhpham.com — Next.js Playbook</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600;700&display=swap">
 
@@ -301,8 +301,8 @@ body {
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-logo">
-      <div class="title">Corp Site Playbook</div>
-      <div class="sub">Next.js Owner Guide</div>
+      <div class="title">ngocquynhpham.com</div>
+      <div class="sub">Next.js Owner Playbook</div>
     </div>
 
     <div class="nav-section">Kiến trúc</div>
@@ -334,19 +334,19 @@ body {
     <!-- OVERVIEW -->
     <div class="panel active" id="panel-overview">
       <div class="panel-title">🏗 Tổng quan dự án</div>
-      <div class="panel-desc">Corporate / brand site — Next.js App Router, SEO + GEO first-class, hybrid data (API + static), standalone deploy.</div>
+      <div class="panel-desc"><a href="https://ngocquynhpham.com/" style="color:var(--accent)">ngocquynhpham.com</a> — personal brand site · Next.js App Router, SEO + GEO first-class, hybrid data (API + static), standalone deploy.</div>
 
       <div class="section-label">Mental Model — Đây là gì?</div>
       <div class="grid-3">
         <div class="pillar">
           <div class="pillar-icon">🏢</div>
-          <div class="pillar-name">Corporate Site</div>
-          <div class="pillar-desc">Không phải SaaS. Không login, không session, không middleware. Website giới thiệu công ty + IR + ESG + Brand tiếng Hàn.</div>
+          <div class="pillar-name">ngocquynhpham.com</div>
+          <div class="pillar-desc">Không phải SaaS. Không login, không session, không middleware. Site thương hiệu cá nhân: about, projects, blog/news, demos — canonical <code>https://ngocquynhpham.com</code>.</div>
         </div>
         <div class="pillar">
           <div class="pillar-icon">🔀</div>
           <div class="pillar-name">URL Migration</div>
-          <div class="pillar-desc">Rebuild từ URL cũ (<code>/company</code>, <code>/investors</code>) sang mới (<code>/about</code>, <code>/ir</code>). Hàng trăm 301 redirect trong next.config.ts.</div>
+          <div class="pillar-desc">Rebuild từ URL cũ (<code>ngocquynhpham.github.io/...</code>, legacy slugs) sang canonical trên <code>ngocquynhpham.com</code> (<code>/about</code>, <code>/projects</code>). Hàng trăm 301 redirect trong next.config.ts.</div>
         </div>
         <div class="pillar">
           <div class="pillar-icon">📡</div>
@@ -382,7 +382,7 @@ body {
         </div>
         <div class="card">
           <div class="card-title">📊 Mock vs API Matrix</div>
-          <p>Không phải trang nào cũng live API. IR financial statements còn dùng mock. Phải biết trang nào là real-time trước khi hứa với client.</p>
+          <p>Không phải trang nào cũng live API. Một số block trên ngocquynhpham.com còn mock/static. Phải biết trang nào real-time trước khi publish.</p>
         </div>
         <div class="card">
           <div class="card-title">⚙️ Cache + Deploy</div>
@@ -424,8 +424,8 @@ body {
       <div class="card">
         <ul>
           <li><strong>page.tsx mỏng</strong> — Gọi data function, pageMeta, bọc layout width, gắn JsonLd. Không map field API trực tiếp trong page.</li>
-          <li><strong>data/api là contract nội bộ</strong> — Đổi Swagger chỉ sửa đây + regen client. UI không được import <code>FrontNewsroomSelectResponse</code> trực tiếp.</li>
-          <li><strong>data/mock = fallback + UI config</strong> — Types, constants, UI config + fallback shape + content chưa/không lên API (financial tables, ESG diagrams).</li>
+          <li><strong>data/api là contract nội bộ</strong> — Đổi Swagger chỉ sửa đây + regen client. UI không được import <code>NewsroomListItemDto</code> (generated type) trực tiếp.</li>
+          <li><strong>data/mock = fallback + UI config</strong> — Types, constants, UI config + fallback shape + content chưa/không lên API (project stats, diagram tĩnh trên ngocquynhpham.com).</li>
           <li><strong>lib = cross-cutting thuần</strong> — seo, routes, bbs helpers, cache, assetPath. Không có business logic.</li>
         </ul>
       </div>
@@ -433,7 +433,7 @@ body {
       <div class="section-label">Lỗi phổ biến khi team lớn</div>
       <div class="card" style="border-color: color-mix(in srgb, var(--red) 40%, transparent);">
         <div class="card-title" style="color:var(--red)">⚠️ Anti-pattern</div>
-        <p>Gọi <code>api.api.detail2()</code> trực tiếp trong component → khó test, khó đổi API, duplicate mapping logic. Luôn đi qua <code>data/api/</code>.</p>
+        <p>Gọi <code>api.news.getById()</code> (generated client) trực tiếp trong component → khó test, khó đổi API, duplicate mapping logic. Luôn đi qua <code>data/api/</code>.</p>
       </div>
 
       <div class="section-label">Pattern UI — Shell + Colocation</div>
@@ -441,20 +441,20 @@ body {
         <div class="card">
           <div class="card-title">Shell Pattern (x4)</div>
           <ul style="list-style:none;padding:0">
-            <li style="padding:4px 0;border-bottom:1px solid var(--border);font-size:12.5px"><code>CompanyShell</code> → About section</li>
-            <li style="padding:4px 0;border-bottom:1px solid var(--border);font-size:12.5px"><code>GovernanceShell</code> → IR governance</li>
-            <li style="padding:4px 0;border-bottom:1px solid var(--border);font-size:12.5px"><code>EsgLayout</code> (client) → Sustainability</li>
-            <li style="padding:4px 0;font-size:12.5px"><code>BrandShell</code> → Brand section</li>
+            <li style="padding:4px 0;border-bottom:1px solid var(--border);font-size:12.5px"><code>AboutShell</code> → /about trên ngocquynhpham.com</li>
+            <li style="padding:4px 0;border-bottom:1px solid var(--border);font-size:12.5px"><code>BlogShell</code> → Blog / writing trên ngocquynhpham.com</li>
+            <li style="padding:4px 0;border-bottom:1px solid var(--border);font-size:12.5px"><code>ContentLayout</code> (client) → Long-form case studies</li>
+            <li style="padding:4px 0;font-size:12.5px"><code>ProjectsShell</code> → Projects / demos trên ngocquynhpham.com</li>
           </ul>
           <p style="margin-top:8px;font-size:12px;color:var(--fg3)">Shell thường là Client Component vì dùng usePathname để highlight active nav.</p>
         </div>
         <div class="card">
-          <div class="card-title">ESG Colocation (template 10+ trang)</div>
-          <div class="code">sustainability/esg/environment/
+          <div class="card-title">Static colocation (template 10+ trang trên ngocquynhpham.com)</div>
+          <div class="code">projects/case-study/example/
   page.tsx       ← metadata + compose
   _components/   ← chỉ dùng route này
   _data/content.ts ← copy + download links</div>
-          <p style="font-size:12px;color:var(--fg3)">Clone trang ESG mới: copy folder, sửa _data, đổi ảnh public/, thêm seoPages, thêm tab esg-nav.ts.</p>
+          <p style="font-size:12px;color:var(--fg3)">Clone trang tĩnh mới: copy folder, sửa _data, đổi ảnh public/, thêm seoPages, thêm tab section-nav.ts.</p>
         </div>
       </div>
 
@@ -465,8 +465,8 @@ body {
           <tbody>
             <tr><td><span class="tag tag-blue">Dynamic API</span></td><td>API + adapter</td><td>Newsroom, notices, board resolutions, announcements</td></tr>
             <tr><td><span class="tag tag-green">API + mock UI</span></td><td>API data, mock layout</td><td>history (hero mock, timeline API), home</td></tr>
-            <tr><td><span class="tag tag-yellow">Tĩnh hoàn toàn</span></td><td>_data/content.ts + public/</td><td>Hầu hết /sustainability/esg/*</td></tr>
-            <tr><td><span class="tag tag-red">Mock hoàn toàn</span></td><td>data/mock/*</td><td>Financial tables, charts chưa có API, board members</td></tr>
+            <tr><td><span class="tag tag-yellow">Tĩnh hoàn toàn</span></td><td>_data/content.ts + public/</td><td>Hầu hết case study / project writeups trên ngocquynhpham.com</td></tr>
+            <tr><td><span class="tag tag-red">Mock hoàn toàn</span></td><td>data/mock/*</td><td>Stats charts, timeline demo, blocks chưa có API trên ngocquynhpham.com</td></tr>
             <tr><td><span class="tag tag-purple">Hybrid</span></td><td>API + mock tabs</td><td>Section vừa có API vừa có UI config cố định</td></tr>
           </tbody>
         </table>
@@ -483,7 +483,7 @@ body {
   <span class="k">async</span> (query: NewsroomQuery = {}): <span class="k">Promise</span>&lt;Paged&lt;NewsStory&gt;&gt; => {
     <span class="k">try</span> {
       <span class="k">return await</span> ttlCache(cacheKey, <span class="k">async</span> () => {  <span class="c">// Layer 2: in-memory TTL</span>
-        <span class="k">const</span> { data } = <span class="k">await</span> api.api.page1({ ... });
+        <span class="k">const</span> { data } = <span class="k">await</span> api.newsroom.list({ ... });
         <span class="k">return</span> toPaged(data.data, (item) => toStory(item, tabs));
       }, CACHE_TTL.long);
     } <span class="k">catch</span> (error) {
@@ -565,7 +565,7 @@ body {
         <div class="tl-item">
           <div class="tl-label">Step 3</div>
           <div class="tl-name">Nested layout (optional)</div>
-          <div class="tl-desc">CompanyShell, GovernanceShell, EsgLayout (client tabs) — chỉ khi section cần active nav.</div>
+          <div class="tl-desc">AboutShell, ProjectsShell, BlogLayout (client tabs) — chỉ khi section trên ngocquynhpham.com cần active nav.</div>
         </div>
         <div class="tl-item">
           <div class="tl-label">Step 4</div>
@@ -582,8 +582,8 @@ body {
       <div class="section-label" style="margin-top:20px">Luồng dữ liệu đầy đủ</div>
       <div class="code">page.tsx (RSC)
   └─► data/api/*.ts (adapter)
-         ├─► lib/api.ts → api-client/index.ts → Backend API
-         ├─► data/mock/ (fallback / tĩnh ESG)
+         ├─► lib/api.ts → api-client/index.ts → api.ngocquynhpham.com
+         ├─► data/mock/ (fallback / trang tĩnh ngocquynhpham.com)
          └─► ttlCache / React cache()</div>
 
       <div class="section-label">Client navigation (NewsContent)</div>
@@ -606,12 +606,12 @@ body {
         <table class="tbl">
           <thead><tr><th>Concern</th><th>Implementation</th></tr></thead>
           <tbody>
-            <tr><td>Title length</td><td><code>fitKeyword</code> target ~20–30 chars, full title ~50–60 + brand suffix</td></tr>
+            <tr><td>Title length</td><td><code>fitKeyword</code> target ~20–30 chars, full title ~50–60 + suffix <code>| ngocquynhpham.com</code></td></tr>
             <tr><td>Description</td><td><code>fitDescription</code> 70–80 chars + CTA pad</td></tr>
             <tr><td>Static routes</td><td><code>seoPages</code> object — single registry cho sitemap + metadata</td></tr>
             <tr><td>Dynamic detail</td><td><code>generateMetadata</code> + <code>titleContext</code> khi title CMS ngắn</td></tr>
             <tr><td>Structured data</td><td>JSON-LD helpers → <code>JsonLd</code> component (Organization, Breadcrumb, FAQ, NewsArticle, Service)</td></tr>
-            <tr><td>Canonical</td><td><code>metadataBase</code> + <code>alternates.canonical</code></td></tr>
+            <tr><td>Canonical</td><td><code>metadataBase: new URL('https://ngocquynhpham.com')</code> + <code>alternates.canonical</code></td></tr>
             <tr><td>GEO</td><td><code>public/llms.txt</code> + AI bots trong robots.ts</td></tr>
             <tr><td>Migration</td><td>Redirect map 301 trong next.config.ts</td></tr>
           </tbody>
@@ -622,7 +622,7 @@ body {
       <div class="card" style="border-color:color-mix(in srgb, var(--purple) 40%, transparent)">
         <div class="card-title" style="color:var(--purple)">🤖 Tối ưu cho LLM crawler</div>
         <ul>
-          <li><strong>public/llms.txt</strong>: mô tả site, URL chính thức, quy tắc trích dẫn cho AI (tránh URL cũ menu_id, không coi ?q= là trang chính thức)</li>
+          <li><strong>public/llms.txt</strong>: mô tả site, URL chính thức <code>https://ngocquynhpham.com</code>, quy tắc trích dẫn cho AI (ưu tiên canonical, không coi ?q= là trang chính thức)</li>
           <li><strong>robots.ts</strong>: liệt kê rõ GPTBot, ClaudeBot, PerplexityBot, Google-Extended với rule allow/disallow</li>
           <li>Đây là tư duy mới — site lớn cần chuẩn bị để LLM cite đúng URL</li>
         </ul>
@@ -649,7 +649,7 @@ body {
         <div class="card-title" style="color:var(--red)">Không có AI runtime trong app</div>
         <ul>
           <li>Không có MCP, không gọi OpenAI/Anthropic trong codebase</li>
-          <li>"AI" = nội dung marketing: block "AI 미디어", popup AI B tv (<code>AiBtvPopupModal</code>)</li>
+          <li>"AI" = nội dung marketing: block campaign trên homepage, popup video quảng bá (<code>CampaignVideoModal</code>) — không có model inference</li>
           <li>Runtime = SSR/RSC + REST API backend thuần, không chatbot/embed model</li>
         </ul>
       </div>
@@ -684,9 +684,9 @@ body {
       <div class="card">
         <ul>
           <li>AI trong workflow (Cursor) ≠ AI trong product — tách biệt khi nói chuyện với client</li>
-          <li>GEO (llms.txt) nên là standard cho brand lớn từ ngày đầu</li>
+          <li>GEO (llms.txt) nên là standard cho ngocquynhpham.com từ ngày đầu</li>
           <li>AGENTS.md là pattern tốt để guide AI agent hiểu đúng version framework đang dùng</li>
-          <li>Nếu cần AI runtime thật (chatbot, RAG): cần thêm API layer riêng, không nhúng trực tiếp vào corporate front</li>
+          <li>Nếu cần AI runtime thật (chatbot, RAG): cần thêm API layer riêng, không nhúng trực tiếp vào front ngocquynhpham.com</li>
         </ul>
       </div>
     </div>
@@ -731,7 +731,7 @@ body {
           <thead><tr><th>Topic</th><th>Chi tiết</th><th>Watch out</th></tr></thead>
           <tbody>
             <tr><td>Build artifact</td><td><code>dist/</code> = standalone + <code>.next/static</code></td><td>Sai path → 404 toàn bộ static assets</td></tr>
-            <tr><td>Health check</td><td>GET /hc → JSON 200</td><td>Script dùng port 3000, thực tế 13000 — phải đối chiếu</td></tr>
+            <tr><td>Health check</td><td>GET /hc → JSON 200</td><td>Script CI và runtime phải cùng <code>PORT</code> (ví dụ 3000 vs 8080) — đối chiếu env</td></tr>
             <tr><td>Process</td><td>next start trên EC2, không serverless</td><td>Restart = cache cold</td></tr>
             <tr><td>Images</td><td>unoptimized: true → không dùng /_next/image</td><td>CDN phải optimize, không phải Next.js</td></tr>
             <tr><td>CSP</td><td>Report-Only hiện tại</td><td>Track reports trước khi enforce để tránh block GTM/GA</td></tr>
@@ -743,7 +743,7 @@ body {
 
       <div class="section-label">API client workflow</div>
       <div class="code"><span class="c"># Khi backend đổi API schema:</span>
-npm run gen-swagger-skb          <span class="c"># Regen từ https://api.renew-skb.click/v3/api-docs</span>
+npm run gen:openapi-client       <span class="c"># Regen từ https://api.ngocquynhpham.com/v3/api-docs</span>
                                   <span class="c"># Output: src/api-client/index.ts (@ts-nocheck)</span>
 
 <span class="c"># Sau đó:</span>
@@ -755,7 +755,7 @@ npm run gen-swagger-skb          <span class="c"># Regen từ https://api.renew-
     <!-- SECURITY -->
     <div class="panel" id="panel-security">
       <div class="panel-title">🔒 Security</div>
-      <div class="panel-desc">Public corporate site — attack surface nhỏ nhưng có vài điểm cần chú ý.</div>
+      <div class="panel-desc">Public site ngocquynhpham.com — attack surface nhỏ nhưng có vài điểm cần chú ý.</div>
 
       <div class="section-label">Attack surface (không có auth)</div>
       <div class="grid-2">
@@ -792,7 +792,7 @@ npm run gen-swagger-skb          <span class="c"># Regen từ https://api.renew-
       <div class="panel-title">📋 Playbook thêm feature</div>
       <div class="panel-desc">3 loại feature phổ biến — copy checklist này cho dự án tiếp theo.</div>
 
-      <div class="section-label">A. Trang marketing tĩnh (giống ESG)</div>
+      <div class="section-label">A. Trang marketing tĩnh (case study / project page trên ngocquynhpham.com)</div>
       <ol class="checklist" style="list-style:none">
         <li class="done">Route trong <code>app/.../page.tsx</code></li>
         <li class="done">Thêm <code>seoPages</code> + optional JsonLd</li>
@@ -849,8 +849,8 @@ npm run gen-swagger-skb          <span class="c"># Regen từ https://api.renew-
         </div>
         <div class="tl-item">
           <div class="tl-label">File 6</div>
-          <div class="tl-name">src/app/sustainability/esg/environment/</div>
-          <div class="tl-desc">Template cho static content pages.</div>
+          <div class="tl-name">src/app/projects/case-study/example/</div>
+          <div class="tl-desc">Template cho static content pages trên ngocquynhpham.com.</div>
         </div>
         <div class="tl-item" style="padding-bottom:0">
           <div class="tl-label">File 7</div>
@@ -929,12 +929,12 @@ npm run gen-swagger-skb          <span class="c"># Regen từ https://api.renew-
               <td class="change">N instances EC2 → Redis shared cache</td>
             </tr>
             <tr>
-              <td>Mock financials</td>
-              <td class="keep">Backend chưa sẵn, số liệu ít đổi</td>
-              <td class="change">Cần audit trail → API + cache dài</td>
+              <td>Mock stats / charts</td>
+              <td class="keep">Backend chưa sẵn, số liệu ít đổi trên ngocquynhpham.com</td>
+              <td class="change">Cần live metrics → API + cache dài</td>
             </tr>
             <tr>
-              <td>Colocated ESG <code>_data</code></td>
+              <td>Colocated static <code>_data</code> (ngocquynhpham.com)</td>
               <td class="keep">Copy ổn định, dev edit trực tiếp</td>
               <td class="change">Non-dev edit nhiều → headless CMS (Contentful, Sanity)</td>
             </tr>
@@ -966,7 +966,7 @@ npm run gen-swagger-skb          <span class="c"># Regen từ https://api.renew-
     <!-- SKILLS -->
     <div class="panel" id="panel-skills">
       <div class="panel-title">🎯 Skill Checklist</div>
-      <div class="panel-desc">Những skill cần có khi owner một corporate Next.js site — dùng cho CV và phỏng vấn.</div>
+      <div class="panel-desc">Những skill cần có khi owner ngocquynhpham.com (Next.js) — dùng cho CV và phỏng vấn.</div>
 
       <div class="section-label">Bắt buộc (đã có)</div>
       <div class="grid-2">
@@ -1028,7 +1028,7 @@ npm run gen-swagger-skb          <span class="c"># Regen từ https://api.renew-
       <div class="section-label">Cách delegate (owner biết giao việc)</div>
       <div class="card">
         <ul>
-          <li><strong>Copy/legal ESG content</strong> → PM + legal team (không cần dev)</li>
+          <li><strong>Copy / nội dung case study</strong> → bạn hoặc PM (edit <code>_data</code>, không cần dev nếu layout sẵn)</li>
           <li><strong>GTM/analytics</strong> → marketing team (chỉ cần biết CSP implications)</li>
           <li><strong>Swagger/backend schema</strong> → backend team với contract <code>data/api</code></li>
           <li><strong>Design tokens/Figma</strong> → designer, dev implement qua Tailwind config</li>
@@ -1038,11 +1038,11 @@ npm run gen-swagger-skb          <span class="c"># Regen từ https://api.renew-
       <div class="section-label">Bullet points cho CV/interview từ dự án này</div>
       <div class="card" style="border-color:color-mix(in srgb, var(--accent) 40%, transparent)">
         <ul>
-          <li>Rebuilt corporate site (Next.js App Router, React 19, TypeScript strict) — migrated 100+ legacy URLs with 301 redirects, zero SEO regression</li>
-          <li>Designed adapter layer pattern (OpenAPI → generated client → domain adapters → RSC) — backend schema changes isolated to <code>data/api/</code>, zero UI rework on API updates</li>
-          <li>Implemented technical SEO system: JSON-LD (Organization, Breadcrumb, FAQ, NewsArticle), sitemap auto-generation, GEO optimization (llms.txt, AI bot rules)</li>
-          <li>Applied 3-layer caching (React cache + in-memory TTL + graceful degrade) — site stays live on API errors, returns empty state instead of crashing</li>
-          <li>AI-native workflow: Cursor + Claude for design-to-code, component scaffolding — maintained code quality across Korean-stakeholder Agile delivery</li>
+          <li>Shipped ngocquynhpham.com (Next.js App Router, React 19, TypeScript strict) — migrated 100+ legacy URLs to canonical domain with 301 redirects, zero SEO regression</li>
+          <li>Designed adapter layer pattern (OpenAPI → generated client → domain adapters → RSC) for api.ngocquynhpham.com — schema changes isolated to <code>data/api/</code></li>
+          <li>Implemented technical SEO for ngocquynhpham.com: JSON-LD (Person/Organization, Breadcrumb, FAQ, NewsArticle), sitemap, GEO (llms.txt, AI bot rules)</li>
+          <li>Applied 3-layer caching (React cache + in-memory TTL + graceful degrade) — ngocquynhpham.com stays live on API errors</li>
+          <li>AI-native workflow: Cursor + Claude for design-to-code on ngocquynhpham.com — component scaffolding without sacrificing code quality</li>
         </ul>
       </div>
     </div>
