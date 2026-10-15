@@ -1,0 +1,98 @@
+/**
+ * GUI Design System — tokens for desktop utility apps (HID device configuration)
+ * Dark-first. Import in Electron, WPF WebView, or static prototype shells.
+ */
+:root {
+  --gui-font-sans: "Inter", "Segoe UI", system-ui, sans-serif;
+  --gui-font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Brand */
+  --gui-primary: hsl(155, 100%, 65%);
+  --gui-primary-hover: hsl(155, 100%, 72%);
+  --gui-primary-fg: hsl(0, 0%, 7%);
+
+  /* Surfaces (dark utility default) */
+  --gui-bg-0: hsl(220, 13%, 9%);
+  --gui-bg-1: hsl(220, 10%, 12%);
+  --gui-bg-2: hsl(220, 12%, 16%);
+  --gui-border: hsla(0, 0%, 100%, 0.08);
+  --gui-text: hsl(0, 0%, 96%);
+  --gui-text-secondary: hsl(0, 0%, 65%);
+  --gui-text-muted: hsl(0, 0%, 48%);
+
+  /* Device / status semantics */
+  --gui-status-connected: hsl(152, 60%, 48%);
+  --gui-status-updating: hsl(38, 92%, 55%);
+  --gui-status-warning: hsl(38, 92%, 55%);
+  --gui-status-error: hsl(4, 72%, 58%);
+  --gui-status-idle: hsl(0, 0%, 45%);
+
+  /* Spacing (4px base) */
+  --gui-space-1: 4px;
+  --gui-space-2: 8px;
+  --gui-space-3: 12px;
+  --gui-space-4: 16px;
+  --gui-space-5: 24px;
+  --gui-space-6: 32px;
+
+  --gui-radius-sm: 6px;
+  --gui-radius-md: 8px;
+  --gui-radius-lg: 12px;
+
+  --gui-shadow-panel: 0 4px 16px hsla(0, 0%, 0%, 0.35);
+
+  --gui-duration-fast: 120ms;
+  --gui-duration-normal: 200ms;
+  --gui-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* Typography roles (utility apps) */
+  --gui-type-dpi-size: 24px;
+  --gui-type-dpi-weight: 700;
+  --gui-type-body-size: 12px;
+  --gui-type-section-size: 14px;
+}
+
+/* Case study: gaming utility shells (Synapse / G Hub–style) */
+:root[data-product-theme="gaming-razer"] {
+  --gui-bg-0: #111111;
+  --gui-bg-1: #1f1f1f;
+  --gui-bg-2: #2a2a2a;
+  --gui-primary: #00ff00;
+  --gui-primary-hover: #33ff33;
+  --gui-primary-fg: #111111;
+}
+
+:root[data-product-theme="gaming-logitech"] {
+  --gui-bg-0: #111111;
+  --gui-bg-1: #1f1f1f;
+  --gui-bg-2: #252525;
+  --gui-primary: #0099ff;
+  --gui-primary-hover: #33adff;
+  --gui-primary-fg: #ffffff;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --gui-bg-0: #f4f6f8;
+    --gui-bg-1: #ffffff;
+    --gui-bg-2: #e8ecf0;
+    --gui-border: #d0d7de;
+    --gui-text: #121212;
+    --gui-text-secondary: #424a53;
+    --gui-text-muted: #656d76;
+    --gui-primary: hsl(155, 70%, 32%);
+    --gui-primary-fg: #ffffff;
+  }
+}
+
+:root[data-theme="light"] {
+  --gui-bg-0: #f4f6f8;
+  --gui-bg-1: #ffffff;
+  --gui-bg-2: #e8ecf0;
+  --gui-border: #d0d7de;
+  --gui-text: #121212;
+  --gui-text-secondary: #424a53;
+  --gui-text-muted: #656d76;
+  --gui-primary: hsl(155, 70%, 32%);
+  --gui-primary-fg: #ffffff;
+}
