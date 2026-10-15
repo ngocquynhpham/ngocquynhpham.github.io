@@ -1,0 +1,1105 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Next.js Corp Site Playbook</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600;700&display=swap">
+
+<style>
+/* === TOKENS === */
+:root {
+  --bg:       #0f1117;
+  --bg2:      #181c27;
+  --bg3:      #1e2333;
+  --border:   #2a2f42;
+  --fg:       #e8eaf0;
+  --fg2:      #9aa0b8;
+  --fg3:      #5c6380;
+  --accent:   #5b8cf5;
+  --accent2:  #3d6de0;
+  --green:    #4caf82;
+  --yellow:   #e8a844;
+  --red:      #e05a5a;
+  --purple:   #9b7ef5;
+  --mono:     'IBM Plex Mono', monospace;
+  --sans:     'Inter', system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg:     #f4f5f9;
+    --bg2:    #ffffff;
+    --bg3:    #eef0f6;
+    --border: #dde0ec;
+    --fg:     #1a1d2e;
+    --fg2:    #4a5070;
+    --fg3:    #8890b0;
+    --accent: #3660d4;
+    --accent2:#2448b0;
+    --green:  #217a50;
+    --yellow: #c07c10;
+    --red:    #c03030;
+    --purple: #6a44d4;
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg:     #f4f5f9;
+  --bg2:    #ffffff;
+  --bg3:    #eef0f6;
+  --border: #dde0ec;
+  --fg:     #1a1d2e;
+  --fg2:    #4a5070;
+  --fg3:    #8890b0;
+  --accent: #3660d4;
+  --accent2:#2448b0;
+  --green:  #217a50;
+  --yellow: #c07c10;
+  --red:    #c03030;
+  --purple: #6a44d4;
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 14px;
+  line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0;
+}
+
+/* LAYOUT */
+.app { display: flex; height: 100%; min-height: 100vh; }
+
+.sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-logo {
+  padding: 0 16px 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+.sidebar-logo .title { font-size: 13px; font-weight: 700; letter-spacing: .06em; color: var(--accent); text-transform: uppercase; }
+.sidebar-logo .sub { font-size: 11px; color: var(--fg3); margin-top: 2px; }
+
+.nav-section { padding: 6px 16px 4px; font-size: 10px; font-weight: 700; letter-spacing: .1em; color: var(--fg3); text-transform: uppercase; margin-top: 8px; }
+
+.nav-btn {
+  display: flex; align-items: center; gap: 8px;
+  width: 100%; padding: 7px 16px;
+  background: none; border: none; cursor: pointer;
+  color: var(--fg2); font-size: 13px; font-family: var(--sans);
+  text-align: left; transition: color .15s, background .15s;
+}
+.nav-btn:hover { background: var(--bg3); color: var(--fg); }
+.nav-btn.active { background: var(--bg3); color: var(--accent); }
+.nav-btn .dot {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+  background: var(--fg3);
+}
+.nav-btn.active .dot { background: var(--accent); }
+
+.main { flex: 1; min-width: 0; padding: 32px 28px; }
+
+/* PANEL */
+.panel { display: none; }
+.panel.active { display: block; }
+
+.panel-title {
+  font-size: 22px; font-weight: 700; margin-bottom: 4px;
+  display: flex; align-items: center; gap: 10px;
+}
+.panel-desc { color: var(--fg2); margin-bottom: 24px; font-size: 13px; }
+
+/* CARDS */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+.card-title {
+  font-size: 13px; font-weight: 600;
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 10px;
+}
+.card p, .card li { font-size: 13px; color: var(--fg2); }
+.card ul, .card ol { padding-left: 18px; }
+.card li { margin-bottom: 4px; }
+
+/* GRID */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+/* TABLE */
+.tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.tbl th {
+  text-align: left; padding: 8px 10px;
+  background: var(--bg3); color: var(--fg2);
+  font-weight: 600; font-size: 11px; letter-spacing: .05em;
+  text-transform: uppercase; border-bottom: 1px solid var(--border);
+}
+.tbl td { padding: 8px 10px; border-bottom: 1px solid var(--border); color: var(--fg2); vertical-align: top; }
+.tbl tr:last-child td { border-bottom: none; }
+.tbl tr:hover td { background: var(--bg3); }
+
+/* CODE */
+.code {
+  font-family: var(--mono);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px 14px;
+  font-size: 12px;
+  color: var(--fg2);
+  overflow-x: auto;
+  margin: 8px 0;
+  white-space: pre;
+}
+.code .k { color: var(--accent); }
+.code .s { color: var(--green); }
+.code .c { color: var(--fg3); }
+
+/* TAGS */
+.tag {
+  display: inline-flex; align-items: center;
+  padding: 2px 8px; border-radius: 4px;
+  font-size: 11px; font-weight: 600; letter-spacing: .03em;
+}
+.tag-blue   { background: color-mix(in srgb, var(--accent) 15%, transparent); color: var(--accent); }
+.tag-green  { background: color-mix(in srgb, var(--green) 15%, transparent); color: var(--green); }
+.tag-yellow { background: color-mix(in srgb, var(--yellow) 15%, transparent); color: var(--yellow); }
+.tag-red    { background: color-mix(in srgb, var(--red) 15%, transparent); color: var(--red); }
+.tag-purple { background: color-mix(in srgb, var(--purple) 15%, transparent); color: var(--purple); }
+
+/* FLOW */
+.flow {
+  display: flex; align-items: stretch; gap: 0;
+  margin: 12px 0; overflow-x: auto; padding-bottom: 4px;
+}
+.flow-step {
+  flex: 1; min-width: 100px;
+  background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 6px; padding: 10px 12px;
+  font-size: 12px; position: relative;
+}
+.flow-step + .flow-step { margin-left: 24px; }
+.flow-step + .flow-step::before {
+  content: '→';
+  position: absolute; left: -18px; top: 50%; transform: translateY(-50%);
+  color: var(--fg3); font-size: 14px;
+}
+.flow-step .step-label { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--fg3); margin-bottom: 4px; }
+.flow-step .step-name { font-weight: 600; color: var(--fg); font-size: 12.5px; }
+.flow-step .step-file { font-family: var(--mono); font-size: 10px; color: var(--accent); margin-top: 3px; }
+
+/* PILLARS */
+.pillar {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
+  padding: 14px 16px;
+}
+.pillar-icon { font-size: 20px; margin-bottom: 8px; }
+.pillar-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.pillar-desc { font-size: 12px; color: var(--fg2); }
+
+/* CHECKLIST */
+.checklist { list-style: none; padding: 0; }
+.checklist li {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px; color: var(--fg2);
+  display: flex; align-items: flex-start; gap: 8px;
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist li::before { content: '□'; color: var(--fg3); flex-shrink: 0; font-family: var(--mono); margin-top: 1px; }
+.checklist li.done::before { content: '✓'; color: var(--green); }
+
+/* TIMELINE */
+.timeline { position: relative; padding-left: 20px; }
+.timeline::before { content: ''; position: absolute; left: 6px; top: 0; bottom: 0; width: 1px; background: var(--border); }
+.tl-item { position: relative; padding-bottom: 16px; }
+.tl-item::before { content: ''; position: absolute; left: -17px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+.tl-label { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+.tl-name { font-size: 13px; font-weight: 600; margin: 2px 0; }
+.tl-desc { font-size: 12px; color: var(--fg2); }
+
+/* SECTION LABEL */
+.section-label {
+  font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--fg3); margin-bottom: 8px; margin-top: 20px;
+}
+
+/* COMPARE TABLE */
+.compare { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.compare th { background: var(--bg3); color: var(--fg2); padding: 8px 10px; font-size: 11px; letter-spacing: .05em; text-transform: uppercase; font-weight: 600; text-align: left; border-bottom: 1px solid var(--border); }
+.compare td { padding: 8px 10px; border-bottom: 1px solid var(--border); color: var(--fg2); vertical-align: top; }
+.compare tr:hover td { background: var(--bg3); }
+.compare .keep { color: var(--green); font-weight: 600; }
+.compare .change { color: var(--yellow); font-weight: 600; }
+
+/* TOGGLE */
+.theme-toggle {
+  margin-top: auto; padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 8px;
+}
+.theme-toggle button {
+  background: var(--bg3); border: 1px solid var(--border);
+  color: var(--fg2); padding: 4px 10px; border-radius: 4px;
+  font-size: 11px; cursor: pointer; font-family: var(--sans);
+}
+.theme-toggle button:hover { color: var(--fg); }
+
+/* MOBILE */
+.mobile-nav {
+  display: none;
+  position: sticky; top: 0; z-index: 10;
+  background: var(--bg2); border-bottom: 1px solid var(--border);
+  padding: 10px 0; overflow-x: auto;
+}
+.mobile-nav::-webkit-scrollbar { display: none; }
+.mobile-nav-inner { display: flex; gap: 6px; padding: 0 16px; width: max-content; }
+.mobile-nav .nav-btn {
+  width: auto; padding: 5px 12px; border-radius: 20px; white-space: nowrap;
+  font-size: 12px;
+}
+.mobile-nav .nav-btn.active { background: var(--accent); color: #fff; }
+.mobile-nav .nav-btn.active .dot { background: #fff; }
+
+@media (max-width: 700px) {
+  .sidebar { display: none; }
+  .mobile-nav { display: block; }
+  .main { padding: 16px 0 32px; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .flow { flex-direction: column; }
+  .flow-step + .flow-step { margin-left: 0; margin-top: 24px; }
+  .flow-step + .flow-step::before { content: '↓'; left: 50%; top: -18px; transform: translateX(-50%); }
+}
+</style>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav">
+  <div class="mobile-nav-inner" id="mobileNav"></div>
+</div>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="title">Corp Site Playbook</div>
+      <div class="sub">Next.js Owner Guide</div>
+    </div>
+
+    <div class="nav-section">Kiến trúc</div>
+    <button class="nav-btn active" data-tab="overview"><span class="dot"></span>Tổng quan</button>
+    <button class="nav-btn" data-tab="arch"><span class="dot"></span>Architecture src/</button>
+    <button class="nav-btn" data-tab="data"><span class="dot"></span>Data Layer</button>
+    <button class="nav-btn" data-tab="request"><span class="dot"></span>Request Flow</button>
+
+    <div class="nav-section">Key Concerns</div>
+    <button class="nav-btn" data-tab="seo"><span class="dot"></span>SEO + GEO</button>
+    <button class="nav-btn" data-tab="ai"><span class="dot"></span>AI trong dự án</button>
+    <button class="nav-btn" data-tab="deploy"><span class="dot"></span>Deploy & Ops</button>
+    <button class="nav-btn" data-tab="security"><span class="dot"></span>Security</button>
+
+    <div class="nav-section">Owner Kit</div>
+    <button class="nav-btn" data-tab="playbook"><span class="dot"></span>Playbook thêm feature</button>
+    <button class="nav-btn" data-tab="gaps"><span class="dot"></span>Gap & Backlog</button>
+    <button class="nav-btn" data-tab="decide"><span class="dot"></span>Giữ hay Đổi?</button>
+    <button class="nav-btn" data-tab="skills"><span class="dot"></span>Skill checklist</button>
+
+    <div class="theme-toggle">
+      <button onclick="toggleTheme()">☀︎ / ☾ Theme</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- OVERVIEW -->
+    <div class="panel active" id="panel-overview">
+      <div class="panel-title">🏗 Tổng quan dự án</div>
+      <div class="panel-desc">Corporate / brand site — Next.js App Router, SEO + GEO first-class, hybrid data (API + static), standalone deploy.</div>
+
+      <div class="section-label">Mental Model — Đây là gì?</div>
+      <div class="grid-3">
+        <div class="pillar">
+          <div class="pillar-icon">🏢</div>
+          <div class="pillar-name">Corporate Site</div>
+          <div class="pillar-desc">Không phải SaaS. Không login, không session, không middleware. Website giới thiệu công ty + IR + ESG + Brand tiếng Hàn.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">🔀</div>
+          <div class="pillar-name">URL Migration</div>
+          <div class="pillar-desc">Rebuild từ URL cũ (<code>/company</code>, <code>/investors</code>) sang mới (<code>/about</code>, <code>/ir</code>). Hàng trăm 301 redirect trong next.config.ts.</div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">📡</div>
+          <div class="pillar-name">Hybrid Content</div>
+          <div class="pillar-desc">API/CMS cho phần động (news, notices, announcements). Copy tĩnh colocated cho trang dài ổn định — PM tự edit trong repo.</div>
+        </div>
+      </div>
+
+      <div class="section-label" style="margin-top:20px">Stack kỹ thuật</div>
+      <div class="card">
+        <table class="tbl">
+          <thead><tr><th>Lớp</th><th>Công nghệ</th><th>Ghi chú</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag tag-blue">Framework</span></td><td>Next.js 16.3.8 (App Router) · React 19</td><td>Server Components mặc định</td></tr>
+            <tr><td><span class="tag tag-blue">Language</span></td><td>TypeScript 5 strict</td><td>Không có any ngoài generated code</td></tr>
+            <tr><td><span class="tag tag-green">UI</span></td><td>Tailwind CSS 4 · clsx + tw-merge · lucide-react</td><td>Không MUI, không Shadcn</td></tr>
+            <tr><td><span class="tag tag-yellow">HTTP</span></td><td>Axios + OpenAPI/Swagger generated client</td><td>WAF chặn non-browser UA → fake UA</td></tr>
+            <tr><td><span class="tag tag-purple">Deploy</span></td><td>AWS CodeBuild → EC2 hoặc Vercel · Node LTS standalone</td><td>Health endpoint /hc, port cố định</td></tr>
+            <tr><td><span class="tag tag-red">Không có</span></td><td>Redux/Zustand · React Query · UI kit · Test · Sentry</td><td>Nhẹ hơn nhưng ít safety net</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section-label">Owner phải nắm 4 trụ cột này</div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">🗺 SEO Registry</div>
+          <p>Toàn bộ metadata tĩnh tập trung tại <code>src/lib/seo.ts</code>. Thêm route mới = thêm vào đây. Sitemap tự động generate từ <code>seoPages</code>.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">🔄 Redirect Map</div>
+          <p><code>next.config.ts</code> chứa hàng trăm 301 redirect từ URL cũ. Phải duy trì khi đổi slug để không mất SEO juice.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">📊 Mock vs API Matrix</div>
+          <p>Không phải trang nào cũng live API. IR financial statements còn dùng mock. Phải biết trang nào là real-time trước khi hứa với client.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">⚙️ Cache + Deploy</div>
+          <p><code>ttlCache</code> in-memory per process. Multi-instance EC2 = cache không đồng nhất. Standalone Node, không serverless.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARCHITECTURE -->
+    <div class="panel" id="panel-arch">
+      <div class="panel-title">📁 Architecture src/</div>
+      <div class="panel-desc">Phân tầng rõ ràng — mỗi layer có đúng một trách nhiệm.</div>
+
+      <div class="section-label">Sơ đồ phân tầng</div>
+      <div class="flow">
+        <div class="flow-step">
+          <div class="step-label">Layer 1</div>
+          <div class="step-name">app/**/page.tsx</div>
+          <div class="step-file">Route · metadata · orchestration</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-label">Layer 2</div>
+          <div class="step-name">components/**</div>
+          <div class="step-file">UI · Shell · Client islands</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-label">Layer 3</div>
+          <div class="step-name">data/api/**</div>
+          <div class="step-file">Adapter · DTO→ViewModel · Cache</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-label">Layer 4</div>
+          <div class="step-name">lib/ + api-client/</div>
+          <div class="step-file">HTTP · SEO · Routes · BBS helpers</div>
+        </div>
+      </div>
+
+      <div class="section-label">Quy tắc ownership (quan trọng)</div>
+      <div class="card">
+        <ul>
+          <li><strong>page.tsx mỏng</strong> — Gọi data function, pageMeta, bọc layout width, gắn JsonLd. Không map field API trực tiếp trong page.</li>
+          <li><strong>data/api là contract nội bộ</strong> — Đổi Swagger chỉ sửa đây + regen client. UI không được import <code>FrontNewsroomSelectResponse</code> trực tiếp.</li>
+          <li><strong>data/mock = fallback + UI config</strong> — Types, constants, UI config + fallback shape + content chưa/không lên API (financial tables, ESG diagrams).</li>
+          <li><strong>lib = cross-cutting thuần</strong> — seo, routes, bbs helpers, cache, assetPath. Không có business logic.</li>
+        </ul>
+      </div>
+
+      <div class="section-label">Lỗi phổ biến khi team lớn</div>
+      <div class="card" style="border-color: color-mix(in srgb, var(--red) 40%, transparent);">
+        <div class="card-title" style="color:var(--red)">⚠️ Anti-pattern</div>
+        <p>Gọi <code>api.api.detail2()</code> trực tiếp trong component → khó test, khó đổi API, duplicate mapping logic. Luôn đi qua <code>data/api/</code>.</p>
+      </div>
+
+      <div class="section-label">Pattern UI — Shell + Colocation</div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title">Shell Pattern (x4)</div>
+          <ul style="list-style:none;padding:0">
+            <li style="padding:4px 0;border-bottom:1px solid var(--border);font-size:12.5px"><code>CompanyShell</code> → About section</li>
+            <li style="padding:4px 0;border-bottom:1px solid var(--border);font-size:12.5px"><code>GovernanceShell</code> → IR governance</li>
+            <li style="padding:4px 0;border-bottom:1px solid var(--border);font-size:12.5px"><code>EsgLayout</code> (client) → Sustainability</li>
+            <li style="padding:4px 0;font-size:12.5px"><code>BrandShell</code> → Brand section</li>
+          </ul>
+          <p style="margin-top:8px;font-size:12px;color:var(--fg3)">Shell thường là Client Component vì dùng usePathname để highlight active nav.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">ESG Colocation (template 10+ trang)</div>
+          <div class="code">sustainability/esg/environment/
+  page.tsx       ← metadata + compose
+  _components/   ← chỉ dùng route này
+  _data/content.ts ← copy + download links</div>
+          <p style="font-size:12px;color:var(--fg3)">Clone trang ESG mới: copy folder, sửa _data, đổi ảnh public/, thêm seoPages, thêm tab esg-nav.ts.</p>
+        </div>
+      </div>
+
+      <div class="section-label">Ma trận nguồn dữ liệu</div>
+      <div class="card">
+        <table class="tbl">
+          <thead><tr><th>Loại trang</th><th>Nguồn</th><th>Ví dụ</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag tag-blue">Dynamic API</span></td><td>API + adapter</td><td>Newsroom, notices, board resolutions, announcements</td></tr>
+            <tr><td><span class="tag tag-green">API + mock UI</span></td><td>API data, mock layout</td><td>history (hero mock, timeline API), home</td></tr>
+            <tr><td><span class="tag tag-yellow">Tĩnh hoàn toàn</span></td><td>_data/content.ts + public/</td><td>Hầu hết /sustainability/esg/*</td></tr>
+            <tr><td><span class="tag tag-red">Mock hoàn toàn</span></td><td>data/mock/*</td><td>Financial tables, charts chưa có API, board members</td></tr>
+            <tr><td><span class="tag tag-purple">Hybrid</span></td><td>API + mock tabs</td><td>Section vừa có API vừa có UI config cố định</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- DATA LAYER -->
+    <div class="panel" id="panel-data">
+      <div class="panel-title">🔌 Data Layer</div>
+      <div class="panel-desc">Pattern vàng — copy sang bất kỳ dự án Next.js nào. Ba lớp cache phải nắm rõ.</div>
+
+      <div class="section-label">Pattern chuẩn (getNewsroomPage)</div>
+      <div class="code"><span class="k">export const</span> getNewsroomPage = <span class="k">cache</span>(          <span class="c">// Layer 1: React cache() — dedupe 1 request</span>
+  <span class="k">async</span> (query: NewsroomQuery = {}): <span class="k">Promise</span>&lt;Paged&lt;NewsStory&gt;&gt; => {
+    <span class="k">try</span> {
+      <span class="k">return await</span> ttlCache(cacheKey, <span class="k">async</span> () => {  <span class="c">// Layer 2: in-memory TTL</span>
+        <span class="k">const</span> { data } = <span class="k">await</span> api.api.page1({ ... });
+        <span class="k">return</span> toPaged(data.data, (item) => toStory(item, tabs));
+      }, CACHE_TTL.long);
+    } <span class="k">catch</span> (error) {
+      logApiError(<span class="s">"[api] GET /api/v1/newsroom failed"</span>, error);
+      <span class="k">return</span> emptyPage&lt;NewsStory&gt;();              <span class="c">// Graceful degrade</span>
+    }
+  },
+);</div>
+
+      <div class="section-label">Ba lớp cache</div>
+      <div class="card">
+        <table class="tbl">
+          <thead><tr><th>Lớp</th><th>Cơ chế</th><th>Phạm vi</th><th>Khi nào đủ</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>React cache()</code></td>
+              <td>Dedupe trong 1 render</td>
+              <td>Cùng function gọi 2 lần trong 1 request → 1 fetch</td>
+              <td>Luôn dùng</td>
+            </tr>
+            <tr>
+              <td><code>ttlCache</code></td>
+              <td>In-memory TTL + stale-while-revalidate</td>
+              <td>Per Node process — N instance EC2 = N cache riêng</td>
+              <td>1–2 instance, đơn giản</td>
+            </tr>
+            <tr>
+              <td><code>force-dynamic</code></td>
+              <td>Không static HTML at build</td>
+              <td>Mọi page hit server; no build-time HTML</td>
+              <td>Footer/legal luôn mới</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section-label">Owner checklist khi scale</div>
+      <ul class="checklist">
+        <li>Tăng số instance EC2 → hit rate cache giảm, API load tăng → xem xét Redis</li>
+        <li>Deploy rolling → cache cold mỗi process → tăng TTL hoặc dùng ISR</li>
+        <li>Muốn shared cache → Redis (chưa có trong repo) hoặc ISR/fetch revalidate</li>
+        <li>API down → site không crash → UX có thể trống (emptyPage) → là product decision</li>
+      </ul>
+
+      <div class="section-label">WAF Workaround (nợ kỹ thuật)</div>
+      <div class="card" style="border-color:color-mix(in srgb, var(--yellow) 40%, transparent)">
+        <div class="card-title" style="color:var(--yellow)">⚠️ Kỹ thuật nợ cần biết</div>
+        <p><code>lib/api.ts</code>: Server-side fetch dùng User-Agent Chrome cố định vì WAF CloudFront chặn UA không phải browser. Fix đúng: allowlist IP origin server hoặc dùng private ALB thay vì public API.</p>
+      </div>
+
+      <div class="section-label">BBS Domain (lib/bbs.ts)</div>
+      <div class="card">
+        <ul>
+          <li><strong>mediaUrl</strong> → static CDN path hoặc /api/v1/file/download/{seq}</li>
+          <li><strong>toPaged</strong> → chuẩn hóa list/pageNum/pages/totalCount cho mọi board</li>
+          <li><strong>Date</strong>: API YYYY-MM-DD → hiển thị YYYY.MM.DD</li>
+          <li>Thêm board mới: copy pattern boardResolution.ts, không invent pagination mới</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- REQUEST FLOW -->
+    <div class="panel" id="panel-request">
+      <div class="panel-title">⚡ Request Flow</div>
+      <div class="panel-desc">Vòng đời một request trong Next.js 16 App Router — từ edge đến client islands.</div>
+
+      <div class="section-label">5 bước xử lý một request</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-label">Step 1</div>
+          <div class="tl-name">Edge/Node nhận request → route match app/</div>
+          <div class="tl-desc">Không có middleware.ts → không redirect/auth tập trung. SEO redirect nằm hết trong next.config.ts.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-label">Step 2</div>
+          <div class="tl-name">Root layout.tsx (force-dynamic)</div>
+          <div class="tl-desc">Parallel fetch getFamilySites() + getFooterLegalLinks() → Header/Footer luôn fresh mọi request.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-label">Step 3</div>
+          <div class="tl-name">Nested layout (optional)</div>
+          <div class="tl-desc">CompanyShell, GovernanceShell, EsgLayout (client tabs) — chỉ khi section cần active nav.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-label">Step 4</div>
+          <div class="tl-name">page.tsx fetch + render RSC HTML</div>
+          <div class="tl-desc">Gọi data/api functions, pageMeta, JsonLd. Render HTML trên server và stream về.</div>
+        </div>
+        <div class="tl-item" style="padding-bottom:0">
+          <div class="tl-label">Step 5</div>
+          <div class="tl-name">Client islands hydrate</div>
+          <div class="tl-desc">Breadcrumb dropdown, news filter/pagination (URL state ?tab=&q=&page=), modals, charts. URL state tốt cho share link.</div>
+        </div>
+      </div>
+
+      <div class="section-label" style="margin-top:20px">Luồng dữ liệu đầy đủ</div>
+      <div class="code">page.tsx (RSC)
+  └─► data/api/*.ts (adapter)
+         ├─► lib/api.ts → api-client/index.ts → Backend API
+         ├─► data/mock/ (fallback / tĩnh ESG)
+         └─► ttlCache / React cache()</div>
+
+      <div class="section-label">Client navigation (NewsContent)</div>
+      <div class="card">
+        <ul>
+          <li>Dùng <code>useRouter</code> + <code>searchParams</code> — filter là URL state (<code>?tab=&q=&page=</code>)</li>
+          <li>Tốt cho share link, back/forward button hoạt động đúng</li>
+          <li>SEO: <code>generateMetadata</code> set <code>index: false</code> khi có <code>?q=</code> → tránh thin content</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- SEO -->
+    <div class="panel" id="panel-seo">
+      <div class="panel-title">🔍 SEO + GEO</div>
+      <div class="panel-desc">SEO là bounded context trong repo này — coi src/lib/seo.ts như một mini product.</div>
+
+      <div class="section-label">Trung tâm SEO (src/lib/seo.ts ~440 dòng)</div>
+      <div class="card">
+        <table class="tbl">
+          <thead><tr><th>Concern</th><th>Implementation</th></tr></thead>
+          <tbody>
+            <tr><td>Title length</td><td><code>fitKeyword</code> target ~20–30 chars, full title ~50–60 + brand suffix</td></tr>
+            <tr><td>Description</td><td><code>fitDescription</code> 70–80 chars + CTA pad</td></tr>
+            <tr><td>Static routes</td><td><code>seoPages</code> object — single registry cho sitemap + metadata</td></tr>
+            <tr><td>Dynamic detail</td><td><code>generateMetadata</code> + <code>titleContext</code> khi title CMS ngắn</td></tr>
+            <tr><td>Structured data</td><td>JSON-LD helpers → <code>JsonLd</code> component (Organization, Breadcrumb, FAQ, NewsArticle, Service)</td></tr>
+            <tr><td>Canonical</td><td><code>metadataBase</code> + <code>alternates.canonical</code></td></tr>
+            <tr><td>GEO</td><td><code>public/llms.txt</code> + AI bots trong robots.ts</td></tr>
+            <tr><td>Migration</td><td>Redirect map 301 trong next.config.ts</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section-label">GEO — Generative Engine Optimization (không phải geolocation)</div>
+      <div class="card" style="border-color:color-mix(in srgb, var(--purple) 40%, transparent)">
+        <div class="card-title" style="color:var(--purple)">🤖 Tối ưu cho LLM crawler</div>
+        <ul>
+          <li><strong>public/llms.txt</strong>: mô tả site, URL chính thức, quy tắc trích dẫn cho AI (tránh URL cũ menu_id, không coi ?q= là trang chính thức)</li>
+          <li><strong>robots.ts</strong>: liệt kê rõ GPTBot, ClaudeBot, PerplexityBot, Google-Extended với rule allow/disallow</li>
+          <li>Đây là tư duy mới — site lớn cần chuẩn bị để LLM cite đúng URL</li>
+        </ul>
+      </div>
+
+      <div class="section-label">Owner Playbook — thêm route mới</div>
+      <ol class="checklist" style="list-style:none;counter-reset:step">
+        <li class="done">Thêm entry <code>seoPages.newPage</code> trong seo.ts</li>
+        <li class="done">Export <code>metadata = pageMeta(seoPages.newPage)</code> trên page.tsx</li>
+        <li class="done">Nếu cần schema → helper JsonLd + inject trong page</li>
+        <li class="done">Redirect URL cũ nếu thay slug</li>
+        <li class="done">Verify sitemap (static tự vào qua Object.values(seoPages))</li>
+        <li class="done">Noindex khi có query string (?q=) để tránh thin content</li>
+      </ol>
+    </div>
+
+    <!-- AI -->
+    <div class="panel" id="panel-ai">
+      <div class="panel-title">🤖 AI trong dự án — thực tế là gì?</div>
+      <div class="panel-desc">Tách biệt AI trong sản phẩm vs AI trong workflow phát triển.</div>
+
+      <div class="section-label">Trong sản phẩm (website)</div>
+      <div class="card">
+        <div class="card-title" style="color:var(--red)">Không có AI runtime trong app</div>
+        <ul>
+          <li>Không có MCP, không gọi OpenAI/Anthropic trong codebase</li>
+          <li>"AI" = nội dung marketing: block "AI 미디어", popup AI B tv (<code>AiBtvPopupModal</code>)</li>
+          <li>Runtime = SSR/RSC + REST API backend thuần, không chatbot/embed model</li>
+        </ul>
+      </div>
+
+      <div class="section-label">AI trong workflow dev (IDE level)</div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title" style="color:var(--green)">✅ Cursor + Claude (bạn dùng)</div>
+          <ul>
+            <li>Design-to-code từ Figma Dev Mode</li>
+            <li>Component scaffolding tự động</li>
+            <li>Code review inline</li>
+            <li>Giảm đáng kể thời gian implementation</li>
+          </ul>
+          <p style="margin-top:8px;font-size:12px;color:var(--fg3)">Đây là IDE-level tool, không phản ánh kiến trúc runtime của site.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">AGENTS.md trong repo</div>
+          <p>Block Next.js 16 do <code>next dev</code> inject — hướng dẫn agent (Cursor, Copilot) đọc docs trong <code>node_modules/next</code> thay vì hallucinate API cũ.</p>
+          <p style="margin-top:8px;font-size:12px;color:var(--fg3)">Pattern hay: để AGENTS.md guide AI agent hiểu đúng version framework.</p>
+        </div>
+      </div>
+
+      <div class="section-label">MCP — có không?</div>
+      <div class="card" style="border-color:color-mix(in srgb, var(--yellow) 40%, transparent)">
+        <div class="card-title" style="color:var(--yellow)">Không có MCP trong codebase</div>
+        <p>Không có cấu hình MCP, Cursor rules (.cursor/), hay orchestration "băm task" trong code. MCP/Figma là môi trường IDE của dev, không phải kiến trúc của product.</p>
+        <p style="margin-top:8px;font-size:12px;color:var(--fg2)"><strong>Tuy nhiên</strong> — GEO (llms.txt + bot rules) là cách site nói chuyện với AI crawlers. Đây là tư duy AI-native ở layer content, không phải runtime.</p>
+      </div>
+
+      <div class="section-label">Bài học cho dự án tiếp theo</div>
+      <div class="card">
+        <ul>
+          <li>AI trong workflow (Cursor) ≠ AI trong product — tách biệt khi nói chuyện với client</li>
+          <li>GEO (llms.txt) nên là standard cho brand lớn từ ngày đầu</li>
+          <li>AGENTS.md là pattern tốt để guide AI agent hiểu đúng version framework đang dùng</li>
+          <li>Nếu cần AI runtime thật (chatbot, RAG): cần thêm API layer riêng, không nhúng trực tiếp vào corporate front</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- DEPLOY -->
+    <div class="panel" id="panel-deploy">
+      <div class="panel-title">🚀 Deploy & Ops</div>
+      <div class="panel-desc">Standalone Node 24 trên AWS EC2 — những gì owner hay thiếu.</div>
+
+      <div class="section-label">Pipeline deploy</div>
+      <div class="flow">
+        <div class="flow-step">
+          <div class="step-label">CI Step 1</div>
+          <div class="step-name">npm ci</div>
+          <div class="step-file">Install dependencies</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-label">CI Step 2</div>
+          <div class="step-name">Lint + Typecheck</div>
+          <div class="step-file">eslint + tsc --noEmit</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-label">CI Step 3</div>
+          <div class="step-name">Audit critical</div>
+          <div class="step-file">npm audit --audit-level=critical</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-label">CI Step 4</div>
+          <div class="step-name">Build</div>
+          <div class="step-file">next build → standalone</div>
+        </div>
+        <div class="flow-step">
+          <div class="step-label">Deploy</div>
+          <div class="step-name">CodeDeploy → EC2</div>
+          <div class="step-file">Health check /hc</div>
+        </div>
+      </div>
+
+      <div class="section-label">Checklist vận hành</div>
+      <div class="card">
+        <table class="tbl">
+          <thead><tr><th>Topic</th><th>Chi tiết</th><th>Watch out</th></tr></thead>
+          <tbody>
+            <tr><td>Build artifact</td><td><code>dist/</code> = standalone + <code>.next/static</code></td><td>Sai path → 404 toàn bộ static assets</td></tr>
+            <tr><td>Health check</td><td>GET /hc → JSON 200</td><td>Script dùng port 3000, thực tế 13000 — phải đối chiếu</td></tr>
+            <tr><td>Process</td><td>next start trên EC2, không serverless</td><td>Restart = cache cold</td></tr>
+            <tr><td>Images</td><td>unoptimized: true → không dùng /_next/image</td><td>CDN phải optimize, không phải Next.js</td></tr>
+            <tr><td>CSP</td><td>Report-Only hiện tại</td><td>Track reports trước khi enforce để tránh block GTM/GA</td></tr>
+            <tr><td>Node version</td><td>Cố định trong engines + .nvmrc</td><td>Phải khớp giữa package.json và runtime server</td></tr>
+            <tr><td>Offline build</td><td>docs/offline-build.md</td><td>Khi mạng đóng / private npm registry</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section-label">API client workflow</div>
+      <div class="code"><span class="c"># Khi backend đổi API schema:</span>
+npm run gen-swagger-skb          <span class="c"># Regen từ https://api.renew-skb.click/v3/api-docs</span>
+                                  <span class="c"># Output: src/api-client/index.ts (@ts-nocheck)</span>
+
+<span class="c"># Sau đó:</span>
+<span class="k">1.</span> Fix compile errors tại data/api/* (TypeScript báo tại adapter, không rải UI)
+<span class="k">2.</span> Smoke test các route dynamic
+<span class="k">3.</span> Verify build pass</div>
+    </div>
+
+    <!-- SECURITY -->
+    <div class="panel" id="panel-security">
+      <div class="panel-title">🔒 Security</div>
+      <div class="panel-desc">Public corporate site — attack surface nhỏ nhưng có vài điểm cần chú ý.</div>
+
+      <div class="section-label">Attack surface (không có auth)</div>
+      <div class="grid-2">
+        <div class="card" style="border-color:color-mix(in srgb, var(--red) 40%, transparent)">
+          <div class="card-title" style="color:var(--red)">⚠️ XSS từ CMS HTML</div>
+          <p><code>HtmlContent</code> + <code>dangerouslySetInnerHTML</code>. Không có sanitize library trong repo. Cần security review nếu CMS admin bị compromise.</p>
+        </div>
+        <div class="card" style="border-color:color-mix(in srgb, var(--yellow) 40%, transparent)">
+          <div class="card-title" style="color:var(--yellow)">⚠️ Dependency audit</div>
+          <p>CI chỉ block ở <code>critical</code>. Dependencies cần review định kỳ. npm audit không phải silver bullet.</p>
+        </div>
+      </div>
+
+      <div class="section-label">Headers đã có</div>
+      <div class="card">
+        <ul>
+          <li><code>X-Frame-Options: DENY</code> — ngăn clickjacking</li>
+          <li><code>Referrer-Policy</code> — kiểm soát referrer leak</li>
+          <li><code>Permissions-Policy</code> — tắt geolocation API trình duyệt</li>
+          <li><code>CSP Report-Only</code> — chưa enforce, đang collect violations</li>
+          <li>GTM third-party → cần trong CSP allowlist khi enforce</li>
+          <li>Không secrets trong repo — API public read-only phía front</li>
+        </ul>
+      </div>
+
+      <div class="section-label">Client hygiene</div>
+      <div class="card">
+        <p><code>instrumentation-client.ts</code> + script gỡ attribute extension (<code>bis_skin_checked</code>) gây hydration warning — pattern hay để giữ hydration clean khi user có browser extensions.</p>
+      </div>
+    </div>
+
+    <!-- PLAYBOOK -->
+    <div class="panel" id="panel-playbook">
+      <div class="panel-title">📋 Playbook thêm feature</div>
+      <div class="panel-desc">3 loại feature phổ biến — copy checklist này cho dự án tiếp theo.</div>
+
+      <div class="section-label">A. Trang marketing tĩnh (giống ESG)</div>
+      <ol class="checklist" style="list-style:none">
+        <li class="done">Route trong <code>app/.../page.tsx</code></li>
+        <li class="done">Thêm <code>seoPages</code> + optional JsonLd</li>
+        <li class="done"><code>_data/content.ts</code> + <code>_components/</code> nếu &gt; ~100 dòng</li>
+        <li class="done">Shell layout nếu section lớn cần sub-nav</li>
+        <li class="done">Redirect nếu thay URL cũ</li>
+      </ol>
+
+      <div class="section-label">B. Danh sách + chi tiết từ API (giống newsroom)</div>
+      <ol class="checklist" style="list-style:none">
+        <li class="done">Swagger endpoint mới → regen nếu chưa có</li>
+        <li class="done"><code>data/api/feature.ts</code>: types, mappers, <code>cache</code> + <code>ttlCache</code>, try/catch</li>
+        <li class="done"><code>page.tsx</code> list + <code>[id]/page.tsx</code> với <code>generateMetadata</code></li>
+        <li class="done">Client component cho query string nếu filter phức tạp</li>
+        <li class="done">Sitemap loop nếu cần index detail pages</li>
+        <li class="done">Thêm vào <code>routes.ts</code> + <code>nav.ts</code></li>
+      </ol>
+
+      <div class="section-label">C. Chỉ đổi SEO toàn site</div>
+      <ol class="checklist" style="list-style:none">
+        <li class="done">Sửa <code>seo.ts</code> (seoPages, title/description logic)</li>
+        <li class="done">Sửa <code>layout.tsx</code> keywords/OG tags</li>
+        <li class="done">Update <code>public/llms.txt</code> nếu thêm section mới</li>
+        <li class="done">Test với Google Rich Results Test</li>
+        <li class="done">Verify Search Console coverage</li>
+      </ol>
+
+      <div class="section-label">File "north star" — đọc theo thứ tự 2–3 giờ</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-label">File 1</div>
+          <div class="tl-name">next.config.ts</div>
+          <div class="tl-desc">Redirect + security headers + image config. Toàn bộ migration SEO nằm đây.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-label">File 2</div>
+          <div class="tl-name">src/lib/seo.ts</div>
+          <div class="tl-desc">Đọc toàn bộ ~440 dòng. Hiểu fitKeyword, seoPages, pageMeta.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-label">File 3</div>
+          <div class="tl-name">src/lib/api.ts + src/data/api/newsroom.ts</div>
+          <div class="tl-desc">Pattern vàng — hiểu rồi copy sang mọi dự án.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-label">File 4</div>
+          <div class="tl-name">src/lib/ttlCache.ts + src/lib/bbs.ts</div>
+          <div class="tl-desc">Cache mechanism + BBS domain logic.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-label">File 5</div>
+          <div class="tl-name">src/app/newsroom/page.tsx + [id]/page.tsx</div>
+          <div class="tl-desc">Template cho dynamic list + detail pages.</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-label">File 6</div>
+          <div class="tl-name">src/app/sustainability/esg/environment/</div>
+          <div class="tl-desc">Template cho static content pages.</div>
+        </div>
+        <div class="tl-item" style="padding-bottom:0">
+          <div class="tl-label">File 7</div>
+          <div class="tl-name">deploy/buildspecs/front-web.yml</div>
+          <div class="tl-desc">Deploy pipeline — ship đúng cách.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAPS -->
+    <div class="panel" id="panel-gaps">
+      <div class="panel-title">🕳 Gap & Backlog</div>
+      <div class="panel-desc">Biết gap này giúp bạn không hứa over khi sang dự án mới.</div>
+
+      <div class="card">
+        <table class="tbl">
+          <thead><tr><th>Gap</th><th>Rủi ro</th><th>Fix khi nào</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><span class="tag tag-red">Tests (unit/e2e)</span></td>
+              <td>Regression SEO, adapter mapping errors không phát hiện sớm</td>
+              <td>Long-term owner → Playwright smoke + adapter unit tests</td>
+            </tr>
+            <tr>
+              <td><span class="tag tag-yellow">middleware.ts</span></td>
+              <td>Không centralize geo/locale/A-B testing</td>
+              <td>Khi cần feature đó</td>
+            </tr>
+            <tr>
+              <td><span class="tag tag-yellow">ISR / partial static</span></td>
+              <td>Chi phí server cao hơn cần thiết (force-dynamic toàn bộ)</td>
+              <td>Traffic cao + API ổn định</td>
+            </tr>
+            <tr>
+              <td><span class="tag tag-yellow">Shared Redis cache</span></td>
+              <td>Cache không nhất quán multi-instance EC2</td>
+              <td>Khi scale lên N instances</td>
+            </tr>
+            <tr>
+              <td><span class="tag tag-blue">i18n</span></td>
+              <td>Chỉ có ko (tiếng Hàn) — mở rộng ngôn ngữ = project mới</td>
+              <td>Khi có yêu cầu đa ngôn ngữ</td>
+            </tr>
+            <tr>
+              <td><span class="tag tag-red">HTML sanitize</span></td>
+              <td>XSS từ CMS nếu admin bị compromise</td>
+              <td>Sớm nhất có thể — add DOMPurify</td>
+            </tr>
+            <tr>
+              <td><span class="tag tag-blue">Design system doc</span></td>
+              <td>Tailwind tokens rải rác trong className, khó onboard</td>
+              <td>Khi team lớn lên</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- DECIDE -->
+    <div class="panel" id="panel-decide">
+      <div class="panel-title">⚖️ Giữ hay Đổi?</div>
+      <div class="panel-desc">Khi bắt đầu dự án mới, copy bảng này để ra quyết định kiến trúc.</div>
+
+      <div class="card">
+        <table class="compare">
+          <thead><tr><th>Quyết định kiến trúc</th><th>Giữ khi…</th><th>Đổi khi…</th></tr></thead>
+          <tbody>
+            <tr>
+              <td><code>force-dynamic</code> everywhere</td>
+              <td class="keep">Footer/legal luôn mới, API thay thường xuyên</td>
+              <td class="change">Traffic cao, API ổn định → ISR selective</td>
+            </tr>
+            <tr>
+              <td><code>ttlCache</code> in-memory</td>
+              <td class="keep">1–2 instance, deployment đơn giản</td>
+              <td class="change">N instances EC2 → Redis shared cache</td>
+            </tr>
+            <tr>
+              <td>Mock financials</td>
+              <td class="keep">Backend chưa sẵn, số liệu ít đổi</td>
+              <td class="change">Cần audit trail → API + cache dài</td>
+            </tr>
+            <tr>
+              <td>Colocated ESG <code>_data</code></td>
+              <td class="keep">Copy ổn định, dev edit trực tiếp</td>
+              <td class="change">Non-dev edit nhiều → headless CMS (Contentful, Sanity)</td>
+            </tr>
+            <tr>
+              <td>Swagger gen client</td>
+              <td class="keep">Backend Java/Spring OpenAPI</td>
+              <td class="change">GraphQL/tRPC → bỏ generated layer</td>
+            </tr>
+            <tr>
+              <td>No tests</td>
+              <td class="keep">Deadline migration, MVP</td>
+              <td class="change">Long-term owner → Playwright smoke + adapter unit tests</td>
+            </tr>
+            <tr>
+              <td>No middleware.ts</td>
+              <td class="keep">Simple redirect trong config là đủ</td>
+              <td class="change">Cần auth, locale detection, A/B testing</td>
+            </tr>
+            <tr>
+              <td>Images unoptimized</td>
+              <td class="keep">Dùng CDN external optimize (CloudFront)</td>
+              <td class="change">CDN không có resize → bật lại Next/Image</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="panel" id="panel-skills">
+      <div class="panel-title">🎯 Skill Checklist</div>
+      <div class="panel-desc">Những skill cần có khi owner một corporate Next.js site — dùng cho CV và phỏng vấn.</div>
+
+      <div class="section-label">Bắt buộc (đã có)</div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title" style="color:var(--green)">✅ Next.js App Router</div>
+          <ul>
+            <li>RSC, nested layouts, metadata API</li>
+            <li>force-dynamic, streaming</li>
+            <li>Client islands pattern</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--green)">✅ Cache strategy</div>
+          <ul>
+            <li>React cache() deduplication</li>
+            <li>In-memory TTL + stale-while-revalidate</li>
+            <li>Graceful degradation khi API lỗi</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--green)">✅ OpenAPI adapter layer</div>
+          <ul>
+            <li>swagger-typescript-api generation</li>
+            <li>DTO → ViewModel mapping</li>
+            <li>Contract-first API layer</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--green)">✅ Technical SEO</div>
+          <ul>
+            <li>Canonical, redirect migration (301)</li>
+            <li>schema.org structured data (JSON-LD)</li>
+            <li>Sitemap + robots.ts</li>
+            <li>GEO / llms.txt (bonus)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section-label">Nên có (cần thêm practice)</div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title" style="color:var(--yellow)">📈 AWS CodeBuild/CodeDeploy</div>
+          <p>Standalone Node deploy, buildspec YAML, health check pattern. Thực hành qua dự án thực tế.</p>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--yellow)">📈 WAF/CDN constraints</div>
+          <p>Server-side fetch qua CloudFront, UA spoofing, private ALB pattern. Biết trade-off.</p>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--yellow)">📈 Testing (Playwright)</div>
+          <p>Hiện tại zero tests. Nên thêm smoke test cho SEO regression + adapter mapping.</p>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--yellow)">📈 Redis / ISR</div>
+          <p>Shared cache cho multi-instance. ISR selective thay cho force-dynamic toàn bộ.</p>
+        </div>
+      </div>
+
+      <div class="section-label">Cách delegate (owner biết giao việc)</div>
+      <div class="card">
+        <ul>
+          <li><strong>Copy/legal ESG content</strong> → PM + legal team (không cần dev)</li>
+          <li><strong>GTM/analytics</strong> → marketing team (chỉ cần biết CSP implications)</li>
+          <li><strong>Swagger/backend schema</strong> → backend team với contract <code>data/api</code></li>
+          <li><strong>Design tokens/Figma</strong> → designer, dev implement qua Tailwind config</li>
+        </ul>
+      </div>
+
+      <div class="section-label">Bullet points cho CV/interview từ dự án này</div>
+      <div class="card" style="border-color:color-mix(in srgb, var(--accent) 40%, transparent)">
+        <ul>
+          <li>Rebuilt corporate site (Next.js App Router, React 19, TypeScript strict) — migrated 100+ legacy URLs with 301 redirects, zero SEO regression</li>
+          <li>Designed adapter layer pattern (OpenAPI → generated client → domain adapters → RSC) — backend schema changes isolated to <code>data/api/</code>, zero UI rework on API updates</li>
+          <li>Implemented technical SEO system: JSON-LD (Organization, Breadcrumb, FAQ, NewsArticle), sitemap auto-generation, GEO optimization (llms.txt, AI bot rules)</li>
+          <li>Applied 3-layer caching (React cache + in-memory TTL + graceful degrade) — site stays live on API errors, returns empty state instead of crashing</li>
+          <li>AI-native workflow: Cursor + Claude for design-to-code, component scaffolding — maintained code quality across Korean-stakeholder Agile delivery</li>
+        </ul>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const tabs = [
+  { id: 'overview', label: 'Tổng quan' },
+  { id: 'arch', label: 'Architecture' },
+  { id: 'data', label: 'Data Layer' },
+  { id: 'request', label: 'Request Flow' },
+  { id: 'seo', label: 'SEO + GEO' },
+  { id: 'ai', label: 'AI' },
+  { id: 'deploy', label: 'Deploy' },
+  { id: 'security', label: 'Security' },
+  { id: 'playbook', label: 'Playbook' },
+  { id: 'gaps', label: 'Gaps' },
+  { id: 'decide', label: 'Giữ / Đổi' },
+  { id: 'skills', label: 'Skills' },
+];
+
+// Build mobile nav
+const mobileInner = document.getElementById('mobileNav');
+tabs.forEach(t => {
+  const btn = document.createElement('button');
+  btn.className = 'nav-btn' + (t.id === 'overview' ? ' active' : '');
+  btn.dataset.tab = t.id;
+  btn.innerHTML = `<span class="dot"></span>${t.label}`;
+  btn.addEventListener('click', () => switchTab(t.id));
+  mobileInner.appendChild(btn);
+});
+
+function switchTab(tabId) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === tabId);
+  });
+  const panel = document.getElementById('panel-' + tabId);
+  if (panel) panel.classList.add('active');
+}
+
+document.querySelectorAll('.sidebar .nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+});
+
+function toggleTheme() {
+  const root = document.documentElement;
+  const cur = root.getAttribute('data-theme');
+  if (!cur) {
+    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  } else {
+    root.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+  }
+}
+</script>
+
+</body></html>
