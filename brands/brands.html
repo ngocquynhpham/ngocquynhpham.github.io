@@ -1,0 +1,1331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Quinn UX Guidelines</title>
+<link rel="icon" href="https://placehold.co/32x32/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Q" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+<style>
+:root {
+  --bg: #f8f8f7; --bg2: #ffffff; --bg3: #f0efed; --border: #e2e0db;
+  --fg: #1a1917; --fg2: #5c5a55; --fg3: #9c9890;
+  --accent: #6366f1; --accent-bg: #eef2ff;
+  --sidebar-w: 240px; --radius: 8px;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f0f14; --bg2: #16161f; --bg3: #222230; --border: #2e2e3d;
+    --fg: #f2f2f8; --fg2: #a8a8b8; --fg3: #6b6b7a;
+    --accent: #818cf8; --accent-bg: #1e1b4b;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f0f14; --bg2: #16161f; --bg3: #222230; --border: #2e2e3d;
+  --fg: #f2f2f8; --fg2: #a8a8b8; --fg3: #6b6b7a;
+  --accent: #818cf8; --accent-bg: #1e1b4b;
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { font-family: var(--font-sans); background: var(--bg); color: var(--fg); font-size: 14px; line-height: 1.6; display: flex; flex-direction: column; min-height: 100%; }
+.mono { font-family: var(--font-mono); font-size: 12px; }
+.topbar {
+  position: sticky; top: 0; z-index: 100; background: var(--bg2);
+  border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px;
+  padding: 10px 16px;
+}
+.topbar-title { font-size: 15px; font-weight: 700; flex: 1; }
+.topbar-title span { color: var(--accent); }
+.topbar-badge { font-size: 11px; font-weight: 600; color: var(--fg2); background: var(--bg3); border: 1px solid var(--border); padding: 2px 8px; border-radius: 20px; }
+.theme-btn, .plat-btn {
+  background: var(--bg3); border: 1px solid var(--border); color: var(--fg2);
+  border-radius: 6px; padding: 4px 10px; font-size: 12px; cursor: pointer; font-family: var(--font-sans);
+}
+.plat-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.menu-btn { display: none; background: none; border: none; color: var(--fg2); cursor: pointer; font-size: 20px; }
+.layout { display: flex; flex: 1; min-height: 0; }
+.sidebar {
+  width: var(--sidebar-w); min-width: var(--sidebar-w); background: var(--bg2);
+  border-right: 1px solid var(--border); overflow-y: auto; padding: 12px 0 32px;
+  position: sticky; top: 49px; height: calc(100vh - 49px);
+}
+.nav-section-label { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--fg3); padding: 8px 16px 4px; }
+.nav-item {
+  display: flex; align-items: center; gap: 8px; padding: 6px 16px; font-size: 13px; font-weight: 500;
+  color: var(--fg2); cursor: pointer; border-left: 2px solid transparent; transition: all .12s; user-select: none;
+}
+.nav-item:hover { background: var(--bg3); color: var(--fg); }
+.nav-item.active { color: var(--accent); border-left-color: var(--accent); background: var(--accent-bg); }
+.nav-item.hidden { display: none; }
+.nav-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--fg3); flex-shrink: 0; }
+.nav-item.active .nav-dot { background: var(--accent); }
+.main { flex: 1; min-width: 0; overflow-y: auto; padding: 28px 28px 48px; }
+.panel { display: none; max-width: 920px; }
+.panel.active { display: block; }
+.panel-header { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+.panel-header h2 { font-size: 22px; font-weight: 700; margin: 0 0 6px; }
+.panel-desc { color: var(--fg2); font-size: 13.5px; margin: 0; max-width: 640px; }
+.card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 16px; }
+.card-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--fg3); margin-bottom: 10px; }
+.bullet-list { margin: 0; padding-left: 18px; color: var(--fg2); font-size: 13.5px; line-height: 1.7; }
+.figure-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-bottom: 16px; }
+.figure { margin: 0; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.figure img { display: block; width: 100%; aspect-ratio: 16/9; object-fit: cover; background: var(--bg3); }
+.figure figcaption { font-size: 11px; color: var(--fg3); padding: 8px 10px; border-top: 1px solid var(--border); }
+.callout { display: flex; gap: 10px; padding: 12px 14px; border-radius: var(--radius); font-size: 13px; color: var(--fg2); }
+.callout-info { background: var(--accent-bg); border-left: 3px solid var(--accent); }
+@media (max-width: 680px) {
+  .sidebar { display: none; position: fixed; top: 49px; left: 0; bottom: 0; z-index: 200; width: 260px; box-shadow: 4px 0 24px rgba(0,0,0,.15); }
+  .sidebar.open { display: block; }
+  .menu-btn { display: block; }
+  .main { padding: 20px 16px 40px; }
+  .topbar-badge { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <button class="menu-btn" onclick="toggleMenu()" aria-label="Menu">☰</button>
+  <div class="topbar-title">✦ <span>Quinn</span> UX Guidelines</div>
+  <span class="topbar-badge">TV design system</span>
+  <button type="button" class="plat-btn active" data-plat="all" onclick="setPlatform('all')">All</button>
+  <button type="button" class="plat-btn" data-plat="web" onclick="setPlatform('web')">Android TV</button>
+  <button type="button" class="plat-btn" data-plat="ios" onclick="setPlatform('ios')">Apple TV</button>
+  <button class="theme-btn" onclick="toggleTheme()">Theme</button>
+</div>
+<div class="layout">
+  <nav class="sidebar" id="sidebar"><div class="nav-section">
+      <div class="nav-section-label">Start</div>
+      <div class="nav-item" onclick="show('overview')" data-panel="overview" data-platform="all">
+        <span class="nav-dot"></span>Overview
+      </div>
+    </div><div class="nav-section">
+      <div class="nav-section-label">Principle</div>
+      <div class="nav-item" onclick="show('principle')" data-panel="principle" data-platform="all">
+        <span class="nav-dot"></span>Principle
+      </div><div class="nav-item" onclick="show('principle-tv')" data-panel="principle-tv" data-platform="all">
+        <span class="nav-dot"></span>TV Environment
+      </div><div class="nav-item" onclick="show('principle-contents')" data-panel="principle-contents" data-platform="all">
+        <span class="nav-dot"></span>Contents
+      </div><div class="nav-item" onclick="show('principle-navigation')" data-panel="principle-navigation" data-platform="all">
+        <span class="nav-dot"></span>Navigation
+      </div><div class="nav-item" onclick="show('principle-legacy')" data-panel="principle-legacy" data-platform="all">
+        <span class="nav-dot"></span>Respect for Legacy
+      </div><div class="nav-item" onclick="show('principle-a11y')" data-panel="principle-a11y" data-platform="all">
+        <span class="nav-dot"></span>Accessibility
+      </div>
+    </div><div class="nav-section">
+      <div class="nav-section-label">Foundation · Web</div>
+      <div class="nav-item" onclick="show('f-web')" data-panel="f-web" data-platform="web">
+        <span class="nav-dot"></span>Foundation (Android TV)
+      </div><div class="nav-item" onclick="show('f-web-color')" data-panel="f-web-color" data-platform="web">
+        <span class="nav-dot"></span>Color
+      </div><div class="nav-item" onclick="show('f-web-type')" data-panel="f-web-type" data-platform="web">
+        <span class="nav-dot"></span>Typography
+      </div><div class="nav-item" onclick="show('f-web-icon')" data-panel="f-web-icon" data-platform="web">
+        <span class="nav-dot"></span>Iconography
+      </div><div class="nav-item" onclick="show('f-web-layout')" data-panel="f-web-layout" data-platform="web">
+        <span class="nav-dot"></span>Layout
+      </div><div class="nav-item" onclick="show('f-web-focus')" data-panel="f-web-focus" data-platform="web">
+        <span class="nav-dot"></span>Focus
+      </div><div class="nav-item" onclick="show('f-web-adot')" data-panel="f-web-adot" data-platform="web">
+        <span class="nav-dot"></span>Quinn Assist
+      </div><div class="nav-item" onclick="show('f-web-voiceid')" data-panel="f-web-voiceid" data-platform="web">
+        <span class="nav-dot"></span>Voice profile
+      </div>
+    </div><div class="nav-section">
+      <div class="nav-section-label">Foundation · iOS</div>
+      <div class="nav-item" onclick="show('f-ios')" data-panel="f-ios" data-platform="ios">
+        <span class="nav-dot"></span>Foundation (Apple TV)
+      </div><div class="nav-item" onclick="show('f-ios-color')" data-panel="f-ios-color" data-platform="ios">
+        <span class="nav-dot"></span>Color (tvOS)
+      </div><div class="nav-item" onclick="show('f-ios-type')" data-panel="f-ios-type" data-platform="ios">
+        <span class="nav-dot"></span>Typography (tvOS)
+      </div><div class="nav-item" onclick="show('f-ios-icon')" data-panel="f-ios-icon" data-platform="ios">
+        <span class="nav-dot"></span>Iconography (tvOS)
+      </div><div class="nav-item" onclick="show('f-ios-layout')" data-panel="f-ios-layout" data-platform="ios">
+        <span class="nav-dot"></span>Layout (tvOS)
+      </div><div class="nav-item" onclick="show('f-ios-focus')" data-panel="f-ios-focus" data-platform="ios">
+        <span class="nav-dot"></span>Focus (tvOS)
+      </div><div class="nav-item" onclick="show('f-ios-motion')" data-panel="f-ios-motion" data-platform="ios">
+        <span class="nav-dot"></span>Motion
+      </div>
+    </div><div class="nav-section">
+      <div class="nav-section-label">Components · Web</div>
+      <div class="nav-item" onclick="show('c-web')" data-panel="c-web" data-platform="web">
+        <span class="nav-dot"></span>Components (Web)
+      </div><div class="nav-item" onclick="show('c-web-buttons')" data-panel="c-web-buttons" data-platform="web">
+        <span class="nav-dot"></span>Buttons
+      </div><div class="nav-item" onclick="show('c-web-checkbox')" data-panel="c-web-checkbox" data-platform="web">
+        <span class="nav-dot"></span>Checkbox
+      </div><div class="nav-item" onclick="show('c-web-radio')" data-panel="c-web-radio" data-platform="web">
+        <span class="nav-dot"></span>Radio
+      </div><div class="nav-item" onclick="show('c-web-switch')" data-panel="c-web-switch" data-platform="web">
+        <span class="nav-dot"></span>Switch
+      </div><div class="nav-item" onclick="show('c-web-dropdowns')" data-panel="c-web-dropdowns" data-platform="web">
+        <span class="nav-dot"></span>Dropdown
+      </div><div class="nav-item" onclick="show('c-web-dock')" data-panel="c-web-dock" data-platform="web">
+        <span class="nav-dot"></span>Dock
+      </div><div class="nav-item" onclick="show('c-web-flag')" data-panel="c-web-flag" data-platform="web">
+        <span class="nav-dot"></span>Flags
+      </div><div class="nav-item" onclick="show('c-web-gnb')" data-panel="c-web-gnb" data-platform="web">
+        <span class="nav-dot"></span>GNB
+      </div><div class="nav-item" onclick="show('c-web-inputs')" data-panel="c-web-inputs" data-platform="web">
+        <span class="nav-dot"></span>Inputs
+      </div><div class="nav-item" onclick="show('c-web-ime')" data-panel="c-web-ime" data-platform="web">
+        <span class="nav-dot"></span>IME
+      </div><div class="nav-item" onclick="show('c-web-loading')" data-panel="c-web-loading" data-platform="web">
+        <span class="nav-dot"></span>Loading
+      </div><div class="nav-item" onclick="show('c-web-menus')" data-panel="c-web-menus" data-platform="web">
+        <span class="nav-dot"></span>Menus
+      </div><div class="nav-item" onclick="show('c-web-pagination')" data-panel="c-web-pagination" data-platform="web">
+        <span class="nav-dot"></span>Pagination
+      </div><div class="nav-item" onclick="show('c-web-popup')" data-panel="c-web-popup" data-platform="web">
+        <span class="nav-dot"></span>Pop up
+      </div><div class="nav-item" onclick="show('c-web-tabs')" data-panel="c-web-tabs" data-platform="web">
+        <span class="nav-dot"></span>Tabs
+      </div><div class="nav-item" onclick="show('c-web-tooltip')" data-panel="c-web-tooltip" data-platform="web">
+        <span class="nav-dot"></span>Tooltip
+      </div>
+    </div><div class="nav-section">
+      <div class="nav-section-label">Components · iOS</div>
+      <div class="nav-item" onclick="show('c-ios')" data-panel="c-ios" data-platform="ios">
+        <span class="nav-dot"></span>Components (tvOS)
+      </div><div class="nav-item" onclick="show('c-ios-badges')" data-panel="c-ios-badges" data-platform="ios">
+        <span class="nav-dot"></span>Badges
+      </div><div class="nav-item" onclick="show('c-ios-block')" data-panel="c-ios-block" data-platform="ios">
+        <span class="nav-dot"></span>Block
+      </div><div class="nav-item" onclick="show('c-ios-buttons')" data-panel="c-ios-buttons" data-platform="ios">
+        <span class="nav-dot"></span>Buttons
+      </div><div class="nav-item" onclick="show('c-ios-checkbox')" data-panel="c-ios-checkbox" data-platform="ios">
+        <span class="nav-dot"></span>Checkbox
+      </div><div class="nav-item" onclick="show('c-ios-radio')" data-panel="c-ios-radio" data-platform="ios">
+        <span class="nav-dot"></span>Radio
+      </div><div class="nav-item" onclick="show('c-ios-switch')" data-panel="c-ios-switch" data-platform="ios">
+        <span class="nav-dot"></span>Switch
+      </div><div class="nav-item" onclick="show('c-ios-slider')" data-panel="c-ios-slider" data-platform="ios">
+        <span class="nav-dot"></span>Slider
+      </div><div class="nav-item" onclick="show('c-ios-gnb')" data-panel="c-ios-gnb" data-platform="ios">
+        <span class="nav-dot"></span>GNB
+      </div><div class="nav-item" onclick="show('c-ios-inputs')" data-panel="c-ios-inputs" data-platform="ios">
+        <span class="nav-dot"></span>Inputs
+      </div><div class="nav-item" onclick="show('c-ios-ime')" data-panel="c-ios-ime" data-platform="ios">
+        <span class="nav-dot"></span>IME
+      </div><div class="nav-item" onclick="show('c-ios-loading')" data-panel="c-ios-loading" data-platform="ios">
+        <span class="nav-dot"></span>Loading
+      </div><div class="nav-item" onclick="show('c-ios-pagination')" data-panel="c-ios-pagination" data-platform="ios">
+        <span class="nav-dot"></span>Pagination
+      </div><div class="nav-item" onclick="show('c-ios-player')" data-panel="c-ios-player" data-platform="ios">
+        <span class="nav-dot"></span>Player
+      </div><div class="nav-item" onclick="show('c-ios-popup')" data-panel="c-ios-popup" data-platform="ios">
+        <span class="nav-dot"></span>Pop up
+      </div><div class="nav-item" onclick="show('c-ios-splash')" data-panel="c-ios-splash" data-platform="ios">
+        <span class="nav-dot"></span>Splash
+      </div><div class="nav-item" onclick="show('c-ios-tabs')" data-panel="c-ios-tabs" data-platform="ios">
+        <span class="nav-dot"></span>Tabs
+      </div><div class="nav-item" onclick="show('c-ios-tooltip')" data-panel="c-ios-tooltip" data-platform="ios">
+        <span class="nav-dot"></span>Tooltip
+      </div>
+    </div></nav>
+  <main class="main"><section class="panel" id="panel-overview" data-platform="all">
+  <header class="panel-header">
+    <h2>Overview</h2>
+    <p class="panel-desc">Quinn design system — TV-first UX for streaming on Android TV and Apple TV. Principle, foundation tokens, and components for ten-foot UI.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Principle — why we design for TV remotes</li><li>Foundation — color, type, layout, motion</li><li>Components — shippable UI patterns</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Overview" alt="" loading="lazy" />
+  <figcaption>Hero spec</figcaption>
+</figure>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Journey%20map" alt="" loading="lazy" />
+  <figcaption>Discovery → play flow</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-principle" data-platform="all">
+  <header class="panel-header">
+    <h2>Principle</h2>
+    <p class="panel-desc">Quinn core value: joy through media. Content over chrome. Household viewing, remote-only input.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Core value &amp; audience</li><li>TV, content, navigation, legacy, accessibility</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Principle%20hub" alt="" loading="lazy" />
+  <figcaption>Principle hub</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-principle-tv" data-platform="all">
+  <header class="panel-header">
+    <h2>TV Environment</h2>
+    <p class="panel-desc">16:9, 1920×1080 baseline, safe zones, viewing distance, high contrast displays.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Safe margins</li><li>D-pad + OK + Back</li><li>Low visual density at distance</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Safe%20zone" alt="" loading="lazy" />
+  <figcaption>Safe zone</figcaption>
+</figure>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Viewing%20distance" alt="" loading="lazy" />
+  <figcaption>Viewing distance</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-principle-contents" data-platform="all">
+  <header class="panel-header">
+    <h2>Contents</h2>
+    <p class="panel-desc">Poster-led discovery. Live vs on-demand mental models. Media first.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Hierarchy on tiles</li><li>Live vs VOD</li><li>Rich thumbnails</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Content%20rails" alt="" loading="lazy" />
+  <figcaption>Content rails</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-principle-navigation" data-platform="all">
+  <header class="panel-header">
+    <h2>Navigation</h2>
+    <p class="panel-desc">Predictable focus. Fewest steps to playback. Align with platform norms.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Focus entry points</li><li>Information order</li><li>Cross-platform patterns</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Focus%20map" alt="" loading="lazy" />
+  <figcaption>Focus map</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-principle-legacy" data-platform="all">
+  <header class="panel-header">
+    <h2>Respect for Legacy</h2>
+    <p class="panel-desc">Evolve patterns without breaking learned behavior. Guide users through change.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Incremental rollout</li><li>Onboarding</li><li>Shared OTT conventions</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Migration%20UX" alt="" loading="lazy" />
+  <figcaption>Migration UX</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-principle-a11y" data-platform="all">
+  <header class="panel-header">
+    <h2>Accessibility</h2>
+    <p class="panel-desc">Inclusive by default — captions, contrast, plain language, WCAG-oriented reviews.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Captions &amp; descriptions</li><li>Inclusive visuals</li><li>Contrast &amp; focus</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20A11y%20checklist" alt="" loading="lazy" />
+  <figcaption>A11y checklist</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-f-web" data-platform="web">
+  <header class="panel-header">
+    <h2>Foundation (Android TV)</h2>
+    <p class="panel-desc">Quinn tokens for Android TV — color, typography, icons, layout, focus, assistant, voice profile.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Dark-first theme</li><li>Quinn Blue accent</li><li>Grid &amp; elevation</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Foundation%20web" alt="" loading="lazy" />
+  <figcaption>Foundation web</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-f-web-color" data-platform="web">
+  <header class="panel-header">
+    <h2>Color</h2>
+    <p class="panel-desc">Brand, neutral, and semantic ramps. Sparingly use accent on dark UI.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Primary / neutral</li><li>States</li><li>Calibrate on TV</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Color%20tokens" alt="" loading="lazy" />
+  <figcaption>Color tokens</figcaption>
+</figure>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Dark%20UI%20swatches" alt="" loading="lazy" />
+  <figcaption>Dark UI swatches</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-f-web-type" data-platform="web">
+  <header class="panel-header">
+    <h2>Typography</h2>
+    <p class="panel-desc">Quinn type scale for titles, body, and captions at ten-foot distance.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Weight roles</li><li>Size ramp</li><li>Line height</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Type%20scale" alt="" loading="lazy" />
+  <figcaption>Type scale</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-f-web-icon" data-platform="web">
+  <header class="panel-header">
+    <h2>Iconography</h2>
+    <p class="panel-desc">Tokenized icon states. Clear silhouettes from the couch.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Naming convention</li><li>Focus states</li><li>Grid alignment</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Icon%20grid" alt="" loading="lazy" />
+  <figcaption>Icon grid</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-f-web-layout" data-platform="web">
+  <header class="panel-header">
+    <h2>Layout</h2>
+    <p class="panel-desc">Rails, blocks, and spacing for remote traversal.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>8px grid</li><li>Horizontal rails</li><li>Vertical stacks</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Layout%20grid" alt="" loading="lazy" />
+  <figcaption>Layout grid</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-f-web-focus" data-platform="web">
+  <header class="panel-header">
+    <h2>Focus</h2>
+    <p class="panel-desc">Visible focus for D-pad selection — scale, stroke, glow per component.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Default vs focused</li><li>Selected vs pressed</li><li>Initial focus rules</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Focus%20states" alt="" loading="lazy" />
+  <figcaption>Focus states</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-f-web-adot" data-platform="web">
+  <header class="panel-header">
+    <h2>Quinn Assist</h2>
+    <p class="panel-desc">Voice &amp; chat assistant for media — STT, thinking state, answer layout.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Voice bubbles</li><li>Processing state</li><li>Multi-turn UI</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Assist%20flow" alt="" loading="lazy" />
+  <figcaption>Assist flow</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-f-web-voiceid" data-platform="web">
+  <header class="panel-header">
+    <h2>Voice profile</h2>
+    <p class="panel-desc">Optional voice enrollment for personalized assistant responses.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Enrollment</li><li>Retry &amp; errors</li><li>Privacy copy</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Voice%20profile" alt="" loading="lazy" />
+  <figcaption>Voice profile</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-f-ios" data-platform="ios">
+  <header class="panel-header">
+    <h2>Foundation (Apple TV)</h2>
+    <p class="panel-desc">tvOS-aligned tokens with shared Quinn brand.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Parallax &amp; motion</li><li>HIG alignment</li><li>Brand consistency</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Foundation%20tvOS" alt="" loading="lazy" />
+  <figcaption>Foundation tvOS</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-f-ios-color" data-platform="ios">
+  <header class="panel-header">
+    <h2>Color (tvOS)</h2>
+    <p class="panel-desc">Palettes tuned for Apple TV displays.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Brand on tvOS</li><li>Semantic colors</li><li>A11y</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20tvOS%20color" alt="" loading="lazy" />
+  <figcaption>tvOS color</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-f-ios-type" data-platform="ios">
+  <header class="panel-header">
+    <h2>Typography (tvOS)</h2>
+    <p class="panel-desc">Readable hierarchy for ten-foot UI.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Dynamic type</li><li>Roles</li><li>Localization</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20tvOS%20type" alt="" loading="lazy" />
+  <figcaption>tvOS type</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-f-ios-icon" data-platform="ios">
+  <header class="panel-header">
+    <h2>Iconography (tvOS)</h2>
+    <p class="panel-desc">Custom + system symbols for Siri Remote.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Export sizes</li><li>Focus parity</li><li>States</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20tvOS%20icons" alt="" loading="lazy" />
+  <figcaption>tvOS icons</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-f-ios-layout" data-platform="ios">
+  <header class="panel-header">
+    <h2>Layout (tvOS)</h2>
+    <p class="panel-desc">Safe areas and parallax-friendly structure.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Top shelf</li><li>Section gaps</li><li>Rails</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20tvOS%20layout" alt="" loading="lazy" />
+  <figcaption>tvOS layout</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-f-ios-focus" data-platform="ios">
+  <header class="panel-header">
+    <h2>Focus (tvOS)</h2>
+    <p class="panel-desc">Focus engine — parallax, scale, coordinated motion.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Focus guides</li><li>Groups</li><li>Reduce motion</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20tvOS%20focus" alt="" loading="lazy" />
+  <figcaption>tvOS focus</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-f-ios-motion" data-platform="ios">
+  <header class="panel-header">
+    <h2>Motion</h2>
+    <p class="panel-desc">Transitions and timing for natural TV movement.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Screen changes</li><li>Duration</li><li>FPS</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Motion%20curves" alt="" loading="lazy" />
+  <figcaption>Motion curves</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-web" data-platform="web">
+  <header class="panel-header">
+    <h2>Components (Web)</h2>
+    <p class="panel-desc">Android TV kit — controls, navigation, feedback.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Token states</li><li>Remote targets</li><li>Modals &amp; toasts</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Component%20map" alt="" loading="lazy" />
+  <figcaption>Component map</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-web-buttons" data-platform="web">
+  <header class="panel-header">
+    <h2>Buttons</h2>
+    <p class="panel-desc">Primary, secondary, icon, destructive.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Label + container</li><li>Focus/disabled</li><li>Icon pairs</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Buttons" alt="" loading="lazy" />
+  <figcaption>Buttons</figcaption>
+</figure>
+<figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Button%20states" alt="" loading="lazy" />
+  <figcaption>Button states</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-web-checkbox" data-platform="web">
+  <header class="panel-header">
+    <h2>Checkbox</h2>
+    <p class="panel-desc">Multi-select in lists.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Multi only</li><li>List consistency</li><li>Labels</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Checkbox" alt="" loading="lazy" />
+  <figcaption>Checkbox</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-web-radio" data-platform="web">
+  <header class="panel-header">
+    <h2>Radio</h2>
+    <p class="panel-desc">Single choice per group.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Exclusive select</li><li>Optional artwork</li><li>Clear selected</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Radio%20group" alt="" loading="lazy" />
+  <figcaption>Radio group</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-web-switch" data-platform="web">
+  <header class="panel-header">
+    <h2>Switch</h2>
+    <p class="panel-desc">Binary settings with obvious on/off.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Contrast</li><li>Focus ring</li><li>No ambiguous states</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Switch" alt="" loading="lazy" />
+  <figcaption>Switch</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-web-dropdowns" data-platform="web">
+  <header class="panel-header">
+    <h2>Dropdown</h2>
+    <p class="panel-desc">Expandable lists from a trigger.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Open/closed</li><li>Remote parity</li><li>Submenus</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Dropdown" alt="" loading="lazy" />
+  <figcaption>Dropdown</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-web-dock" data-platform="web">
+  <header class="panel-header">
+    <h2>Dock</h2>
+    <p class="panel-desc">Collapsed hint vs expanded actions.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Simple dock</li><li>Expand to use</li><li>Entry point</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Dock" alt="" loading="lazy" />
+  <figcaption>Dock</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-web-flag" data-platform="web">
+  <header class="panel-header">
+    <h2>Flags</h2>
+    <p class="panel-desc">Badges on tiles — live, new, promo.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>On posters</li><li>Contrast</li><li>Minimal noise</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Flags" alt="" loading="lazy" />
+  <figcaption>Flags</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-web-gnb" data-platform="web">
+  <header class="panel-header">
+    <h2>GNB</h2>
+    <p class="panel-desc">Global nav and brand lockup.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>You are here</li><li>Subnav</li><li>Profile</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20GNB" alt="" loading="lazy" />
+  <figcaption>GNB</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-web-inputs" data-platform="web">
+  <header class="panel-header">
+    <h2>Inputs</h2>
+    <p class="panel-desc">Search and forms with errors and focus.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>IME handoff</li><li>Validation</li><li>Search variant</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Inputs" alt="" loading="lazy" />
+  <figcaption>Inputs</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-web-ime" data-platform="web">
+  <header class="panel-header">
+    <h2>IME</h2>
+    <p class="panel-desc">On-screen keyboard grids.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Full keypad</li><li>Languages</li><li>Focus path</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20IME" alt="" loading="lazy" />
+  <figcaption>IME</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-web-loading" data-platform="web">
+  <header class="panel-header">
+    <h2>Loading</h2>
+    <p class="panel-desc">Spinner vs progress thresholds.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>>1s spinner</li><li>>4s progress</li><li>Non-blocking</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Loading" alt="" loading="lazy" />
+  <figcaption>Loading</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-web-menus" data-platform="web">
+  <header class="panel-header">
+    <h2>Menus</h2>
+    <p class="panel-desc">Overflow and context menus.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Placement</li><li>Dismiss</li><li>Depth</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Menus" alt="" loading="lazy" />
+  <figcaption>Menus</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-web-pagination" data-platform="web">
+  <header class="panel-header">
+    <h2>Pagination</h2>
+    <p class="panel-desc">Position in long lists.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Index + total</li><li>Window</li><li>Wrap rules</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Pagination" alt="" loading="lazy" />
+  <figcaption>Pagination</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-web-popup" data-platform="web">
+  <header class="panel-header">
+    <h2>Pop up</h2>
+    <p class="panel-desc">Modal vs toast patterns.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Modal decisions</li><li>Toast info</li><li>Focus trap</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Popup" alt="" loading="lazy" />
+  <figcaption>Popup</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-web-tabs" data-platform="web">
+  <header class="panel-header">
+    <h2>Tabs</h2>
+    <p class="panel-desc">Block vs page tabs.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>One active</li><li>Focus memory</li><li>Swap content</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Tabs" alt="" loading="lazy" />
+  <figcaption>Tabs</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-web-tooltip" data-platform="web">
+  <header class="panel-header">
+    <h2>Tooltip</h2>
+    <p class="panel-desc">Rare hints on ten-foot UI.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Short copy</li><li>Non-blocking</li><li>Auto dismiss</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Tooltip" alt="" loading="lazy" />
+  <figcaption>Tooltip</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-ios" data-platform="ios">
+  <header class="panel-header">
+    <h2>Components (tvOS)</h2>
+    <p class="panel-desc">Player, splash, badges, controls for Apple TV.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Parallax cards</li><li>Player chrome</li><li>Native feel</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Components%20tvOS" alt="" loading="lazy" />
+  <figcaption>Components tvOS</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-ios-badges" data-platform="ios">
+  <header class="panel-header">
+    <h2>Badges</h2>
+    <p class="panel-desc">Promo and status on artwork.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Poster badges</li><li>Live/new</li><li>Legibility</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Badges" alt="" loading="lazy" />
+  <figcaption>Badges</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-ios-block" data-platform="ios">
+  <header class="panel-header">
+    <h2>Block</h2>
+    <p class="panel-desc">Content rail templates.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Tile families</li><li>Sizes</li><li>Focus scale</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Blocks" alt="" loading="lazy" />
+  <figcaption>Blocks</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-ios-buttons" data-platform="ios">
+  <header class="panel-header">
+    <h2>Buttons</h2>
+    <p class="panel-desc">tvOS actions with Quinn tokens.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Primary/destructive</li><li>Placement</li><li>Motion</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20tvOS%20buttons" alt="" loading="lazy" />
+  <figcaption>tvOS buttons</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-ios-checkbox" data-platform="ios">
+  <header class="panel-header">
+    <h2>Checkbox</h2>
+    <p class="panel-desc">Multi-select lists.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Parity with web</li><li>tvOS chrome</li><li>Groups</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20tvOS%20checkbox" alt="" loading="lazy" />
+  <figcaption>tvOS checkbox</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-ios-radio" data-platform="ios">
+  <header class="panel-header">
+    <h2>Radio</h2>
+    <p class="panel-desc">Exclusive choices.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Single select</li><li>Artwork option</li><li>Default</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20tvOS%20radio" alt="" loading="lazy" />
+  <figcaption>tvOS radio</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-ios-switch" data-platform="ios">
+  <header class="panel-header">
+    <h2>Switch</h2>
+    <p class="panel-desc">Settings toggles.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Label</li><li>Apply immediately</li><li>Focus order</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20tvOS%20switch" alt="" loading="lazy" />
+  <figcaption>tvOS switch</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-ios-slider" data-platform="ios">
+  <header class="panel-header">
+    <h2>Slider</h2>
+    <p class="panel-desc">Scrubbing and values.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Steps</li><li>Preview</li><li>Commit</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Slider" alt="" loading="lazy" />
+  <figcaption>Slider</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-ios-gnb" data-platform="ios">
+  <header class="panel-header">
+    <h2>GNB</h2>
+    <p class="panel-desc">Top-level tvOS navigation.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Tabs</li><li>Titles</li><li>Account</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20tvOS%20GNB" alt="" loading="lazy" />
+  <figcaption>tvOS GNB</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-ios-inputs" data-platform="ios">
+  <header class="panel-header">
+    <h2>Inputs</h2>
+    <p class="panel-desc">Search and fields with Siri Remote.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Search first</li><li>Errors</li><li>Dictation</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20tvOS%20inputs" alt="" loading="lazy" />
+  <figcaption>tvOS inputs</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-ios-ime" data-platform="ios">
+  <header class="panel-header">
+    <h2>IME</h2>
+    <p class="panel-desc">Text entry overlay.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Grid</li><li>Languages</li><li>Done/cancel</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20tvOS%20IME" alt="" loading="lazy" />
+  <figcaption>tvOS IME</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-ios-loading" data-platform="ios">
+  <header class="panel-header">
+    <h2>Loading</h2>
+    <p class="panel-desc">Network-bound feedback.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Brand motion</li><li>Timeout</li><li>Background</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20tvOS%20loading" alt="" loading="lazy" />
+  <figcaption>tvOS loading</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-ios-pagination" data-platform="ios">
+  <header class="panel-header">
+    <h2>Pagination</h2>
+    <p class="panel-desc">Carousel and list position.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Dots</li><li>Counts</li><li>Edges</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20tvOS%20pagination" alt="" loading="lazy" />
+  <figcaption>tvOS pagination</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-ios-player" data-platform="ios">
+  <header class="panel-header">
+    <h2>Player</h2>
+    <p class="panel-desc">Transport, timeline, related content.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Auto-hide chrome</li><li>Episodes</li><li>Errors</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Player%20UI" alt="" loading="lazy" />
+  <figcaption>Player UI</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-ios-popup" data-platform="ios">
+  <header class="panel-header">
+    <h2>Pop up</h2>
+    <p class="panel-desc">Alerts and sheets.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Action order</li><li>Destructive</li><li>Full-screen</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20tvOS%20alert" alt="" loading="lazy" />
+  <figcaption>tvOS alert</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-ios-splash" data-platform="ios">
+  <header class="panel-header">
+    <h2>Splash</h2>
+    <p class="panel-desc">Launch brand moment.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Brief</li><li>Motion</li><li>No input</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20Splash" alt="" loading="lazy" />
+  <figcaption>Splash</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-ios-tabs" data-platform="ios">
+  <header class="panel-header">
+    <h2>Tabs</h2>
+    <p class="panel-desc">In-screen segments.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Block vs page</li><li>Focus</li><li>Swipe/remote</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20tvOS%20tabs" alt="" loading="lazy" />
+  <figcaption>tvOS tabs</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section>
+<section class="panel" id="panel-c-ios-tooltip" data-platform="ios">
+  <header class="panel-header">
+    <h2>Tooltip</h2>
+    <p class="panel-desc">Optional hints.</p>
+  </header>
+  <div class="card">
+    <div class="card-title">Key points</div>
+    <ul class="bullet-list"><li>Don’t cover focus</li><li>Brief</li><li>Rare</li></ul>
+  </div>
+  <div class="figure-grid"><figure class="figure">
+  <img src="https://placehold.co/800x450/1e1b4b/e9e7ff/png?text=Quinn%20%C2%B7%20tvOS%20tooltip" alt="" loading="lazy" />
+  <figcaption>tvOS tooltip</figcaption>
+</figure></div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <span>Replace placeholders via <a href="https://placehold.co/" target="_blank" rel="noopener">placehold.co</a> URLs in <code class="mono">brands/scripts/build-brands-spa.mjs</code>, then <code class="mono">node brands/scripts/build-brands-spa.mjs</code>.</span>
+  </div>
+</section></main>
+</div>
+<script>
+function toggleTheme() {
+  const root = document.documentElement;
+  const cur = root.getAttribute('data-theme');
+  root.setAttribute('data-theme', cur === 'dark' ? 'light' : 'dark');
+  try { localStorage.setItem('quinn-theme', root.getAttribute('data-theme')); } catch (e) {}
+}
+try {
+  const t = localStorage.getItem('quinn-theme');
+  if (t) document.documentElement.setAttribute('data-theme', t);
+} catch (e) {}
+
+function toggleMenu() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+document.addEventListener('click', e => {
+  const sb = document.getElementById('sidebar');
+  if (sb.classList.contains('open') && !sb.contains(e.target) && !e.target.closest('.menu-btn')) sb.classList.remove('open');
+});
+
+function setPlatform(p) {
+  document.querySelectorAll('.plat-btn').forEach(b => b.classList.toggle('active', b.dataset.plat === p));
+  document.querySelectorAll('[data-platform]').forEach(el => {
+    const plat = el.getAttribute('data-platform');
+    const show = p === 'all' || plat === 'all' || plat === p;
+    el.classList.toggle('hidden', !show);
+    if (el.classList.contains('panel') && !show) el.classList.remove('active');
+  });
+  if (!document.querySelector('.nav-item.active:not(.hidden)')) show('overview');
+  try { localStorage.setItem('quinn-plat', p); } catch (e) {}
+}
+
+function show(id) {
+  const panel = document.getElementById('panel-' + id);
+  if (!panel || panel.classList.contains('hidden')) return;
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  panel.classList.add('active');
+  const nav = document.querySelector('.nav-item[data-panel="' + id + '"]');
+  if (nav) nav.classList.add('active');
+  document.getElementById('sidebar').classList.remove('open');
+  try { localStorage.setItem('quinn-panel', id); } catch (e) {}
+}
+
+try {
+  const sp = localStorage.getItem('quinn-plat');
+  if (sp) setPlatform(sp);
+  else setPlatform('all');
+  const saved = localStorage.getItem('quinn-panel');
+  if (saved && document.getElementById('panel-' + saved)) show(saved);
+  else show('overview');
+} catch (e) { show('overview'); }
+</script>
+</body>
+</html>
