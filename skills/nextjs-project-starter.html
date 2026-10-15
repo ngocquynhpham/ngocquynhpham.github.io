@@ -1,0 +1,1490 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Next.js Project Starter</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+
+<style>
+/* Layout: left sidebar nav + main content, collapsible on mobile */
+:root {
+  --bg: #f8f8f7;
+  --bg2: #ffffff;
+  --bg3: #f0efed;
+  --border: #e2e0db;
+  --fg: #1a1917;
+  --fg2: #5c5a55;
+  --fg3: #9c9890;
+  --accent: #2563eb;
+  --accent-bg: #eff5ff;
+  --green: #16a34a;
+  --green-bg: #f0fdf4;
+  --amber: #d97706;
+  --amber-bg: #fffbeb;
+  --red: #dc2626;
+  --red-bg: #fef2f2;
+  --purple: #7c3aed;
+  --purple-bg: #f5f3ff;
+  --teal: #0d9488;
+  --teal-bg: #f0fdfa;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --sidebar-w: 220px;
+  --radius: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141412;
+    --bg2: #1e1d1b;
+    --bg3: #2a2926;
+    --border: #3a3835;
+    --fg: #f0ede8;
+    --fg2: #a8a49c;
+    --fg3: #5c5a55;
+    --accent: #4d8ef0;
+    --accent-bg: #1a2540;
+    --green: #4ade80;
+    --green-bg: #0f2a1a;
+    --amber: #fbbf24;
+    --amber-bg: #2a1f0a;
+    --red: #f87171;
+    --red-bg: #2a1010;
+    --purple: #a78bfa;
+    --purple-bg: #1e1530;
+    --teal: #2dd4bf;
+    --teal-bg: #0a2220;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141412;
+  --bg2: #1e1d1b;
+  --bg3: #2a2926;
+  --border: #3a3835;
+  --fg: #f0ede8;
+  --fg2: #a8a49c;
+  --fg3: #5c5a55;
+  --accent: #4d8ef0;
+  --accent-bg: #1a2540;
+  --green: #4ade80;
+  --green-bg: #0f2a1a;
+  --amber: #fbbf24;
+  --amber-bg: #2a1f0a;
+  --red: #f87171;
+  --red-bg: #2a1010;
+  --purple: #a78bfa;
+  --purple-bg: #1e1530;
+  --teal: #2dd4bf;
+  --teal-bg: #0a2220;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 14px;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+/* TOP BAR */
+.topbar {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 100;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-block: 10px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.topbar-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--fg);
+  flex: 1;
+}
+.topbar-title span { color: var(--accent); }
+.topbar-badge {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  color: var(--fg2);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+.theme-btn {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--fg2);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: background .15s;
+}
+.theme-btn:hover { background: var(--border); }
+.menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--fg2);
+  cursor: pointer;
+  font-size: 20px;
+  padding: 2px 4px;
+  line-height: 1;
+}
+
+/* LAYOUT */
+.layout {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: var(--sidebar-w);
+  min-width: var(--sidebar-w);
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 16px 0 32px;
+  position: sticky;
+  top: 45px;
+  height: calc(100vh - 45px);
+}
+.nav-section {
+  margin-bottom: 4px;
+}
+.nav-section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--fg3);
+  padding: 8px 16px 4px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--fg2);
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: all .12s;
+  user-select: none;
+}
+.nav-item:hover { background: var(--bg3); color: var(--fg); }
+.nav-item.active {
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: var(--accent-bg);
+}
+.nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  padding-block: 28px 48px;
+  padding-left: max(28px, env(safe-area-inset-left, 0px));
+  padding-right: max(28px, env(safe-area-inset-right, 0px));
+}
+
+/* PANELS */
+.panel { display: none; }
+.panel.active { display: block; }
+
+.panel-header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.panel-header h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 6px;
+  text-wrap: balance;
+}
+.panel-desc {
+  color: var(--fg2);
+  font-size: 13.5px;
+  max-width: 640px;
+  margin: 0;
+}
+
+/* CARDS */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 16px;
+}
+.card-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 12px;
+  color: var(--fg2);
+}
+
+/* DECISION TREE */
+.tree-question {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.tree-question h3 {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 14px;
+}
+.type-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+}
+.type-card {
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: all .15s;
+  background: var(--bg);
+}
+.type-card:hover { border-color: var(--accent); background: var(--accent-bg); }
+.type-card.selected { border-color: var(--accent); background: var(--accent-bg); }
+.type-card-icon { font-size: 22px; margin-bottom: 6px; }
+.type-card-name { font-weight: 700; font-size: 13px; margin-bottom: 3px; }
+.type-card-desc { font-size: 12px; color: var(--fg2); line-height: 1.4; }
+.type-card.corp { --color: var(--accent); }
+.type-card.saas { --color: var(--green); }
+.type-card.admin { --color: var(--amber); }
+.type-card.ecom { --color: var(--red); }
+.type-card.dashboard { --color: var(--purple); }
+.type-card.selected .type-card-name { color: var(--color, var(--accent)); }
+
+/* PHASE CHECKLIST */
+.phase-block {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.phase-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--bg2);
+  cursor: pointer;
+  user-select: none;
+  transition: background .12s;
+}
+.phase-header:hover { background: var(--bg3); }
+.phase-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--bg2);
+  background: var(--fg3);
+  border-radius: 4px;
+  padding: 1px 7px;
+  flex-shrink: 0;
+}
+.phase-name { font-weight: 600; font-size: 14px; flex: 1; }
+.phase-meta { font-size: 12px; color: var(--fg3); }
+.phase-caret {
+  font-size: 11px;
+  color: var(--fg3);
+  transition: transform .2s;
+}
+.phase-block.open .phase-caret { transform: rotate(90deg); }
+.phase-body {
+  display: none;
+  padding: 16px 18px;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+}
+.phase-block.open .phase-body { display: block; }
+
+.checklist { list-style: none; padding: 0; margin: 0; }
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 5px 0;
+  font-size: 13.5px;
+  border-bottom: 1px solid var(--border);
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist li input[type=checkbox] {
+  margin-top: 3px;
+  width: 14px; height: 14px;
+  flex-shrink: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.checklist li label { cursor: pointer; line-height: 1.5; }
+.checklist li.checked label { text-decoration: line-through; color: var(--fg3); }
+
+.branch-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  padding: 1px 6px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.tag-corp { background: var(--accent-bg); color: var(--accent); }
+.tag-saas { background: var(--green-bg); color: var(--green); }
+.tag-admin { background: var(--amber-bg); color: var(--amber); }
+.tag-ecom { background: var(--red-bg); color: var(--red); }
+.tag-dash { background: var(--purple-bg); color: var(--purple); }
+.tag-all { background: var(--bg3); color: var(--fg2); }
+
+/* FOLDER LAYOUT */
+.folder-tree {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 2;
+  background: var(--bg3);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  overflow-x: auto;
+}
+.folder-tree .dir { color: var(--accent); font-weight: 600; }
+.folder-tree .file { color: var(--fg); }
+.folder-tree .comment { color: var(--fg3); font-size: 12px; }
+.folder-tree .diff-new { color: var(--green); }
+.folder-tree .diff-optional { color: var(--amber); }
+
+/* STACK MATRIX */
+.stack-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.stack-table th {
+  text-align: left;
+  padding: 8px 12px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  font-weight: 700;
+  font-size: 12px;
+  white-space: nowrap;
+}
+.stack-table td {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  vertical-align: top;
+}
+.stack-table tr:nth-child(even) td { background: var(--bg3); }
+.check { color: var(--green); font-weight: 700; }
+.dash { color: var(--fg3); }
+.pill {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 12px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--fg2);
+  white-space: nowrap;
+}
+.pill.primary { background: var(--accent-bg); border-color: var(--accent); color: var(--accent); }
+.pill.warn { background: var(--amber-bg); border-color: var(--amber); color: var(--amber); }
+.pill.danger { background: var(--red-bg); border-color: var(--red); color: var(--red); }
+
+/* CODE BLOCKS */
+.code-block {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  overflow-x: auto;
+  line-height: 1.7;
+  margin: 8px 0;
+}
+
+/* CALLOUTS */
+.callout {
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  margin: 12px 0;
+  font-size: 13px;
+}
+.callout-info { background: var(--accent-bg); border-left: 3px solid var(--accent); }
+.callout-warn { background: var(--amber-bg); border-left: 3px solid var(--amber); }
+.callout-tip { background: var(--green-bg); border-left: 3px solid var(--green); }
+.callout-icon { font-size: 16px; flex-shrink: 0; line-height: 1.5; }
+
+/* GRID */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+/* PROGRESS */
+.progress-bar { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; margin: 4px 0; }
+.progress-fill { height: 100%; border-radius: 3px; background: var(--accent); transition: width .3s; }
+
+/* TYPE FILTER BAR */
+.filter-bar {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding: 12px 14px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  align-items: center;
+}
+.filter-label { font-size: 12px; font-weight: 600; color: var(--fg2); margin-right: 4px; }
+.filter-btn {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--fg2);
+  cursor: pointer;
+  transition: all .12s;
+  font-family: var(--font-sans);
+}
+.filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+.filter-btn.active { background: var(--accent); border-color: var(--accent); color: white; }
+.filter-btn.f-corp.active { background: var(--accent); border-color: var(--accent); }
+.filter-btn.f-saas.active { background: var(--green); border-color: var(--green); }
+.filter-btn.f-admin.active { background: var(--amber); border-color: var(--amber); }
+.filter-btn.f-ecom.active { background: var(--red); border-color: var(--red); }
+.filter-btn.f-dash.active { background: var(--purple); border-color: var(--purple); }
+
+/* CHECKLIST hidden rows */
+.checklist li[data-types]:not([data-types*="all"]) { display: none; }
+
+/* RESPONSIVE */
+@media (max-width: 680px) {
+  .sidebar { display: none; position: fixed; top: 45px; left: 0; bottom: 0; z-index: 200; width: 240px; }
+  .sidebar.open { display: block; }
+  .menu-btn { display: block; }
+  .main { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .two-col { grid-template-columns: 1fr; }
+  .three-col { grid-template-columns: 1fr 1fr; }
+  .type-grid { grid-template-columns: 1fr 1fr; }
+  .topbar-badge { display: none; }
+}
+@media (max-width: 420px) {
+  .three-col { grid-template-columns: 1fr; }
+}
+
+h3 { font-size: 15px; font-weight: 700; margin: 20px 0 10px; }
+h3:first-child { margin-top: 0; }
+p { margin: 0 0 10px; color: var(--fg2); font-size: 13.5px; }
+a { color: var(--accent); }
+</style>
+
+<div class="topbar">
+  <button class="menu-btn" onclick="toggleMenu()" aria-label="Menu">☰</button>
+  <div class="topbar-title">⚡ <span>Next.js</span> Project Starter</div>
+  <span class="topbar-badge">v1.0 · 2025</span>
+  <button class="theme-btn" onclick="toggleTheme()">Toggle theme</button>
+</div>
+
+<div class="layout">
+  <nav class="sidebar" id="sidebar">
+    <div class="nav-section">
+      <div class="nav-section-label">Bắt đầu</div>
+      <div class="nav-item active" onclick="show('decision')" data-panel="decision">
+        <span class="nav-dot" style="background:var(--accent)"></span> Decision Tree
+      </div>
+      <div class="nav-item" onclick="show('stack')" data-panel="stack">
+        <span class="nav-dot" style="background:var(--fg3)"></span> Stack & Setup
+      </div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Phase Checklist</div>
+      <div class="nav-item" onclick="show('phases')" data-panel="phases">
+        <span class="nav-dot" style="background:var(--green)"></span> Phase 0–5
+      </div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Architecture</div>
+      <div class="nav-item" onclick="show('folder')" data-panel="folder">
+        <span class="nav-dot" style="background:var(--teal)"></span> Folder Layout
+      </div>
+      <div class="nav-item" onclick="show('data')" data-panel="data">
+        <span class="nav-dot" style="background:var(--amber)"></span> Data Layer
+      </div>
+      <div class="nav-item" onclick="show('seo')" data-panel="seo">
+        <span class="nav-dot" style="background:var(--purple)"></span> SEO / GEO
+      </div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-section-label">Deploy & Ops</div>
+      <div class="nav-item" onclick="show('deploy')" data-panel="deploy">
+        <span class="nav-dot" style="background:var(--red)"></span> Deploy
+      </div>
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <!-- ══════════════════════════════════════════════
+         PANEL: DECISION TREE
+    ═══════════════════════════════════════════════ -->
+    <section class="panel active" id="panel-decision">
+      <div class="panel-header">
+        <h2>Chọn loại dự án</h2>
+        <p class="panel-desc">Chọn 1 trong 5 loại để xem trình tự phase, stack khuyến nghị và folder layout phù hợp nhất.</p>
+      </div>
+
+      <div class="tree-question">
+        <h3>🤔 Dự án của bạn là gì?</h3>
+        <div class="type-grid" id="type-grid">
+          <div class="type-card corp" onclick="selectType('corp')" tabindex="0">
+            <div class="type-card-icon">🏢</div>
+            <div class="type-card-name">Corporate / Marketing</div>
+            <div class="type-card-desc">Site công ty, landing page, IR, brand site. Chủ yếu GET + SEO.</div>
+          </div>
+          <div class="type-card saas" onclick="selectType('saas')" tabindex="0">
+            <div class="type-card-icon">🚀</div>
+            <div class="type-card-name">SaaS / Product App</div>
+            <div class="type-card-desc">App có login, subscription, user CRUD. Auth-first, mutation nặng.</div>
+          </div>
+          <div class="type-card admin" onclick="selectType('admin')" tabindex="0">
+            <div class="type-card-icon">⚙️</div>
+            <div class="type-card-name">Admin / Internal Tool</div>
+            <div class="type-card-desc">Backoffice nội bộ, CMS, portal. CRUD đầy đủ, không cần SEO.</div>
+          </div>
+          <div class="type-card ecom" onclick="selectType('ecom')" tabindex="0">
+            <div class="type-card-icon">🛒</div>
+            <div class="type-card-name">E-commerce</div>
+            <div class="type-card-desc">Shop online, catalog, cart. ISR + SEO + checkout flow.</div>
+          </div>
+          <div class="type-card dashboard" onclick="selectType('dashboard')" tabindex="0">
+            <div class="type-card-icon">📊</div>
+            <div class="type-card-name">Dashboard / Analytics</div>
+            <div class="type-card-desc">Realtime metrics, charts, reports. React Query + WebSocket.</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="type-summary" style="display:none">
+        <div class="card" id="type-detail-card"></div>
+
+        <div class="callout callout-tip">
+          <span class="callout-icon">💡</span>
+          <span>Sau khi chọn loại, xem <strong>Phase 0–5</strong> để lọc checklist theo type, hoặc <strong>Stack &amp; Setup</strong> để so sánh tool.</span>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <div class="card-title">So sánh nhanh 5 loại</div>
+        <div style="overflow-x:auto">
+          <table class="stack-table">
+            <thead>
+              <tr>
+                <th>Loại</th>
+                <th>Routing</th>
+                <th>SEO</th>
+                <th>Auth</th>
+                <th>API style</th>
+                <th>Deploy ưu tiên</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>🏢 Corporate</td>
+                <td>Static + ISR</td>
+                <td><span class="check">●● cao</span></td>
+                <td>Không</td>
+                <td>GET only, BFF</td>
+                <td>Vercel / EC2</td>
+              </tr>
+              <tr>
+                <td>🚀 SaaS</td>
+                <td>Dynamic, nested</td>
+                <td><span class="dash">thấp</span></td>
+                <td><span class="pill primary">Auth.js / Clerk</span></td>
+                <td>REST + RPC</td>
+                <td>Vercel Edge</td>
+              </tr>
+              <tr>
+                <td>⚙️ Admin</td>
+                <td>SPA-like, hash nav</td>
+                <td><span class="dash">không</span></td>
+                <td>SSO / LDAP</td>
+                <td>CRUD REST</td>
+                <td>Vite + Nginx</td>
+              </tr>
+              <tr>
+                <td>🛒 E-comm</td>
+                <td>SSG catalog + ISR</td>
+                <td><span class="check">●● cao</span></td>
+                <td>Session / JWT</td>
+                <td>Commerce API</td>
+                <td>Vercel / CDN</td>
+              </tr>
+              <tr>
+                <td>📊 Dashboard</td>
+                <td>Dynamic</td>
+                <td><span class="dash">không</span></td>
+                <td>JWT / SSO</td>
+                <td>REST + WS</td>
+                <td>Container / EC2</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         PANEL: STACK & SETUP
+    ═══════════════════════════════════════════════ -->
+    <section class="panel" id="panel-stack">
+      <div class="panel-header">
+        <h2>Stack & Setup</h2>
+        <p class="panel-desc">Core stack chung + decision tree cho từng lớp tool.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Base stack — mọi loại dự án</div>
+        <div class="code-block">
+Next.js 15+    App Router         // default, trừ admin SPA có thể Vite
+React 19       Server Components  // SC mặc định, "use client" khi cần
+TypeScript     strict mode        // tsconfig strict: true
+Tailwind 4     utility-first CSS  // hoặc CSS Modules nếu team prefer
+ESLint 9       flat config        // + @typescript-eslint/recommended
+Prettier       code format        // tích hợp Husky + lint-staged
+        </div>
+      </div>
+
+      <h3>Chọn theo tính năng</h3>
+
+      <div style="overflow-x:auto">
+        <table class="stack-table">
+          <thead>
+            <tr>
+              <th>Layer</th>
+              <th>Corp 🏢</th>
+              <th>SaaS 🚀</th>
+              <th>Admin ⚙️</th>
+              <th>E-comm 🛒</th>
+              <th>Dashboard 📊</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Auth</strong></td>
+              <td><span class="dash">—</span></td>
+              <td><span class="pill primary">Auth.js v5</span> hoặc Clerk</td>
+              <td><span class="pill">NextAuth + LDAP</span></td>
+              <td><span class="pill">session-based</span></td>
+              <td><span class="pill">JWT + refresh</span></td>
+            </tr>
+            <tr>
+              <td><strong>Data fetching</strong></td>
+              <td>fetch + cache()</td>
+              <td>TanStack Query</td>
+              <td>TanStack Query</td>
+              <td>fetch + ISR</td>
+              <td>TanStack Query + SWR</td>
+            </tr>
+            <tr>
+              <td><strong>State mgmt</strong></td>
+              <td>URL params</td>
+              <td>Zustand / Jotai</td>
+              <td>Zustand</td>
+              <td>Zustand (cart)</td>
+              <td>Zustand / Recoil</td>
+            </tr>
+            <tr>
+              <td><strong>Forms</strong></td>
+              <td><span class="dash">ít</span></td>
+              <td>React Hook Form + Zod</td>
+              <td>React Hook Form + Zod</td>
+              <td>RHF (checkout)</td>
+              <td>RHF (filters)</td>
+            </tr>
+            <tr>
+              <td><strong>UI kit</strong></td>
+              <td>shadcn tùy chọn</td>
+              <td>shadcn/ui</td>
+              <td>shadcn/ui hoặc Ant Design</td>
+              <td>shadcn/ui</td>
+              <td>shadcn + Tremor/Recharts</td>
+            </tr>
+            <tr>
+              <td><strong>Charts</strong></td>
+              <td><span class="dash">—</span></td>
+              <td>Recharts</td>
+              <td>Recharts / Victory</td>
+              <td><span class="dash">—</span></td>
+              <td><span class="pill primary">Recharts + D3</span></td>
+            </tr>
+            <tr>
+              <td><strong>ORM / DB</strong></td>
+              <td><span class="dash">—</span></td>
+              <td>Prisma / Drizzle</td>
+              <td>Prisma</td>
+              <td>Prisma hoặc Stripe SDK</td>
+              <td>Prisma / ClickHouse</td>
+            </tr>
+            <tr>
+              <td><strong>Realtime</strong></td>
+              <td><span class="dash">—</span></td>
+              <td>Pusher / SSE</td>
+              <td>WebSocket</td>
+              <td><span class="dash">—</span></td>
+              <td><span class="pill primary">WebSocket / SSE</span></td>
+            </tr>
+            <tr>
+              <td><strong>i18n</strong></td>
+              <td>next-intl</td>
+              <td>next-intl</td>
+              <td>i18next</td>
+              <td>next-intl</td>
+              <td><span class="dash">thường không</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-info" style="margin-top:16px">
+        <span class="callout-icon">ℹ️</span>
+        <div><strong>Admin / internal tool:</strong> Nếu không cần SEO, không cần Next.js — Vite + React Router v7 + shadcn/ui nhanh hơn, build nhẹ hơn, ít config hơn. Chỉ dùng Next nếu team đã dùng hoặc cần Server Actions.</div>
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>E-commerce checkout:</strong> Đừng tự build payment — dùng Stripe Hosted Checkout hoặc Stripe Elements. Self-hosted payment tăng PCI scope đáng kể.</div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         PANEL: PHASE CHECKLIST
+    ═══════════════════════════════════════════════ -->
+    <section class="panel" id="panel-phases">
+      <div class="panel-header">
+        <h2>Phase 0–5 Checklist</h2>
+        <p class="panel-desc">Lọc theo loại dự án để ẩn các bước không liên quan. Tick từng item để track tiến độ.</p>
+      </div>
+
+      <div class="filter-bar">
+        <span class="filter-label">Lọc theo loại:</span>
+        <button class="filter-btn active" onclick="filterChecklist('all')">Tất cả</button>
+        <button class="filter-btn f-corp" onclick="filterChecklist('corp')">🏢 Corporate</button>
+        <button class="filter-btn f-saas" onclick="filterChecklist('saas')">🚀 SaaS</button>
+        <button class="filter-btn f-admin" onclick="filterChecklist('admin')">⚙️ Admin</button>
+        <button class="filter-btn f-ecom" onclick="filterChecklist('ecom')">🛒 E-comm</button>
+        <button class="filter-btn f-dash" onclick="filterChecklist('dash')">📊 Dashboard</button>
+      </div>
+
+      <!-- Phase 0 -->
+      <div class="phase-block open" id="ph0">
+        <div class="phase-header" onclick="togglePhase('ph0')">
+          <span class="phase-num" style="background:var(--fg2)">P0</span>
+          <span class="phase-name">Trước khi code</span>
+          <span class="phase-meta">1–3 ngày</span>
+          <span class="phase-caret">▶</span>
+        </div>
+        <div class="phase-body">
+          <ul class="checklist" id="checklist-p0">
+            <li data-types="all"><input type="checkbox" id="c0-1"><label for="c0-1">Viết product one-liner: "Ai dùng? Mục tiêu? Read-only hay có login?"</label></li>
+            <li data-types="all"><input type="checkbox" id="c0-2"><label for="c0-2">Feature list có bảng: Feature | Actor | Read/Write | Data source | Priority</label></li>
+            <li data-types="all"><input type="checkbox" id="c0-3"><label for="c0-3">Tách P0 (launch) / P1 — không nhận "làm hết sitemap ngày 1"</label></li>
+            <li data-types="all"><input type="checkbox" id="c0-4"><label for="c0-4">Sitemap / URL structure + redirect từ site cũ (nếu migrate)</label></li>
+            <li data-types="all"><input type="checkbox" id="c0-5"><label for="c0-5">Non-functional: deploy target, SLA, analytics, API có sẵn chưa?</label></li>
+            <li data-types="all"><input type="checkbox" id="c0-6"><label for="c0-6">Ranh giới hệ thống: front gọi API nào? Có admin riêng? CDN?</label></li>
+            <li data-types="corp ecom"><input type="checkbox" id="c0-7"><label for="c0-7"><span class="branch-tag tag-corp">CORP/ECOM</span> SEO required: confirm meta strategy, redirect 301 từ site cũ</label></li>
+            <li data-types="saas admin"><input type="checkbox" id="c0-8"><label for="c0-8"><span class="branch-tag tag-saas">SAAS/ADMIN</span> Auth provider: chọn Auth.js / Clerk / SSO / LDAP</label></li>
+            <li data-types="ecom"><input type="checkbox" id="c0-9"><label for="c0-9"><span class="branch-tag tag-ecom">ECOM</span> Payment provider: Stripe / VNPay / MoMo — chọn hosted hay embedded</label></li>
+            <li data-types="dash"><input type="checkbox" id="c0-10"><label for="c0-10"><span class="branch-tag tag-dash">DASHBOARD</span> Xác định data source: REST API / WebSocket / polling interval</label></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Phase 1 -->
+      <div class="phase-block" id="ph1">
+        <div class="phase-header" onclick="togglePhase('ph1')">
+          <span class="phase-num" style="background:var(--accent)">P1</span>
+          <span class="phase-name">Khung kỹ thuật</span>
+          <span class="phase-meta">Tuần 1</span>
+          <span class="phase-caret">▶</span>
+        </div>
+        <div class="phase-body">
+          <ul class="checklist" id="checklist-p1">
+            <li data-types="all"><input type="checkbox" id="c1-1"><label for="c1-1">Repo + Node version cố định trong <code>engines</code> field</label></li>
+            <li data-types="all"><input type="checkbox" id="c1-2"><label for="c1-2">TypeScript strict, ESLint 9 flat config, Prettier + Husky lint-staged</label></li>
+            <li data-types="all"><input type="checkbox" id="c1-3"><label for="c1-3">Scripts: <code>dev / build / lint / typecheck / test</code></label></li>
+            <li data-types="corp ecom saas dash"><input type="checkbox" id="c1-4"><label for="c1-4"><span class="branch-tag tag-corp">CORP/ECOM/SAAS</span> Next.js 15 App Router — <em>không</em> Pages Router</label></li>
+            <li data-types="admin"><input type="checkbox" id="c1-5"><label for="c1-5"><span class="branch-tag tag-admin">ADMIN</span> Cân nhắc Vite + React Router v7 thay Next nếu không cần SSR/SEO</label></li>
+            <li data-types="all"><input type="checkbox" id="c1-6"><label for="c1-6"><code>src/</code> convention: <code>app/ components/ data/api/ lib/ types/</code></label></li>
+            <li data-types="all"><input type="checkbox" id="c1-7"><label for="c1-7"><code>.env.example</code> — validate biến bắt buộc khi build</label></li>
+            <li data-types="all"><input type="checkbox" id="c1-8"><label for="c1-8">Routing registry: <code>lib/routes.ts</code> — tránh hardcode string URL</label></li>
+            <li data-types="all"><input type="checkbox" id="c1-9"><label for="c1-9">Layout shell: header/footer, <code>error.tsx</code>, <code>not-found.tsx</code>, loading skeleton</label></li>
+            <li data-types="corp ecom"><input type="checkbox" id="c1-10"><label for="c1-10"><span class="branch-tag tag-corp">CORP/ECOM</span> Health endpoint <code>/hc</code> nếu deploy EC2/container</label></li>
+            <li data-types="saas admin ecom"><input type="checkbox" id="c1-11"><label for="c1-11"><span class="branch-tag tag-saas">SAAS/ADMIN/ECOM</span> Auth setup sớm — middleware protect routes</label></li>
+            <li data-types="saas admin ecom dash"><input type="checkbox" id="c1-12"><label for="c1-12"><span class="branch-tag tag-saas">SAAS+</span> TanStack Query provider trong root layout</label></li>
+            <li data-types="dash"><input type="checkbox" id="c1-13"><label for="c1-13"><span class="branch-tag tag-dash">DASHBOARD</span> WebSocket / SSE setup trong shared hook</label></li>
+            <li data-types="all"><input type="checkbox" id="c1-14"><label for="c1-14">1 trang placeholder + 1 route thật — đảm bảo pipeline chạy được</label></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase-block" id="ph2">
+        <div class="phase-header" onclick="togglePhase('ph2')">
+          <span class="phase-num" style="background:var(--teal)">P2</span>
+          <span class="phase-name">Data & API Layer</span>
+          <span class="phase-meta">Song song UI P0</span>
+          <span class="phase-caret">▶</span>
+        </div>
+        <div class="phase-body">
+          <ul class="checklist" id="checklist-p2">
+            <li data-types="all"><input type="checkbox" id="c2-1"><label for="c2-1">Inventory endpoint (Swagger/Postman): list, detail, search, pagination</label></li>
+            <li data-types="all"><input type="checkbox" id="c2-2"><label for="c2-2">Phân loại data: Dynamic API / Static colocated / Mock tạm / Hybrid</label></li>
+            <li data-types="corp ecom"><input type="checkbox" id="c2-3"><label for="c2-3"><span class="branch-tag tag-corp">CORP/ECOM</span> HTTP client + adapter layer: <code>data/api/feature.ts</code> → map DTO → view model</label></li>
+            <li data-types="corp"><input type="checkbox" id="c2-4"><label for="c2-4"><span class="branch-tag tag-corp">CORP</span> <code>React cache()</code> cho dedup per-request + TTL in-memory cache</label></li>
+            <li data-types="saas admin dash"><input type="checkbox" id="c2-5"><label for="c2-5"><span class="branch-tag tag-saas">SAAS/ADMIN/DASH</span> TanStack Query: <code>useQuery / useMutation / queryClient.invalidate</code> pattern</label></li>
+            <li data-types="saas admin ecom"><input type="checkbox" id="c2-6"><label for="c2-6"><span class="branch-tag tag-saas">SAAS+</span> Server Actions cho mutations — hoặc API routes nếu team prefer</label></li>
+            <li data-types="all"><input type="checkbox" id="c2-7"><label for="c2-7">Zod schema cho response + form — 1 source of truth</label></li>
+            <li data-types="all"><input type="checkbox" id="c2-8"><label for="c2-8">Empty fallback + error handling chuẩn trong mọi adapter</label></li>
+            <li data-types="corp ecom"><input type="checkbox" id="c2-9"><label for="c2-9"><span class="branch-tag tag-corp">CORP/ECOM</span> Slice đầu tiên end-to-end: list + detail từ API → page → metadata</label></li>
+            <li data-types="ecom"><input type="checkbox" id="c2-10"><label for="c2-10"><span class="branch-tag tag-ecom">ECOM</span> Cart store: Zustand persist + sync với backend session</label></li>
+            <li data-types="dash"><input type="checkbox" id="c2-11"><label for="c2-11"><span class="branch-tag tag-dash">DASHBOARD</span> Data fetching hook bọc useQuery + polling/WS refresh strategy</label></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase-block" id="ph3">
+        <div class="phase-header" onclick="togglePhase('ph3')">
+          <span class="phase-num" style="background:var(--purple)">P3</span>
+          <span class="phase-name">SEO / Auth / Payments</span>
+          <span class="phase-meta">Theo loại</span>
+          <span class="phase-caret">▶</span>
+        </div>
+        <div class="phase-body">
+          <div class="callout callout-info">
+            <span class="callout-icon">ℹ️</span>
+            <span>Phase này phân kỳ mạnh nhất theo loại dự án. Corporate/E-comm làm SEO sớm; SaaS/Admin làm Auth sớm.</span>
+          </div>
+          <ul class="checklist" id="checklist-p3">
+            <li data-types="corp ecom"><input type="checkbox" id="c3-1"><label for="c3-1"><span class="branch-tag tag-corp">CORP/ECOM</span> <code>pageMeta()</code> — title/description rules + OG tags</label></li>
+            <li data-types="corp ecom"><input type="checkbox" id="c3-2"><label for="c3-2"><span class="branch-tag tag-corp">CORP/ECOM</span> <code>robots.ts</code> + <code>sitemap.ts</code></label></li>
+            <li data-types="corp ecom"><input type="checkbox" id="c3-3"><label for="c3-3"><span class="branch-tag tag-corp">CORP/ECOM</span> JSON-LD cho trang quan trọng (Article, Product, Organization)</label></li>
+            <li data-types="corp ecom"><input type="checkbox" id="c3-4"><label for="c3-4"><span class="branch-tag tag-corp">CORP/ECOM</span> Redirect 301 map (file hoặc <code>next.config</code>)</label></li>
+            <li data-types="corp"><input type="checkbox" id="c3-5"><label for="c3-5"><span class="branch-tag tag-corp">CORP</span> noindex rule cho search/filter pages (<code>?q=</code> params)</label></li>
+            <li data-types="corp"><input type="checkbox" id="c3-6"><label for="c3-6"><span class="branch-tag tag-corp">CORP</span> Optional: <code>public/llms.txt</code> + AI bot rules cho GEO</label></li>
+            <li data-types="saas admin ecom"><input type="checkbox" id="c3-7"><label for="c3-7"><span class="branch-tag tag-saas">SAAS/ADMIN</span> Auth flows: login, register, forgot password, email verify</label></li>
+            <li data-types="saas admin"><input type="checkbox" id="c3-8"><label for="c3-8"><span class="branch-tag tag-saas">SAAS/ADMIN</span> RBAC / permission guard: middleware + usePermission hook</label></li>
+            <li data-types="saas"><input type="checkbox" id="c3-9"><label for="c3-9"><span class="branch-tag tag-saas">SAAS</span> Subscription / plan gating: feature flag theo tier</label></li>
+            <li data-types="ecom"><input type="checkbox" id="c3-10"><label for="c3-10"><span class="branch-tag tag-ecom">ECOM</span> Checkout flow: address → shipping → payment → confirm</label></li>
+            <li data-types="ecom"><input type="checkbox" id="c3-11"><label for="c3-11"><span class="branch-tag tag-ecom">ECOM</span> Stripe webhook handler + idempotency</label></li>
+            <li data-types="dash"><input type="checkbox" id="c3-12"><label for="c3-12"><span class="branch-tag tag-dash">DASHBOARD</span> Auth (JWT) + token refresh silent + 401 interceptor</label></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Phase 4 -->
+      <div class="phase-block" id="ph4">
+        <div class="phase-header" onclick="togglePhase('ph4')">
+          <span class="phase-num" style="background:var(--amber)">P4</span>
+          <span class="phase-name">UI theo vertical slice</span>
+          <span class="phase-meta">Lặp lại</span>
+          <span class="phase-caret">▶</span>
+        </div>
+        <div class="phase-body">
+          <p style="margin-bottom:12px">Mỗi feature P0 đi qua 6 bước này:</p>
+          <ul class="checklist" id="checklist-p4">
+            <li data-types="all"><input type="checkbox" id="c4-1"><label for="c4-1">Route + metadata (title, description)</label></li>
+            <li data-types="all"><input type="checkbox" id="c4-2"><label for="c4-2">Server Component fetch adapter</label></li>
+            <li data-types="all"><input type="checkbox" id="c4-3"><label for="c4-3">Presentational component (thuần props)</label></li>
+            <li data-types="all"><input type="checkbox" id="c4-4"><label for="c4-4">Client island chỉ chỗ cần: filter, modal, chart, realtime</label></li>
+            <li data-types="all"><input type="checkbox" id="c4-5"><label for="c4-5">Empty / error / loading state đầy đủ</label></li>
+            <li data-types="all"><input type="checkbox" id="c4-6"><label for="c4-6">Mobile review + a11y cơ bản (keyboard nav, ARIA labels)</label></li>
+            <li data-types="corp ecom"><input type="checkbox" id="c4-7"><label for="c4-7"><span class="branch-tag tag-corp">CORP/ECOM</span> Colocation lớn: <code>_components/ + _data/content.ts</code> cùng route folder</label></li>
+            <li data-types="saas admin ecom"><input type="checkbox" id="c4-8"><label for="c4-8"><span class="branch-tag tag-saas">SAAS/ADMIN</span> Optimistic update cho mutations (useMutation + rollback)</label></li>
+            <li data-types="ecom"><input type="checkbox" id="c4-9"><label for="c4-9"><span class="branch-tag tag-ecom">ECOM</span> ISR revalidate cho product pages (<code>revalidate: 3600</code>)</label></li>
+            <li data-types="dash"><input type="checkbox" id="c4-10"><label for="c4-10"><span class="branch-tag tag-dash">DASHBOARD</span> Chart component: Recharts + skeleton loading</label></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Phase 5 -->
+      <div class="phase-block" id="ph5">
+        <div class="phase-header" onclick="togglePhase('ph5')">
+          <span class="phase-num" style="background:var(--red)">P5</span>
+          <span class="phase-name">Vận hành & Go-live</span>
+          <span class="phase-meta">Trước launch</span>
+          <span class="phase-caret">▶</span>
+        </div>
+        <div class="phase-body">
+          <ul class="checklist" id="checklist-p5">
+            <li data-types="all"><input type="checkbox" id="c5-1"><label for="c5-1">CI pipeline: lint → typecheck → build (fail fast)</label></li>
+            <li data-types="all"><input type="checkbox" id="c5-2"><label for="c5-2">Deploy doc: môi trường, biến env, rollback procedure</label></li>
+            <li data-types="all"><input type="checkbox" id="c5-3"><label for="c5-3">Smoke checklist: 10 URL P0 + API down behavior</label></li>
+            <li data-types="all"><input type="checkbox" id="c5-4"><label for="c5-4">E2E smoke tests vài flow P0 (Playwright)</label></li>
+            <li data-types="all"><input type="checkbox" id="c5-5"><label for="c5-5">Unit tests cho adapter / transform functions</label></li>
+            <li data-types="all"><input type="checkbox" id="c5-6"><label for="c5-6">Security: HTTP headers (HSTS, CSP, X-Frame), secrets audit</label></li>
+            <li data-types="all"><input type="checkbox" id="c5-7"><label for="c5-7">Dependency audit (<code>npm audit</code>)</label></li>
+            <li data-types="corp ecom"><input type="checkbox" id="c5-8"><label for="c5-8"><span class="branch-tag tag-corp">CORP/ECOM</span> XSS sanitize HTML từ CMS (DOMPurify)</label></li>
+            <li data-types="corp ecom"><input type="checkbox" id="c5-9"><label for="c5-9"><span class="branch-tag tag-corp">CORP/ECOM</span> Lighthouse audit: target 90+ Performance + SEO</label></li>
+            <li data-types="saas admin ecom"><input type="checkbox" id="c5-10"><label for="c5-10"><span class="branch-tag tag-saas">SAAS/ADMIN</span> CSRF protection, rate limiting cho auth routes</label></li>
+            <li data-types="ecom"><input type="checkbox" id="c5-11"><label for="c5-11"><span class="branch-tag tag-ecom">ECOM</span> PCI compliance checklist nếu có custom payment form</label></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         PANEL: FOLDER LAYOUT
+    ═══════════════════════════════════════════════ -->
+    <section class="panel" id="panel-folder">
+      <div class="panel-header">
+        <h2>Folder Layout</h2>
+        <p class="panel-desc">Cấu trúc src/ chuẩn — áp dụng cho mọi loại dự án với các thư mục tuỳ chọn theo type.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Core structure (mọi loại)</div>
+        <div class="folder-tree">
+<span class="dir">src/</span>
+├── <span class="dir">app/</span>                    <span class="comment">// Next.js App Router</span>
+│   ├── layout.tsx              <span class="comment">// root layout + providers</span>
+│   ├── page.tsx
+│   ├── not-found.tsx
+│   ├── error.tsx
+│   └── <span class="dir">(routes)/</span>           <span class="comment">// route groups</span>
+├── <span class="dir">components/</span>             <span class="comment">// shared UI components</span>
+│   ├── <span class="dir">ui/</span>                 <span class="comment">// shadcn/ui primitives</span>
+│   └── <span class="dir">layout/</span>             <span class="comment">// Header, Footer, Shell</span>
+├── <span class="dir">data/</span>
+│   └── <span class="dir">api/</span>                <span class="comment">// adapters: DTO → view model</span>
+│       └── feature.ts
+├── <span class="dir">lib/</span>
+│   ├── api-client.ts           <span class="comment">// base HTTP client</span>
+│   ├── routes.ts               <span class="comment">// URL registry</span>
+│   ├── utils.ts
+│   └── cache.ts                <span class="comment">// TTL / React cache helpers</span>
+└── <span class="dir">types/</span>
+    └── index.ts
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title" style="color:var(--green)">+ SaaS / Admin</div>
+          <div class="folder-tree" style="font-size:12px">
+<span class="diff-new">src/</span>
+├── <span class="diff-new">app/(auth)/</span>         <span class="comment">// login, register...</span>
+├── <span class="diff-new">app/(protected)/</span>    <span class="comment">// authed routes</span>
+├── <span class="diff-new">lib/auth.ts</span>         <span class="comment">// Auth.js config</span>
+├── <span class="diff-new">lib/permissions.ts</span>  <span class="comment">// RBAC helpers</span>
+└── <span class="diff-new">store/</span>
+    └── <span class="diff-new">useUserStore.ts</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--red)">+ E-commerce</div>
+          <div class="folder-tree" style="font-size:12px">
+<span class="diff-new">src/</span>
+├── <span class="diff-new">app/(shop)/</span>         <span class="comment">// catalog routes</span>
+├── <span class="diff-new">app/(checkout)/</span>     <span class="comment">// checkout flow</span>
+├── <span class="diff-new">store/</span>
+│   └── <span class="diff-new">useCartStore.ts</span>
+└── <span class="diff-new">lib/stripe.ts</span>       <span class="comment">// payment client</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--purple)">+ Dashboard</div>
+          <div class="folder-tree" style="font-size:12px">
+<span class="diff-new">src/</span>
+├── <span class="diff-new">hooks/</span>
+│   ├── <span class="diff-new">useMetrics.ts</span>   <span class="comment">// useQuery wrappers</span>
+│   └── <span class="diff-new">useSocket.ts</span>
+├── <span class="diff-new">components/charts/</span>
+└── <span class="diff-new">store/</span>
+    └── <span class="diff-new">useFiltersStore.ts</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--accent)">+ Corp / SEO-heavy</div>
+          <div class="folder-tree" style="font-size:12px">
+<span class="diff-new">src/</span>
+├── <span class="diff-new">lib/seo.ts</span>          <span class="comment">// pageMeta() helper</span>
+├── <span class="diff-new">lib/structured-data.ts</span>
+├── <span class="diff-new">public/</span>
+│   └── <span class="diff-new">llms.txt</span>        <span class="comment">// GEO optional</span>
+└── <span class="diff-new">app/.../</span>
+    └── <span class="diff-new">_components/</span>    <span class="comment">// colocation</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-tip">
+        <span class="callout-icon">✅</span>
+        <div><strong>Rule colocation:</strong> Nếu component chỉ dùng ở 1 route, đặt trong <code>_components/</code> bên trong route folder. Chỉ lift lên <code>src/components/</code> khi dùng ở 2+ nơi.</div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         PANEL: DATA LAYER
+    ═══════════════════════════════════════════════ -->
+    <section class="panel" id="panel-data">
+      <div class="panel-header">
+        <h2>Data Layer Patterns</h2>
+        <p class="panel-desc">Ma trận data source × strategy, và các pattern code chuẩn.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Data source matrix</div>
+        <div style="overflow-x:auto">
+          <table class="stack-table">
+            <thead>
+              <tr><th>Pattern</th><th>Khi nào</th><th>Strategy</th><th>Cache</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Dynamic API</strong></td>
+                <td>List/detail từ backend</td>
+                <td>fetch trong Server Component</td>
+                <td>React cache() + TTL</td>
+              </tr>
+              <tr>
+                <td><strong>API + mock UI</strong></td>
+                <td>Backend chưa xong</td>
+                <td>Mock data, ghi rõ backlog</td>
+                <td>N/A</td>
+              </tr>
+              <tr>
+                <td><strong>Static colocated</strong></td>
+                <td>Marketing copy, FAQ</td>
+                <td><code>_data/content.ts</code> bên route</td>
+                <td>Build-time</td>
+              </tr>
+              <tr>
+                <td><strong>ISR</strong></td>
+                <td>Catalog, blog post</td>
+                <td><code>revalidate: 3600</code></td>
+                <td>CDN edge</td>
+              </tr>
+              <tr>
+                <td><strong>Client-side query</strong></td>
+                <td>Mutation, realtime, user-specific</td>
+                <td>TanStack Query <code>useQuery</code></td>
+                <td>Query cache</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <h3>Server Component fetch pattern</h3>
+      <div class="code-block">
+<span style="color:var(--fg3)">// data/api/news.ts — Corp/ECOM</span>
+import { cache } from 'react'
+
+<span style="color:var(--fg3)">// React cache() deduplicates per request</span>
+export const getNewsList = cache(async (page = 1) => {
+  const res = await fetch(`${API_BASE}/news?page=${page}`, {
+    next: { revalidate: 60 }     <span style="color:var(--fg3)">// ISR</span>
+  })
+  if (!res.ok) return { items: [], total: 0 }  <span style="color:var(--fg3)">// graceful fallback</span>
+
+  const raw = await res.json()
+  return newsSchema.parse(raw)   <span style="color:var(--fg3)">// Zod validate</span>
+})
+      </div>
+
+      <h3>TanStack Query mutation pattern</h3>
+      <div class="code-block">
+<span style="color:var(--fg3)">// SaaS/Admin — useMutation + invalidate</span>
+const mutation = useMutation({
+  mutationFn: (data: CreateItemInput) =>
+    apiClient.post('/items', data),
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['items'] })
+    toast.success('Saved!')
+  },
+  onError: (err) => toast.error(err.message),
+})
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>Đừng fetch trong useEffect.</strong> Dùng Server Component hoặc TanStack Query. <code>useEffect + fetch</code> bỏ lỡ loading state, race condition, và không cache được.</div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         PANEL: SEO / GEO
+    ═══════════════════════════════════════════════ -->
+    <section class="panel" id="panel-seo">
+      <div class="panel-header">
+        <h2>SEO & GEO</h2>
+        <p class="panel-desc">Áp dụng cho Corporate và E-commerce. SaaS/Admin/Dashboard thường bỏ qua panel này.</p>
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠️</span>
+        <span><strong>Làm SEO sớm (Phase 3)</strong> — không để cuối. URL structure thay đổi muộn gây mất backlink và redirect phức tạp.</span>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">SEO Checklist</div>
+          <ul style="margin:0;padding-left:18px;font-size:13px;line-height:2;color:var(--fg2)">
+            <li><code>generateMetadata()</code> per route</li>
+            <li>OG tags: title, description, image</li>
+            <li><code>robots.ts</code> — allow/disallow</li>
+            <li><code>sitemap.ts</code> — dynamic generation</li>
+            <li>JSON-LD: Article / Product / Org</li>
+            <li>301 redirect map cũ → mới</li>
+            <li>noindex cho <code>?q=</code>, pagination</li>
+            <li>Canonical URL cho duplicate</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title" style="color:var(--purple)">GEO (AI-first search)</div>
+          <ul style="margin:0;padding-left:18px;font-size:13px;line-height:2;color:var(--fg2)">
+            <li><code>public/llms.txt</code> — AI bot hint</li>
+            <li><code>robots.ts</code>: allow GPTBot, Claude-Web</li>
+            <li>Headings semantic và descriptive</li>
+            <li>FAQ schema → AI snippet</li>
+            <li>Entity markup (Organization)</li>
+            <li>Clear authorship / date metadata</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>pageMeta() helper pattern</h3>
+      <div class="code-block">
+<span style="color:var(--fg3)">// lib/seo.ts</span>
+export function pageMeta(page: string, overrides = {}): Metadata {
+  const base = seoPages[page] ?? seoPages.default
+  return {
+    title: base.title,
+    description: base.description,
+    openGraph: { ...base, url: `${SITE_URL}/${page}` },
+    alternates: { canonical: `${SITE_URL}/${page}` },
+    ...overrides,
+  }
+}
+
+<span style="color:var(--fg3)">// page.tsx</span>
+export const generateMetadata = (): Metadata =>
+  pageMeta('news', { title: 'Latest News | Brand' })
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         PANEL: DEPLOY
+    ═══════════════════════════════════════════════ -->
+    <section class="panel" id="panel-deploy">
+      <div class="panel-header">
+        <h2>Deploy & Ops</h2>
+        <p class="panel-desc">Lựa chọn deploy theo loại dự án và trade-off.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Deploy target matrix</div>
+        <div style="overflow-x:auto">
+          <table class="stack-table">
+            <thead>
+              <tr><th>Loại</th><th>Khuyến nghị</th><th>Lý do</th><th>Trade-off</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>🏢 Corp / Marketing</td>
+                <td><span class="pill primary">Vercel</span> hoặc EC2 standalone</td>
+                <td>Edge CDN, ISR, zero config</td>
+                <td>Vercel cost scale; EC2 cần ops</td>
+              </tr>
+              <tr>
+                <td>🚀 SaaS</td>
+                <td><span class="pill primary">Vercel Edge</span></td>
+                <td>Edge Middleware cho auth, global latency</td>
+                <td>Vendor lock-in nhẹ</td>
+              </tr>
+              <tr>
+                <td>⚙️ Admin / Internal</td>
+                <td>Nginx + Docker hoặc <span class="pill">Vite SSG</span></td>
+                <td>Không cần SSR, build static là đủ</td>
+                <td>Phải tự quản infra</td>
+              </tr>
+              <tr>
+                <td>🛒 E-commerce</td>
+                <td><span class="pill primary">Vercel</span></td>
+                <td>ISR cho catalog, Edge cho cart</td>
+                <td>Stripe webhook cần verify IP</td>
+              </tr>
+              <tr>
+                <td>📊 Dashboard</td>
+                <td>Container (ECS/EKS) hoặc EC2</td>
+                <td>Cần WebSocket, long-lived connection</td>
+                <td>Vercel timeout 30s cho API routes</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">EC2 Standalone (Next.js)</div>
+          <div class="code-block" style="font-size:12px">
+<span style="color:var(--fg3)">// next.config.ts</span>
+output: 'standalone'
+
+<span style="color:var(--fg3)">// Pipeline: Build → Artifact → Deploy</span>
+1. CodeBuild: npm ci && npm run build
+2. Artifact: .next/standalone + .next/static
+3. CodeDeploy → EC2
+4. Health: GET /hc → 200
+
+<span style="color:var(--fg3)">// Reverse proxy (Nginx)</span>
+proxy_pass http://localhost:3000;
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Vercel (SaaS/Corp)</div>
+          <div class="code-block" style="font-size:12px">
+<span style="color:var(--fg3)">// vercel.json</span>
+{
+  "functions": {
+    "app/api/**": { "maxDuration": 30 }
+  },
+  "headers": [
+    { "source": "/(.*)",
+      "headers": [
+        { "key": "X-Frame-Options",
+          "value": "DENY" }
+      ]}
+  ]
+}
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>Dashboard / WebSocket:</strong> Vercel API Routes timeout 30s và không giữ WebSocket connection. Dùng container hoặc tách WebSocket server riêng (Node.js standalone + <code>ws</code>).</div>
+      </div>
+
+      <h3>CI Pipeline chuẩn</h3>
+      <div class="code-block">
+<span style="color:var(--fg3)">// .github/workflows/ci.yml</span>
+jobs:
+  ci:
+    steps:
+      - npm ci
+      - npm run lint        <span style="color:var(--fg3)"># ESLint</span>
+      - npm run typecheck   <span style="color:var(--fg3)"># tsc --noEmit</span>
+      - npm run test        <span style="color:var(--fg3)"># vitest / jest</span>
+      - npm run build       <span style="color:var(--fg3)"># fail nếu có TS error</span>
+      - npx playwright test <span style="color:var(--fg3)"># e2e smoke (optional)</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+// --- Theme toggle ---
+function toggleTheme() {
+  const root = document.documentElement
+  const current = root.getAttribute('data-theme')
+  root.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark')
+  try { localStorage.setItem('theme', root.getAttribute('data-theme')) } catch(e){}
+}
+try {
+  const saved = localStorage.getItem('theme')
+  if (saved) document.documentElement.setAttribute('data-theme', saved)
+} catch(e){}
+
+// --- Mobile menu ---
+function toggleMenu() {
+  document.getElementById('sidebar').classList.toggle('open')
+}
+document.addEventListener('click', e => {
+  const sb = document.getElementById('sidebar')
+  if (sb.classList.contains('open') &&
+      !sb.contains(e.target) &&
+      !e.target.closest('.menu-btn')) {
+    sb.classList.remove('open')
+  }
+})
+
+// --- Panel navigation ---
+function show(panel) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'))
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'))
+  document.getElementById('panel-' + panel).classList.add('active')
+  document.querySelector('[data-panel="' + panel + '"]').classList.add('active')
+  document.getElementById('sidebar').classList.remove('open')
+  try { localStorage.setItem('panel', panel) } catch(e){}
+}
+try {
+  const saved = localStorage.getItem('panel')
+  if (saved && document.getElementById('panel-' + saved)) show(saved)
+} catch(e){}
+
+// --- Phase accordion ---
+function togglePhase(id) {
+  document.getElementById(id).classList.toggle('open')
+}
+
+// --- Checklist persistence ---
+document.querySelectorAll('.checklist input[type=checkbox]').forEach(cb => {
+  try {
+    if (localStorage.getItem('chk-' + cb.id) === '1') {
+      cb.checked = true
+      cb.closest('li').classList.add('checked')
+    }
+  } catch(e){}
+  cb.addEventListener('change', () => {
+    cb.closest('li').classList.toggle('checked', cb.checked)
+    try { localStorage.setItem('chk-' + cb.id, cb.checked ? '1' : '0') } catch(e){}
+  })
+})
+
+// --- Type filter for checklist ---
+let activeFilter = 'all'
+function filterChecklist(type) {
+  activeFilter = type
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'))
+  document.querySelector('.filter-btn.f-' + type)
+    ? document.querySelector('.filter-btn.f-' + type).classList.add('active')
+    : document.querySelector('.filter-btn').classList.add('active')
+
+  document.querySelectorAll('.checklist li[data-types]').forEach(li => {
+    const types = li.getAttribute('data-types').split(' ')
+    if (type === 'all') {
+      li.style.display = ''
+    } else {
+      li.style.display = (types.includes(type) || types.includes('all')) ? '' : 'none'
+    }
+  })
+}
+
+// --- Project type selection ---
+const typeDetails = {
+  corp: {
+    color: 'var(--accent)',
+    icon: '🏢',
+    name: 'Corporate / Marketing',
+    top: ['SEO từ Phase 3 — làm sớm trước UI', 'Architecture: GET-only BFF, React cache() + TTL', 'Routing: Static + ISR, không cần auth'],
+    skip: ['TanStack Query (dùng Server Component fetch)', 'Auth setup', 'Checkout flow'],
+    stack: 'Next.js 15 · Tailwind · next-intl · shadcn (tùy) · Vercel / EC2 standalone'
+  },
+  saas: {
+    color: 'var(--green)',
+    icon: '🚀',
+    name: 'SaaS / Product App',
+    top: ['Auth setup ngay Phase 1 — trước khi build bất cứ thứ gì', 'TanStack Query cho mọi server state', 'RBAC / permission guard sớm'],
+    skip: ['SEO nặng (chỉ landing page cần)', 'ISR (dynamic data không hợp)'],
+    stack: 'Next.js 15 · Auth.js v5 · TanStack Query · Zustand · Prisma · Vercel Edge'
+  },
+  admin: {
+    color: 'var(--amber)',
+    icon: '⚙️',
+    name: 'Admin / Internal Tool',
+    top: ['Cân nhắc Vite + React Router thay Next nếu không cần SSR', 'CRUD full + form validation nặng', 'UI kit mạnh: Ant Design hoặc shadcn'],
+    skip: ['SEO hoàn toàn', 'ISR', 'robots.ts / sitemap.ts'],
+    stack: 'Vite (hoặc Next) · shadcn/ui · React Hook Form · Zod · TanStack Query · Nginx'
+  },
+  ecom: {
+    color: 'var(--red)',
+    icon: '🛒',
+    name: 'E-commerce',
+    top: ['ISR cho product catalog — revalidate theo inventory', 'Checkout: dùng Stripe Hosted hoặc Elements', 'SEO quan trọng: product schema, canonical'],
+    skip: ['Custom payment form (tăng PCI scope)', 'WebSocket (không cần realtime)'],
+    stack: 'Next.js 15 · Stripe SDK · Zustand (cart) · TanStack Query · Vercel'
+  },
+  dashboard: {
+    color: 'var(--purple)',
+    icon: '📊',
+    name: 'Dashboard / Analytics',
+    top: ['Tránh Vercel cho API routes có WebSocket', 'TanStack Query + polling hoặc SWR', 'Chart library sớm: Recharts là safe default'],
+    skip: ['SEO', 'ISR', 'robots.ts'],
+    stack: 'Next.js (hoặc Vite) · TanStack Query · Recharts · Zustand · WebSocket · Container'
+  }
+}
+
+function selectType(type) {
+  document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'))
+  document.querySelector('.type-card.' + type).classList.add('selected')
+
+  const d = typeDetails[type]
+  const card = document.getElementById('type-detail-card')
+  card.innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+      <span style="font-size:24px">${d.icon}</span>
+      <div>
+        <div style="font-weight:700;font-size:15px">${d.name}</div>
+        <div style="font-size:12px;color:var(--fg2)">${d.stack}</div>
+      </div>
+    </div>
+    <div class="two-col">
+      <div>
+        <div class="card-title" style="color:${d.color}">✅ Ưu tiên làm sớm</div>
+        <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.9;color:var(--fg2)">
+          ${d.top.map(t => `<li>${t}</li>`).join('')}
+        </ul>
+      </div>
+      <div>
+        <div class="card-title" style="color:var(--fg3)">⏭ Bỏ qua / không cần</div>
+        <ul style="margin:0;padding-left:18px;font-size:13px;line-height:1.9;color:var(--fg3)">
+          ${d.skip.map(s => `<li>${s}</li>`).join('')}
+        </ul>
+      </div>
+    </div>
+  `
+  document.getElementById('type-summary').style.display = 'block'
+
+  // Auto-sync filter in phases
+  const filterMap = { corp: 'corp', saas: 'saas', admin: 'admin', ecom: 'ecom', dashboard: 'dash' }
+  try { localStorage.setItem('selectedType', type) } catch(e){}
+}
+
+// Restore selected type
+try {
+  const saved = localStorage.getItem('selectedType')
+  if (saved && typeDetails[saved]) selectType(saved)
+} catch(e){}
+</script>
+
+</body></html>
