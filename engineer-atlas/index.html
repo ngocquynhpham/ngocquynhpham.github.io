@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#181c27">
+  <title>Engineer Atlas — Learning Hub</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" aria-label="Thu gọn sidebar" aria-expanded="true">☰</button>
+    <button type="button" class="menu-btn" onclick="toggleMenu()" aria-label="Menu">☰</button>
+    <div class="topbar-title">◈ <span>Engineer Atlas</span></div>
+    <span class="topbar-badge">Hệ thống học cá nhân</span>
+    <span class="sync-pill" id="syncPill">Lưu cục bộ</span>
+    <button type="button" class="theme-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Đổi giao diện">
+      <svg class="theme-icon" id="themeIconSun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="theme-icon hidden" id="themeIconMoon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </header>
+
+  <div class="layout" id="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Main">
+      <div class="sidebar-scroll">
+      <div class="nav-section-label">Hôm nay</div>
+      <button type="button" class="nav-item active" data-view="dashboard"><span class="nav-dot"></span><span class="nav-label">Tổng quan học tập</span></button>
+
+      <div class="nav-group" id="roadmap-group">
+        <div class="nav-parent">
+          <button type="button" class="nav-item" data-view="roadmap" id="nav-roadmap">
+            <span class="nav-dot"></span>
+            <span class="nav-label">Lộ trình 6 tháng</span>
+          </button>
+          <button type="button" class="nav-chevron" id="roadmapChevron" aria-label="Mở danh sách tháng" aria-expanded="false" aria-controls="roadmap-sub"></button>
+        </div>
+        <div class="nav-sub" id="roadmap-sub" hidden>
+          <button type="button" class="nav-item nav-item--sub" data-month="0"><span class="nav-label">Tháng 1 · Frontend</span></button>
+          <button type="button" class="nav-item nav-item--sub" data-month="1"><span class="nav-label">Tháng 2 · Database</span></button>
+          <button type="button" class="nav-item nav-item--sub" data-month="2"><span class="nav-label">Tháng 3 · Backend</span></button>
+          <button type="button" class="nav-item nav-item--sub" data-month="3"><span class="nav-label">Tháng 4 · LLM</span></button>
+          <button type="button" class="nav-item nav-item--sub" data-month="4"><span class="nav-label">Tháng 5 · RAG</span></button>
+          <button type="button" class="nav-item nav-item--sub" data-month="5"><span class="nav-label">Tháng 6 · DevOps</span></button>
+        </div>
+      </div>
+
+      <div class="nav-section-label">Capstone</div>
+      <button type="button" class="nav-item" data-view="capstone"><span class="nav-dot"></span><span class="nav-label">Operations Platform</span></button>
+
+      <div class="nav-section-label">Tra cứu</div>
+      <button type="button" class="nav-item" data-view="library"><span class="nav-dot"></span><span class="nav-label">Thư viện chủ đề</span></button>
+      <button type="button" class="nav-item" data-view="map"><span class="nav-dot"></span><span class="nav-label">Sơ đồ kiến thức</span></button>
+
+      <div class="nav-section-label">Để sau</div>
+      <button type="button" class="nav-item" data-view="optional"><span class="nav-dot"></span><span class="nav-label">Explore later</span></button>
+      <button type="button" class="nav-item" data-view="protonx"><span class="nav-dot"></span><span class="nav-label">ProtonX</span></button>
+
+      <div class="nav-section-label">Dữ liệu</div>
+      <button type="button" class="nav-item" data-view="backup"><span class="nav-dot"></span><span class="nav-label">Sao lưu</span></button>
+      </div>
+      <div class="sidebar-account" id="sidebarAccount" aria-label="Tài khoản"></div>
+    </nav>
+
+    <main class="main" id="content" aria-live="polite"></main>
+  </div>
+  <div class="sidebar-backdrop" id="sidebarBackdrop" hidden aria-hidden="true"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

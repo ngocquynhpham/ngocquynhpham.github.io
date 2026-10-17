@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "project": "Operations Platform",
+  "updatedAt": null,
+  "progress": {
+    "completed": 0,
+    "total": 48,
+    "percent": 0
+  },
+  "milestones": [],
+  "phases": [
+    { "index": 1, "title": "Product Discovery", "completed": 0, "total": 5 },
+    { "index": 2, "title": "System Architecture", "completed": 0, "total": 6 },
+    { "index": 3, "title": "UI/UX Design", "completed": 0, "total": 5 },
+    { "index": 4, "title": "Frontend Development", "completed": 0, "total": 7 },
+    { "index": 5, "title": "Backend Development", "completed": 0, "total": 8 },
+    { "index": 6, "title": "Fullstack Integration", "completed": 0, "total": 6 },
+    { "index": 7, "title": "Testing & Quality", "completed": 0, "total": 6 },
+    { "index": 8, "title": "Deployment & Portfolio", "completed": 0, "total": 8 }
+  ]
+}
