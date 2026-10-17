@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operations Platform — Fullstack Engineering Case Study</title>
+  <meta name="description" content="Self-directed fullstack capstone: multi-tenant business application architecture, REST APIs, relational modeling, access control, and deployment.">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="../../logo.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="back" href="../../index.html">← Home</a>
+    <p class="kicker">Engineering case study / 001 · <span id="statusBadge">In progress</span></p>
+    <h1>Operations Platform</h1>
+    <p class="lead">A fullstack business application — self-directed engineering project focused on maintainable architecture, not a production product announcement.</p>
+    <p class="disclaimer">Conceptual layout · Progress synced from private checklist export (<code>public-progress.json</code>).</p>
+  </header>
+
+  <main class="content">
+    <section class="panel" id="overview">
+      <h2>Overview</h2>
+      <p>Exploring how to design and build a multi-user business application: system design, REST APIs, relational data modeling, access control, application workflows, and deployment.</p>
+    </section>
+
+    <section class="panel" id="progress">
+      <h2>Development progress</h2>
+      <div class="progress-head">
+        <div class="progress-pct" id="progressPct">0%</div>
+        <div class="progress-meta" id="progressMeta">0 / 51 milestones completed (public view)</div>
+      </div>
+      <div class="bar" aria-hidden="true"><div class="fill" id="progressFill" style="width:0%"></div></div>
+      <p class="muted" id="progressUpdated">Last updated: —</p>
+      <div id="phaseGrid" class="phase-grid"></div>
+      <h3>Completed capabilities</h3>
+      <ul id="milestoneList" class="milestone-list"><li class="muted">None yet — milestones appear when marked done in Engineer Atlas export.</li></ul>
+    </section>
+
+    <section class="panel" id="engineering">
+      <h2>Engineering focus</h2>
+      <ul class="pill-list">
+        <li>System design</li>
+        <li>REST APIs</li>
+        <li>Relational data modeling</li>
+        <li>Access control & tenant isolation</li>
+        <li>Application workflows</li>
+        <li>Deployment & CI/CD</li>
+      </ul>
+    </section>
+
+    <section class="panel" id="architecture">
+      <h2>Architecture</h2>
+      <p class="muted">Planned stack — implementation documented as it lands.</p>
+      <figure class="diagram">
+        <img src="assets/architecture.svg" width="720" height="280" alt="Boxes: Web client, API layer, PostgreSQL, Docker deployment">
+      </figure>
+    </section>
+
+    <section class="panel" id="stack">
+      <h2>Technology stack (planned)</h2>
+      <p>React / Next.js · TypeScript · Python / FastAPI · PostgreSQL · Docker · GitHub Actions</p>
+    </section>
+
+    <section class="panel" id="role">
+      <h2>My role</h2>
+      <p>Solo design and implementation: product scoping, architecture, frontend, backend, database, testing, and deployment documentation.</p>
+    </section>
+
+    <section class="panel" id="learnings">
+      <h2>Key learnings</h2>
+      <p class="muted">Updated as milestones complete — no invented metrics or production claims.</p>
+      <ul id="learningsList">
+        <li>Separating public engineering narrative from private product documentation.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Generic capstone narrative · No logistics domain details on this page.</p>
+  </footer>
+  <script src="progress-loader.js"></script>
+</body>
+</html>
