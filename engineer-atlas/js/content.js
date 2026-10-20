@@ -55,6 +55,13 @@ export const MODULES = [
           'Vitest, RTL, Playwright, error boundaries, XSS, CSRF, CSP',
         ],
       ],
+      [
+        'Browser Internals & Client Persistence',
+        [
+          'Browser Storage & Client-Side Persistence',
+          'Memory Management & JavaScript Runtime (CS foundations)',
+        ],
+      ],
     ],
   },
   {
@@ -66,6 +73,13 @@ export const MODULES = [
       ['Data Modeling', ['ERD, entities, primary keys, foreign keys', 'One-to-many, many-to-many, join tables', 'Normalization, constraints, referential integrity', 'Schema design từ business requirements']],
       ['PostgreSQL & Optimization', ['Indexes, EXPLAIN ANALYZE, query plans', 'Transactions, ACID, isolation, locks', 'Connection pooling, query optimization', 'Backup, restore, migrations, data safety']],
       ['Application Data Layer', ['SQLAlchemy ORM & relationships', 'Alembic migrations and seed data', 'Repository/data access patterns', 'Integration tests, pgvector fundamentals']],
+      [
+        'Engineering Foundations — Database Depth',
+        [
+          'Database Query Optimization, EXPLAIN & N+1 (interview depth)',
+          'Transactions, Concurrency & Database Locking (lab)',
+        ],
+      ],
     ],
   },
   {
@@ -80,6 +94,17 @@ export const MODULES = [
       [
         'Web Architecture / Fullstack Integration',
         ['Server-Driven UI & Lightweight Frontend (Django · HTMX · Alpine · daisyUI)'],
+      ],
+      [
+        'Engineering Foundations — Software Design',
+        ['OOP & Software Design Fundamentals', 'Data Structures & Algorithms (interview track)'],
+      ],
+      [
+        'Engineering Foundations — Security & Architecture',
+        [
+          'Web Security Fundamentals — Cross-Stack (auth, XSS, CSRF, SQLi)',
+          'Backend Architecture & Framework Patterns (Router → Service → Repository)',
+        ],
       ],
     ],
   },
@@ -134,6 +159,47 @@ export const ROADMAP_TOPIC_DEFAULTS = {
   '2-4-0': 'later',
 };
 
+/** Suggested study order for Core Engineering Knowledge Expansion (not sequential lock). */
+export const CORE_KNOWLEDGE_EXPANSION_PHASES = [
+  {
+    id: 'expansion-phase-1',
+    label: 'Phase 1 — Immediate (~1 tuần)',
+    topicIds: ['0-4-0', '2-6-0', '2-5-0'],
+    note: 'Browser Storage → Security cross-stack → OOP cơ bản.',
+  },
+  {
+    id: 'expansion-phase-2',
+    label: 'Phase 2 — Core Engineering (3–4 tuần)',
+    topicIds: ['1-4-0', '1-4-1'],
+    note: 'SQL depth → Index/EXPLAIN → N+1 → Transaction → Deadlock.',
+  },
+  {
+    id: 'expansion-phase-3',
+    label: 'Phase 3 — Interview Readiness (2–3 tuần)',
+    topicIds: ['2-5-1', '0-4-1', '2-6-1'],
+    note: 'DSA → Memory/Runtime → Backend architecture & DI.',
+  },
+  {
+    id: 'expansion-phase-4',
+    label: 'Phase 4 — Explore Later',
+    topicIds: [],
+    optionalTrackKey: 'distributed-systems-advanced',
+    note: 'Redis, queues, idempotency, DDD — khi có nhu cầu thực tế.',
+  },
+];
+
+/** All roadmap topic IDs from the expansion (for dashboard filters). */
+export const CORE_KNOWLEDGE_EXPANSION_TOPIC_IDS = [
+  '0-4-0',
+  '0-4-1',
+  '1-4-0',
+  '1-4-1',
+  '2-5-0',
+  '2-5-1',
+  '2-6-0',
+  '2-6-1',
+];
+
 export const OPTIONAL_TRACKS = [
   {
     key: 'manufacturing-integration',
@@ -182,6 +248,31 @@ export const OPTIONAL_TRACKS = [
       ['Hands-on Architecture Labs', ['Firestore vs FastAPI vs function for one flow', 'Secure callable with per-user auth', 'Webhook with idempotency', 'Architecture diagram and trade-offs']],
     ],
     lab: 'Optional: Cloud Function for server-side AI or webhooks.',
+  },
+  {
+    key: 'distributed-systems-advanced',
+    name: 'Distributed Systems & Advanced Backend',
+    desc: 'Explore Later — Core Knowledge Expansion Phase 4. Không bắt buộc trước khi ship Fullstack/AI sprint.',
+    groups: [
+      [
+        'Caching & Messaging',
+        [
+          'Redis caching patterns & TTL',
+          'RabbitMQ / message queues overview',
+          'Apache Kafka overview (events & logs)',
+          'When to introduce a queue vs in-process async',
+        ],
+      ],
+      [
+        'Reliability patterns',
+        ['Idempotency keys & duplicate delivery', 'Retry & exponential backoff', 'Event-driven architecture intro', 'Distributed transactions (overview only)'],
+      ],
+      [
+        'Design at scale (conceptual)',
+        ['Domain-Driven Design (DDD) boundaries', 'Sagas vs 2PC — awareness', 'Spring Boot / Java stack (optional specialization)', 'Trade-off doc: monolith vs services for portfolio scale'],
+      ],
+    ],
+    lab: 'Optional: Redis cache-aside for one read-heavy API endpoint + idempotent webhook handler sketch.',
   },
 ];
 
