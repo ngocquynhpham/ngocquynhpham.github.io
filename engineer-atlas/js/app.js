@@ -60,6 +60,10 @@ import {
   nextCapstoneTask,
   phaseProgress,
 } from './capstone-insights.js';
+import { getLearningProgram } from './learning-programs/registry.js';
+import { computeProgramStats } from './learning-programs/stats.js';
+import { applyProgramDefaults } from './learning-programs/state.js';
+import { programUrl } from './atlas-paths.js';
 
 const TOPICS = allTopics();
 const expandedTopics = new Set(['0-0-0']);
@@ -279,6 +283,13 @@ function topicRow(t) {
   const notes = data.notes[id] || '';
   const link = data.links[id] || '';
   const doingClass = status === 'doing' ? ' is-doing' : '';
+  const meta = TOPIC_DETAILS[id];
+  const badgeParts = [];
+  if (meta?.moduleKind === 'core') badgeParts.push('<span class="tag">Core knowledge</span>');
+  if (meta?.moduleKind === 'optional') badgeParts.push('<span class="tag tag-muted">Explore later · Tùy chọn</span>');
+  if (meta?.priority === 'high') badgeParts.push('<span class="tag">Ưu tiên cao</span>');
+  if (meta?.durationEstimate) badgeParts.push(`<span class="tag tag-muted">${esc(meta.durationEstimate)}</span>`);
+  const badges = badgeParts.length ? `<div class="topic-badges" style="margin-top:6px;display:flex;flex-wrap:wrap;gap:6px">${badgeParts.join('')}</div>` : '';
 
   const expandLabel = hasDetail
     ? isOpen
@@ -291,6 +302,7 @@ function topicRow(t) {
   return `<article class="topic-row${doingClass}" data-id="${id}">
     <div>
       <div class="topic-title">${esc(t.title)}</div>
+      ${badges}
       <div class="topic-meta">${esc(MODULES[t.module].name)} · Tuần ${weekNum} · <span class="week-name">${esc(weekName)}</span></div>
       <div class="topic-expand">
         <button type="button" class="expand-btn" data-expand="${id}" aria-expanded="${isOpen}">${expandLabel}</button>
@@ -374,6 +386,7 @@ function dashboardView() {
     <div class="kpi-card"><div class="kpi-value">${activeLearningDaysCount()}</div><div class="kpi-label">Ngày có hoạt động</div><div class="kpi-hint">${countPracticeArtifacts()} bằng chứng (link/ghi chú)</div></div>
   </div>
   ${continueBlock}
+  ${pythonProgramDashboardCard()}
   ${capstoneDashboardCard()}
   <div class="domain-block">
     <div class="domain-head"><h2 style="margin:0;font-size:15px">Tiến độ học theo lĩnh vực</h2><span class="tag">Checklist + “Đã hoàn thành”</span></div>
@@ -385,6 +398,33 @@ function dashboardView() {
     <p class="muted" style="margin-top:10px"><strong>Đang yếu / chưa xong:</strong></p>
     ${weakList}
   </div>
+  </div>`;
+}
+
+function pythonProgramDashboardCard() {
+  const program = getLearningProgram('python-100-days-angela-yu');
+  if (!program) return '';
+  applyProgramDefaults(program.id);
+  const stats = computeProgramStats(program);
+  return `<div class="card program-dash-card">
+    <div class="eyebrow">Python Engineering / Learning Program</div>
+    <h2 style="margin:6px 0 4px;font-size:17px">${esc(program.shortTitle)}</h2>
+    <p class="muted">${esc(program.instructor)} · ${esc(program.platform)} · <span class="tag">${esc(stats.programStatusLabel)}</span></p>
+    <div class="program-progress-row" style="margin-top:12px">
+      <div class="program-progress-pct" style="font-size:28px">${stats.completionPct}%</div>
+      <div class="program-progress-meta" style="flex:1">
+        <p class="muted">${stats.completed} / ${stats.total} days completed</p>
+        ${bar(stats.completionPct)}
+      </div>
+    </div>
+    <div class="program-stat-grid program-stat-grid--2" style="margin-top:12px">
+      <div><div class="program-stat-value">${stats.completed}</div><div class="program-stat-label">Completed</div></div>
+      <div><div class="program-stat-value">${stats.notStarted}</div><div class="program-stat-label">Chưa tick</div></div>
+    </div>
+    <div class="btn-row">
+      <a class="btn" href="${esc(programUrl(program.pathSegment))}">Mở chương trình →</a>
+    </div>
+    <p class="muted notehint">Tiến độ khóa học tách khỏi roadmap — không double-count sprint.</p>
   </div>`;
 }
 
@@ -554,7 +594,7 @@ function mapView() {
       <aside class="knowledge-map-detail card" id="knowledgeMapDetail" aria-live="polite"></aside>
     </div>
   </div>
-  <div class="callout"><strong>Explore later:</strong> Manufacturing, Three.js, BaaS, Serverless. <button type="button" class="expand-btn" onclick="go('optional')">Xem →</button></div></div>`;
+  <div class="callout"><strong>Explore later:</strong> Manufacturing, Three.js, BaaS, Serverless; roadmap Backend tháng 3 có thêm Server-Driven UI (mặc định Để sau). <button type="button" class="expand-btn" onclick="go('optional')">Xem →</button></div></div>`;
 }
 
 function roadmapView() {
@@ -1247,6 +1287,8 @@ async function boot() {
   renderAccountCard();
   bindNav();
   renderContent();
+  const topicParam = new URLSearchParams(window.location.search).get('topic');
+  if (topicParam) openTopic(topicParam);
 }
 
 boot();

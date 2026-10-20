@@ -53,6 +53,8 @@ Tài liệu này mô tả **dữ liệu cá nhân học tập** trong Engineer A
 | ------ | ------- | ----------- | ---------- |
 | **User** | Tài khoản, profile tối thiểu | Firebase Auth | Có (`users/{uid}`) |
 | **Topic** | Chủ đề roadmap 6 tháng | `allTopics()` trong `content.js` | Không (static) |
+| **Learning program** | Khóa học có ngày (100 Days Python, …) | `learning-programs/registry.js` | Không (static) |
+| **Program day state** | Trạng thái / ghi chú từng ngày | User `programDays` | Có (v1 local; cloud `catalog=program`) |
 | **Subtopic** | Checklist kiến thức trong topic | `getTopicSubtopics()` / `TOPIC_DETAILS` | Không (static) |
 | **Learning progress** | Trạng thái theo *catalog* (roadmap, proton, optional, assessment) | User | Có |
 | **Capstone task** | Checklist lifecycle Operations Platform | `CAPSTONE_PHASES` trong `capstone.js` | Có (map riêng, enum status khác) |
@@ -71,6 +73,7 @@ Tài liệu này mô tả **dữ liệu cá nhân học tập** trong Engineer A
 - **ID:** `{moduleIndex}-{weekIndex}-{topicIndex}` (string), ví dụ `0-0-0`.
 - **Module key:** `MODULES[moduleIndex].key` — `frontend`, `database`, `backend`, `llm`, `rag`, `devops`.
 - **Subtopic ID:** `{topicId}-{sectionIndex}-{itemIndex}`.
+- **Default status (optional):** `ROADMAP_TOPIC_DEFAULTS` trong `content.js` — ví dụ topic explore-later `2-4-0` → `later` khi user chưa set `statuses[id]`.
 
 ### 4.2 ProtonX
 
@@ -346,7 +349,9 @@ Khi FleetOps/product chốt MVP: cập nhật `projects/{projectSlug}.openQuesti
 | ------- | -------- |
 | **1** | Doc v1: unified progress catalog, capstone maps, activityDays, project meta tentative, backup v3 |
 
-**Backup JSON version** (app): `3` — khi đổi shape local, tăng version và ghi migration note tại đây.
+**Backup JSON version** (app): `4` — thêm `learningPrograms`, `programDays`, `programEvidence[]`, `programProjects[]`.
+
+**Program day IDs:** `python-day-001` … `python-day-100` (program `python-100-days-angela-yu`). UI: `/engineer-atlas/programs/python-100-days/`.
 
 ---
 

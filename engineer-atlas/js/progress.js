@@ -3,6 +3,8 @@
  * Export shape matches future Firestore document fields.
  */
 
+import { ROADMAP_TOPIC_DEFAULTS } from './content.js';
+
 const STORE_KEY = 'quinn-engineering-atlas-v1';
 
 const EMPTY = () => ({
@@ -20,6 +22,14 @@ const EMPTY = () => ({
   capstoneNotes: {},
   capstoneLinks: {},
   capstoneMeta: {},
+  /** Learning programs (course tracking) — keyed by program id */
+  learningPrograms: {},
+  /** Per-day state — keys e.g. python-day-001 */
+  programDays: {},
+  /** Evidence rows: { id, programId, dayId, url, type, title, addedAt } */
+  programEvidence: [],
+  /** Portfolio projects: { id, programId, dayId, name, portfolioTag, ... } */
+  programProjects: [],
 });
 
 let data = EMPTY();
@@ -97,7 +107,7 @@ export function patchProgress(mutator) {
 
 export function exportBackup() {
   return {
-    version: 3,
+    version: 4,
     exportedAt: new Date().toISOString(),
     ...data,
   };
@@ -107,8 +117,13 @@ export function importBackup(json) {
   if (!json || typeof json !== 'object' || typeof json.statuses !== 'object') {
     throw new Error('Invalid backup');
   }
-  for (const k of Object.keys(EMPTY())) {
-    data[k] = json[k] && typeof json[k] === 'object' ? json[k] : {};
+  const empty = EMPTY();
+  for (const k of Object.keys(empty)) {
+    if (Array.isArray(empty[k])) {
+      data[k] = Array.isArray(json[k]) ? json[k] : [];
+    } else {
+      data[k] = json[k] && typeof json[k] === 'object' && !Array.isArray(json[k]) ? json[k] : {};
+    }
   }
   return saveProgress();
 }
@@ -119,7 +134,7 @@ export function resetProgress() {
 }
 
 export function statusForTopic(id) {
-  return data.statuses[id] || 'todo';
+  return data.statuses[id] || ROADMAP_TOPIC_DEFAULTS[id] || 'todo';
 }
 
 /** Seed draft statuses for capstone doc tasks (once). */

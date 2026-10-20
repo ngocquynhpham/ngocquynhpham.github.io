@@ -701,4 +701,88 @@ export default {
       },
     ]
   ),
+  '0-0-4': detail(
+    'Same-Origin Policy và CORS quyết định request browser có chạy hay bị chặn — khác hẳn auth phía API. Mục tiêu: phân biệt lỗi CORS vs 403/503, CSR vs SSR/Next.js server fetch, và debug tích hợp API an toàn (tham chiếu ẩn danh corporate Next.js + Admin CMS).',
+    [
+      {
+        heading: 'Origin & Same-Origin Policy',
+        items: [
+          'Origin = scheme + hostname + port — ví dụ https://app.example.com:443.',
+          'Phân loại 5 cặp URL: same-origin vs cross-origin (http/https, subdomain, port).',
+          'Giải thích vì sao browser chặn JS đọc cross-origin response (không phải “server từ chối”).',
+          'Phân biệt browser security enforcement vs backend authorization (401/403).',
+          'Activity: bảng same/cross-origin cho URL pairs thật (local + staging).',
+        ],
+      },
+      {
+        heading: 'CORS & preflight requests',
+        items: [
+          'Access-Control-Allow-Origin — echo origin cụ thể vs *.',
+          'Access-Control-Allow-Methods, Allow-Headers, Allow-Credentials.',
+          'Simple request vs preflighted (OPTIONS) — khi nào browser gửi OPTIONS trước.',
+          'Vì sao Allow-Origin: * không dùng được khi credentials: include.',
+          'Activity: DevTools Network — chụp request/response CORS + preflight thất bại/thành công.',
+        ],
+      },
+      {
+        heading: 'Client-side vs server-side API requests',
+        items: [
+          'Flow SSR: Browser → Next.js server → Backend API → server → browser (Node không bị browser CORS).',
+          'Flow CSR/SPA: Browser → Backend API trực tiếp — CORS áp dụng nếu cross-origin.',
+          'Next.js Server Components, Client Components, Server Actions — request chạy ở đâu.',
+          'Axios/fetch trong "use client" vs trong server file — environment khác nhau.',
+          'Postman, curl, Node HTTP client không enforce SOP/CORS như browser.',
+          'Activity: vẽ và giải thích hai sơ đồ flow (server-side vs client-side).',
+        ],
+      },
+      {
+        heading: 'Next.js proxy & rewrites',
+        items: [
+          'Same-origin proxy: browser chỉ gọi /api/v1/* trên cùng origin.',
+          'next.config rewrites — map path tới backend URL (env API_BASE_URL).',
+          'Relative vs absolute API URL — tránh leak backend URL ra client khi không cần.',
+          'Cookie/session qua proxy: domain, Secure, SameSite, forwarded headers.',
+          'Giới hạn bảo mật reverse proxy (không thay thế auth backend).',
+          'Activity: phân tích hoặc implement ví dụ rewrite /api/v1/* an toàn (mock backend).',
+        ],
+      },
+      {
+        heading: 'Debugging API integration',
+        items: [
+          'Nhận diện lỗi CORS Console (blocked by CORS policy) vs HTTP 403 Forbidden.',
+          '503 Service Unavailable vs network timeout vs DNS failure.',
+          'WAF/block — response body hoặc status lạ trước khi tới app.',
+          'OPTIONS preflight fail — thiếu Allow-Methods/Headers.',
+          'Frontend fallback che lỗi API — empty state vs error state.',
+          'Activity: chẩn đoán 3 failure giả lập từ HAR + Console.',
+        ],
+      },
+      {
+        heading: 'Case study — corporate site & Admin CMS (ẩn danh)',
+        items: [
+          'Corporate frontend: Next.js RSC + server-side fetch — không cần browser CORS tới API nội bộ.',
+          'Admin CMS riêng: browser gọi API cross-origin — backend phải cấu hình CORS đúng origin.',
+          'Giải thích vì sao trang public render được data nhưng CMS browser báo CORS.',
+          'Optional same-origin proxy cho endpoint chọn lọc — trade-off vận hành.',
+          'Không ghi domain nội bộ, credential, WAF rule thật trong evidence.',
+        ],
+      },
+      {
+        heading: 'Learning evidence',
+        items: [
+          'Evidence 1: sơ đồ client-side vs server-side request flow (PNG hoặc link).',
+          'Evidence 2: screenshot DevTools CORS/preflight.',
+          'Evidence 3: giải thích ngắn vì sao Node.js request không chịu browser CORS.',
+          'Evidence 4: checklist debug CORS vs 403 vs 503 vs network.',
+          'Evidence 5: case study kiến trúc ẩn danh (1 trang markdown).',
+        ],
+      },
+    ],
+    {
+      moduleKind: 'core',
+      priority: 'high',
+      durationEstimate: '2–3 giờ',
+      difficulty: 'intermediate',
+    }
+  ),
 };
