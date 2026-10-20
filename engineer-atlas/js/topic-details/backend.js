@@ -551,4 +551,75 @@ export default {
       },
     ]
   ),
+  '2-4-0': detail(
+    'Server-driven UI: HTML do server render + partial update (HTMX) + interactivity nhẹ (Alpine) — quyết định kiến trúc, không học thuộc syntax. Mục tiêu: so sánh React SPA vs Django Templates + HTMX + Alpine + daisyUI; lab ẩn danh theo workflow quản lý hồ sơ (TYT Đông Thạnh). Module tùy chọn — không thay ưu tiên Fullstack/AI sprint.',
+    [
+      {
+        heading: 'Django Templates & server-rendered HTML',
+        items: [
+          'Template rendering pipeline: view → context → template → HTML response.',
+          'Template inheritance: base.html, block, extend.',
+          'Views và context data — trách nhiệm backend vs template.',
+          'Partials/includes tái sử dụng (list row, filter bar).',
+          'Form POST, validation errors hiển thị server-side.',
+          'Activity: render trang danh sách hồ sơ (case-list) bằng Django Templates + mock data.',
+        ],
+      },
+      {
+        heading: 'HTMX (~5 giờ)',
+        items: [
+          'hx-get, hx-post, hx-target, hx-swap, hx-trigger.',
+          'Partial HTML response — server trả fragment, không JSON SPA.',
+          'Server-driven filtering, pagination, search.',
+          'CSRF token với hx-post (Django csrf).',
+          'Loading và error states (hx-indicator, swap outerHTML).',
+          'Activity: lọc case-list không build React SPA.',
+        ],
+      },
+      {
+        heading: 'Alpine.js (~3 giờ)',
+        items: [
+          'x-data, x-show, x-model, x-on, x-bind.',
+          'Reactive state nhẹ — dropdown, modal, toggle filter UI.',
+          'Kết hợp Alpine với HTML server-rendered (không thay HTMX).',
+          'Activity: dropdown filter hoặc modal tương tác trên case-list.',
+        ],
+      },
+      {
+        heading: 'daisyUI (~2 giờ)',
+        items: [
+          'Tailwind + daisyUI component classes.',
+          'Themes, table, form, modal responsive.',
+          'Empty state và error UI nhất quán.',
+          'Activity: style case-list với daisyUI (table + form filter).',
+        ],
+      },
+      {
+        heading: 'Full integration (~4 giờ)',
+        items: [
+          'Tích hợp Django Templates + HTMX + Alpine + Tailwind/daisyUI.',
+          'Hiển thị danh sách hồ sơ, filter, partial update HTMX.',
+          'Dropdown/modal Alpine; loading, empty, error states.',
+          'Mock/sanitized data — không sửa production TYT Đông Thạnh cho lab.',
+          'Activity: màn hình case-list functional end-to-end (local hoặc repo lab riêng).',
+        ],
+      },
+      {
+        heading: 'Learning evidence & ADR',
+        items: [
+          'Evidence: link repo hoặc demo case-list screen.',
+          'Giải thích ngắn server-rendered partial updates vs JSON API + client render.',
+          'So sánh React SPA vs Django + HTMX + Alpine (complexity, state, network).',
+          'ADR: React SPA vs Server-Driven UI — dev complexity, ownership, performance, team skill, use case.',
+          'Kết luận ADR cho màn case-list TYT Đông Thạnh dựa requirement thật — không “một size fits all”.',
+        ],
+      },
+    ],
+    {
+      moduleKind: 'optional',
+      priority: 'low',
+      durationEstimate: '~14 giờ · 2 tuần',
+      difficulty: 'intermediate',
+    }
+  ),
 };

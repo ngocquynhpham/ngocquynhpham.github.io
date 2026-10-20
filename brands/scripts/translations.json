@@ -354,5 +354,6 @@
   "전체 프로세스 중 사용자가 현재까지 진행한 진행률을 전체 진행률 위에 표기": "Overlay the progress the user has made so far during the entire process",
   "UI의 요소들을 인터랙티브하게 제공하며 사용자의 브랜드 경험을 높여줍니다.": "It provides the elements of the UI interactively and enhances the user's brand experience.",
   "표준화된 컬러 및 사용 가이드를 제공하여 브랜드 서비스 컬러를 정의합니다.": "Define brand service colors by providing standardized colors and how-to guides.",
-  "서체는 중요한 정보를 강조하고 시각적 계층을 만드는데 사용될 수 있습니다.": "Fonts can be used to highlight important information and create a visual hierarchy."
+  "서체는 중요한 정보를 강조하고 시각적 계층을 만드는데 사용될 수 있습니다.": "Fonts can be used to highlight important information and create a visual hierarchy.",
+  "이벤트성 프로모션 콘텐츠를 재구성하여 제공합니다.": "Reconfigure and deliver eventful promotional content."
 }

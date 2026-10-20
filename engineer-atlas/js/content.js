@@ -25,6 +25,7 @@ export const MODULES = [
           'DOM, CSSOM, critical rendering path, layout, paint, composite',
           'HTTP, DNS, TLS, browser caching, CDN, DevTools Network',
           'CSR, SSR, SSG, ISR, hydration, React Server Components',
+          'CORS & Client–Server Architecture',
         ],
       ],
       [
@@ -76,6 +77,10 @@ export const MODULES = [
       ['Python & FastAPI', ['Python typing, environments, async/await', 'Pydantic, routers, dependency injection', 'Services, repositories, separation of concerns', 'File uploads, background tasks, validation']],
       ['Auth & Security', ['Password hashing, JWT vs sessions', 'Authentication, authorization, RBAC', 'Cookies, CSRF, CORS, rate limiting', 'Secrets, input validation, OWASP basics']],
       ['Backend Reliability', ['Pytest unit & integration tests', 'Logging, exceptions, structured errors', 'Timeouts, retries, concurrency basics', 'API profiling, DB bottlenecks, caching basics']],
+      [
+        'Web Architecture / Fullstack Integration',
+        ['Server-Driven UI & Lightweight Frontend (Django · HTMX · Alpine · daisyUI)'],
+      ],
     ],
   },
   {
@@ -123,6 +128,11 @@ export const MONTH_OUTCOMES = [
 ];
 
 export const DOMAIN_SHORT = ['FE', 'DATA', 'BE', 'LLM', 'RAG', 'DEVOPS'];
+
+/** Default roadmap status when user has not set one (backward-compatible; optional / explore-later topics). */
+export const ROADMAP_TOPIC_DEFAULTS = {
+  '2-4-0': 'later',
+};
 
 export const OPTIONAL_TRACKS = [
   {
