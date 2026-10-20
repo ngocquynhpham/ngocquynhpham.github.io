@@ -9,6 +9,8 @@ import {
   PROTON_WEEK_REFS,
   allTopics,
   getTopicSubtopics,
+  CORE_KNOWLEDGE_EXPANSION_PHASES,
+  CORE_KNOWLEDGE_EXPANSION_TOPIC_IDS,
 } from './content.js';
 import {
   getData,
@@ -289,6 +291,7 @@ function topicRow(t) {
   if (meta?.moduleKind === 'optional') badgeParts.push('<span class="tag tag-muted">Explore later · Tùy chọn</span>');
   if (meta?.priority === 'high') badgeParts.push('<span class="tag">Ưu tiên cao</span>');
   if (meta?.durationEstimate) badgeParts.push(`<span class="tag tag-muted">${esc(meta.durationEstimate)}</span>`);
+  if (meta?.expansionPhase) badgeParts.push(`<span class="tag tag-muted">Phase ${meta.expansionPhase}</span>`);
   const badges = badgeParts.length ? `<div class="topic-badges" style="margin-top:6px;display:flex;flex-wrap:wrap;gap:6px">${badgeParts.join('')}</div>` : '';
 
   const expandLabel = hasDetail
@@ -387,6 +390,7 @@ function dashboardView() {
   </div>
   ${continueBlock}
   ${pythonProgramDashboardCard()}
+  ${coreExpansionDashboardCard()}
   ${capstoneDashboardCard()}
   <div class="domain-block">
     <div class="domain-head"><h2 style="margin:0;font-size:15px">Tiến độ học theo lĩnh vực</h2><span class="tag">Checklist + “Đã hoàn thành”</span></div>
@@ -398,6 +402,34 @@ function dashboardView() {
     <p class="muted" style="margin-top:10px"><strong>Đang yếu / chưa xong:</strong></p>
     ${weakList}
   </div>
+  </div>`;
+}
+
+function coreExpansionDashboardCard() {
+  const ids = CORE_KNOWLEDGE_EXPANSION_TOPIC_IDS;
+  const done = ids.filter((id) => statusForTopic(id) === 'done').length;
+  const doing = ids.filter((id) => statusForTopic(id) === 'doing').length;
+  const pct = ids.length ? Math.round((done / ids.length) * 100) : 0;
+  const phases = CORE_KNOWLEDGE_EXPANSION_PHASES.map((ph) => {
+    const phaseTopics = ph.topicIds?.length
+      ? ph.topicIds
+      : ph.optionalTrackKey
+        ? []
+        : [];
+    const phaseDone = phaseTopics.filter((id) => ['done', 'known'].includes(statusForTopic(id))).length;
+    const sub =
+      ph.optionalTrackKey
+        ? `<span class="muted">Explore later → tab Optional</span>`
+        : `<span class="muted">${phaseDone}/${phaseTopics.length} chủ đề</span>`;
+    return `<li class="subtopic-item"><strong>${esc(ph.label)}</strong> — ${esc(ph.note)} ${sub}</li>`;
+  }).join('');
+  return `<div class="card insight-card">
+    <div class="card-title">Core Engineering Knowledge Expansion</div>
+    <p class="muted">FE-first + interview depth · ${done}/${ids.length} hoàn thành · ${doing} đang học · ${pct}% checklist roadmap expansion.</p>
+    ${bar(pct)}
+    <p class="muted" style="margin-top:12px"><strong>Thứ tự đề xuất (không học tuần tự cả khối):</strong></p>
+    <ul class="subtopic-list">${phases}</ul>
+    <div class="btn-row">${btn('Tháng 1 · Browser Storage', "openTopic('0-4-0')", 'secondary')}${btn('Tháng 2 · SQL depth', "openTopic('1-4-0')", 'secondary')}</div>
   </div>`;
 }
 
