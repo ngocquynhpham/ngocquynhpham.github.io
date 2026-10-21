@@ -11,6 +11,7 @@ import {
   getTopicSubtopics,
   CORE_KNOWLEDGE_EXPANSION_PHASES,
   CORE_KNOWLEDGE_EXPANSION_TOPIC_IDS,
+  REAL_WORLD_CASE_STUDY_TOPIC_IDS,
 } from './content.js';
 import {
   getData,
@@ -292,6 +293,11 @@ function topicRow(t) {
   if (meta?.priority === 'high') badgeParts.push('<span class="tag">Ưu tiên cao</span>');
   if (meta?.durationEstimate) badgeParts.push(`<span class="tag tag-muted">${esc(meta.durationEstimate)}</span>`);
   if (meta?.expansionPhase) badgeParts.push(`<span class="tag tag-muted">Phase ${meta.expansionPhase}</span>`);
+  if (meta?.moduleKind === 'case_study') badgeParts.push('<span class="tag">Case study</span>');
+  if (meta?.caseStudyProject) badgeParts.push(`<span class="tag tag-muted">${esc(meta.caseStudyProject)}</span>`);
+  if (meta?.fixStatus === 'pending_verification') {
+    badgeParts.push('<span class="tag tag-muted">Fix implemented · Pending verification</span>');
+  }
   const badges = badgeParts.length ? `<div class="topic-badges" style="margin-top:6px;display:flex;flex-wrap:wrap;gap:6px">${badgeParts.join('')}</div>` : '';
 
   const expandLabel = hasDetail
@@ -391,6 +397,7 @@ function dashboardView() {
   ${continueBlock}
   ${pythonProgramDashboardCard()}
   ${coreExpansionDashboardCard()}
+  ${caseStudyDashboardCard()}
   ${capstoneDashboardCard()}
   <div class="domain-block">
     <div class="domain-head"><h2 style="margin:0;font-size:15px">Tiến độ học theo lĩnh vực</h2><span class="tag">Checklist + “Đã hoàn thành”</span></div>
@@ -402,6 +409,29 @@ function dashboardView() {
     <p class="muted" style="margin-top:10px"><strong>Đang yếu / chưa xong:</strong></p>
     ${weakList}
   </div>
+  </div>`;
+}
+
+function caseStudyDashboardCard() {
+  const items = REAL_WORLD_CASE_STUDY_TOPIC_IDS.map((id) => {
+    const t = TOPICS.find((x) => x.id === id);
+    const meta = TOPIC_DETAILS[id];
+    if (!t) return '';
+    const st = statusForTopic(id);
+    const stats = topicSubtopicStats(id);
+    const pending = meta?.fixStatus === 'pending_verification';
+    return `<div class="branch">
+      <h4>${esc(t.title)}</h4>
+      <p class="muted">${esc(meta?.caseStudyProject || 'Project')} · ${esc(STATUS_LABELS[st] || st)}${pending ? ' · Chưa verify production' : ''}</p>
+      <p class="muted">Checklist verification: ${stats.checked}/${stats.total}</p>
+      ${btn('Mở case study', `openTopic('${id}')`, pending ? '' : 'secondary')}
+    </div>`;
+  }).join('');
+  if (!items) return '';
+  return `<div class="card insight-card">
+    <div class="card-title">Production case studies</div>
+    <p class="muted">Fullstack debugging thực tế — tick verification trước khi đánh dấu “Đã hoàn thành”.</p>
+    ${items}
   </div>`;
 }
 

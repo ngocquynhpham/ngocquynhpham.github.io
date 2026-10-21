@@ -5,6 +5,7 @@ import chatbot from './chatbot.js';
 import rag from './rag.js';
 import infra from './infra.js';
 import foundationsExpansion from './foundations-expansion.js';
+import caseStudies from './case-studies.js';
 
 export const TOPIC_DETAILS = {
   ...frontend,
@@ -14,4 +15,5 @@ export const TOPIC_DETAILS = {
   ...rag,
   ...infra,
   ...foundationsExpansion,
+  ...caseStudies,
 };

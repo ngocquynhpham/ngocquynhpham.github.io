@@ -62,6 +62,10 @@ export const MODULES = [
           'Memory Management & JavaScript Runtime (CS foundations)',
         ],
       ],
+      [
+        'Production Debugging & Client–Server Architecture',
+        ['Production Debugging — SPA Routing, Auth Redirect & Cache (MyHappyClass)'],
+      ],
     ],
   },
   {
@@ -189,6 +193,9 @@ export const CORE_KNOWLEDGE_EXPANSION_PHASES = [
 ];
 
 /** All roadmap topic IDs from the expansion (for dashboard filters). */
+/** Real-world case study topics (roadmap); separate progress from theory modules. */
+export const REAL_WORLD_CASE_STUDY_TOPIC_IDS = ['0-5-0'];
+
 export const CORE_KNOWLEDGE_EXPANSION_TOPIC_IDS = [
   '0-4-0',
   '0-4-1',
