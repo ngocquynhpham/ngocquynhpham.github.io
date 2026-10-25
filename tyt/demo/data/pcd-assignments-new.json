@@ -1,0 +1,356 @@
+[
+  {
+    "hamlet_nums": [
+      24,
+      31,
+      32
+    ],
+    "hamlet_label": "Ấp 24,31,32",
+    "staff": [
+      "Vũ Đình Danh"
+    ],
+    "title": "CN Điều dưỡng",
+    "department": "Phòng bệnh - ATTP",
+    "work_site": "Điểm chính",
+    "manager": "Lê Thị Ngân Thảo"
+  },
+  {
+    "hamlet_nums": [
+      30
+    ],
+    "hamlet_label": "Ấp 30",
+    "staff": [
+      "Vũ Thị Kim Anh"
+    ],
+    "title": "Dược sĩ CĐ",
+    "department": "Dược",
+    "work_site": "Điểm chính",
+    "manager": null
+  },
+  {
+    "hamlet_nums": [
+      33
+    ],
+    "hamlet_label": "Ấp 33",
+    "staff": [
+      "Phạm Mỹ Trang"
+    ],
+    "title": "CN Điều dưỡng",
+    "department": "Phòng bệnh - ATTP",
+    "work_site": "Điểm chính",
+    "manager": null
+  },
+  {
+    "hamlet_nums": [
+      40
+    ],
+    "hamlet_label": "Ấp 40",
+    "staff": [
+      "Trần Thị Thanh Hương"
+    ],
+    "title": "CN NHS",
+    "department": "Phòng Dân số",
+    "work_site": "Điểm chính",
+    "manager": "Khưu Mỹ Vi"
+  },
+  {
+    "hamlet_nums": [
+      41
+    ],
+    "hamlet_label": "Ấp 41",
+    "staff": [
+      "Nguyễn Kim Hoàng An"
+    ],
+    "title": "BS YHDP",
+    "department": "Phòng Dân số",
+    "work_site": "Điểm chính",
+    "manager": null
+  },
+  {
+    "hamlet_nums": [
+      45,
+      46
+    ],
+    "hamlet_label": "Ấp 45,46",
+    "staff": [
+      "Kiều Ngọc Sương"
+    ],
+    "title": "CĐ Điều dưỡng",
+    "department": "Phòng bệnh - ATTP",
+    "work_site": "Điểm chính",
+    "manager": null
+  },
+  {
+    "hamlet_nums": [
+      42,
+      47
+    ],
+    "hamlet_label": "Ấp 42,47",
+    "staff": [
+      "Nguyễn Ánh Hồng"
+    ],
+    "title": "CN Điều dưỡng",
+    "department": "Phòng Dân số",
+    "work_site": "Điểm chính",
+    "manager": null
+  },
+  {
+    "hamlet_nums": [
+      43,
+      44
+    ],
+    "hamlet_label": "Ấp 43,44",
+    "staff": [
+      "Nguyễn Thị Thu Thảo"
+    ],
+    "title": "CN Điều dưỡng",
+    "department": "Khám bệnh",
+    "work_site": "Điểm chính",
+    "manager": "Nguyễn Văn Thanh"
+  },
+  {
+    "hamlet_nums": [
+      36,
+      37
+    ],
+    "hamlet_label": "Ấp 36,37",
+    "staff": [
+      "Nguyễn Thị Hồng Mây"
+    ],
+    "title": "BS YHCT",
+    "department": "Khám bệnh",
+    "work_site": "Điểm chính",
+    "manager": null
+  },
+  {
+    "hamlet_nums": [
+      34,
+      35
+    ],
+    "hamlet_label": "Ấp 34,35",
+    "staff": [
+      "Phạm Thị Ngọc Nguyên"
+    ],
+    "title": "BS YHCT",
+    "department": "Khám bệnh",
+    "work_site": "Điểm chính",
+    "manager": null
+  },
+  {
+    "hamlet_nums": [
+      25,
+      26,
+      27
+    ],
+    "hamlet_label": "Ấp 25,26,27",
+    "staff": [
+      "Đặng Thị Thuỷ"
+    ],
+    "title": "CN Điều dưỡng",
+    "department": "Phòng bệnh - ATTP",
+    "work_site": "Điểm chính",
+    "manager": "Phạm Thị Phương Thảo"
+  },
+  {
+    "hamlet_nums": [
+      28,
+      29,
+      38,
+      39
+    ],
+    "hamlet_label": "Ấp 28,29,38,39",
+    "staff": [
+      "Nguyễn Hải Giang"
+    ],
+    "title": "CN YTCC",
+    "department": "Phòng bệnh - ATTP",
+    "work_site": "Điểm chính",
+    "manager": null
+  },
+  {
+    "hamlet_nums": [
+      5,
+      11
+    ],
+    "hamlet_label": "Ấp 5,11",
+    "staff": [
+      "Nguyễn Thị Hồng Đào"
+    ],
+    "title": "Kỹ sư ATTP",
+    "department": "Phòng bệnh - ATTP",
+    "work_site": "Điểm 2",
+    "manager": "Trương Thị Ánh Mai\n\nNguyễn Bin\n(Phụ trách chính PCD trên địa bàn xã)"
+  },
+  {
+    "hamlet_nums": [
+      4,
+      8,
+      12,
+      13
+    ],
+    "hamlet_label": "Ấp 4,8,12,13",
+    "staff": [
+      "Phan Minh Thành",
+      "Nguyễn Thị Tuyết Mai"
+    ],
+    "title": "BS YHDP\nCĐ Điều dưỡng",
+    "department": "Phòng bệnh - ATTP",
+    "work_site": "Điểm 2",
+    "manager": null
+  },
+  {
+    "hamlet_nums": [
+      1,
+      2,
+      19,
+      21
+    ],
+    "hamlet_label": "Ấp 1,2,19,21",
+    "staff": [
+      "Nguyễn Trần Hoàng Tú"
+    ],
+    "title": "BS YHDP",
+    "department": "Phòng bệnh - ATTP",
+    "work_site": "Điểm 2",
+    "manager": null
+  },
+  {
+    "hamlet_nums": [
+      3,
+      15
+    ],
+    "hamlet_label": "Ấp 3,15",
+    "staff": [
+      "Nguyễn Mạnh Toàn"
+    ],
+    "title": "Dược sĩ CĐ",
+    "department": "Dược",
+    "work_site": "Điểm 2",
+    "manager": null
+  },
+  {
+    "hamlet_nums": [
+      9,
+      14,
+      16
+    ],
+    "hamlet_label": "Ấp 9,14,16",
+    "staff": [
+      "Trần Thị Thanh Tuyền",
+      "Thạch Huỳnh Trang Nhã"
+    ],
+    "title": "CĐ Điều dưỡng\nY sỹ YHCT",
+    "department": "Phòng bệnh - ATTP",
+    "work_site": "Điểm 2",
+    "manager": null
+  },
+  {
+    "hamlet_nums": [
+      17,
+      18,
+      22,
+      23
+    ],
+    "hamlet_label": "Ấp 17,18,22,23",
+    "staff": [
+      "Nguyễn Văn Thắng"
+    ],
+    "title": "CĐ Điều dưỡng",
+    "department": "Phòng bệnh - ATTP",
+    "work_site": "Điểm 2",
+    "manager": null
+  },
+  {
+    "hamlet_nums": [
+      7,
+      20
+    ],
+    "hamlet_label": "Ấp 7,20",
+    "staff": [
+      "Hoàng Thị Nga"
+    ],
+    "title": "CN NHS",
+    "department": "Phòng Dân số",
+    "work_site": "Điểm 2",
+    "manager": null
+  },
+  {
+    "hamlet_nums": [
+      6,
+      10
+    ],
+    "hamlet_label": "Ấp 6,10",
+    "staff": [
+      "Hồ Minh Nguyệt"
+    ],
+    "title": "CN Điều dưỡng",
+    "department": "Phòng Dân số",
+    "work_site": "Điểm 2",
+    "manager": null
+  },
+  {
+    "hamlet_nums": [
+      48
+    ],
+    "hamlet_label": "Ấp 48",
+    "staff": [
+      "Đặng Ngọc Tiến"
+    ],
+    "title": "CĐ Điều dưỡng",
+    "department": "Phòng Dân số",
+    "work_site": "Điểm 1",
+    "manager": "Trần Thanh Trúc"
+  },
+  {
+    "hamlet_nums": [
+      49
+    ],
+    "hamlet_label": "Ấp 49",
+    "staff": [
+      "Nguyễn Đỗ Hoàng Minh"
+    ],
+    "title": "Dược sĩ ĐH",
+    "department": "Dược",
+    "work_site": "Điểm 1",
+    "manager": null
+  },
+  {
+    "hamlet_nums": [
+      50
+    ],
+    "hamlet_label": "Ấp 50",
+    "staff": [
+      "Văn Viết Duy Phương"
+    ],
+    "title": "BS YHDP",
+    "department": "Khám bệnh",
+    "work_site": "Điểm 1",
+    "manager": null
+  },
+  {
+    "hamlet_nums": [
+      51
+    ],
+    "hamlet_label": "Ấp 51",
+    "staff": [
+      "Nguyễn Thị Thùy Linh"
+    ],
+    "title": "CN Điều dưỡng",
+    "department": "Phòng bệnh - ATTP",
+    "work_site": "Điểm 1",
+    "manager": null
+  },
+  {
+    "hamlet_nums": [
+      52
+    ],
+    "hamlet_label": "Ấp 52",
+    "staff": [
+      "Phạm Thị Thanh Thuỷ"
+    ],
+    "title": "CĐ Điều dưỡng",
+    "department": "Phòng Dân số",
+    "work_site": "Điểm 1",
+    "manager": null
+  }
+]
