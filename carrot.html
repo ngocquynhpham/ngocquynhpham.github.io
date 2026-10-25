@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thank you, CARROT GLOBAL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Luckiest+Guy&family=Patrick+Hand&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    /*
+      Đổi 3 ảnh: sửa --photo-1, --photo-2, --photo-3
+      (đặt file trong assets/carrot/ hoặc dùng đường dẫn bất kỳ)
+    */
+    :root {
+      --cream: #f2e8d9;
+      --cream-dark: #e8dcc8;
+      --orange: #e86f2a;
+      --orange-deep: #d45a18;
+      --ink: #3d342c;
+      --muted: #5c534a;
+      --photo-1: url("assets/carrot/photo-1.JPG");
+      --photo-2: url("assets/carrot/photo-2.JPG");
+      --photo-3: url("assets/carrot/photo-3.JPG");
+      --photos-top: 17%;
+      --photos-bottom: 7%;
+      --photos-left: 4%;
+      --photos-right: 4%;
+      --photos-gap: clamp(6px, 0.75vw, 12px);
+      --text-shadow-orange:
+        0 1px 0 #fff,
+        0 2px 6px rgba(255, 255, 255, 0.85),
+        0 2px 10px rgba(232, 111, 42, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px 12px;
+      background: linear-gradient(160deg, #d4c4b0 0%, #ebe3d6 50%, #cfc0ae 100%);
+      font-family: "Patrick Hand", "Segoe UI", sans-serif;
+    }
+
+    .wrap {
+      width: min(1280px, 100%);
+    }
+
+    .hint {
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0 0 12px;
+      opacity: 0.85;
+    }
+
+    .board {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background-color: var(--cream);
+      background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E"),
+        radial-gradient(ellipse 80% 60% at 20% 10%, #fff8 0%, transparent 55%),
+        radial-gradient(ellipse 70% 50% at 90% 80%, var(--cream-dark) 0%, transparent 60%);
+      border-radius: 4px;
+      box-shadow:
+        0 2px 0 #fff9 inset,
+        0 24px 80px rgba(61, 52, 44, 0.28),
+        0 8px 24px rgba(61, 52, 44, 0.12);
+      overflow: hidden;
+    }
+
+    /* —— Typography —— */
+    .title-block {
+      position: absolute;
+      left: 3.5%;
+      top: 5%;
+      z-index: 6;
+      pointer-events: none;
+    }
+
+    .title-block .thanks {
+      margin: 0;
+      font-family: "Caveat", cursive;
+      font-weight: 700;
+      font-size: clamp(26px, 3.8vw, 48px);
+      color: var(--orange-deep);
+      line-height: 1;
+      transform: rotate(-1deg);
+      text-shadow: var(--text-shadow-orange);
+    }
+
+    .title-block .brand {
+      margin: 0.05em 0 0;
+      font-family: "Luckiest Guy", cursive;
+      font-size: clamp(34px, 5.2vw, 68px);
+      color: var(--orange);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      text-shadow:
+        2px 2px 0 rgba(212, 90, 24, 0.2),
+        var(--text-shadow-orange);
+    }
+
+    .title-block .journey {
+      margin: 0.15em 0 0;
+      font-family: "Caveat", cursive;
+      font-weight: 700;
+      font-size: clamp(18px, 2.4vw, 30px);
+      color: var(--orange);
+      text-shadow: var(--text-shadow-orange);
+    }
+
+    .side-left {
+      position: absolute;
+      left: 1.8%;
+      top: 32%;
+      z-index: 6;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: "Caveat", cursive;
+      font-weight: 700;
+      font-size: clamp(17px, 2vw, 24px);
+      color: var(--orange-deep);
+      letter-spacing: 0.04em;
+      pointer-events: none;
+      text-shadow: var(--text-shadow-orange);
+    }
+
+    .side-right {
+      position: absolute;
+      right: 1.5%;
+      top: 28%;
+      z-index: 6;
+      max-width: 9%;
+      text-align: center;
+      font-family: "Caveat", cursive;
+      font-weight: 700;
+      font-size: clamp(15px, 1.75vw, 22px);
+      color: var(--orange);
+      line-height: 1.25;
+      transform: rotate(14deg);
+      pointer-events: none;
+      text-shadow: var(--text-shadow-orange);
+    }
+
+    .caption-svg {
+      position: absolute;
+      left: 0;
+      bottom: 4%;
+      width: 52%;
+      height: 18%;
+      z-index: 6;
+      pointer-events: none;
+      filter: drop-shadow(0 1px 3px rgba(255, 255, 255, 0.9))
+        drop-shadow(0 2px 6px rgba(232, 111, 42, 0.35));
+    }
+
+    .caption-svg text {
+      font-family: "Caveat", cursive;
+      font-weight: 700;
+      font-size: 22px;
+      fill: var(--orange-deep);
+    }
+
+    @media (min-width: 900px) {
+      .caption-svg text {
+        font-size: 26px;
+      }
+    }
+
+    /* —— Photo area (flex: ảnh 2–3 sát ảnh 1) —— */
+    .photos-row {
+      position: absolute;
+      top: var(--photos-top);
+      bottom: var(--photos-bottom);
+      left: var(--photos-left);
+      right: var(--photos-right);
+      display: flex;
+      align-items: stretch;
+      gap: var(--photos-gap);
+      z-index: 1;
+    }
+
+    .photos-main,
+    .photos-stack {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .photos-main {
+      flex: 1.32;
+      transform: rotate(1deg);
+      transform-origin: center center;
+    }
+
+    .photos-stack {
+      flex: 0.88;
+      gap: clamp(8px, 1vw, 14px);
+      justify-content: space-between;
+      z-index: 2;
+    }
+
+    /* —— Polaroids —— */
+    .polaroid {
+      position: relative;
+      margin: 0;
+      background: #fefefe;
+      padding: clamp(8px, 1.1vw, 12px);
+      padding-bottom: clamp(22px, 3vw, 40px);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.9) inset,
+        0 10px 28px rgba(45, 38, 32, 0.22),
+        0 3px 8px rgba(45, 38, 32, 0.1);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    .photos-main .polaroid {
+      flex: 1;
+      height: 100%;
+    }
+
+    .photos-stack .polaroid {
+      flex: 1;
+      min-height: 0;
+    }
+
+    .photos-stack .polaroid.p2 {
+      transform: rotate(-1.5deg);
+    }
+
+    .photos-stack .polaroid.p3 {
+      transform: rotate(1.5deg);
+    }
+
+    .polaroid .photo {
+      display: block;
+      width: 100%;
+      flex: 1;
+      min-height: 0;
+      background-color: #e5ddd2;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .photos-main .photo {
+      flex: 1;
+      min-height: 0;
+    }
+
+    .polaroid .photo.is-empty {
+      background-image:
+        linear-gradient(135deg, #ebe4da 0%, #d9cfc2 100%),
+        var(--img, none);
+      background-size: cover, cover;
+      background-blend-mode: normal;
+    }
+
+    .polaroid .tape {
+      position: absolute;
+      top: clamp(-8px, -0.8vw, -12px);
+      left: 50%;
+      width: clamp(52px, 7vw, 78px);
+      height: clamp(16px, 2vw, 24px);
+      transform: translateX(-50%) rotate(-2deg);
+      border-radius: 2px;
+      opacity: 0.92;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+    }
+
+    .tape-orange {
+      background: repeating-linear-gradient(
+        92deg,
+        #f4a261 0 5px,
+        #e76f51 5px 10px,
+        #f4a261 10px 14px
+      );
+    }
+
+    .tape-green {
+      transform: translateX(-50%) rotate(3deg);
+      background: repeating-linear-gradient(
+        88deg,
+        #b5c99a 0 5px,
+        #6a994e 5px 10px,
+        #a7c957 10px 14px
+      );
+    }
+
+    .p1 .photo {
+      background-image: var(--photo-1);
+      background-position: center 42%;
+    }
+
+    .p2 .photo {
+      background-image: var(--photo-2);
+      /* Chỉnh % dọc: tăng = hình trong khung nhích lên */
+      background-position: center 44%;
+    }
+
+    .p3 .photo {
+      background-image: var(--photo-3);
+      background-position: center 38%;
+    }
+
+    /* —— Stickers —— */
+    .deco {
+      position: absolute;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .deco svg {
+      display: block;
+      filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.08));
+    }
+
+    .deco.carrot {
+      z-index: 5;
+    }
+
+    .deco.carrot svg {
+      filter: drop-shadow(0 3px 6px rgba(45, 38, 32, 0.12));
+    }
+
+    .heart {
+      color: #e85d4c;
+    }
+
+    .heart.orange {
+      color: var(--orange);
+    }
+
+    .star {
+      color: #f4a261;
+    }
+
+    @media (max-width: 640px) {
+      .board {
+        display: flex;
+        flex-direction: column;
+        aspect-ratio: auto;
+        min-height: 520px;
+        padding: 0 4% 4%;
+      }
+
+      .photos-row {
+        position: relative;
+        top: auto;
+        bottom: auto;
+        left: auto;
+        right: auto;
+        flex-direction: column;
+        margin-top: 32%;
+        gap: 10px;
+      }
+
+      .photos-main {
+        transform: none;
+      }
+
+      .photos-stack {
+        flex-direction: row;
+        gap: 10px;
+      }
+
+      .photos-stack .polaroid {
+        transform: none;
+      }
+
+      .photos-stack .polaroid.p2,
+      .photos-stack .polaroid.p3 {
+        transform: rotate(0);
+      }
+
+      .side-left,
+      .side-right {
+        display: none;
+      }
+
+      .caption-svg {
+        width: 90%;
+        left: 5%;
+      }
+
+      .title-block {
+        top: 3%;
+      }
+    }
+
+    @media print {
+      body {
+        padding: 0;
+        background: white;
+      }
+
+      .hint {
+        display: none;
+      }
+
+      .board {
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="hint">
+      Thay ảnh trong <code>assets/carrot/photo-1.JPG</code> … <code>photo-3.JPG</code> hoặc sửa biến
+      <code>--photo-1</code> … <code>--photo-3</code> trong CSS.
+    </p>
+
+    <article class="board" aria-label="Thank you CARROT GLOBAL collage">
+      <header class="title-block">
+        <p class="thanks">Thank you,</p>
+        <h1 class="brand">CARROT GLOBAL</h1>
+        <p class="journey">for the amazing journey ♡</p>
+      </header>
+
+      <p class="side-left">Good People Great Times ♡</p>
+      <p class="side-right">Different Projects Same Carrots</p>
+
+      <svg class="caption-svg" viewBox="0 0 520 80" aria-hidden="true">
+        <defs>
+          <path id="caption-arc" d="M 20 55 Q 260 95 500 45" fill="none" />
+        </defs>
+        <text>
+          <textPath href="#caption-arc" startOffset="2%">
+            To the team who made work feel lighter and brighter ♡
+          </textPath>
+        </text>
+      </svg>
+
+      <!-- Decorations -->
+      <div class="deco" style="left: 28%; top: 14%; transform: rotate(-12deg)">
+        <svg width="36" height="36" class="heart orange" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+        </svg>
+      </div>
+      <div class="deco" style="right: 22%; top: 18%; transform: rotate(8deg)">
+        <svg width="28" height="28" class="star" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7-6.3-4.6L5.7 21l2.3-7-6-4.6h7.6z" />
+        </svg>
+      </div>
+      <div class="deco" style="left: 52%; bottom: 18%; transform: rotate(6deg)">
+        <svg width="32" height="32" class="heart" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+        </svg>
+      </div>
+
+      <svg width="0" height="0" aria-hidden="true" focusable="false">
+        <defs>
+          <symbol id="carrot-mascot" viewBox="0 0 56 72">
+            <ellipse cx="28" cy="48" rx="14" ry="22" fill="#f4a261" />
+            <ellipse cx="28" cy="50" rx="10" ry="16" fill="#e76f51" opacity="0.35" />
+            <path d="M28 26c-8-6-14 2-10 10 2 4 6 6 10 4 4 2 8 0 10-4 4-8-2-16-10-10z" fill="#6a994e" />
+            <circle cx="24" cy="44" r="2" fill="#3d342c" />
+            <circle cx="32" cy="44" r="2" fill="#3d342c" />
+            <path d="M26 50q2 3 4 0" stroke="#3d342c" stroke-width="1.5" fill="none" stroke-linecap="round" />
+          </symbol>
+        </defs>
+      </svg>
+
+      <div class="deco carrot" style="left: 2%; bottom: 20%; transform: rotate(-12deg) scale(0.95)">
+        <svg width="56" height="72"><use href="#carrot-mascot" /></svg>
+      </div>
+      <div class="deco carrot" style="left: 12%; top: 11%; transform: rotate(8deg) scale(0.55)">
+        <svg width="56" height="72"><use href="#carrot-mascot" /></svg>
+      </div>
+      <div class="deco carrot" style="left: 48%; top: 3%; transform: rotate(-6deg) scale(0.7)">
+        <svg width="56" height="72"><use href="#carrot-mascot" /></svg>
+      </div>
+      <div class="deco carrot" style="left: 58%; top: 12%; transform: rotate(14deg) scale(0.5)">
+        <svg width="56" height="72"><use href="#carrot-mascot" /></svg>
+      </div>
+      <div class="deco carrot" style="right: 34%; top: 6%; transform: rotate(-10deg) scale(0.82)">
+        <svg width="56" height="72"><use href="#carrot-mascot" /></svg>
+      </div>
+      <div class="deco carrot" style="right: 12%; top: 14%; transform: rotate(18deg) scale(0.62)">
+        <svg width="56" height="72"><use href="#carrot-mascot" /></svg>
+      </div>
+      <div class="deco carrot" style="right: 2%; bottom: 32%; transform: rotate(-18deg) scale(0.88)">
+        <svg width="56" height="72"><use href="#carrot-mascot" /></svg>
+      </div>
+      <div class="deco carrot" style="right: 18%; bottom: 8%; transform: rotate(10deg) scale(0.58)">
+        <svg width="56" height="72"><use href="#carrot-mascot" /></svg>
+      </div>
+      <div class="deco carrot" style="left: 36%; bottom: 6%; transform: rotate(-4deg) scale(0.48)">
+        <svg width="56" height="72"><use href="#carrot-mascot" /></svg>
+      </div>
+      <div class="deco carrot" style="left: 22%; top: 38%; transform: rotate(22deg) scale(0.42)">
+        <svg width="56" height="72"><use href="#carrot-mascot" /></svg>
+      </div>
+      <div class="deco carrot" style="left: 46%; bottom: 14%; transform: rotate(6deg) scale(0.65)">
+        <svg width="56" height="72"><use href="#carrot-mascot" /></svg>
+      </div>
+      <div class="deco carrot" style="right: 28%; bottom: 22%; transform: rotate(-8deg) scale(0.52)">
+        <svg width="56" height="72"><use href="#carrot-mascot" /></svg>
+      </div>
+      <div class="deco" style="left: 42%; top: 52%; transform: rotate(20deg)">
+        <svg width="24" height="24" class="heart orange" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+        </svg>
+      </div>
+
+      <div class="photos-row">
+        <div class="photos-main">
+          <figure class="polaroid p1">
+            <span class="tape tape-orange" aria-hidden="true"></span>
+            <span class="photo" role="img" aria-label="Ảnh 1"></span>
+          </figure>
+        </div>
+        <div class="photos-stack">
+          <figure class="polaroid p2">
+            <span class="tape tape-green" aria-hidden="true"></span>
+            <span class="photo" role="img" aria-label="Ảnh 2"></span>
+          </figure>
+          <figure class="polaroid p3">
+            <span class="tape tape-green" aria-hidden="true"></span>
+            <span class="photo" role="img" aria-label="Ảnh 3"></span>
+          </figure>
+        </div>
+      </div>
+    </article>
+  </div>
+</body>
+</html>
