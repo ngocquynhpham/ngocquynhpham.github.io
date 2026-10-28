@@ -1,0 +1,1768 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>TTI · Web System Engineer — Interview Atlas</title>
+    <style>
+      :root {
+        --bg: #f7f7f4;
+        --paper: #fff;
+        --ink: #1c252d;
+        --muted: #65727d;
+        --line: #e2e6e6;
+        --accent: #255d77;
+        --light: #eaf2f5;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font:
+          15px/1.65 Inter,
+          system-ui,
+          -apple-system,
+          Segoe UI,
+          sans-serif;
+      }
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      a {
+        color: var(--accent);
+      }
+      .shell {
+        display: grid;
+        grid-template-columns: 245px minmax(0, 1fr);
+        min-height: 100vh;
+      }
+      .side {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        background: #172d39;
+        color: #dbe7ea;
+        padding: 26px 16px;
+        overflow: auto;
+      }
+      .brand {
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        font-weight: 800;
+        color: #8fb7c9;
+      }
+      .side h2 {
+        font-size: 22px;
+        color: white;
+        line-height: 1.2;
+        margin: 14px 0 7px;
+      }
+      .side p {
+        font-size: 12px;
+        color: #b5c8cf;
+      }
+      .nav {
+        margin-top: 24px;
+        display: grid;
+        gap: 3px;
+      }
+      .nav button {
+        width: 100%;
+        text-align: left;
+        background: none;
+        border: 0;
+        color: #d0dde1;
+        padding: 10px 12px;
+        border-radius: 8px;
+        font-size: 13px;
+      }
+      .nav button:hover,
+      .nav button.active {
+        background: #2a4c5e;
+        color: white;
+      }
+      .main {
+        min-width: 0;
+        max-width: 1250px;
+        width: 100%;
+        margin: auto;
+        padding: 38px clamp(16px, 4vw, 58px) 80px;
+      }
+      .eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent);
+        font-weight: 800;
+      }
+      .hero {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 20px;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 28px;
+      }
+      .hero h1 {
+        font-size: clamp(28px, 4vw, 46px);
+        line-height: 1.12;
+        letter-spacing: -0.05em;
+        margin: 9px 0;
+      }
+      .sub {
+        color: var(--muted);
+        max-width: 690px;
+      }
+      .pill {
+        border: 1px solid var(--line);
+        padding: 6px 10px;
+        border-radius: 99px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin: 22px 0;
+      }
+      .stat {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 16px;
+      }
+      .stat strong {
+        display: block;
+        font-size: 25px;
+        line-height: 1.2;
+      }
+      .stat small {
+        color: var(--muted);
+      }
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+        margin: 20px 0;
+        align-items: center;
+      }
+      .toolbar input,
+      .toolbar select {
+        border: 1px solid #d4dddf;
+        background: white;
+        border-radius: 9px;
+        padding: 10px 12px;
+        min-height: 42px;
+      }
+      .toolbar input {
+        flex: 1;
+        min-width: 200px;
+      }
+      .btn {
+        border: 1px solid #c9d5d9;
+        background: white;
+        color: #24485a;
+        border-radius: 9px;
+        padding: 9px 13px;
+        font-weight: 650;
+      }
+      .btn.primary {
+        background: #255d77;
+        color: white;
+        border-color: #255d77;
+      }
+      .btn:hover {
+        filter: brightness(0.96);
+      }
+      .sectionTitle {
+        font-size: 19px;
+        margin: 28px 0 12px;
+        letter-spacing: -0.025em;
+      }
+      .cards {
+        display: grid;
+        gap: 11px;
+      }
+      .qa {
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        padding: 17px 20px;
+      }
+      .qa.done {
+        border-left: 4px solid #3a8a75;
+      }
+      .qhead {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        justify-content: space-between;
+      }
+      .qhead h3 {
+        font-size: 16px;
+        margin: 0 0 7px;
+        line-height: 1.4;
+      }
+      .meta {
+        font-size: 11px;
+        color: var(--muted);
+        margin-bottom: 8px;
+      }
+      .answer {
+        margin-top: 11px;
+        padding-top: 12px;
+        border-top: 1px solid var(--line);
+      }
+      .answer p {
+        margin: 6px 0 11px;
+      }
+      .lang {
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        color: var(--accent);
+      }
+      .vi {
+        color: #4d5c65;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+      }
+      .actions button {
+        font-size: 12px;
+        padding: 6px 10px;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .panel {
+        background: white;
+        border: 1px solid var(--line);
+        padding: 22px;
+        border-radius: 14px;
+        margin: 20px 0;
+      }
+      .panel h2 {
+        margin-top: 0;
+        font-size: 20px;
+      }
+      .grid2 {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+      .tag {
+        display: inline-block;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+        color: #7a5c24;
+        background: #f7f0df;
+        border-radius: 5px;
+        padding: 2px 7px;
+      }
+      .tag.high {
+        background: #e5eff5;
+        color: #245a76;
+      }
+      .hide {
+        display: none !important;
+      }
+      .progress {
+        height: 7px;
+        background: #dbe4e6;
+        border-radius: 9px;
+        overflow: hidden;
+        margin: 13px 0;
+      }
+      .progress span {
+        display: block;
+        height: 100%;
+        background: #3a8a75;
+        width: 0;
+        transition: width 0.2s;
+      }
+      .flash {
+        min-height: 220px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        background: #eef4f5;
+        border: 1px solid #d5e2e6;
+        border-radius: 12px;
+        padding: 25px;
+        cursor: pointer;
+      }
+      .flash h3 {
+        font-size: 21px;
+      }
+      .flash p {
+        margin: 5px;
+      }
+      .tiny {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .source {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .note-item {
+        padding: 10px 0;
+        border-bottom: 1px solid var(--line);
+        white-space: pre-wrap;
+      }
+      .note-item:last-child {
+        border: 0;
+      }
+      @media (max-width: 800px) {
+        .shell {
+          display: block;
+        }
+        .side {
+          position: static;
+          height: auto;
+          padding: 17px;
+        }
+        .side h2 {
+          font-size: 18px;
+          margin: 6px 0;
+        }
+        .side p {
+          display: none;
+        }
+        .nav {
+          display: flex;
+          overflow: auto;
+          margin-top: 10px;
+          gap: 4px;
+        }
+        .nav button {
+          white-space: nowrap;
+          width: auto;
+        }
+        .main {
+          padding: 24px 15px 65px;
+        }
+        .hero {
+          display: block;
+        }
+        .stats {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .stat {
+          padding: 12px;
+        }
+        .grid2 {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media print {
+        .side,
+        .toolbar,
+        .actions,
+        .no-print {
+          display: none !important;
+        }
+        .shell {
+          display: block;
+        }
+        .main {
+          padding: 0;
+          max-width: none;
+        }
+        .answer.hide {
+          display: block !important;
+        }
+        .qa {
+          break-inside: avoid;
+        }
+        .panel {
+          break-inside: avoid;
+        }
+        body {
+          background: white;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="side">
+        <div class="brand">INTERVIEW ATLAS / 2026</div>
+        <h2>Web System<br />Engineer</h2>
+        <p>TTI · Cu Chi · Offline revision</p>
+        <nav class="nav" id="nav"></nav>
+        <p style="margin-top: 28px">
+          Built for focused, honest preparation.<br />Không nhận kinh nghiệm
+          chưa có.
+        </p>
+      </aside>
+      <main class="main">
+        <header class="hero">
+          <div>
+            <div class="eyebrow">TTI / PERSONAL STUDY GUIDE</div>
+            <h1>Interview preparation,<br />without the noise.</h1>
+            <div class="sub">
+              Ôn phỏng vấn Web System Engineer theo CV thực tế + JD TTI. Có song
+              ngữ EN B1 / VI, thẻ ghi nhớ, đánh dấu đã ôn và tra cứu tài liệu
+              gốc.
+            </div>
+          </div>
+          <span class="pill">Offline · HTML / CSS / JS</span>
+        </header>
+        <div class="stats">
+          <div class="stat">
+            <strong id="total">0</strong><small>Câu hỏi</small>
+          </div>
+          <div class="stat">
+            <strong id="done">0</strong><small>Đã ôn</small>
+          </div>
+          <div class="stat">
+            <strong id="pct">0%</strong><small>Tiến độ</small>
+          </div>
+        </div>
+        <div class="progress"><span id="bar"></span></div>
+        <section class="panel" id="overview">
+          <div class="eyebrow">Start here</div>
+          <h2>Chiến lược ôn nhanh</h2>
+          <div class="grid2">
+            <div>
+              <b>Điểm mạnh có thật</b>
+              <p>
+                5+ năm React/TypeScript, enterprise systems, API integration,
+                data-heavy UI, stakeholder coordination, SaaS MyHappyClass, dự
+                án FastAPI/PostgreSQL và Linux VPS.
+              </p>
+            </div>
+            <div>
+              <b>Khoảng trống cần nói đúng</b>
+              <p>
+                Node.js backend production, MQTT/Socket.IO/Redis Pub/Sub,
+                Windows Server, factory MES và CI/CD production: hiểu khái niệm,
+                chưa nhận đã vận hành thực tế.
+              </p>
+            </div>
+          </div>
+          <p>
+            <b>60 phút cuối:</b> 10′ giới thiệu + Why TTI · 15′ dự án thật · 15′
+            React/API/SQL · 10′ Manufacturing · 10′ luyện nói tiếng Anh.
+          </p>
+          <div class="tiny">
+            Ưu tiên nói được 5 câu: giới thiệu · Why TTI · MyHappyClass bug ·
+            Manufacturing/MES · giới hạn Node/Windows.
+          </div>
+        </section>
+        <div class="toolbar" id="toolbar">
+          <input
+            id="search"
+            placeholder="Tìm câu hỏi, SQL, MES, deployment..."
+            aria-label="Tìm kiếm"
+          /><select id="category">
+            <option value="all">Tất cả chủ đề</option></select
+          ><select id="priority">
+            <option value="all">Mọi mức ưu tiên</option>
+            <option value="high">Quan trọng nhất</option>
+            <option value="medium">Ôn thêm</option></select
+          ><select id="status">
+            <option value="all">Tất cả trạng thái</option>
+            <option value="todo">Chưa ôn</option>
+            <option value="done">Đã ôn</option></select
+          ><button class="btn" id="toggle">Ẩn/hiện đáp án</button
+          ><button class="btn" onclick="window.print()">In / PDF</button>
+        </div>
+        <section id="study">
+          <div class="eyebrow">Question bank</div>
+          <h2 class="sectionTitle" id="listTitle">Câu hỏi & câu trả lời</h2>
+          <div class="cards" id="cards"></div>
+          <p class="muted" id="empty"></p>
+        </section>
+        <section class="panel" id="flashSection">
+          <div class="eyebrow">Active recall</div>
+          <h2>Flashcards — tự trả lời trước khi lật</h2>
+          <div
+            class="flash"
+            id="flash"
+            tabindex="0"
+            role="button"
+            aria-label="Lật thẻ"
+          >
+            <div class="tiny" id="flashMeta"></div>
+            <h3 id="flashQuestion"></h3>
+            <p id="flashAnswer" class="hide"></p>
+            <div class="tiny">Nhấn vào thẻ để lật</div>
+          </div>
+          <div class="actions">
+            <button class="btn" id="prev">← Trước</button
+            ><button class="btn primary" id="next">Tiếp →</button
+            ><button class="btn" id="random">Ngẫu nhiên</button
+            ><button class="btn" id="flashDone">Đánh dấu đã ôn</button>
+          </div>
+        </section>
+        <section class="panel" id="sourceSection">
+          <div class="eyebrow">Source library</div>
+          <h2>Ghi chú mở rộng từ tài liệu đính kèm</h2>
+          <p class="muted">
+            Phần này giữ thêm nội dung từ tài liệu Word để không bỏ sót các ghi
+            chú và ví dụ cũ. Đây là tài liệu tham khảo, không phải mọi ví dụ đều
+            là kinh nghiệm thực tế của bạn.
+          </p>
+          <input
+            id="noteSearch"
+            placeholder="Tìm trong ghi chú nguồn..."
+            style="
+              width: 100%;
+              border: 1px solid var(--line);
+              border-radius: 8px;
+              padding: 11px;
+            "
+          />
+          <div
+            id="notes"
+            style="max-height: 560px; overflow: auto; margin-top: 12px"
+          ></div>
+        </section>
+        <footer class="source">
+          Nguồn: CV Web System Engineer · TTI JD · Web system engineer.docx ·
+          TTI Mobile Full Review. Tiến độ lưu trong trình duyệt trên thiết bị
+          này.
+        </footer>
+      </main>
+    </div>
+    <script>
+      const DATA = [
+        {
+          id: 1,
+          category: "HR & TTI",
+          q: "Tell me about yourself — 30 seconds",
+          en: "I am a software engineer with over five years of experience building web applications and internal business systems. My strengths are React, TypeScript, REST API integration, and data-heavy interfaces. I have also built a small full-stack project with FastAPI and PostgreSQL. I want to apply these skills to manufacturing systems.",
+          vi: "Em có hơn 5 năm làm web và hệ thống nội bộ; mạnh React/TypeScript, API, giao diện dữ liệu. Có dự án cá nhân FastAPI/PostgreSQL; muốn chuyển kỹ năng sang hệ thống sản xuất.",
+          priority: "high",
+        },
+        {
+          id: 2,
+          category: "HR & TTI",
+          q: "Why TTI?",
+          en: "TTI is a global manufacturing company focused on innovation and continuous improvement. I want to use my experience with internal web systems to support manufacturing operations and learn more about factory processes.",
+          vi: "Muốn dùng kinh nghiệm hệ thống nội bộ để cải thiện vận hành nhà máy và phát triển kỹ năng.",
+          priority: "high",
+        },
+        {
+          id: 3,
+          category: "HR & TTI",
+          q: "What do you know about TTI?",
+          en: "TTI stands for Techtronic Industries. It is a global company known for power tools and brands such as Milwaukee and Ryobi.",
+          vi: "Tập đoàn sản xuất công cụ điện, nổi bật với Milwaukee và Ryobi. Không tự khẳng định chi tiết chưa kiểm chứng.",
+          priority: "high",
+        },
+        {
+          id: 4,
+          category: "HR & TTI",
+          q: "Why move from frontend to Web System Engineer?",
+          en: "I enjoy understanding business workflows, not only building interfaces. I have worked with APIs, data models, and deployment in personal projects. I want to grow toward end-to-end ownership.",
+          vi: "Không nói mình đã là full-stack senior; nhấn mạnh hiểu nghiệp vụ, mở rộng backend và triển khai.",
+          priority: "high",
+        },
+        {
+          id: 5,
+          category: "HR & TTI",
+          q: "How strong are your Python and backend skills?",
+          en: "My strongest skills are React, TypeScript, and frontend development. I have basic hands-on experience with Python, Django, and FastAPI through projects. I use AI tools to support implementation, but I review, test, and debug the code. I am still improving my backend skills.",
+          vi: "Trung thực: Python/FastAPI/Django ở mức cơ bản; tự kiểm tra logic và test code AI hỗ trợ.",
+          priority: "high",
+        },
+        {
+          id: 6,
+          category: "HR & TTI",
+          q: "Do you have Node.js experience?",
+          en: "I have not used Node.js extensively for production backend systems. My backend experience is mainly with Python and FastAPI, but I understand REST APIs and databases and can learn Node.js.",
+          vi: "Chưa có Node production mạnh. Node.js là runtime JS phía server, Express/NestJS là framework.",
+          priority: "high",
+        },
+        {
+          id: 7,
+          category: "HR & TTI",
+          q: "How do you handle deadlines?",
+          en: "I clarify priorities, split work into smaller tasks, estimate the effort, and communicate early when I see a risk.",
+          vi: "Chia task, ưu tiên, báo sớm nếu có rủi ro.",
+          priority: "medium",
+        },
+        {
+          id: 8,
+          category: "HR & TTI",
+          q: "How do you work with stakeholders?",
+          en: "I clarify requirements early and communicate with designers, backend developers, and business stakeholders to avoid rework.",
+          vi: "Đã phối hợp team Nhật/Hàn, BA/PM/PO/Design.",
+          priority: "medium",
+        },
+        {
+          id: 9,
+          category: "HR & TTI",
+          q: "May I answer in Vietnamese?",
+          en: "Sorry, may I explain this part in Vietnamese? I can explain it more clearly.",
+          vi: "Câu cứu nguy khi bí tiếng Anh.",
+          priority: "high",
+        },
+        {
+          id: 10,
+          category: "HR & TTI",
+          q: "What if you do not know a technology?",
+          en: "I have not worked with it directly, so I do not want to give an incorrect answer. I understand the basic concept and I am willing to learn.",
+          vi: "Không nhận bừa kinh nghiệm MQTT, Redis, Windows Server, CI/CD.",
+          priority: "high",
+        },
+        {
+          id: 11,
+          category: "Projects & STAR",
+          q: "Thang Loi — internal systems",
+          en: "I developed React and TypeScript interfaces for eight internal systems used by more than 500 people, including HRM, CRM, asset management, and e-signature. I integrated Django REST APIs and built reusable UI components.",
+          vi: "Nhấn vào workflow doanh nghiệp, RBAC, bảng dữ liệu lớn, 40+ components.",
+          priority: "high",
+        },
+        {
+          id: 12,
+          category: "Projects & STAR",
+          q: "E-signature workflow",
+          en: "I worked on the frontend of an e-signature workflow with dynamic forms and approval steps across departments. It helped reduce manual work.",
+          vi: "BPMN workflow, nhiều cấp duyệt; chỉ nhận phần FE mình làm.",
+          priority: "medium",
+        },
+        {
+          id: 13,
+          category: "Projects & STAR",
+          q: "SK Broadband — what did you build?",
+          en: "I built responsive pages using Next.js and TypeScript and integrated CMS-backed APIs using an OpenAPI-generated Axios client. The CMS admin system was developed by another team.",
+          vi: "Generate API client giảm viết tay URL/type; mình không xây CMS admin.",
+          priority: "high",
+        },
+        {
+          id: 14,
+          category: "Projects & STAR",
+          q: "SK Roaming — what did you build?",
+          en: "I developed responsive customer-facing pages for SIM and eSIM purchase, device rental, reservation lookup, and service guides with HTML, CSS, and JavaScript.",
+          vi: "Trang tích hợp vào hệ JSP/Java có sẵn.",
+          priority: "medium",
+        },
+        {
+          id: 15,
+          category: "Projects & STAR",
+          q: "MyHappyClass — proud project",
+          en: "I co-founded a SaaS product for tutors. I researched users, designed the UI, and built the React frontend. It has over 100 accounts and more than 40 active tutors.",
+          vi: "Một ví dụ product thinking: điểm danh mobile, lịch học, học phí.",
+          priority: "high",
+        },
+        {
+          id: 16,
+          category: "Projects & STAR",
+          q: "MyHappyClass — many-to-many data",
+          en: "A student can join many classes, and a class can have many students. We use an enrollment relationship to store the student’s status in each class.",
+          vi: "student ↔ enrollment ↔ class; backend partner triển khai schema, mình hiểu mô hình và phối hợp thiết kế.",
+          priority: "high",
+        },
+        {
+          id: 17,
+          category: "Projects & STAR",
+          q: "MyHappyClass — production 404 bug",
+          en: "Users saw a 404 when clicking sign-up. I checked the URL and redirect flow and found /signup on the landing page while the app used /register. I corrected the route and redirect.",
+          vi: "STAR: Situation 404 → Task tìm lỗi → Action trace route → Result sửa luồng.",
+          priority: "high",
+        },
+        {
+          id: 18,
+          category: "Projects & STAR",
+          q: "EconWiki — full-stack scope",
+          en: "I built a React frontend, a FastAPI backend, and a PostgreSQL database for an economics knowledge app. I deployed it on a Linux VPS using Docker.",
+          vi: "Đây là dự án cá nhân để nói về end-to-end, không phóng đại quy mô.",
+          priority: "high",
+        },
+        {
+          id: 19,
+          category: "Projects & STAR",
+          q: "Epidemic — case management",
+          en: "I worked on a disease case management application with case lists, assignments, Excel import validation, dashboards, and audit logs.",
+          vi: "Ví dụ nghiệp vụ: phân quyền NVYT/Manager/Admin, audit ai sửa gì khi nào; không nói là hệ MES.",
+          priority: "medium",
+        },
+        {
+          id: 20,
+          category: "Projects & STAR",
+          q: "TechX — Safari viewport bug",
+          en: "A mobile page using 100vh was cut off in Safari because of the browser address bar. I changed it to 100dvh and tested the layout again.",
+          vi: "Ví dụ debug ngắn, dễ kể bằng tiếng Anh.",
+          priority: "medium",
+        },
+        {
+          id: 21,
+          category: "Projects & STAR",
+          q: "Using AI responsibly",
+          en: "I use Cursor and AI tools to support repetitive coding and understand documentation, but I review the logic, test the results, and take responsibility for the final code.",
+          vi: "OpenAPI-generated client là code generation, không mặc nhiên là AI.",
+          priority: "medium",
+        },
+        {
+          id: 22,
+          category: "JavaScript & React",
+          q: "var / let / const",
+          en: "let and const are block-scoped. var is function-scoped. I prefer const by default and let when reassignment is needed.",
+          vi: "const khóa việc gán lại biến, không làm object bất biến.",
+          priority: "high",
+        },
+        {
+          id: 23,
+          category: "JavaScript & React",
+          q: "Closure",
+          en: "A closure lets a function remember variables from the scope where it was created. A common use is debounce.",
+          vi: "Ví dụ debounce giữ timer giữa các lần gõ search.",
+          priority: "medium",
+        },
+        {
+          id: 24,
+          category: "JavaScript & React",
+          q: "Event loop",
+          en: "JavaScript runs synchronous code first. Promise callbacks are microtasks, which normally run before setTimeout tasks after the current stack finishes.",
+          vi: "console.log(1); setTimeout(()=>console.log(2),0); Promise.resolve().then(()=>console.log(3)); console.log(4) → 1,4,3,2.",
+          priority: "high",
+        },
+        {
+          id: 25,
+          category: "JavaScript & React",
+          q: "Promise / async-await",
+          en: "async/await is syntax for working with Promises. I use try/catch/finally and handle loading, error, and success states.",
+          vi: "fetch không reject với HTTP 404/500; cần check response.ok.",
+          priority: "high",
+        },
+        {
+          id: 26,
+          category: "JavaScript & React",
+          q: "Props vs state",
+          en: "Props are passed from a parent component. State is data managed by a component that can change over time.",
+          vi: "React render lại khi state/props thay đổi; chú ý tránh mutation.",
+          priority: "high",
+        },
+        {
+          id: 27,
+          category: "JavaScript & React",
+          q: "useEffect",
+          en: "useEffect synchronizes a component with external systems, such as subscriptions or browser APIs. Cleanup prevents stale subscriptions and leaks.",
+          vi: "Không dùng useEffect cho mọi phép tính derived state.",
+          priority: "medium",
+        },
+        {
+          id: 28,
+          category: "JavaScript & React",
+          q: "React key",
+          en: "Keys help React identify items in a list. Use stable IDs instead of array indexes when items can move or change.",
+          vi: "Index key dễ làm sai state khi reorder.",
+          priority: "medium",
+        },
+        {
+          id: 29,
+          category: "JavaScript & React",
+          q: "React performance",
+          en: "I measure first, then consider memoization, pagination, virtualization, lazy loading, and code splitting.",
+          vi: "React.memo/useMemo/useCallback chỉ khi có lý do; tránh tối ưu mù.",
+          priority: "high",
+        },
+        {
+          id: 30,
+          category: "JavaScript & React",
+          q: "Frontend states",
+          en: "For data fetching, I design loading, error, empty, and success states.",
+          vi: "Đặc biệt bảng dữ liệu nghiệp vụ.",
+          priority: "medium",
+        },
+        {
+          id: 31,
+          category: "JavaScript & React",
+          q: "Authentication vs authorization",
+          en: "Authentication verifies who a user is. Authorization checks what the user is allowed to do.",
+          vi: "RBAC: FE ẩn action để UX, BE vẫn phải kiểm tra quyền.",
+          priority: "high",
+        },
+        {
+          id: 32,
+          category: "API & Architecture",
+          q: "What is RESTful API?",
+          en: "REST is an architectural style for APIs, commonly using HTTP methods and resource-based URLs.",
+          vi: "Không gọi REST là giao thức; HTTP mới là giao thức.",
+          priority: "high",
+        },
+        {
+          id: 33,
+          category: "API & Architecture",
+          q: "GET / POST / PUT / PATCH / DELETE",
+          en: "GET reads data, POST commonly creates or submits, PUT replaces a resource, PATCH updates part of it, and DELETE removes it.",
+          vi: "GET nên safe; PUT/DELETE thường idempotent; POST không mặc định idempotent.",
+          priority: "high",
+        },
+        {
+          id: 34,
+          category: "API & Architecture",
+          q: "Endpoint / path / query",
+          en: "An endpoint is an API address. Path parameters identify a resource, while query parameters filter, sort, or paginate.",
+          vi: "/orders/12 là path param; /orders?page=2 là query param.",
+          priority: "high",
+        },
+        {
+          id: 35,
+          category: "API & Architecture",
+          q: "Status codes",
+          en: "200 OK, 201 Created, 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, and 500 Internal Server Error.",
+          vi: "401 chưa xác thực; 403 đã biết danh tính nhưng không đủ quyền.",
+          priority: "high",
+        },
+        {
+          id: 36,
+          category: "API & Architecture",
+          q: "JSON.stringify / JSON.parse",
+          en: "JSON.stringify converts a JavaScript value into JSON text. JSON.parse converts JSON text into a JavaScript value.",
+          vi: "JSON là format dữ liệu, không phải REST hay HTTP.",
+          priority: "medium",
+        },
+        {
+          id: 37,
+          category: "API & Architecture",
+          q: "CORS",
+          en: "CORS is a browser security mechanism that controls whether JavaScript can read responses from another origin. The server sends the relevant CORS headers.",
+          vi: "Postman/server-to-server không bị browser CORS enforcement.",
+          priority: "medium",
+        },
+        {
+          id: 38,
+          category: "API & Architecture",
+          q: "How would you design a feature end-to-end?",
+          en: "I clarify requirements and roles, define the data model and API contract, build the UI and backend, test error cases, deploy, monitor, and support the feature.",
+          vi: "Đây là quy trình đề xuất; phân biệt với phần đã tự làm thật.",
+          priority: "high",
+        },
+        {
+          id: 39,
+          category: "API & Architecture",
+          q: "Security basics",
+          en: "Validate inputs on the server, enforce authorization, avoid SQL injection with parameterized queries, and prevent XSS when rendering untrusted HTML.",
+          vi: "CSP, HttpOnly, HTTPS, rate limit; tránh dangerouslySetInnerHTML thiếu sanitize.",
+          priority: "medium",
+        },
+        {
+          id: 40,
+          category: "SQL & Database",
+          q: "Relational database and keys",
+          en: "Relational databases organize data into tables. A primary key identifies a row, and a foreign key connects related tables.",
+          vi: "PostgreSQL/MySQL là relational; MongoDB là document NoSQL, dù JD nhóm chung.",
+          priority: "high",
+        },
+        {
+          id: 41,
+          category: "SQL & Database",
+          q: "INNER JOIN / LEFT JOIN",
+          en: "INNER JOIN returns matching rows. LEFT JOIN keeps all rows from the left table, even without a match.",
+          vi: "Ví dụ orders JOIN products, work_orders LEFT JOIN production_logs.",
+          priority: "high",
+        },
+        {
+          id: 42,
+          category: "SQL & Database",
+          q: "GROUP BY / HAVING",
+          en: "GROUP BY aggregates rows. WHERE filters rows before grouping; HAVING filters groups after aggregation.",
+          vi: "COUNT(*) theo line_id để tính sản lượng theo chuyền.",
+          priority: "high",
+        },
+        {
+          id: 43,
+          category: "SQL & Database",
+          q: "Index",
+          en: "An index helps queries find rows faster, but it costs storage and can slow inserts and updates.",
+          vi: "Index cột thường filter/join; xem EXPLAIN trước khi thêm.",
+          priority: "high",
+        },
+        {
+          id: 44,
+          category: "SQL & Database",
+          q: "Transaction and ACID",
+          en: "A transaction groups related operations. It can commit all changes or roll them back when something fails.",
+          vi: "ACID: Atomicity, Consistency, Isolation, Durability.",
+          priority: "high",
+        },
+        {
+          id: 45,
+          category: "SQL & Database",
+          q: "Two users edit the same case",
+          en: "I would consider optimistic locking with a version column. The update only succeeds if the version still matches, so one user cannot silently overwrite another.",
+          vi: "UPDATE cases SET status=?,version=version+1 WHERE id=? AND version=?; affected rows=0 → conflict.",
+          priority: "high",
+        },
+        {
+          id: 46,
+          category: "SQL & Database",
+          q: "Normalization",
+          en: "Normalization reduces duplicated data by separating entities and connecting them with keys.",
+          vi: "Ví dụ student, class, enrollment; cân bằng với yêu cầu query.",
+          priority: "medium",
+        },
+        {
+          id: 47,
+          category: "SQL & Database",
+          q: "SQL performance",
+          en: "I would inspect slow queries and execution plans, add suitable indexes, return only required columns, and paginate large results.",
+          vi: "Không SELECT * toàn bộ hàng chục nghìn dòng lên FE.",
+          priority: "high",
+        },
+        {
+          id: 48,
+          category: "SQL & Database",
+          q: "PostgreSQL vs MySQL vs MongoDB",
+          en: "PostgreSQL and MySQL are relational SQL databases. MongoDB stores document-oriented data.",
+          vi: "Có kinh nghiệm PostgreSQL; không nhận đã vận hành MySQL/MongoDB production.",
+          priority: "medium",
+        },
+        {
+          id: 49,
+          category: "Manufacturing 101",
+          q: "Manufacturing flow",
+          en: "A typical flow is planning, raw material warehouse, production, quality control, finished goods warehouse, and logistics.",
+          vi: "Planning → Raw Materials → Production → Quality → Finished Goods → Logistics.",
+          priority: "high",
+        },
+        {
+          id: 50,
+          category: "Manufacturing 101",
+          q: "MES / ERP / WMS / QMS",
+          en: "MES tracks shop-floor production. ERP manages enterprise resources. WMS manages warehouse operations. QMS supports quality processes.",
+          vi: "Các hệ thống có thể trao đổi qua API; không khẳng định TTI dùng hệ cụ thể.",
+          priority: "high",
+        },
+        {
+          id: 51,
+          category: "Manufacturing 101",
+          q: "Work order",
+          en: "A work order tells a factory what product to make, how many units, and when to produce them.",
+          vi: "Lệnh sản xuất có mã WO, sản phẩm, số lượng, kế hoạch, trạng thái.",
+          priority: "high",
+        },
+        {
+          id: 52,
+          category: "Manufacturing 101",
+          q: "Production line / station",
+          en: "A production line has multiple stations or steps where products are assembled or tested.",
+          vi: "Line = dây chuyền; station = trạm/công đoạn.",
+          priority: "high",
+        },
+        {
+          id: 53,
+          category: "Manufacturing 101",
+          q: "Traceability",
+          en: "Traceability means tracking materials and products through production using barcodes, serial numbers, or batch numbers.",
+          vi: "Tra ngược sản phẩm lỗi thuộc lô nguyên liệu, line, ca nào.",
+          priority: "high",
+        },
+        {
+          id: 54,
+          category: "Manufacturing 101",
+          q: "Production tracking / downtime / defects",
+          en: "Production tracking shows output and progress. Downtime is when a machine or line stops. Defects are quality problems.",
+          vi: "Dashboard có planned vs actual, output, defect rate, downtime.",
+          priority: "high",
+        },
+        {
+          id: 55,
+          category: "Manufacturing 101",
+          q: "Factory system example",
+          en: "An operator scans a barcode, the system records the work order, station, time, and result, and a dashboard shows progress.",
+          vi: "Ví dụ minh họa, không nhận từng xây MES.",
+          priority: "high",
+        },
+        {
+          id: 56,
+          category: "Manufacturing 101",
+          q: "Digital transformation",
+          en: "Digital transformation replaces manual paper or Excel workflows with connected systems that help teams work more efficiently.",
+          vi: "Kinh nghiệm hệ thống nội bộ có thể chuyển sang nhà máy.",
+          priority: "medium",
+        },
+        {
+          id: 57,
+          category: "Realtime & Performance",
+          q: "WebSocket / Socket.IO",
+          en: "WebSocket supports two-way communication over a persistent connection. Socket.IO is a library that adds features such as reconnection and events.",
+          vi: "Chỉ hiểu khái niệm; ví dụ dashboard line cập nhật realtime.",
+          priority: "medium",
+        },
+        {
+          id: 58,
+          category: "Realtime & Performance",
+          q: "MQTT",
+          en: "MQTT is a lightweight publish-subscribe messaging protocol often used by IoT devices and sensors.",
+          vi: "Sensor → broker → subscriber; không cần học code sâu.",
+          priority: "medium",
+        },
+        {
+          id: 59,
+          category: "Realtime & Performance",
+          q: "Redis cache / Pub/Sub",
+          en: "Redis is an in-memory data store. Cache stores frequently used data to reduce repeated work. Pub/Sub sends messages from publishers to active subscribers.",
+          vi: "Redis Pub/Sub không lưu bền tin cho subscriber offline; phân biệt cache với message broker.",
+          priority: "medium",
+        },
+        {
+          id: 60,
+          category: "Realtime & Performance",
+          q: "High concurrency",
+          en: "High concurrency means many requests happen at the same time. Efficient APIs, connection management, indexes, and transaction handling are important.",
+          vi: "Nói hiểu nguyên tắc, không tự nhận đã scale hệ production concurrency lớn.",
+          priority: "high",
+        },
+        {
+          id: 61,
+          category: "Realtime & Performance",
+          q: "Large datasets",
+          en: "I use server-side pagination and filtering to avoid loading all records. For large tables, I may use virtualization to reduce DOM nodes.",
+          vi: "Phân biệt pagination dữ liệu và virtualization DOM.",
+          priority: "high",
+        },
+        {
+          id: 62,
+          category: "Realtime & Performance",
+          q: "Race condition",
+          en: "A race condition happens when the result depends on timing. For searches, I can cancel outdated requests or ignore stale responses.",
+          vi: "DB cần locking/version để bảo vệ cập nhật đồng thời.",
+          priority: "medium",
+        },
+        {
+          id: 63,
+          category: "Deployment & CI/CD",
+          q: "Linux VPS deployment",
+          en: "I have deployed web applications on a Linux VPS using Docker and a reverse proxy. I build the frontend, upload artifacts, configure the web server, and verify the site.",
+          vi: "Có kinh nghiệm Ubuntu VPS, Nginx/Caddy, Docker; không nói Windows Server.",
+          priority: "high",
+        },
+        {
+          id: 64,
+          category: "Deployment & CI/CD",
+          q: "VPS vs Windows Server",
+          en: "A VPS is a virtual machine. Windows Server is an operating system that can run on a virtual or physical server.",
+          vi: "Linux/Windows là OS; VPS là hình thức máy chủ.",
+          priority: "high",
+        },
+        {
+          id: 65,
+          category: "Deployment & CI/CD",
+          q: "IIS / RDP / Windows Services",
+          en: "IIS is a Microsoft web server. RDP allows remote access. Windows Services run background processes.",
+          vi: "Chỉ mới tìm hiểu, chưa triển khai Windows Server thực tế.",
+          priority: "medium",
+        },
+        {
+          id: 66,
+          category: "Deployment & CI/CD",
+          q: "What is CI/CD?",
+          en: "CI/CD automates steps such as build, test, and deployment. I understand the basics and am learning GitLab CI/CD, but I have not managed a production pipeline myself.",
+          vi: "CI = Continuous Integration; CD = Delivery/Deployment.",
+          priority: "medium",
+        },
+        {
+          id: 67,
+          category: "Deployment & CI/CD",
+          q: "Build Vite/Astro frontend",
+          en: "I run npm run build to generate a dist folder, upload the build files to the server, configure the web root, and verify routing and assets.",
+          vi: "Vite là build tool/dev server; Astro là framework; kiểm tra SPA fallback khi cần.",
+          priority: "medium",
+        },
+        {
+          id: 68,
+          category: "Deployment & CI/CD",
+          q: "Django + Caddy + systemd",
+          en: "For a Django app, collectstatic gathers static assets. A reverse proxy forwards traffic to the application server, while systemd can manage the backend process.",
+          vi: "collectstatic không tự chạy Django; Caddy có thể cấp HTTPS; systemd quản lý service.",
+          priority: "medium",
+        },
+        {
+          id: 69,
+          category: "Questions for TTI",
+          q: "What manufacturing systems does the team mainly work on?",
+          en: "What manufacturing systems does the team mainly work on, such as MES, production tracking, or internal web applications?",
+          vi: "Team đang làm MES, production tracking hay web nội bộ?",
+          priority: "high",
+        },
+        {
+          id: 70,
+          category: "Questions for TTI",
+          q: "What is the main technology stack?",
+          en: "What is the main technology stack for this position?",
+          vi: "Stack chính thực tế là gì?",
+          priority: "high",
+        },
+        {
+          id: 71,
+          category: "Questions for TTI",
+          q: "First three months",
+          en: "What would be the main priorities for the person joining this role in the first three months?",
+          vi: "Ba tháng đầu cần đạt kết quả gì?",
+          priority: "high",
+        },
+      ];
+      const NOTES = [
+        "CNTT - Phần cứng / Mạng,CNTT - Phần mềm",
+        "We are looking for a Software Engineer with strong Full-Stack development skills and a good understanding of manufacturing operations to join our development team.",
+        "Candidates with previous experience working in a manufacturing environment, factory IT/engineering teams, MES, production systems, or industrial software projects are strongly preferred. A good understanding of production processes, production tracking, traceability, line operations, work orders, production planning, quality processes, and shop-floor data will be a significant advantage.",
+        "Full-Stack Web Application Development using Node.js and JavaScript/React.js.",
+        "Development of systems supporting manufacturing and production operations.",
+        "Design application architecture, API structure, database interactions, and system integration.",
+        "Ensure code quality, maintainability, scalability, and security throughout the development lifecycle.",
+        "Ensure database solutions are reliable, scalable, and optimized for high-performance applications.",
+        "Implement appropriate strategies for large datasets, high concurrency, and transaction management.",
+        "Participate in meetings and discussions with colleagues or stakeholders.",
+        "Have experience working in a factory environment",
+        "2+ years of professional experience in web/application development.",
+        "Experience with real-time technologies such as:",
+        "Good experience with relational databases:",
+        "Experience developing and optimizing applications for high concurrency and high performance.",
+        "Experience deploying and operating applications on Windows Server.",
+        "We are looking for an engineer who can take ownership of a feature or system end-to-end — from understanding the business requirement, designing the solution, developing the front-end and back-end, optimizing the database, deploying the server, and supporting the system in production.",
+        "I am a software engineer with over five years of experience building web applications and internal business systems. My main strengths are React, TypeScript, REST API integration, and data-heavy interfaces. I have also built a small full-stack project with FastAPI and PostgreSQL. I want to apply these skills to manufacturing systems.",
+        "– \n\nHi, I'm Quynh, but you can call me Quinn. I have over five years of experience as a Frontend Developer, mainly working with JavaScript, React, and TypeScript.",
+        "I started my career at Thang Loi Group, where I developed internal web applications for over 500 (five hundred) employees, including HR, asset management, and e-signature systems. I also built a design system with more than 40 reusable components, which helped reduce UI development time by around 40%.",
+        "After that, I joined TechX Vietnam, a Japanese company. There, I worked on CMS-based websites, built reusable JavaScript components, and collaborated with Japanese stakeholders. I also had the chance to mentor junior developers.",
+        "Currently, I work at e·motion Global Vietnam on two projects for SK Group. One is a corporate website built with Next.js and TypeScript, and the other is a customer-facing roaming website using Vanilla JavaScript. I work closely with Korean stakeholders and use tools like Figma Dev Mode and Cursor to speed up development.",
+        "Overall, my strength is building clean, reusable, and user-friendly interfaces. I enjoy understanding business requirements and turning them into practical solutions.\n\n– \nSorry, may I explain this in Vietnamese? I can explain it more clearly.",
+        "TTI Web System Engineer — Ôn phỏng vấn cấp tốc 1 giờ",
+        "English B1 + Tiếng Việt. Học ý chính, nói chậm, không cần thuộc từng chữ. Không nhận kinh nghiệm mình chưa có.",
+        "0–10 phút: Giới thiệu bản thân + Why TTI + What do you know about TTI?",
+        "10–25 phút: 3 câu chuyện dự án + STAR + teamwork/deadline.",
+        "25–40 phút: React, REST API, SQL, performance, deployment.",
+        "40–50 phút: Manufacturing, MES/WMS, Windows Server, AI.",
+        "50–60 phút: Nói thành tiếng, ghi âm, luyện xin trả lời tiếng Việt.",
+        "1. Tell me about yourself. (60–90 seconds)",
+        "EN:\nI am a software engineer with over five years of experience building web applications and internal business systems. My main skills are React, TypeScript, and JavaScript. I have worked on HR, CRM, document management, and other enterprise systems. I also have experience working with REST APIs, databases, and some Python backend development. Recently, I worked on web projects for SK Group with Korean stakeholders. I enjoy building useful systems that help people work more efficiently. Now, I want to apply my experience in a manufacturing environment and continue growing as a Web System Engineer.",
+        "VI: Tôi là kỹ sư phần mềm với hơn 5 năm phát triển web và hệ thống nội bộ. Thế mạnh là React, TypeScript, JavaScript; từng làm HR, CRM, quản lý tài liệu và hệ thống doanh nghiệp. Có kinh nghiệm API, database và một phần backend Python. Gần đây làm dự án SK Group với các bên liên quan Hàn Quốc. Tôi muốn ứng dụng kỹ năng trong môi trường sản xuất và phát triển thành Web System Engineer.",
+        "EN (bản đã chọn):\nI want to work at TTI because it is a global manufacturing company that focuses on innovation and continuous improvement.",
+        "I have experience developing web applications and internal systems. I want to use my technical skills to improve business processes and support manufacturing operations.",
+        "I also want to learn more about manufacturing systems and grow as a software engineer.",
+        "VI: Tôi muốn làm việc tại TTI vì đây là công ty sản xuất toàn cầu, chú trọng đổi mới và cải tiến liên tục. Tôi có kinh nghiệm làm web và hệ thống nội bộ, muốn cải thiện quy trình nghiệp vụ, hỗ trợ sản xuất và học thêm về hệ thống sản xuất.",
+        "EN:\nAs far as I know, TTI stands for Techtronic Industries. It was founded in 1985 and is a global manufacturing company. TTI focuses on cordless technology and has well-known brands like Milwaukee and Ryobi. TTI has been operating in Vietnam since 2018. I know that TTI focuses on innovation and operational excellence. I would like to use software to help improve manufacturing operations.",
+        "VI: TTI là Techtronic Industries, thành lập năm 1985, là tập đoàn sản xuất toàn cầu, nổi tiếng về công nghệ không dây và các thương hiệu Milwaukee, Ryobi. TTI hoạt động ở Việt Nam từ năm 2018, chú trọng đổi mới và vận hành hiệu quả.",
+        "4. What do you know about TTI and this role?",
+        "EN:\nTTI is a global manufacturing company. Manufacturing involves production, quality control, warehouses, and logistics. I believe a Web System Engineer helps these teams work better through web applications, APIs, and data. I want to use my frontend experience and backend knowledge to support manufacturing operations.",
+        "VI: Vị trí Web System Engineer có thể hỗ trợ các bộ phận sản xuất, chất lượng, kho và logistics bằng ứng dụng web, API và dữ liệu.",
+        "5. How do you see the role of technology in manufacturing?",
+        "EN:\nI believe every department plays an important role in manufacturing, from production and quality control to logistics. Technology is not everything. It is a tool that helps people work faster, reduce manual tasks, and improve efficiency. As a software engineer, I want to build systems that support people and make their daily work easier.",
+        "VI: Mỗi bộ phận đều quan trọng. Công nghệ là công cụ giúp con người giảm việc thủ công, làm nhanh và hiệu quả hơn.",
+        "EN:\nAs far as I know, TTI has six core values. Some of them are integrity and respect, building trusted relationships, and encouraging innovation.",
+        "VI: TTI có sáu giá trị cốt lõi; tôi nhớ các giá trị như chính trực và tôn trọng, quan hệ tin cậy và khuyến khích sáng tạo.",
+        "6 giá trị tiếng Việt: Làm điều đúng đắn → Chính trực và tôn trọng → Quan hệ tin cậy → Đóng góp cộng đồng → Khuyến khích sáng tạo → Vượt mong đợi khách hàng.",
+        "EN: As far as I know, LEED stands for Leadership in Energy and Environmental Design. It is related to green and sustainable buildings.",
+        "VI: LEED liên quan đến công trình xanh và bền vững.",
+        "8. Why does TTI have multiple manufacturing facilities?",
+        "EN: Having multiple factories helps TTI optimize its global supply chain, from producing plastic parts, batteries, and motors to assembling finished products.",
+        "VI: Nhiều nhà máy có thể giúp tối ưu chuỗi cung ứng từ linh kiện đến lắp ráp thành phẩm. Đây là nhận định về lợi ích, không phải lý do chính thức được xác nhận.",
+        "9. Tell me about a technical problem you solved. — MyHappyClass 404",
+        "EN:\nIn my MyHappyClass project, I worked on a registration page issue. Some users got a 404 error when they clicked the sign-up button. At first, the issue looked different in Chrome and Edge, so I checked the URL, routing, and login redirect flow. I found that the landing page used /signup, but the React app only supported /register. I updated the routing and redirect logic to fix the issue. This experience taught me to find the root cause and check the full application flow when debugging production issues.",
+        "VI: Một số người dùng gặp 404 khi bấm đăng ký. Tôi kiểm tra URL, routing và redirect; phát hiện landing dùng /signup nhưng React app chỉ có /register. Tôi chỉnh routing/redirect, rút kinh nghiệm tìm nguyên nhân gốc.",
+        "STAR: Situation = lỗi 404; Task = tìm nguyên nhân; Action = kiểm tra URL/routing/redirect và sửa; Result = khắc phục vấn đề (chỉ nói đã kiểm thử production nếu thực sự đã xác nhận).",
+        "10. Tell me about a project you are proud of. — Enterprise systems",
+        "EN:\nI worked on internal enterprise systems such as HR, CRM, document management, and e-signature. My main responsibility was building frontend features using React and TypeScript and integrating backend APIs. These systems supported daily business operations. I learned how to build reusable components and work closely with other teams.",
+        "VI: Tôi phát triển giao diện React/TypeScript, tích hợp API cho các hệ thống nội bộ HR/CRM/tài liệu/chữ ký điện tử; học được cách tái sử dụng component và phối hợp đội nhóm.",
+        "11. Tell me about your SK Group projects.",
+        "EN:\nI worked on two web renewal projects for SK Group. For SK Broadband, I built responsive pages using Next.js and TypeScript and integrated CMS-backed APIs. For SK Telecom Roaming, I developed responsive pages using HTML, CSS, and JavaScript. I worked with Korean stakeholders and designers to turn designs into working interfaces.",
+        "VI: Tôi tham gia hai dự án cải tiến website: SK Broadband (Next.js/TS, tích hợp API từ CMS do nhóm khác phát triển) và SK Telecom Roaming (HTML/CSS/JS), phối hợp với stakeholder và designer Hàn Quốc.",
+        "EN:\nFirst, I clarify the requirements and priorities. Then I break the work into smaller tasks and estimate the time. If I see a risk of delay, I inform my team early and discuss the best solution.",
+        "VI: Làm rõ yêu cầu/ưu tiên, chia việc nhỏ, ước lượng thời gian; báo sớm khi có nguy cơ trễ.",
+        "13. How do you work with other teams?",
+        "EN:\nI try to understand the requirements and communicate clearly. I work with designers, backend developers, and business stakeholders. If something is unclear, I ask questions early to avoid mistakes and rework.",
+        "VI: Làm rõ yêu cầu, giao tiếp với thiết kế/backend/nghiệp vụ, hỏi sớm để tránh sai và làm lại.",
+        "14. How do you handle a production issue?",
+        "EN:\nFirst, I try to understand the issue and check the logs. Then I find the root cause and discuss possible solutions with my team. After fixing the issue, I test the application to make sure everything works correctly.",
+        "VI: Xác định lỗi, xem log, tìm nguyên nhân gốc, trao đổi giải pháp, sửa và kiểm thử.",
+        "C. Technical – trả lời ngắn, đúng bản chất",
+        "EN: React is a JavaScript library for building user interfaces. It uses reusable components and updates the UI when state changes.",
+        "VI: React là thư viện JavaScript để xây UI theo component, cập nhật giao diện khi state thay đổi.",
+        "16. What is the difference between props and state?",
+        "EN: Props are data passed from a parent component. State is data managed inside a component and can change over time.",
+        "VI: Props truyền từ component cha; state là dữ liệu component quản lý và có thể thay đổi.",
+        "17. What is a RESTful API? GET vs POST?",
+        "EN: REST is an architectural style for designing APIs, commonly using HTTP. GET retrieves data. POST usually creates a resource or submits data. The frontend sends requests to the backend, and the backend returns responses, often in JSON format.",
+        "VI: REST là phong cách thiết kế API, thường dùng HTTP. GET lấy dữ liệu, POST thường tạo/gửi dữ liệu. FE gọi BE qua HTTP, thường trao đổi JSON.",
+        "Nhớ thêm: endpoint = URL API; path parameter = định danh trong đường dẫn (/orders/12); query parameter = lọc/phân trang (?page=2); status codes 200/201/400/401/403/404/500; authentication vs authorization; JSON.stringify chuyển object thành chuỗi JSON, JSON.parse chuyển chuỗi JSON thành giá trị JS.",
+        "EN: JOIN combines data from related tables. GROUP BY groups rows so we can calculate totals, counts, or averages.",
+        "VI: JOIN kết hợp bảng có liên hệ; GROUP BY gom nhóm để đếm/tính tổng/trung bình.",
+        "EN: An index helps the database find records faster, especially for frequently searched columns. However, indexes use storage and can slow down writes.",
+        "VI: Index tăng tốc tìm kiếm, nhưng tốn dung lượng và có chi phí khi ghi dữ liệu.",
+        "20. What is a database transaction?",
+        "EN: A transaction groups database operations into one unit. It helps keep data consistent. If something fails, the transaction can be rolled back.",
+        "VI: Transaction nhóm thao tác thành một đơn vị để đảm bảo nhất quán, có thể rollback khi lỗi. Hai người cùng sửa một bản ghi có thể dùng optimistic locking (version) hoặc locking phù hợp để tránh ghi đè.",
+        "21. How do you improve application performance?",
+        "EN: I first measure the problem. On the frontend, I can use lazy loading, code splitting, pagination, and reduce unnecessary renders. For large datasets, I avoid loading everything at once. On the backend and database, I would check slow queries, indexes, caching, and pagination with the team.",
+        "VI: Đo trước khi tối ưu; FE dùng lazy loading, code splitting, pagination, giảm render thừa; DB xem slow query/index/cache.",
+        "EN: High concurrency means many users or requests access the system at the same time. We need efficient APIs, database queries, connection management, and correct transaction handling.",
+        "VI: Nhiều request cùng lúc; cần API, truy vấn, kết nối và transaction hiệu quả. Không tự nhận đã triển khai hệ thống high concurrency nếu chưa có bằng chứng.",
+        "23. Do you have Node.js backend experience?",
+        "EN: My strongest experience is in frontend development. For backend, I have worked with Python and FastAPI, REST APIs, and databases. I have not used Node.js extensively in production, but I understand backend concepts and I am willing to learn.",
+        "VI: Mạnh FE; có Python/FastAPI/API/DB; chưa dùng Node.js nhiều trong production nhưng hiểu khái niệm và sẵn sàng học.",
+        "24. Do you have experience deploying on Windows Server?",
+        "EN (bản đã chọn):\nI have experience deploying web applications on Linux VPS using Nginx and Docker. I have worked with backend APIs and databases. I haven't deployed applications on Windows Server yet, but I understand the basic deployment process. I'm currently learning about IIS, Windows Services, and Windows Server administration.",
+        "VI: Có kinh nghiệm deploy Linux VPS/Nginx/Docker, chưa trực tiếp deploy Windows Server; đang tìm hiểu IIS, Windows Services và quản trị Windows Server.",
+        "Nhớ: VPS = máy chủ ảo; Windows Server = hệ điều hành server; IIS = web server; RDP = remote desktop; PowerShell = shell/automation; Windows Service = tiến trình dịch vụ nền.",
+        "EN: CI/CD is a way to automate building, testing, and delivering software. I understand the basic concepts and am currently learning GitLab CI/CD, but I have not managed a production pipeline myself.",
+        "VI: CI/CD tự động hóa build/test/delivery. Tôi mới học khái niệm, chưa tự vận hành pipeline production.",
+        "26. What are WebSocket, MQTT, and Redis?",
+        "EN: WebSocket supports two-way real-time communication. MQTT is a lightweight messaging protocol often used with IoT devices. Redis is an in-memory data store often used for caching and messaging. I understand these concepts but have not used them extensively in production.",
+        "VI: WebSocket giao tiếp hai chiều thời gian thực; MQTT giao thức nhắn tin nhẹ cho IoT; Redis lưu dữ liệu trong RAM để cache và hỗ trợ messaging. Chỉ cần nắm khái niệm.",
+        "Quy trình tổng quát: Planning → Raw Materials Warehouse → Production → Quality → Finished Goods Warehouse → Logistics.",
+        "27. What do you know about manufacturing systems?",
+        "EN (bản đã chọn):\nAs far as I know, manufacturing systems help factories manage production, materials, and quality.",
+        "For example, MES tracks production orders and production progress. WMS manages warehouse inventory.",
+        "These systems can connect through APIs to share data.",
+        "I have experience building web applications and working with APIs and databases. I want to use these skills to improve manufacturing operations.",
+        "VI: Hệ thống sản xuất quản lý sản xuất/nguyên liệu/chất lượng. MES theo dõi lệnh và tiến độ; WMS quản lý tồn kho; hệ thống chia sẻ dữ liệu qua API. Tôi muốn áp dụng kỹ năng web/API/DB để hỗ trợ vận hành.",
+        "EN: A work order is an instruction to produce a certain quantity of products, usually with a schedule and production details.",
+        "VI: Lệnh sản xuất quy định sản phẩm, số lượng, thời gian và thông tin sản xuất.",
+        "EN: Traceability means tracking a product or material through the production process, often using barcodes, serial numbers, or batch numbers.",
+        "VI: Truy xuất sản phẩm/nguyên liệu qua các công đoạn, bằng mã vạch, số serial hoặc số lô.",
+        "30. What is digital transformation in manufacturing?",
+        "EN: It means using digital systems to replace manual work, connect data, and help people make better decisions. For example, a dashboard can show production progress, defects, and machine downtime.",
+        "VI: Số hóa công việc thủ công, kết nối dữ liệu, hỗ trợ quyết định; ví dụ dashboard tiến độ, lỗi, máy dừng.",
+        "Các hệ thống này là kiến thức ngành tổng quát, không khẳng định TTI đang sử dụng tất cả.",
+        "E. AI & Câu cứu nguy khi tiếng Anh chưa đủ",
+        "EN:\nI think using AI is important today. It helps reduce repetitive tasks and saves time. For example, I use AI tools to support coding, understand documentation, and review possible solutions. However, I always check the results because I am responsible for the final code.",
+        "VI: Trong thời đại hiện nay, AI giúp giảm công việc lặp lại và tiết kiệm thời gian. Tôi dùng để hỗ trợ code, đọc tài liệu, xem xét giải pháp nhưng luôn kiểm tra kết quả và chịu trách nhiệm với code cuối cùng.",
+        "Ví dụ thật nếu được hỏi sâu: Ở SK Broadband, sử dụng OpenAPI-generated Axios client để giảm việc viết tay API client và hạn chế lỗi tích hợp; đây là code generation từ API specification, không nên tự gọi là AI nếu không dùng AI trong bước đó. Cursor/Figma Dev Mode là công cụ khác hỗ trợ chuyển thiết kế thành UI.",
+        "EN: I'm sorry, I'm not confident enough to explain this clearly in English. Would it be okay if I answer in Vietnamese?",
+        "VI: Xin lỗi, tôi chưa đủ tự tin để giải thích rõ câu này bằng tiếng Anh. Tôi có thể trả lời bằng tiếng Việt được không?",
+        "Ngắn hơn: Sorry, may I explain this part in Vietnamese?",
+        "EN: I haven't worked with this technology directly, so I don't want to give an incorrect answer. But I understand the basic concept, and I'm willing to learn.",
+        "VI: Tôi chưa trực tiếp làm công nghệ này nên không muốn trả lời sai; tôi hiểu khái niệm cơ bản và sẵn sàng học.",
+        "EN: Could you share more about the systems this team is working on? Are they mainly production systems, MES integrations, or internal web applications?",
+        "VI: Anh/chị có thể chia sẻ thêm nhóm đang làm hệ thống nào không? Chủ yếu là hệ thống sản xuất, tích hợp MES hay ứng dụng web nội bộ?",
+        "5 câu phải nói trơn tru trước khi vào phòng",
+        "What do you know about manufacturing systems?",
+        "Tell me about a technical problem you solved. (MyHappyClass 404)",
+        "Do you have experience with Node.js / Windows Server? (trả lời trung thực)",
+        "Câu kết: My goal is not just to build software, but to build useful systems that help people work better.",
+        "Mẹo 1 giờ cuối: Đừng cố học thêm 20 khái niệm mới. Đọc câu hỏi → che phần EN → tự nói 30–60 giây → mở đáp án → sửa 1–2 ý. Ưu tiên câu 1, 2, 9, 23, 24, 27, 32.",
+        "Site công ty SK Broadband, làm lại từ đầu bằng Next.js App Router. Nội dung lấy từ CMS. Mình generate Axios client từ OpenAPI, rồi viết một lớp map response CMS sang view model. Page chủ yếu là Server Component, force-dynamic vì nội dung đổi liên tục. Có cache TTL trong memory để không gọi CMS mỗi request. URL cũ của site trước được redirect sang route mới. \n\nDưới đây là câu hỏi thật sự hay bị hỏi, bám đúng code dự án này.",
+        "1. Kiến trúc — câu mở đầu gần như chắc chắn",
+        "“Kể flow một trang, ví dụ newsroom, từ request tới UI.”",
+        "Câu trả lời ngắn: page là Server Component, đọc searchParams (tab, search, sort, page), gọi song song getNewsroomTabs, pinned, tags, list. Hàm trong src/data/api gọi client generate, map DTO sang NewsStory, rồi đẩy props xuống NewsContent (client) để lọc, phân trang, search. Layout gốc cũng fetch family sites và legal links cho footer.",
+        "“Server Component và Client Component chia thế nào?”",
+        "Server: fetch, metadata, layout, trang tĩnh ESG/CI. Client chỉ chỗ có tương tác: tab, pagination, video, chart tín dụng, popup, menu mobile, hero slider. Không fetch API ở client cho nội dung CMS.",
+        "“Tại sao không SSG / ISR mà force-dynamic gần như mọi trang?”",
+        "Footer gọi API family site và điều khoản. Nếu build tĩnh, HTML footer bị đóng băng lúc build. Newsroom, IR, popup cũng đổi từ CMS. force-dynamic để mỗi request render lại. Trade-off: TTFB phụ thuộc CMS, nên mới có cache TTL.",
+        "Câu follow-up khó: “Vậy sao không dùng revalidate của Next?” Câu thật: cache tự viết vì muốn stale-while-revalidate và fallback khi API lỗi, không muốn page fail cả request. Nhược điểm cần nói thẳng: cache nằm trong Map của từng process Node, nhiều instance thì cache lệch nhau, không share như Redis.",
+        "2. OpenAPI client — đúng chỗ bullet của bạn",
+        "“Generate thế nào, và nó thực sự giảm lỗi ở đâu?”",
+        "npm run gen-swagger-skb chạy swagger-typescript-api từ spec https://api.renew-skb.click/v3/api-docs, ra src/api-client/index.ts. Một instance api trong src/lib/api.ts, timeout 10s. Lợi ích cụ thể: đổi field backend thì typecheck fail, không phải sửa URL/param tay ở từng page.",
+        "Câu bẫy: “Vậy là không viết API code nữa à?” Không. File generate chỉ là HTTP + type. Mapping, fallback, format ngày, lọc file, cache key vẫn viết tay trong src/data/api. File generate còn @ts-nocheck, rất dài, phải regen khi spec đổi. Nói vậy sẽ thật hơn câu “reducing errors”.",
+        "Tầng data try/catch, log, trả fallback (tab newsroom về 전체, list rỗng). Lỗi không nuốt được thì error.tsx hiện màn retry. Phân biệt hai lớp này nếu bị hỏi.",
+        "Đây là chỗ interviewer giỏi sẽ đào, vì nhìn code là thấy.",
+        "Cache. ttlCache: hit còn hạn thì trả luôn; hết hạn thì trả data cũ và refresh nền; request trùng key thì dùng chung một promise (inflight). TTL 2 phút và 10 phút. Hỏi tiếp: race condition, memory leak nếu key vô hạn (newsroom key có page + search word), process restart thì cache mất.",
+        "User-Agent giả Chrome. Server fetch bị CloudFront WAF 403 vì UA không phải browser, nên gắn UA Chrome. Nói thẳng đây là workaround. Cách đúng là allowlist origin hoặc gọi ALB nội bộ. Đừng khoe như một best practice.",
+        "Ảnh unoptimized: true. Tắt image optimizer của Next vì lỗ hổng decode AVIF, và file đã nằm trên static CDN. Đừng nói “vì cho nhanh” nếu không đo.",
+        "CSP đang Report-Only. Header có nosniff, X-Frame-Options: DENY, Permissions-Policy, CSP. Chưa enforce vì GTM, font, domain ảnh CMS chưa chốt ở edge. Hỏi “tại sao không chặn luôn” thì trả lời: bật enforce sớm sẽ gãy analytics hoặc ảnh CMS.",
+        "HTML từ CMS. HtmlContent dùng dangerouslySetInnerHTML. Câu này rất hay ra. CMS là nguồn tin nội bộ, nhưng vẫn là XSS nếu editor hoặc API bị chèn script. Hiện chưa sanitize. Cách nói trung thực: tin CMS, rủi ro còn đó, hướng xử lý là sanitize server-side (DOMPurify) hoặc để CMS xuất HTML đã sạch.",
+        "Redirect hàng loạt. Site cũ dùng /investors, /esg?tab=, /pr-brand/.... Map sang /ir, /sustainability/esg/..., /brand/... để bookmark và SEO không chết. permanent: true là 308. Một số route dùng permanent: false khi chưa chốt URL cuối.",
+        'Deploy. output: "standalone", env qua env-cmd, health check GET /hc, basePath nếu treo dưới subpath. NEXT_PUBLIC_API_BASE_URL thiếu thì process throw lúc import, không chạy với API rỗng.',
+        "4. UI / product — họ sẽ hỏi nếu JD thiên frontend",
+        "Breakpoint chính và vì sao một số block hidden lg:block (breadcrumb, hero desktop khác mobile).",
+        "“Pixel-perfect” đo bằng gì: Figma, breakpoint nào, ai review. Đừng nói suông.",
+        "Nội dung Hàn, font, metadata ko_KR, GTM.",
+        "Trang tĩnh ESG nhiều, trang động là newsroom, IR notice, commercial, terms, history, audience committee.",
+        "Popup trang chủ, prev/next bài, download file đính kèm.",
+        "5. Câu hành vi, trả lời bằng một story",
+        "Chuẩn bị mỗi câu một ví dụ thật, không liệt kê tech:",
+        "Bug khó nhất. Ứng viên tốt nói hydration (suppressHydrationWarning, script strip attribute extension bis_skin_checked) hoặc WAF 403, không nói “fix CSS”.",
+        "Làm việc với backend khi spec lệch UI.",
+        "Phần bạn làm và phần người khác làm. “Rebuilt from scratch, all sections” nghe như một mình làm cả site. Nếu team cùng làm, nói rõ phần bạn own.",
+        "Biết giới hạn: cache không share giữa instance, CSP chưa enforce, HTML CMS chưa sanitize, UA giả.",
+        "Nếu bị hỏi “em optimize performance thế nào”, đừng bịa Lighthouse. Cái có thật: Promise.all để không fetch nối tiếp, cache() của React để dedupe trong một request, TTL để giảm tải CMS, ảnh để CDN phục vụ. Cái chưa làm: ISR, Redis, đo Core Web Vitals. Nói chưa làm còn điểm hơn bịa.",
+        "After several years of working in technology, I decided to take a career break from April to June. Instead of simply taking time off, I wanted to use the break intentionally.",
+        "I spent part of my time improving my AI and GenAI skills. I completed Google Gemini certifications and explored new AI tools. I also volunteered and spent time outdoors. Hiking, cycling and swimming helped me recharge after several busy years.",
+        "I also visited museums and gave myself time to reflect on my career. By the end of the break, I had not only rested but had also developed new skills, gained fresh ideas and returned with more energy.",
+        "Now, I am ready to use what I have learned in the next stage of my career.\n\n===\n\nSau vài năm làm việc trong lĩnh vực công nghệ, tôi quyết định dành cho mình một khoảng nghỉ từ tháng 4 đến tháng 6. Thay vì chỉ đơn thuần nghỉ ngơi, tôi muốn tận dụng khoảng thời gian này một cách có ý nghĩa, để học hỏi thêm những điều mới và nhìn lại hành trình nghề nghiệp của bản thân.",
+        "Trong thời gian đó, tôi tập trung nâng cao kiến thức về AI và Generative AI, hoàn thành các chứng chỉ Google Gemini và tìm hiểu thêm những công cụ AI mới. Bên cạnh việc học, tôi cũng tham gia các hoạt động tình nguyện và dành nhiều thời gian hơn cho bản thân. Những chuyến đi bộ đường dài, đạp xe và bơi lội giúp tôi lấy lại năng lượng sau nhiều năm làm việc bận rộn.",
+        "Tôi cũng dành thời gian tham quan bảo tàng, khám phá những góc nhìn mới và suy ngẫm về con đường sự nghiệp mình muốn theo đuổi. Khi kết thúc khoảng nghỉ, điều tôi nhận được không chỉ là sự thư giãn, mà còn là những kỹ năng mới, những ý tưởng mới và một tinh thần tích cực hơn.",
+        "Nhìn lại, tôi xem đây là một khoảng nghỉ có chủ đích, không phải để tạm dừng sự phát triển, mà để chuẩn bị tốt hơn cho chặng đường tiếp theo. Giờ đây, tôi sẵn sàng áp dụng những gì đã học và tiếp tục phát triển trong giai đoạn mới của sự nghiệp.",
+        "The project I'm most proud of is MyHappyClass.",
+        "It's a web app for private tutors in Vietnam. I built it with my partner.",
+        "Before using our app, many tutors used notebooks, Zalo, and Excel to manage classes, attendance, and payments.",
+        "My role was to understand users, design the UI, and build the frontend using React and TypeScript.",
+        "Now, we have over 100 accounts and more than 40 active tutors.",
+        "My favorite feature is mobile attendance. Tutors can open a class and mark students as present or absent on their phones.",
+        "One student can join many classes, so we save attendance data for each student in each class.",
+        "I'm proud of this project because it helps tutors save time and makes their work easier.",
+        "Dự án em tự hào nhất là MyHappyClass, SaaS em đồng sáng lập cho gia sư tự do ở Việt Nam. Vấn đề là gia sư đang quản lý lớp, điểm danh và học phí rải trên sổ, Zalo và file Excel. Em phụ trách tìm hiểu người dùng, thiết kế trải nghiệm, và xây frontend React với TypeScript. Hiện có hơn 100 tài khoản kích hoạt và hơn 40 gia sư đang dùng.",
+        "> Phần em tâm đắc nhất là luồng điểm danh trên điện thoại. Gia sư mở lớp, thấy buổi học, điểm danh có mặt / vắng / có phép ngay giữa hai ca, không cần ngồi máy tính. Bên dưới, mỗi học viên trong một lớp là một enrollment, và mỗi dòng điểm danh gắn với enrollment đó, vì một học viên có thể học nhiều lớp.",
+        "> Phụ huynh không muốn tạo tài khoản chỉ để xem và chuyển khoản. Em làm trang public theo token, không login, hiện số tiền, lớp, và thông tin chuyển khoản. Backend đối soát thanh toán qua Tingee. Em lo phần trang và trạng thái phiếu: chờ thanh toán, đã thu, đã hủy.",
+        "MyHappyClass là SaaS multi-tenant cho gia sư tự do. Mỗi người dùng có một workspace riêng. Em làm frontend React và TypeScript, còn schema do backend triển khai. Em ngồi cùng thiết kế vì màn điểm danh, lịch học và học phí đều bám vào các quan hệ này.",
+        "Học viên và lớp là hai bảng riêng, cùng thuộc một workspace. Quan hệ là nhiều–nhiều: một học viên học nhiều lớp, một lớp có nhiều học viên. Em không gắn danh sách học viên thẳng vào lớp, vì mỗi lần học viên vào một lớp còn có dữ liệu riêng: ngày bắt đầu, trạng thái đang học / học thử / bảo lưu / nghỉ, số buổi đã học và số buổi còn lại.",
+        "Bảng nối là enrollment, có khóa ngoại tới student và class. Từ học viên query ra các lớp đang học. Từ lớp query ra danh sách học viên. Điểm danh mỗi buổi cũng khóa bằng enrollment_id: có mặt, vắng, hoặc có phép.",
+        "Học phí tính theo cặp học viên–lớp đó. Lớp có học phí mỗi buổi. Phiếu học phí gắn học viên và lớp, có trạng thái chờ thanh toán, đã thu, hoặc đã hủy, kèm link công khai để phụ huynh xem và chuyển khoản mà không cần tài khoản.\n\n===",
+        "Ví dụ nói là app là multitenant, nghĩa lag cho nhiều gia su, trung tâm dùng",
+        "E thiết kế phần class, student, enrollment",
+        "1 lớp có nhiều student, 1 student tham gia nhiều class",
+        "Nên e tạo bảng many many enrollment, kết nối khóa ngoại của student và class",
+        "để có thể query học sinh học lớp nào và lớp có học sinh nào",
+        "Rồi học phí sẽ theo enrollment;\n\n\n===\n\nNếu họ hỏi sâu hơn",
+        "Vì sao không để student_ids trên bảng lớp? Vì không query ngược được, và không chỗ nào để lưu trạng thái hay số buổi của riêng học viên đó trong lớp đó. Enrollment vừa là bảng nối, vừa là nơi giữ dữ liệu của mối quan hệ.",
+        "Điểm danh nằm ở đâu? Một buổi học (class_session) thuộc một lớp. Mỗi dòng điểm danh trỏ tới enrollment_id, không trỏ thẳng học viên, vì cùng một học viên có thể học nhiều lớp và mỗi lớp điểm danh riêng.",
+        "Học phí có khóa ngoại tới enrollment không? Trên API mà frontend đang dùng, phiếu học phí có student và study_class, không lộ enrollment_id. Điểm danh thì có enrollment_id. Nếu bị hỏi đúng câu này, nói vậy. Đừng khẳng định cột tuition.enrollment_id nếu bạn chưa mở migration backend.",
+        "Multi-tenant chặn lẫn dữ liệu thế nào? Mọi bảng nghiệp vụ đều nằm trong một workspace. Query luôn lọc theo workspace slug, nên gia sư A không đọc được học viên của gia sư B.",
+        "==\nĐang muốn phát triển thêm: Ngoài LMS ra\nQuay lại đúng chỗ hôm qua! Mình recap nhanh những gì đã chốt:",
+        "3 idea khả thi nhất, xếp theo độ ưu tiên:",
+        "🥇 AI gen nhận xét học viên cho phụ huynh (làm trước)",
+        "Thầy tick điểm danh xong → AI draft 1–2 câu nhận xét",
+        "Input: topic buổi học + pattern vắng mặt + tên HV",
+        "Output: đoạn text thầy copy/edit rồi gửi Zalo phụ huynh",
+        "Đây là pain point thật — thầy đang làm tay mỗi tuần",
+        '"Lớp Toán 8A đã học 15/20 buổi, 3 buổi vắng, chủ đề còn lại: Phương trình bậc 2..."',
+        "Tự động gen khi thầy vào tab Overview",
+        "Dựa trên môn + level của HV → suggest curriculum từ kho",
+        "Cần có đủ data kho giáo trình trước mới có ý nghĩa",
+        "Muốn đi vào cái nào trước? Nếu bắt đầu từ AI nhận xét học viên, mình có thể giúp Quinn spec:",
+        "Cách tích hợp vào UI hiện tại (sau bước điểm danh)",
+        "Ở TechX, em build layout full-height trên mobile, dùng 100vh — Chrome ổn nhưng Safari bị cắt mất phần dưới vì Safari tính viewport height bao gồm cả thanh địa chỉ. Em fix bằng cách dùng 100dvh — dynamic viewport height, tính đúng vùng hiển thị thực tế. Từ đó em có thói quen test Safari song song ngay từ đầu, không đợi cuối mới check.",
+        "I built a mobile page using 100vh. It worked well in Chrome, but in Safari, the bottom of the page was cut off.",
+        "The problem was Safari's address bar. It made the page height different.",
+        "I fixed it by changing 100vh to 100dvh. After that, the page worked well on Safari.",
+        "From this experience, I learned to test on Safari early, not just at the end.",
+        "Event loop là cơ chế giúp JavaScript (single-thread) vẫn xử lý được nhiều tác vụ async bằng cách:",
+        "Đưa callback async (setTimeout, I/O, Promise callbacks…) vào các queue.",
+        "Liên tục: khi call stack rỗng, event loop lấy task từ queue đẩy vào stack để chạy.",
+        "→ Nhờ event loop, JS có thể xử lý I/O, timer, UI update mà không block toàn bộ chương trình.",
+        "Log 'A' (sync chạy trong call stack).",
+        "Schedule callback 'B' vào macrotask queue.",
+        "Log 'C' (sync chạy trong call stack).",
+        "Call stack rỗng → event loop lấy callback 'B' lên → log 'B'.",
+        "Call stack, macrotask queue, microtask queue",
+        "Call stack: ngăn xếp lưu các hàm đang được thực thi. Hàm mới → đẩy lên stack; xong → pop ra.",
+        "Macrotask queue (task queue): chứa các task từ web API: setTimeout, setInterval, DOM events, I/O,…",
+        "Microtask queue: chứa các microtask ưu tiên cao hơn, chủ yếu là Promise callbacks (.then/.catch/.finally, queueMicrotask).",
+        "Sync: 1, rồi schedule timeout, schedule microtask, rồi 4.",
+        "Call stack rỗng → chạy microtask → log 3.",
+        "Sau khi hết microtask → lấy macrotask → log 2.",
+        "Câu hỏi: đoạn sau in ra gì, tại sao",
+        "Câu 4: Event loop? setTimeout(fn, 0) có chạy ngay không?",
+        'Trả lời mẫu: "JS chạy single-thread trên call stack. Các tác vụ async (timer, fetch, DOM event) được đẩy sang Web APIs, khi xong thì callback xếp vào queue. Event loop chỉ lấy callback từ queue vào stack khi stack rỗng. Vì vậy setTimeout(fn, 0) không chạy ngay — nó chỉ xếp hàng, phải chờ toàn bộ code đồng bộ chạy xong. Ngoài ra microtask (Promise) được ưu tiên chạy hết trước macrotask (setTimeout)."',
+        "setTimeout(() => console.log(2), 0);",
+        "Promise.resolve().then(() => console.log(3));",
+        "Lưu ý: Đoạn code trên là câu đố kinh điển — thuộc lòng thứ tự 1, 4, 3, 2 và giải thích được tại sao.",
+        "Bộ trả lời mẫu — Phỏng vấn Frontend Banking",
+        "Câu 1: var vs let vs const? Tại sao hạn chế dùng var?",
+        'Trả lời mẫu: "var có function scope, bị hoisting lên đầu function với giá trị undefined, và cho phép khai báo lại — dễ gây bug khó trace. let và const có block scope, không cho khai báo lại trong cùng scope. const không cho gán lại reference. Em mặc định dùng const, chỉ dùng let khi cần gán lại, và không dùng var — code dễ đoán hơn, bug ít hơn."',
+        "Bẫy follow-up: \"const có làm object bất biến không?\" → Không, chỉ khóa reference. const user = {}; user.name = 'A' vẫn hợp lệ. Muốn bất biến dùng Object.freeze().",
+        "for (var i = 0; i < 3; i++) setTimeout(() => console.log(i)); // 3 3 3",
+        "for (let i = 0; i < 3; i++) setTimeout(() => console.log(i)); // 0 1 2",
+        "Câu 2: Closure là gì? Ví dụ thực tế?",
+        "Trả lời mẫu: \"Closure là khi một function 'nhớ' được các biến ở scope nơi nó được tạo ra, kể cả khi chạy ở nơi khác. Ứng dụng thực tế em dùng nhiều nhất là debounce — function trả về giữ được biến timer giữa các lần gọi:\"",
+        "timer = setTimeout(() => fn.apply(this, args), delay);",
+        '"Ở dự án trước, em dùng pattern này cho ô search trong data grid 10,000+ records để không gọi filter liên tục theo từng phím gõ."',
+        "Lưu ý: Kể được ví dụ từ dự án thật là điểm ăn tiền — đừng chỉ định nghĩa suông.",
+        "Câu 3: == vs ===? Tại sao banking app nên luôn dùng ===?",
+        'Trả lời mẫu: "== so sánh có ép kiểu ngầm (type coercion), === so sánh cả giá trị lẫn kiểu. Ép kiểu ngầm có nhiều quy tắc khó đoán: 0 == \'\' là true, null == undefined là true. Trong banking, dữ liệu tiền và mã giao dịch mà bị ép kiểu sai có thể gây sai lệch nghiêm trọng — ví dụ amount từ API trả về string "0" mà so == false sẽ là true. Nên luôn dùng === và validate kiểu dữ liệu rõ ràng."',
+        "Câu 5: Promise vs async/await — xử lý lỗi khi gọi API?",
+        'Trả lời mẫu: "async/await là syntax gọn hơn của Promise, giúp code async đọc như code đồng bộ. Khi gọi API em luôn xử lý 3 trạng thái: loading, success, error. Với async/await thì dùng try/catch/finally:"',
+        "async function fetchTransactions() {",
+        'const res = await fetch("/api/transactions");',
+        "if (!res.ok) throw new Error(`HTTP ${res.status}`); // fetch không tự reject lỗi HTTP!",
+        "Bẫy: fetch chỉ reject khi lỗi mạng — HTTP 404/500 vẫn resolve, phải tự check res.ok. Nói được ý này là điểm cộng lớn.",
+        "Câu 6: CSS position các loại? Flexbox vs Grid?",
+        "Position: static (mặc định), relative (dịch theo vị trí gốc, giữ chỗ), absolute (thoát flow, neo theo ancestor có position), fixed (neo theo viewport — dùng cho header/nút back-to-top), sticky (lai relative + fixed — dùng cho header bảng giao dịch khi scroll).",
+        'Flexbox vs Grid — trả lời mẫu: "Flexbox là layout 1 chiều — kiểm soát theo 1 trục, hợp với component nhỏ: navbar, căn giữa, dàn button. Grid là 2 chiều — kiểm soát cả hàng lẫn cột, hợp với layout tổng thể trang. Thực tế em dùng kết hợp: Grid cho khung trang (sidebar + header + content), Flexbox cho component bên trong."',
+        'Bẫy follow-up: "Grid thay được Flexbox không?" → Không, hai công cụ cho hai mục đích, dùng song song.',
+        "Câu 7: Responsive design? Mobile-first là gì?",
+        'Trả lời mẫu: "Mobile-first là viết CSS mặc định cho màn hình nhỏ trước, rồi dùng min-width media query mở rộng dần lên tablet/desktop. Cách này ép mình ưu tiên nội dung cốt lõi và thường ra CSS gọn hơn desktop-first. Em kết hợp đơn vị linh hoạt (rem, %, vw), Flexbox/Grid với minmax() + auto-fit, và ảnh responsive (srcset). Ở công ty trước, mọi component em làm đều đảm bảo chạy đủ desktop/tablet/mobile breakpoints và cross-browser."',
+        '"Riêng app WebView trên mobile, em chú ý thêm touch target tối thiểu ~44px và test trên máy cấu hình thấp."',
+        "B. Performance & thực chiến (từ CV)",
+        "Câu 8 ⭐: Data grid 10,000+ records — virtualized rendering làm thế nào?",
+        'Trả lời mẫu (kể chuyện theo STAR): "Ở Thang Loi Group, màn hình quản lý có bảng hơn 10,000 dòng. Render hết thì DOM quá nặng, scroll giật. Em áp dụng virtualization: chỉ render các dòng trong viewport cộng thêm buffer trên dưới. Nguyên lý: container có chiều cao tổng = số dòng × chiều cao dòng để thanh scroll đúng; lắng nghe scrollTop để tính index dòng đầu tiên cần hiển thị (startIndex = Math.floor(scrollTop / rowHeight)); chỉ render khoảng 20–30 dòng và dịch chúng bằng transform: translateY(). Kết quả DOM luôn chỉ vài chục node thay vì 10,000, scroll mượt 60fps. Kết hợp thêm debounce cho filter/search."',
+        'Follow-up có thể gặp: "Dòng cao không cố định thì sao?" → Khó hơn: phải ước lượng chiều cao rồi đo thực tế sau khi render và điều chỉnh (như react-window VariableSizeList).',
+        "Câu 9: Trang web load chậm — debug từ đâu?",
+        'Trả lời mẫu: "Em đo trước, sửa sau. Bước 1: chạy Lighthouse xem điểm và gợi ý, nhìn các chỉ số Core Web Vitals (LCP, CLS, INP). Bước 2: Network tab xem resource nào nặng/chậm — thường là ảnh chưa nén, JS bundle to, API chậm. Bước 3: xử lý theo thứ tự tác động: nén/lazy load ảnh, code-splitting bundle, cache, giảm render-blocking resources. Nếu chậm do runtime (giật khi thao tác) thì dùng Performance tab tìm long task, kiểm tra re-render thừa và reflow/repaint. Ở TechX em từng audit và refactor DOM, áp dụng lazy loading, loại bỏ JS thừa để cải thiện hiệu năng toàn platform."',
+        "Câu 10: Debounce vs throttle — áp dụng vào ô search lịch sử giao dịch?",
+        'Trả lời mẫu: "Debounce: chỉ chạy sau khi user ngừng thao tác một khoảng thời gian — hợp với ô search: gõ liên tục thì không gọi API, dừng 300–500ms mới gọi 1 lần. Throttle: chạy đều đặn tối đa 1 lần mỗi khoảng thời gian dù event bắn liên tục — hợp với scroll/resize. Với ô search lịch sử giao dịch, em dùng debounce ~400ms, kèm hủy request cũ (AbortController) để tránh race condition khi response về không đúng thứ tự."',
+        "Điểm cộng: nhắc race condition + AbortController — vượt mức câu hỏi, rất ấn tượng.",
+        "Câu 11 ⭐: Kể về lần refactor DOM cải thiện performance ở TechX?",
+        'Trả lời mẫu (STAR): "Situation: platform CMS có các trang client load chậm, DOM phình to do cấu trúc lồng nhau sâu và nhiều JS chạy thừa. Task: em được giao audit và cải thiện hiệu năng frontend toàn platform. Action: em rà soát lại cấu trúc DOM — bỏ wrapper thừa, đơn giản hóa cây DOM; áp dụng lazy loading cho ảnh và module chưa cần ngay; gỡ các đoạn JS trùng lặp/không dùng; đảm bảo component responsive không gây layout shift. Result: trang load nhanh hơn rõ rệt, thời gian deploy site cho client giảm 33–50% nhờ module tái sử dụng được chuẩn hóa."',
+        "Lưu ý: Luyện kể trơn trong ~60 giây. Có số liệu (33–50%) là vũ khí mạnh nhất.",
+        "Câu 12: RESTful API? Methods? 401 vs 403?",
+        'Trả lời mẫu: "REST là kiểu thiết kế API quanh resource, dùng HTTP method thể hiện hành động: GET đọc, POST tạo mới, PUT/PATCH cập nhật (PUT thay toàn bộ, PATCH một phần), DELETE xóa. Status code: 2xx thành công, 4xx lỗi phía client, 5xx lỗi server. 401 Unauthorized = chưa xác thực (chưa đăng nhập/token hết hạn) → redirect về login. 403 Forbidden = đã xác thực nhưng không có quyền → hiện thông báo không đủ quyền. Em từng làm permission-driven UI nên phân biệt 2 case này rất quan trọng để xử lý UX đúng."',
+        "Câu 13: Web chạy trong WebView khác gì browser? Cần lưu ý gì?",
+        'Trả lời mẫu: "Khác biệt chính: (1) WebView thường là engine bị giới hạn hơn browser, trên Android máy cũ có thể là Chromium phiên bản thấp — phải cẩn thận API mới và polyfill; (2) Giao tiếp với native qua JavaScript Bridge — ví dụ gọi camera, sinh trắc học, hoặc native gọi ngược vào web; (3) UX: xử lý nút back vật lý, bàn phím ảo che input, touch target đủ lớn (~44px), click delay trên WebView cũ; (4) Performance: máy cấu hình thấp nên bundle phải nhẹ, hạn chế animation nặng. Em chưa làm production WebView app nhưng có nền React Native/Flutter cơ bản nên hiểu mô hình web–native bridge."',
+        'Trả lời mẫu (câu test thái độ): "Em chưa dùng WebSquare trong dự án thực tế, nhưng khi tìm hiểu về công ty em có research: đây là UI framework của Inswave (Hàn Quốc), được dùng nhiều trong ngân hàng Hàn, phát triển theo hướng khai báo component qua XML và data binding, có công cụ kéo-thả. Bản chất bên dưới vẫn là HTML/CSS/JavaScript và thao tác DOM — là nền tảng em đã làm 4+ năm, nên em tự tin học nhanh. Em cũng từng chuyển từ jQuery sang React rồi làm việc với CMS độc quyền của công ty Nhật, nên việc tiếp cận framework nội bộ mới không phải trở ngại với em."',
+        'Lưu ý: Đây là câu họ muốn nghe thái độ, không phải kiến thức. Ý "từng học framework độc quyền của công ty Nhật" là ăn khớp hoàn hảo.',
+        "Câu 15: XSS là gì? Frontend phòng chống thế nào?",
+        'Trả lời mẫu: "XSS là tấn công chèn script độc vào trang để chạy trên trình duyệt nạn nhân — đánh cắp session, giả mạo giao dịch. Phòng chống ở frontend: (1) không bao giờ render trực tiếp input của user — dùng textContent thay vì innerHTML, trong React tránh dangerouslySetInnerHTML; (2) nếu buộc phải render HTML thì sanitize bằng thư viện như DOMPurify; (3) hỗ trợ Content-Security-Policy header; (4) cookie chứa session nên đặt HttpOnly để JS không đọc được. Trong banking còn quan trọng hơn vì XSS có thể dẫn đến chiếm phiên giao dịch."',
+        "Follow-up có thể gặp: CSRF khác gì? → CSRF lừa trình duyệt gửi request kèm cookie sẵn có; chống bằng CSRF token, SameSite cookie.",
+        'Câu 16: User bấm "Chuyển tiền" 2 lần — xử lý sao?',
+        'Trả lời mẫu: "Em xử lý nhiều lớp. Phía UI: disable nút ngay khi bấm + hiện loading, chỉ enable lại khi có kết quả. Nhưng UI không đủ — mạng chập chờn user có thể retry. Nên lớp quan trọng là idempotency key: frontend sinh một key duy nhất (UUID) cho mỗi giao dịch, gửi kèm request; backend thấy key trùng thì trả kết quả cũ thay vì tạo giao dịch mới. Ngoài ra có màn hình confirm trước khi submit và hiển thị rõ trạng thái giao dịch (pending/success/failed) để user không hoang mang bấm lại."',
+        "Lưu ý: Câu này là đặc thù banking — trả lời tốt là điểm khác biệt lớn so với ứng viên thuần web.",
+        "Câu 17: 0.1 + 0.2 === 0.3? Xử lý tiền tệ trong JS?",
+        "Trả lời mẫu: \"Kết quả là false, vì 0.1 + 0.2 ra 0.30000000000000004 — JS lưu số theo chuẩn IEEE 754 floating point, các số thập phân như 0.1 không biểu diễn chính xác được ở nhị phân. Với tiền tệ: (1) tốt nhất là tính toán theo đơn vị nhỏ nhất bằng số nguyên — VND vốn không có lẻ, còn USD thì tính bằng cent; (2) hoặc dùng thư viện decimal như big.js; (3) format hiển thị bằng Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }); (4) quan trọng nhất: số tiền chính thức luôn do backend tính, frontend chỉ hiển thị — không bao giờ tin số liệu tính ở client.\"",
+        "Câu 17b: Frontend làm gì để tăng bảo mật? (hay chỉ backend làm?)",
+        'Trả lời mẫu: "Bảo mật là defense in depth — backend là cổng cuối cùng, nhưng frontend là lớp phòng thủ đầu tiên và có nhiều việc cụ thể phải làm đúng:',
+        "Chống XSS: không render trực tiếp input user (textContent thay vì innerHTML), sanitize bằng DOMPurify nếu buộc render HTML, hỗ trợ Content-Security-Policy.",
+        "Quản lý token/session an toàn: ưu tiên cookie HttpOnly + Secure + SameSite thay vì localStorage — vì localStorage đọc được bằng JS, dính XSS là mất token.",
+        "Không leak dữ liệu nhạy cảm: không log thông tin user ra console ở production, không đưa dữ liệu nhạy cảm vào URL params, masking số tài khoản/số dư khi hiển thị (****1234).",
+        "Validate input ở client: vừa là UX vừa chặn sớm — nhưng luôn hiểu server mới là source of truth, client validation bypass được.",
+        'UX bảo mật: auto-logout khi idle, autocomplete="off" cho field nhạy cảm, che số dư khi app chuyển background (WebView).',
+        "Dependency: chạy npm audit, không kéo thư viện lạ vào — supply chain attack là rủi ro thật.",
+        'Nếu chỉ trông cậy backend thì user đã có thể bị tấn công ngay trên trình duyệt trước khi request kịp đến server."',
+        "Lưu ý: Câu này TA xác nhận sẽ hỏi — luyện kỹ. Trả lời được 4/6 ý là đã vượt mặt bằng chung.",
+        "Câu 17c: Hiệu năng web — frontend góp phần lớn cỡ nào?",
+        'Trả lời mẫu: "Phần lớn. Có nguyên tắc kinh điển trong giới performance (Steve Souders — Performance Golden Rule): 80–90% thời gian load của user nằm ở phía frontend, chỉ 10–20% là backend/server. Vì sau khi server trả HTML, toàn bộ phần còn lại là việc của frontend: tải và parse JS/CSS, render, ảnh, font. Cụ thể frontend kiểm soát:',
+        "Load time: bundle size, code-splitting, lazy loading, nén ảnh/dùng định dạng hiện đại, cache strategy",
+        "Render: critical rendering path, tránh render-blocking, hạn chế reflow/repaint",
+        "Runtime: virtualization cho danh sách lớn, debounce/throttle, tránh long task chặn main thread",
+        "Đo lường: Core Web Vitals (LCP, CLS, INP) — đo đúng trải nghiệm thật của user",
+        'Ở dự án trước em trực tiếp làm các việc này: audit bằng Lighthouse, refactor DOM, lazy loading, và virtualized grid 10,000+ records."',
+        'Lưu ý: Nhắc được con số "80–90%" + tên "Performance Golden Rule" là tạo ấn tượng senior ngay.',
+        "Câu 18: Tell me about yourself (60–90s)",
+        "Model answer (bản ngắn, từ đơn giản): \"Hi, I'm Quynh — Q-U-Y-N-H — but you can call me Quinn. I have over 4 years of experience as a frontend developer, mainly with JavaScript, HTML, CSS and React.",
+        "I started at Thang Loi Group. I built internal web apps for 200+ employees — HR, asset management, and e-signature tools. I also built a design system with 40+ components, which cut UI development time by about 40%. And I built a data grid that handles 10,000+ records smoothly.",
+        "Most recently, I worked at TechX Vietnam, a Japanese company. I built JavaScript modules for a CMS platform, turned Figma designs into pixel-perfect components, worked directly with Japanese stakeholders, and mentored junior developers.",
+        "I'm interested in this position because banking is where frontend quality really matters — performance, security, reliability. And I also hold a BBA, so banking is where my two strengths meet: engineering and business.\"",
+        "Lưu ý: Luyện nói to 5–7 lần cho trơn. Cấu trúc: hiện tại → quá khứ (thành tích có số) → vì sao ứng tuyển.",
+        "Câu 19: Why banking? / Why our company?",
+        'Model answer (bản ngắn): "Three reasons. First, in banking, frontend quality really matters — a bug in a banking app loses user trust. My background in performance and role-based UI fits that well. Second, I can learn banking know-how from Korean experts here — that\'s a real growth opportunity for me. Third, I already worked with Japanese teams, so I can adapt quickly to a Korean company."',
+        "Câu 20: Working under pressure + When can you start?",
+        'Model answer (pressure — bản ngắn): "At TechX, we had a tight deadline because the design came very late. I split the work into must-have and nice-to-have, reused components from our library instead of building from scratch, and updated the PM every day. We delivered the core features on time. What I learned: under pressure, priorities and honest communication matter more than working longer hours."',
+        'When can you start: trả lời dứt khoát, ví dụ: "I can start within [X] weeks. I understand you prefer someone who can onboard soon, and I\'m ready to move quickly." (JD ưu tiên onboard ASAP — nếu Quinn rảnh ngay, nói thẳng "I\'m available immediately" là điểm cộng lớn.)',
+        "Model answer: \"I'm expecting around twenty-five to thirty million VND, based on my experience and the scope of this role — and I'm open to discussing it depending on the overall package.\"",
+        'Model answer: "I would say my biggest strengths are ownership and frontend architecture. For example, I designed a 40-component design system that the whole company adopted — I enjoy building reusable, maintainable solutions rather than focusing only on a single feature. I\'m also a fast learner and comfortable working independently when needed."',
+        'Lưu ý: claim + proof — luôn kèm 1 bằng chứng cụ thể. Phát âm: strengths /streŋθs/ — có "s" cuối, cụm /ŋθs/ khó, luyện riêng vài lần.',
+        "Câu 23: What is your weakness? (chọn theo JD này)",
+        'Phân tích gap JD vs CV: (1) chưa có banking production — Nice-to-Have, để họ hỏi rồi đỡ bằng BBA/EconWiki, đừng tự khai; (2) hybrid/WebView chưa làm thật — gap sát job nhất; (3) Node.js không có (backend là FastAPI Python), Next.js chỉ familiar; (4) SVN/CVS chưa dùng — bị hỏi thì trả lời kiểu WebSquare "học nhanh"; (5) testing — CV không có, JD yêu cầu; (6) English speaking — lợi thế tương đối, KHÔNG tự khai là weakness.',
+        "Option A — Hybrid/WebView (khuyên dùng — đúng cái job cần):",
+        "\"I haven't built a hybrid WebView app in production yet. My mobile experience is basic React Native and Flutter. So recently, I've been studying how WebView works — the JavaScript bridge, performance on low-end devices. My web fundamentals are strong, so I'm confident I can close this gap quickly.\"",
+        'Option B — Testing (dự phòng nếu bị hỏi "còn gì nữa?"):',
+        "\"One area I'm currently improving is testing. In some of my previous projects, testing was not a major part of the development process. Because of that, I've been actively learning tools such as React Testing Library and Playwright to strengthen this area.\"",
+        "Phát âm: Playwright /ˈpleɪ.raɪt/. Chuẩn bị cả hai — có đạn dự phòng, không bị khựng.",
+        "Câu 24: Closing — kết thúc buổi phỏng vấn",
+        'KHÔNG BAO GIỜ nói "No more questions" — phát tín hiệu thiếu quan tâm. Luôn hỏi ngược ít nhất 1 câu rồi mới close:',
+        '"Yes, I have a couple of questions. Could you tell me more about the training program in Korea — how are employees selected? And what does the team structure look like for this position?"',
+        'Rồi mới: "Thank you so much for your time, Mr./Ms. [tên thật] — I really enjoyed our conversation. Looking forward to the next steps!"',
+        "Lưu ý: công ty Hàn trọng nghi thức — dùng title + tên, đừng gọi trống không.",
+        "Câu G1: Git merge vs rebase khác nhau như nào? Khi nào dùng cái nào?",
+        "Trả lời mẫu: \"Cả hai đều gộp thay đổi từ nhánh này vào nhánh khác, nhưng cách ghi lịch sử khác nhau. Merge tạo một merge commit mới, giữ nguyên lịch sử cả hai nhánh — lịch sử có dạng phân nhánh nhưng trung thực, không sửa commit cũ. Rebase 'nhấc' các commit của nhánh mình đặt lại lên đầu nhánh đích — lịch sử thẳng, đẹp, dễ đọc, nhưng viết lại commit (hash đổi hết). Nguyên tắc em theo: rebase nhánh feature cá nhân lên develop để giữ lịch sử sạch trước khi tạo PR; merge cho nhánh chung. Quy tắc vàng: không bao giờ rebase nhánh đã push và có người khác đang dùng — vì viết lại lịch sử sẽ phá repo của đồng nghiệp.\"",
+        "A---B---C (main)          A---B---C (main)",
+        "D---E---M                     D'---E'",
+        'Follow-up có thể gặp: "Squash là gì?" → Gộp nhiều commit thành 1 khi merge PR — lịch sử main gọn, mỗi feature 1 commit.',
+        "Câu G2: Quy trình làm việc với Git ở dự án trước? Xử lý conflict thế nào?",
+        "Trả lời mẫu: \"Team em theo feature branch workflow: tạo nhánh từ develop theo convention feature/ten-tinh-nang, làm xong tạo Pull Request, qua code review mới merge. Khi conflict: em pull nhánh đích mới nhất về, Git đánh dấu các đoạn conflict (<<<<<<<, =======, >>>>>>>), em xem cả hai phía thay đổi, trao đổi với người viết phần kia nếu không chắc — không bao giờ chọn bừa 'keep mine' — rồi test lại trước khi commit. Để giảm conflict, em chia nhỏ PR và sync nhánh đích thường xuyên.\"",
+        'Trả lời mẫu: "fetch chỉ tải thay đổi từ remote về local repo, không đụng vào code đang làm — mình xem trước rồi quyết định. pull = fetch + merge luôn vào nhánh hiện tại. Em quen dùng fetch rồi xem diff trước khi merge, hoặc git pull --rebase để tránh merge commit thừa khi sync nhánh cá nhân."',
+        "Câu G4: Lỡ commit sai thì làm sao? (reset vs revert)",
+        'Trả lời mẫu: "Tùy commit đã push chưa. Chưa push: dùng git reset — --soft giữ thay đổi ở staging, --hard xóa hẳn; hoặc git commit --amend nếu chỉ sửa commit cuối. Đã push lên nhánh chung: dùng git revert — tạo commit mới đảo ngược thay đổi, không viết lại lịch sử, an toàn cho người khác. Trong môi trường banking em nghiêng về revert vì lịch sử minh bạch, audit được."',
+        'Lưu ý: JD ghi cả SVN/CVS — nếu bị hỏi, trả lời thật: "Em dùng Git là chính, SVN em hiểu khái niệm (centralized, commit thẳng lên server) và tự tin dùng được sau vài ngày." NH Hàn nhiều hệ thống cũ vẫn dùng SVN — đây cũng là câu test thái độ như WebSquare.',
+        "F. Background — Học IT rồi học thêm BBA chi?",
+        "Câu F1: Tại sao đã có bằng IT rồi còn học Business Administration?",
+        "Đây là câu gần như chắc chắn bị hỏi (CV ghi BBA — National Economics University, 2026). Đừng phòng thủ — đây là cơ hội thể hiện product mindset.",
+        'Model answer (English — bản ngắn, không lặp lại SP cty cũ): "After a few years of coding, I became curious about the business side — why we build things, not just how. I realized that when I understand the business, I ask better questions and catch problems earlier. So I took the BBA. And it fits banking well, because banking is full of business logic."',
+        'Nếu bị hỏi tiếp "So you want to become a manager?" — trả lời thẳng Yes/No trước, rồi mới nói goals:',
+        '"Not in the near future — I want to stay technical. In the next 2–3 years, I want to grow into a Senior Frontend Engineer, with deep expertise in component architecture and frontend platform engineering."',
+        "Câu F1b: Where do you see yourself in 2–3 years?",
+        'Model answer: "In the next 2–3 years, I want to grow into a Senior Frontend Engineer with deep expertise in component architecture and frontend platform engineering. I\'m also investing in my English to work more effectively in international environments."',
+        'Lưu ý: "investing in my English" — frame chủ động đầu tư, KHÔNG nói "I want to improve my English" (nghe như thừa nhận điểm yếu). Phát âm: expertise /ˌek.spɜːˈtiːz/, architecture /ˈɑː.kɪ.tek.tʃər/ (nhấn âm đầu), effectively /əˈfek.tɪv.li/.',
+        "Câu F1c: Giới thiệu education (nếu được hỏi về học vấn)",
+        'Model answer: "I graduated with an Associate Degree in Information Technology from the University of Science, and completed a UI/UX Design certificate at DIA Academy. Later, I earned a Bachelor\'s degree in Business Administration at National Economics University — as a second degree, because I wanted to understand the business side of the products I build."',
+        'Lưu ý: trình tự IT → UI/UX → Business kể thành câu chuyện "học liên tục" — đúng hình growth mindset công ty Hàn thích. Dùng "earned/completed" (đã xong), không dùng "pursued" trừ khi nhớ đọc /pəˈsjuːd/ có -d. "National Economics University" — có "s".',
+        'Bẫy cần né: Đừng để họ nghĩ Quinn muốn chuyển sang PM/quản lý rồi bỏ code. Nếu bị hỏi "Vậy em có định chuyển hướng không?" → "Không, em vẫn xác định phát triển theo hướng kỹ thuật — BBA là để em làm engineer tốt hơn, không phải để rời khỏi engineering."',
+        "Câu F2: BBA match gì với domain ngân hàng?",
+        'JD ghi "Knowledge of banking or finance domain" trong Nice-to-Have — BBA chạm trực tiếp:',
+        "Kế toán (debit/credit, sổ cái, đối soát) → logic lõi của core banking và màn hình lịch sử giao dịch",
+        "Tài chính (lãi suất, kỳ hạn, khoản vay) → đọc spec tính năng tiết kiệm/vay không cần giải thích lại",
+        "Quản trị quy trình → banking là ngành của approval flow & phân quyền — khớp với kinh nghiệm e-signature multi-step approval và permission-driven UI đã có",
+        "Điểm cộng kép: BBA tại National Economics University — trường kinh tế top, dân ngân hàng đều biết. Side project EconWiki (wiki kinh tế, fullstack) = bằng chứng sống quan tâm domain thật.",
+        'Câu chốt nên thả sau "why banking?" hoặc câu BBA:',
+        '"Em không chỉ học BBA — em còn build EconWiki, một nền tảng wiki về kinh tế, từ frontend đến backend. Nên với em banking không phải domain xa lạ phải học từ đầu, mà là giao điểm tự nhiên giữa hai thứ em đã đầu tư: engineering và business."',
+        'English version (bản ngắn): "I also built EconWiki, an economics wiki website, by myself — frontend and backend. So banking is not new to me. It\'s where my two strengths meet: engineering and business."',
+        '⚠️ Quan trọng: BBA đã tốt nghiệp (2026) — nói "I hold a BBA" / "I recently completed my BBA", KHÔNG nói "I\'m studying". Bằng đã có trong tay là tín hiệu mạnh hơn nhiều so với "đang học".',
+        "G. Tình huống đặc biệt — 10 người TechX cùng apply",
+        'Bối cảnh: TechX restructuring, ~10 đồng nghiệp cùng nộp vào đây. Interviewer nhìn 10 CV chung một công ty sẽ (1) hỏi dí lý do nghỉ từng người và đối chiếu chéo câu trả lời, (2) tự đặt câu hỏi "chọn ai trong số này?". Hai câu sau phải chuẩn bị sẵn, không được ứng biến.',
+        "Câu G-A: Vì sao em nghỉ công ty cũ?",
+        'Nguyên tắc sống còn: trung thực tuyệt đối. 10 người cùng kèo = 10 phiên bản của cùng một câu chuyện. Ai vòng vo ("em muốn tìm thử thách mới...") sẽ bị lộ ngay khi đối chiếu và mất sạch điểm trust — trong banking, trust là tiêu chí số 1. Restructuring không phải lỗi cá nhân, không có gì phải giấu.',
+        'Trả lời mẫu (tiếng Việt): "TechX tái cấu trúc và cắt giảm nhân sự, vị trí của em nằm trong diện ảnh hưởng — em nghĩ anh/chị cũng thấy một số đồng nghiệp cũ của em ứng tuyển đợt này nên có thể xác nhận chéo. Em không xem đây là điều tiêu cực: thời gian ở TechX em học được nhiều về làm việc với stakeholder quốc tế và quy trình chuẩn của công ty Nhật. Và thực ra nó đến đúng lúc — em đã chuẩn bị nền tảng cho domain banking từ trước (BBA, EconWiki), nên em chọn ứng tuyển vào đây một cách có chủ đích chứ không phải rải CV."',
+        'Model answer (English — bản ngắn): "TechX had a restructuring, and my team was affected — some of my former colleagues also applied here, so you can check that. I learned a lot there, especially working with Japanese teams. But the timing was actually good for me — I had already prepared for banking, with my BBA and my EconWiki project. So I chose this company on purpose, not as a backup."',
+        'Bẫy cần né: tuyệt đối không nói xấu TechX, không than vãn, không tỏ ra bị động kiểu "em mất việc nên đi xin". Frame: sự kiện khách quan + mình chủ động chọn hướng đi tiếp.',
+        "Câu G-B: Vì sao chọn em thay vì 9 người còn lại?",
+        "Nguyên tắc: không dìm đồng nghiệp — họ là bạn cũ, và interviewer đánh giá cả nhân cách. Mở đầu bằng frame lịch sự rồi đưa differentiators.",
+        'Trả lời mẫu: "Em không thể và cũng không muốn nói thay các bạn khác — họ đều là đồng nghiệp tốt của em. Em chỉ có thể nói em mang lại gì cho vị trí này:',
+        "Performance ở đúng quy mô banking cần: em đã build virtualized data grid 10,000+ records và trực tiếp audit, cải thiện hiệu năng cả platform — không phải lý thuyết.",
+        "Tư duy bảo mật & phân quyền: em từng thiết kế permission-driven UI và e-signature workflow nhiều bước phê duyệt — rất gần với nghiệp vụ ngân hàng.",
+        "Hiểu business: em có bằng BBA của NEU và tự build EconWiki — banking với em là giao điểm của engineering và business, không phải domain phải học từ con số 0.",
+        "Tiếng Anh + môi trường quốc tế: em làm việc trực tiếp với stakeholder Nhật, sẵn sàng làm việc với team Hàn Quốc.",
+        'Và em có thể onboard sớm theo đúng ưu tiên của công ty."',
+        'Model answer (English — bản ngắn, câu rời dễ nói): "They are all good engineers, so I can only talk about myself. Four things. First, real performance work — I built a grid that handles 10,000+ records smoothly. Second, a security mindset — I built role-based UIs and approval workflows, very close to banking. Third, I understand business — I hold a BBA and built an economics website. Fourth, English and international experience — I worked directly with Japanese stakeholders. And I can start soon."',
+        'Lưu ý: Câu này chính là "elevator pitch" của cả buổi PV — 4 ý này lặp lại nhất quán ở mọi câu trả lời khác (intro, why banking, BBA) sẽ tạo ấn tượng một ứng viên có câu chuyện rõ ràng.',
+        "Bonus 1: async function có return về Promise không?",
+        "Có — luôn luôn. Return giá trị thường → JS tự wrap vào Promise.resolve(); throw error → Promise rejected; không return → Promise resolve undefined. Vì vậy gọi async function phải await hoặc .then() mới lấy được giá trị.",
+        'async function getName() { return "Quinn"; }',
+        'getName();                 // Promise { "Quinn" } — chưa phải string!',
+        'await getName();           // "Quinn"',
+        "Bonus 2: Flexbox vs Grid khác nhau như nào?",
+        "Flexbox = 1 chiều (1 trục, content-first) — navbar, căn giữa, dàn button. Grid = 2 chiều (hàng + cột, layout-first) — khung trang, dashboard. Thực tế dùng kết hợp: Grid cho layout tổng, Flexbox cho component bên trong. Grid không thay thế Flexbox — hai công cụ cho hai việc.",
+        "H. Extra — Small talk / HR warm-up tiếng Anh (12 câu)",
+        "Ưu tiên: 🔴 học kỹ (dễ bị hỏi) · 🟡 học vừa · ⚪ ưu tiên thấp. Câu 7, 8, 9 đã sửa theo chiến lược PV này.",
+        'Quy tắc phân bổ "vũ khí" — mỗi proof bắn 1 lần',
+        "Tránh lặp nguyên văn cùng ví dụ ở nhiều câu (nghe như học thuộc, ví dụ mất giá):",
+        'Lặp ý (4 differentiators) = nhất quán, tốt. Lặp nguyên văn ví dụ = robot, dở. Khi buộc nhắc lại, dùng "as I mentioned earlier".',
+        "Luyện nói câu 8 và 11 (⭐) trơn tru trong ~60s mỗi câu — vũ khí mạnh nhất",
+        'Luyện "Tell me about yourself" tiếng Anh 5–7 lần',
+        "Thuộc thứ tự output câu đố event loop (1, 4, 3, 2)",
+        "Đọc lướt 1 bài giới thiệu WebSquare (chỉ cần nắm khái niệm)",
+        'Luyện câu BBA (F1) — gần như chắc chắn bị hỏi, kết bằng "BBA giúp em làm engineer tốt hơn"',
+        'Thuộc câu chốt EconWiki (F2) — thả sau "why banking?" để tạo ấn tượng',
+        "Luyện G-A (lý do nghỉ TechX) — trung thực, frame chủ động; 10 người cùng kèo sẽ bị đối chiếu chéo",
+        "Thuộc 4 differentiators (G-B) — lặp nhất quán xuyên suốt buổi PV",
+        "Luyện 17b (FE security) + 17c (FE performance 80–90%) — TA xác nhận sẽ hỏi",
+        'Nhớ: BBA đã tốt nghiệp — "I hold a BBA", không phải "I\'m studying"',
+        'Salary: "twenty-five to thirty million" — tập đọc số to rõ, KHÔNG "twelvety"',
+        "Thuộc 2 câu weakness (A: WebView, B: testing) — có đạn dự phòng",
+        "Closing: luôn hỏi ngược 1–2 câu trước khi cảm ơn; gọi interviewer bằng Mr./Ms. + tên",
+        "Mục H: học kỹ 7 câu 🔴 — đặc biệt câu 7 (product-minded engineer, KHÔNG nói PM role) và câu 8 (overtime)",
+        "Nhớ quy tắc vàng Git: không rebase nhánh đã push chung",
+        "Chuẩn bị 2–3 câu hỏi ngược: tiêu chí incentive, lộ trình training Korea, team structure",
+        'Trả lời "When can you start?" dứt khoát — JD ưu tiên onboard ASAP',
+        "Level: Basic Awareness\nPosition: Web System Engineer — TTI\nExperience: Chưa trực tiếp xây dựng CI/CD Pipeline.",
+        "CI — Continuous Integration (Tích hợp liên tục)",
+        "Tự động kiểm tra, build và test khi có code mới.",
+        "Giúp phát hiện lỗi sớm, giảm thao tác thủ công.",
+        "CD — Continuous Delivery / Continuous Deployment",
+        "Continuous Delivery: Phần mềm luôn sẵn sàng để phát hành, có thể cần phê duyệt thủ công.",
+        "Continuous Deployment: Tự động triển khai lên production khi đáp ứng các điều kiện.",
+        "Mục đích: Tự động hóa quy trình phát triển, kiểm thử và triển khai phần mềm.",
+        "Manual Deployment — Triển khai thủ công",
+        "Ví dụ đã thực hiện với React/Astro trên Ubuntu VPS:",
+        "scp -r dist/* user@server:/var/www/app/",
+        "Pipeline được kích hoạt theo cấu hình.",
+        "Runner thực hiện các job build, test và deploy.",
+        "Giảm thao tác thủ công và tăng tính nhất quán.",
+        "Điểm khác biệt: Đã có kinh nghiệm manual deployment nhưng chưa trực tiếp triển khai CI/CD pipeline.",
+        "CI/CD helps automate building, testing, and deploying applications. It reduces manual work and helps teams release software more reliably.",
+        "CI/CD giúp tự động hóa build, test và deploy ứng dụng, giảm thao tác thủ công và hạn chế lỗi.",
+        "A pipeline is a set of automated jobs, such as build, test, and deploy.",
+        "Pipeline là tập hợp các công việc tự động theo một quy trình.",
+        "Q: Do you have experience with CI/CD?",
+        "I have basic knowledge of CI/CD, but I haven't implemented a CI/CD pipeline myself yet.",
+        "I understand that it helps automate building, testing, and deployment.",
+        "I have experience with manual deployment on an Ubuntu VPS.",
+        "Em có kiến thức cơ bản về CI/CD nhưng chưa trực tiếp xây dựng pipeline. Em hiểu CI/CD giúp tự động hóa build, test và deploy. Em đã có kinh nghiệm triển khai ứng dụng web thủ công trên Ubuntu VPS.",
+        "6. Liên hệ với Manufacturing Systems",
+        "Đối với hệ thống web trong nhà máy:",
+        "Hạn chế downtime để không ảnh hưởng hoạt động sản xuất.",
+        "Chuẩn bị phương án rollback khi có lỗi.",
+        "Ghi nhớ: CI/CD = Automation + Testing + Deployment.",
+        "Interview priority: Low — Basic understanding only.",
+        "1. Nếu được hỏi: How do you use AI in your work?",
+        "Bạn sử dụng AI trong công việc như thế nào?",
+        "I think AI is very useful in today's world.",
+        "It helps us reduce repetitive tasks, save time, and improve productivity.",
+        "In my work, I use AI tools to support coding and debugging.",
+        "But I always review and test the results before using them.",
+        "Tôi nghĩ AI rất hữu ích trong thời đại ngày nay.",
+        "AI giúp chúng ta giảm các công việc lặp đi lặp lại, tiết kiệm thời gian và cải thiện năng suất.",
+        "Trong công việc, tôi sử dụng các công cụ AI để hỗ trợ lập trình và sửa lỗi.",
+        "Nhưng tôi luôn kiểm tra lại và test kết quả trước khi sử dụng.",
+        "Nếu muốn liên hệ kinh nghiệm thật trong CV",
+        "Bà có thể thêm câu này để gây ấn tượng:",
+        "For example, in my previous project, I used Cursor to support frontend development. I also used an OpenAPI-generated client to reduce manual API coding and integration errors.",
+        "Dịch: Ví dụ, trong dự án trước, tôi sử dụng Cursor để hỗ trợ phát triển frontend. Tôi cũng sử dụng client được tạo từ OpenAPI để giảm việc viết code API thủ công và hạn chế lỗi tích hợp.",
+        "Lưu ý: OpenAPI-generated client là công cụ tự động sinh code, không nhất thiết là AI. Mình nói riêng hai công cụ như trên là chính xác.",
+        "PYTHON + FASTAPI + DJANGO — CHEAT SHEET PHỎNG VẤN",
+        "Ôn cấp tốc cho Web System Engineer (TTI). Ưu tiên hiểu bản chất, nhớ cú pháp, nói đúng kinh nghiệm thực tế. Không cần thuộc tất cả framework.",
+        'name = "Quynh"                 # str',
+        "age = 27                       # int",
+        "salary = 20.5                  # float",
+        "is_active = True               # bool",
+        "value = None                   # tương tự null trong JS",
+        'skills = ["React", "Python"]   # list',
+        "point = (10, 20)               # tuple",
+        "unique = {1, 2, 3}             # set",
+        'user = {"name": "Quynh"}       # dict',
+        "Collection = cách gọi chung cho cấu trúc chứa nhiều phần tử. Bốn loại thường gặp:",
+        "Tuple có thể chứa object mutable; dict giữ thứ tự chèn từ Python 3.7+; set rỗng là set(), còn {} là dict rỗng.",
+        "items.append(3)          # thêm 1 phần tử",
+        "items.extend([4, 5])     # thêm nhiều phần tử",
+        "items.pop()              # lấy và xóa phần tử cuối",
+      ];
+      const $ = (s) => document.querySelector(s);
+      const cats = [...new Set(DATA.map((x) => x.category))];
+      let completed = new Set(
+        JSON.parse(localStorage.getItem("tti_done_v3") || "[]"),
+      );
+      let showAnswers = true;
+      let flashIndex = 0,
+        flipped = false;
+      const escapeHTML = (s) =>
+        String(s).replace(
+          /[&<>"']/g,
+          (c) =>
+            ({
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            })[c],
+        );
+      function save() {
+        localStorage.setItem("tti_done_v3", JSON.stringify([...completed]));
+        $("#done").textContent = completed.size;
+        $("#pct").textContent =
+          Math.round((completed.size / DATA.length) * 100) + "%";
+        $("#bar").style.width = (completed.size / DATA.length) * 100 + "%";
+      }
+      function init() {
+        $("#total").textContent = DATA.length;
+        $("#category").innerHTML += [...cats]
+          .map((c) => `<option>${escapeHTML(c)}</option>`)
+          .join("");
+        $("#nav").innerHTML =
+          `<button data-cat="all" class="active">Tất cả</button>` +
+          cats
+            .map(
+              (c) =>
+                `<button data-cat="${escapeHTML(c)}">${escapeHTML(c)}</button>`,
+            )
+            .join("") +
+          `<button data-target="flashSection">Flashcards</button><button data-target="sourceSection">Ghi chú nguồn</button>`;
+        $("#nav").addEventListener("click", (e) => {
+          let b = e.target.closest("button");
+          if (!b) return;
+          if (b.dataset.cat) {
+            $("#category").value = b.dataset.cat;
+            document
+              .querySelectorAll("#nav button")
+              .forEach((x) => x.classList.toggle("active", x === b));
+            render();
+            $("#study").scrollIntoView({ behavior: "smooth" });
+          }
+          if (b.dataset.target)
+            $("#" + b.dataset.target).scrollIntoView({ behavior: "smooth" });
+        });
+        ["search", "category", "priority", "status"].forEach((id) =>
+          $("#" + id).addEventListener(
+            id === "search" ? "input" : "change",
+            render,
+          ),
+        );
+        $("#toggle").onclick = () => {
+          showAnswers = !showAnswers;
+          render();
+        };
+        $("#cards").addEventListener("click", (e) => {
+          let b = e.target.closest("button");
+          if (!b) return;
+          let id = Number(b.dataset.id);
+          if (b.dataset.action === "done") {
+            completed.has(id) ? completed.delete(id) : completed.add(id);
+            save();
+            render();
+          }
+          if (b.dataset.action === "reveal") {
+            let a = $("#a" + id);
+            a.classList.toggle("hide");
+            b.textContent = a.classList.contains("hide")
+              ? "Xem đáp án"
+              : "Ẩn đáp án";
+          }
+        });
+        $("#flash").onclick = () => {
+          flipped = !flipped;
+          renderFlash();
+        };
+        $("#flash").onkeydown = (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            $("#flash").click();
+          }
+        };
+        $("#prev").onclick = () => move(-1);
+        $("#next").onclick = () => move(1);
+        $("#random").onclick = () => {
+          flashIndex = Math.floor(Math.random() * DATA.length);
+          flipped = false;
+          renderFlash();
+        };
+        $("#flashDone").onclick = () => {
+          let id = DATA[flashIndex].id;
+          completed.add(id);
+          save();
+          render();
+        };
+        $("#noteSearch").oninput = renderNotes;
+        save();
+        render();
+        renderFlash();
+        renderNotes();
+      }
+      function filtered() {
+        let q = $("#search").value.toLowerCase().trim();
+        return DATA.filter(
+          (x) =>
+            ($("#category").value === "all" ||
+              x.category === $("#category").value) &&
+            ($("#priority").value === "all" ||
+              x.priority === $("#priority").value) &&
+            ($("#status").value === "all" ||
+              ($("#status").value === "done"
+                ? completed.has(x.id)
+                : !completed.has(x.id))) &&
+            (!q ||
+              [x.q, x.en, x.vi, x.category]
+                .join(" ")
+                .toLowerCase()
+                .includes(q)),
+        );
+      }
+      function render() {
+        let arr = filtered();
+        $("#listTitle").textContent = `${arr.length} câu hỏi phù hợp`;
+        $("#cards").innerHTML = arr
+          .map(
+            (x) =>
+              `<article class="qa ${completed.has(x.id) ? "done" : ""}"><div class="meta">${escapeHTML(x.category)} · #${x.id} · <span class="tag ${x.priority}">${x.priority === "high" ? "Ưu tiên" : "Bổ sung"}</span></div><div class="qhead"><h3>${escapeHTML(x.q)}</h3><span class="tiny">${completed.has(x.id) ? "✓ Đã ôn" : ""}</span></div><div class="answer ${showAnswers ? "" : "hide"}" id="a${x.id}"><div class="lang">ENGLISH · B1</div><p>${escapeHTML(x.en)}</p><div class="lang">TIẾNG VIỆT · GHI NHỚ</div><p class="vi">${escapeHTML(x.vi)}</p></div><div class="actions"><button class="btn" data-action="reveal" data-id="${x.id}">${showAnswers ? "Ẩn đáp án" : "Xem đáp án"}</button><button class="btn" data-action="done" data-id="${x.id}">${completed.has(x.id) ? "↺ Ôn lại" : "✓ Đã ôn"}</button></div></article>`,
+          )
+          .join("");
+        $("#empty").textContent = arr.length
+          ? ""
+          : "Không có câu hỏi phù hợp. Thử bỏ bộ lọc.";
+      }
+      function move(d) {
+        flashIndex = (flashIndex + d + DATA.length) % DATA.length;
+        flipped = false;
+        renderFlash();
+      }
+      function renderFlash() {
+        let x = DATA[flashIndex];
+        $("#flashMeta").textContent =
+          `${flashIndex + 1}/${DATA.length} · ${x.category}`;
+        $("#flashQuestion").textContent = x.q;
+        $("#flashAnswer").textContent = x.en + "\n\n" + x.vi;
+        $("#flashAnswer").style.whiteSpace = "pre-line";
+        $("#flashAnswer").classList.toggle("hide", !flipped);
+      }
+      function renderNotes() {
+        let q = $("#noteSearch").value.toLowerCase().trim();
+        let found = NOTES.filter(
+          (x) => !q || x.toLowerCase().includes(q),
+        ).slice(0, q ? 90 : 35);
+        $("#notes").innerHTML =
+          found
+            .map((x) => `<div class="note-item">${escapeHTML(x)}</div>`)
+            .join("") || "<p>Không có ghi chú phù hợp.</p>";
+      }
+      init();
+    </script>
+  </body>
+</html>
