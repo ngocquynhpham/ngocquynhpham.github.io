@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#181c27">
+  <title>Books — Thư viện ebook</title>
+  <meta name="description" content="Thư viện ebook PDF: English for Business và các bộ sách chuyên ngành. Tìm kiếm, lọc theo chủ đề, đọc trực tiếp trên trình duyệt.">
+  <link rel="canonical" href="https://ngocquynhpham.github.io/projects/books/">
+  <link rel="icon" href="../../engineer-atlas/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <header class="topbar">
+    <button type="button" class="sidebar-toggle" id="sidebarToggle" aria-label="Thu gọn sidebar" aria-expanded="true">☰</button>
+    <button type="button" class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+    <div class="topbar-title">◈ <span>Books</span></div>
+    <span class="topbar-badge">Thư viện PDF</span>
+    <button type="button" class="theme-btn" id="themeBtn" aria-label="Đổi giao diện">
+      <svg class="theme-icon" id="themeIconSun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="theme-icon hidden" id="themeIconMoon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </header>
+
+  <div class="layout" id="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Bộ sách">
+      <div class="sidebar-scroll" id="sidebarNav"></div>
+      <div class="sidebar-foot">
+        <a class="nav-item nav-item--link" href="../../engineer-atlas/"><span class="nav-dot"></span><span class="nav-label">← Engineer Atlas</span></a>
+      </div>
+    </nav>
+
+    <main class="main" id="content" aria-live="polite"></main>
+  </div>
+  <div class="sidebar-backdrop" id="sidebarBackdrop" hidden aria-hidden="true"></div>
+
+  <script type="module" src="index.js"></script>
+</body>
+</html>
